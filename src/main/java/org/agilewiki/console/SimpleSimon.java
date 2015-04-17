@@ -1,9 +1,8 @@
-package org.agilewiki.fun;
+package org.agilewiki.console;
 
 import org.agilewiki.jactor2.core.impl.Plant;
 import org.agilewiki.utils.immutable.BaseRegistry;
 import org.agilewiki.utils.virtualcow.Db;
-import org.agilewiki.utils.virtualcow.FileDoesNotExistExcpetion;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

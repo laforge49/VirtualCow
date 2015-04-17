@@ -9,7 +9,7 @@
     <servlet>
         <servlet-name>Console</servlet-name>
         <servlet-class>
-            org.agilewiki.fun.SimpleSimon
+            org.agilewiki.console.SimpleSimon
         </servlet-class>
     </servlet>
     <servlet-mapping>
