@@ -114,7 +114,7 @@ public class SimpleSimon extends HttpServlet {
                         sb.append("<br />");
                         MapAccessor vma = vmn.mapAccessor(timestamp);
                         for (ListAccessor vla: vma) {
-                            sb.append("&nbsp;&nbsp;&nbsp;&nbsp;" + vla.key() + " = " + vla.flatList());
+                            sb.append("&nbsp;&nbsp;&nbsp;&nbsp;" + vla.key() + " = " + encode("" + vla.flatList()));
                             sb.append("<br />");
                         }
                     }
@@ -133,13 +133,15 @@ public class SimpleSimon extends HttpServlet {
         String subject = request.getParameter("subject");
         String body = request.getParameter("body");
         Map<String, String> map = new HashMap<>();
-        map.put("body", body);
+        map.put("body", encode(body));
         if (subject.length() == 0)
             map.put("error", "Subject is required");
+        /*
         else if (subject.contains("&"))
             map.put("error", "Subject may not contain &amp; or &quot;");
         else if (subject.contains("\""))
             map.put("error", "Subject may not contain &amp; or &quot;");
+            */
         else {
             try {
                 map.put("subject", encode(subject));
@@ -159,14 +161,19 @@ public class SimpleSimon extends HttpServlet {
             switch(c) {
                 case '&' :
                     a = "&amp;";
+                    break;
                 case '<' :
                     a = "&lt;";
+                    break;
                 case '>' :
                     a = "&gt;";
+                    break;
                 case '\'' :
                     a = "&apos;";
+                    break;
                 case '"' :
                     a = "&quot;";
+                    break;
                 default:
                     a = "" + c;
             }
