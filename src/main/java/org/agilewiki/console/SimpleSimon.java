@@ -66,6 +66,7 @@ public class SimpleSimon extends HttpServlet {
             Path dbPath = Paths.get("vcow.db");
             int maxRootBlockSize = 100000;
             db = new Db(new BaseRegistry(), dbPath, maxRootBlockSize);
+            db.registerTransaction(NpjeTransaction.NAME, NpjeTransaction.class);
             db.open(false);
             servletConfig = getServletConfig();
             servletContext = servletConfig.getServletContext();
@@ -101,8 +102,14 @@ public class SimpleSimon extends HttpServlet {
         map.put("body", body);
         if (subject.length() == 0)
             map.put("error", "Subject is required");
-        else
-            map.put("success", "posted");
+        else {
+            try {
+                String timestampId = new NpjeTransaction().update(db, subject, body, request);
+                map.put("success", "posted: " + timestampId);
+            } catch (Exception e) {
+                throw new ServletException("transaction exception", e);
+            }
+        }
         response.getWriter().println(replace("index.html", map));
     }
 }
