@@ -133,21 +133,16 @@ public class SimpleSimon extends HttpServlet {
         String subject = request.getParameter("subject");
         String body = request.getParameter("body");
         Map<String, String> map = new HashMap<>();
-        map.put("subject", subject);
         map.put("body", body);
         if (subject.length() == 0)
             map.put("error", "Subject is required");
+        else if (subject.contains("&"))
+            map.put("error", "Subject may not contain &amp; or &quot;");
+        else if (subject.contains("\""))
+            map.put("error", "Subject may not contain &amp; or &quot;");
         else {
-            String error = null;
-            for (char x: SPECIAL.toCharArray()) {
-                if (subject.indexOf(x) != -1) {
-                    error = "Subject may not contain &amp;, &lt;, &gt;, &quot; or &apos;";
-                    break;
-                }
-            }
-            if (error != null)
-                map.put("error", error);
-            else try {
+            try {
+                map.put("subject", encode(subject));
                 String timestampId = new NpjeTransaction().update(db, subject, body, request);
                 map.put("success", "posted: " + timestampId);
             } catch (Exception e) {
@@ -155,5 +150,28 @@ public class SimpleSimon extends HttpServlet {
             }
         }
         response.getWriter().println(replace("post", map));
+    }
+
+    public String encode(String s) {
+        StringBuilder sb = new StringBuilder();
+        for (char c: s.toCharArray()) {
+            String a;
+            switch(c) {
+                case '&' :
+                    a = "&amp;";
+                case '<' :
+                    a = "&lt;";
+                case '>' :
+                    a = "&gt;";
+                case '\'' :
+                    a = "&apos;";
+                case '"' :
+                    a = "&quot;";
+                default:
+                    a = "" + c;
+            }
+            sb.append(a);
+        }
+        return sb.toString();
     }
 }
