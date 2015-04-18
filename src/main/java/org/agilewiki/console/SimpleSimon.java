@@ -29,7 +29,8 @@ public class SimpleSimon extends HttpServlet {
     private Db db;
     ServletConfig servletConfig;
     ServletContext servletContext;
-    Charset utf8 = Charset.forName("UTF-8");
+    final static Charset utf8 = Charset.forName("UTF-8");
+    final static String SPECIAL = "&<>'\"";
 
     String readResource(String pageName) throws IOException {
         InputStream is = servletContext.getResourceAsStream("/WEB-INF/pages/" + pageName + ".html");
@@ -137,7 +138,16 @@ public class SimpleSimon extends HttpServlet {
         if (subject.length() == 0)
             map.put("error", "Subject is required");
         else {
-            try {
+            String error = null;
+            for (char x: SPECIAL.toCharArray()) {
+                if (subject.indexOf(x) != -1) {
+                    error = "Subject may not contain &amp;, &lt;, &gt;, &quot; or &apos;";
+                    break;
+                }
+            }
+            if (error != null)
+                map.put("error", error);
+            else try {
                 String timestampId = new NpjeTransaction().update(db, subject, body, request);
                 map.put("success", "posted: " + timestampId);
             } catch (Exception e) {
