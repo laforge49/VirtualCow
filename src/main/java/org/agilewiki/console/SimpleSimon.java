@@ -23,6 +23,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class SimpleSimon extends HttpServlet {
@@ -114,8 +115,12 @@ public class SimpleSimon extends HttpServlet {
                         sb.append("<br />");
                         MapAccessor vma = vmn.mapAccessor(timestamp);
                         for (ListAccessor vla: vma) {
-                            sb.append("&nbsp;&nbsp;&nbsp;&nbsp;" + vla.key() + " = " + encode("" + vla.flatList()));
-                            sb.append("<br />");
+                            int sz = vla.size();
+                            for (int i = 0; i < sz; ++i) {
+                                String s = vla.key() + "[" + i + "] = ";
+                                sb.append("&nbsp;&nbsp;&nbsp;&nbsp;" + s + encode("" + vla.get(i), s.length() + 4));
+                                sb.append("<br />");
+                            }
                         }
                     }
                 }
@@ -133,18 +138,12 @@ public class SimpleSimon extends HttpServlet {
         String subject = request.getParameter("subject");
         String body = request.getParameter("body");
         Map<String, String> map = new HashMap<>();
-        map.put("body", encode(body));
+        map.put("body", encode(body, 0));
         if (subject.length() == 0)
             map.put("error", "Subject is required");
-        /*
-        else if (subject.contains("&"))
-            map.put("error", "Subject may not contain &amp; or &quot;");
-        else if (subject.contains("\""))
-            map.put("error", "Subject may not contain &amp; or &quot;");
-            */
         else {
             try {
-                map.put("subject", encode(subject));
+                map.put("subject", encode(subject, 0));
                 String timestampId = new NpjeTransaction().update(db, subject, body, request);
                 map.put("success", "posted: " + timestampId);
             } catch (Exception e) {
@@ -154,11 +153,17 @@ public class SimpleSimon extends HttpServlet {
         response.getWriter().println(replace("post", map));
     }
 
-    public String encode(String s) {
+    public String encode(String s, int indent) {
         StringBuilder sb = new StringBuilder();
         for (char c: s.toCharArray()) {
             String a;
             switch(c) {
+                case '\n' :
+                    a = "<br />";
+                    for (int i = 0; i < indent; ++i) {
+                        a += "&nbsp;";
+                    }
+                    break;
                 case '&' :
                     a = "&amp;";
                     break;
