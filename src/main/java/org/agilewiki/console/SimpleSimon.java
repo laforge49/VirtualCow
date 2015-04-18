@@ -25,8 +25,8 @@ public class SimpleSimon extends HttpServlet {
     ServletContext servletContext;
     Charset utf8 = Charset.forName("UTF-8");
 
-    String readResource(String pathName) throws IOException {
-        InputStream is = servletContext.getResourceAsStream("/WEB-INF/"+pathName);
+    String readResource(String pageName) throws IOException {
+        InputStream is = servletContext.getResourceAsStream("/WEB-INF/pages/" + pageName + ".html");
         InputStreamReader isr = new InputStreamReader(is, utf8);
         StringBuilder sb = new StringBuilder();
         char[] ca = new char[1000];
@@ -39,8 +39,8 @@ public class SimpleSimon extends HttpServlet {
         }
     }
 
-    String replace(String pathName, Map<String, String> sub) throws IOException {
-        String t = readResource(pathName);
+    String replace(String pageName, Map<String, String> sub) throws IOException {
+        String t = readResource(pageName);
         int i = 0;
         StringBuilder sb = new StringBuilder();
         while (i < t.length()) {
@@ -85,8 +85,10 @@ public class SimpleSimon extends HttpServlet {
         response.setContentType("text/html");
         response.setStatus(HttpServletResponse.SC_OK);
         Map<String, String> map = new HashMap<>();
-        map.put("here", "get");
-        response.getWriter().println(replace("index.html", map));
+        String page = request.getParameter("to");
+        if (page == null)
+            page = "home";
+        response.getWriter().println(replace(page, map));
     }
 
     public void doPost(HttpServletRequest request,
@@ -97,7 +99,6 @@ public class SimpleSimon extends HttpServlet {
         String subject = request.getParameter("subject");
         String body = request.getParameter("body");
         Map<String, String> map = new HashMap<>();
-        map.put("here", "post");
         map.put("subject", subject);
         map.put("body", body);
         if (subject.length() == 0)
@@ -110,6 +111,6 @@ public class SimpleSimon extends HttpServlet {
                 throw new ServletException("transaction exception", e);
             }
         }
-        response.getWriter().println(replace("index.html", map));
+        response.getWriter().println(replace("post", map));
     }
 }
