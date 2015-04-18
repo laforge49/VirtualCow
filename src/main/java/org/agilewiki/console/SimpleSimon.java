@@ -107,9 +107,12 @@ public class SimpleSimon extends HttpServlet {
                 StringBuilder sb = new StringBuilder();
                 MapAccessor ma = db.mapAccessor();
                 long timestamp = FactoryRegistry.MAX_TIMESTAMP;
+                int jc = 0;
                 for (ListAccessor la: ma.iterable(Timestamp.PREFIX)) {
                     VersionedMapNode vmn = (VersionedMapNode) la.get(0);
                     if (!vmn.isEmpty(timestamp)) {
+                        if (jc++ > 20)
+                            break;
                         String tsId = la.key().toString();
                         sb.append(tsId);
                         sb.append("<br />");
