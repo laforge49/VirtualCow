@@ -15,11 +15,11 @@ public class NpjeTransaction implements Transaction {
     public String update(Db db, String subject, String body, HttpServletRequest request)
             throws Exception {
         MapNode mn = db.dbFactoryRegistry.nilMap;
-        mn.add(NameIds.SUBJECT, subject);
-        mn.add(NameIds.BODY, body);
-        mn.add(NameIds.REMOTE_HOST, request.getRemoteHost());
-        mn.add(NameIds.REMOTE_ADDR, request.getRemoteAddr());
-        mn.add(NameIds.REMOTE_PORT, request.getRemotePort());
+        mn = mn.add(NameIds.SUBJECT, subject);
+        mn = mn.add(NameIds.BODY, body);
+        mn = mn.add(NameIds.REMOTE_HOST, request.getRemoteHost());
+        mn = mn.add(NameIds.REMOTE_ADDR, request.getRemoteAddr());
+        mn = mn.add(NameIds.REMOTE_PORT, request.getRemotePort());
         return db.update(NAME, mn).call();
     }
 

@@ -1,8 +1,14 @@
 package org.agilewiki.console;
 
 import org.agilewiki.jactor2.core.impl.Plant;
+import org.agilewiki.utils.ids.Timestamp;
 import org.agilewiki.utils.immutable.BaseRegistry;
+import org.agilewiki.utils.immutable.FactoryRegistry;
+import org.agilewiki.utils.immutable.collections.ListAccessor;
+import org.agilewiki.utils.immutable.collections.MapAccessor;
+import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.Db;
+import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -67,7 +73,7 @@ public class SimpleSimon extends HttpServlet {
             int maxRootBlockSize = 100000;
             db = new Db(new BaseRegistry(), dbPath, maxRootBlockSize);
             db.registerTransaction(NpjeTransaction.NAME, NpjeTransaction.class);
-            db.open(false);
+            db.open();
             servletConfig = getServletConfig();
             servletContext = servletConfig.getServletContext();
         } catch(Exception ex) {
@@ -88,7 +94,34 @@ public class SimpleSimon extends HttpServlet {
         String page = request.getParameter("to");
         if (page == null)
             page = "home";
+        else if (page.equals("journal"))
+            journal(map);
         response.getWriter().println(replace(page, map));
+    }
+
+    void journal(Map<String, String> map) {
+        while (true) {
+            try {
+                StringBuilder sb = new StringBuilder();
+                MapAccessor ma = db.mapAccessor();
+                long timestamp = FactoryRegistry.MAX_TIMESTAMP;
+                for (ListAccessor la: ma.iterable(Timestamp.PREFIX)) {
+                    VersionedMapNode vmn = (VersionedMapNode) la.get(0);
+                    if (!vmn.isEmpty(timestamp)) {
+                        String tsId = la.key().toString();
+                        sb.append(tsId);
+                        sb.append("<br />");
+                        MapAccessor vma = vmn.mapAccessor(timestamp);
+                        for (ListAccessor vla: vma) {
+                            sb.append("&nbsp;&nbsp;&nbsp;&nbsp;" + vla.key() + " = " + vla.flatList());
+                            sb.append("<br />");
+                        }
+                    }
+                }
+                map.put("journal", sb.toString());
+                return;
+            } catch (UnexpectedChecksumException uce) {}
+        }
     }
 
     public void doPost(HttpServletRequest request,
