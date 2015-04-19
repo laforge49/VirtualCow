@@ -101,13 +101,48 @@ public class SimpleSimon extends HttpServlet {
             page = "home";
         else if (page.equals("journal"))
             journal(map, request);
+        else if (page.equals("journalEntry"))
+            journalEntry(map, request);
         response.getWriter().println(replace(page, map));
+    }
+
+    void journalEntry(Map<String, String> map, HttpServletRequest request) {
+        String id = request.getParameter("id");
+        long timestamp = FactoryRegistry.MAX_TIMESTAMP;
+        while (true) {
+            try {
+                StringBuilder sb = new StringBuilder();
+                MapAccessor ma = db.mapAccessor();
+
+                ListAccessor la = ma.listAccessor(id);
+                if (la != null) {
+                    VersionedMapNode vmn = (VersionedMapNode) la.get(0);
+                    if (vmn != null && !vmn.isEmpty(timestamp)) {
+                        sb.append(id);
+                        sb.append("<br />");
+                        MapAccessor vma = vmn.mapAccessor(timestamp);
+                        for (ListAccessor vla : vma) {
+                            int sz = vla.size();
+                            for (int i = 0; i < sz; ++i) {
+                                String s = vla.key() + "[" + i + "] = ";
+                                sb.append("&nbsp;&nbsp;&nbsp;&nbsp;" + s + encode("" + vla.get(i), s.length() + 4));
+                                sb.append("<br />");
+                            }
+                        }
+                    }
+                }
+
+                map.put("journalEntry", sb.toString());
+                return;
+            } catch (UnexpectedChecksumException uce) {
+            }
+        }
     }
 
     void journal(Map<String, String> map, HttpServletRequest request) {
         String oldLast = request.getParameter("last");
         String prefix = Timestamp.PREFIX;
-        int limit = 5;
+        int limit = 25;
         if (oldLast == null || !oldLast.startsWith(prefix))
             oldLast = prefix;
         long timestamp = FactoryRegistry.MAX_TIMESTAMP;
@@ -141,21 +176,17 @@ public class SimpleSimon extends HttpServlet {
                         continue;
                     if (vmn.isEmpty(timestamp))
                         continue;
-                    if (++jc > 5) {
+                    if (++jc > limit) {
                         break;
                     }
                     String tsId = la.key().toString();
-                    sb.append(tsId);
+                    sb.append(
+                            "<a href=\"?from=journal&to=journalEntry&id=" +
+                                    tsId +
+                                    "\">" +
+                                    tsId +
+                                    "</a>");
                     sb.append("<br />");
-                    MapAccessor vma = vmn.mapAccessor(timestamp);
-                    for (ListAccessor vla : vma) {
-                        int sz = vla.size();
-                        for (int i = 0; i < sz; ++i) {
-                            String s = vla.key() + "[" + i + "] = ";
-                            sb.append("&nbsp;&nbsp;&nbsp;&nbsp;" + s + encode("" + vla.get(i), s.length() + 4));
-                            sb.append("<br />");
-                        }
-                    }
                     last = la.key().toString();
                 }
 
