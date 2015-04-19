@@ -23,6 +23,9 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -118,7 +121,7 @@ public class SimpleSimon extends HttpServlet {
                 if (la != null) {
                     VersionedMapNode vmn = (VersionedMapNode) la.get(0);
                     if (vmn != null && !vmn.isEmpty(timestamp)) {
-                        sb.append(id);
+                        sb.append(niceTime(id));
                         sb.append("<br />");
                         MapAccessor vma = vmn.mapAccessor(timestamp);
                         for (ListAccessor vla : vma) {
@@ -184,7 +187,7 @@ public class SimpleSimon extends HttpServlet {
                             "<a href=\"?from=journal&to=journalEntry&id=" +
                                     tsId +
                                     "\">" +
-                                    tsId +
+                                    niceTime(tsId) +
                                     "</a>");
                     sb.append("<br />");
                     last = la.key().toString();
@@ -254,5 +257,11 @@ public class SimpleSimon extends HttpServlet {
             sb.append(a);
         }
         return sb.toString();
+    }
+
+    public String niceTime(String timestampId) {
+        Date date = new Date(Timestamp.time(timestampId));
+        DateFormat formatter = new SimpleDateFormat("MM/dd/yy HH:mm");
+        return formatter.format(date);
     }
 }
