@@ -20,10 +20,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public class SimpleSimon extends HttpServlet {
@@ -38,7 +38,7 @@ public class SimpleSimon extends HttpServlet {
         InputStreamReader isr = new InputStreamReader(is, utf8);
         StringBuilder sb = new StringBuilder();
         char[] ca = new char[1000];
-        while(true) {
+        while (true) {
             int l = isr.read(ca, 0, 1000);
             if (l == -1) {
                 return sb.toString();
@@ -58,7 +58,7 @@ public class SimpleSimon extends HttpServlet {
             if (k > i)
                 sb.append(t.substring(i, k));
             int j = t.indexOf('}', k);
-            String n = t.substring(k+1, j);
+            String n = t.substring(k + 1, j);
             i = j + 1;
             if (sub.containsKey(n))
                 sb.append(sub.get(n));
@@ -75,10 +75,13 @@ public class SimpleSimon extends HttpServlet {
             int maxRootBlockSize = 100000;
             db = new Db(new BaseRegistry(), dbPath, maxRootBlockSize);
             db.registerTransaction(NpjeTransaction.NAME, NpjeTransaction.class);
-            db.open();
+            if (Files.exists(dbPath))
+                db.open();
+            else
+                db.open(true);
             servletConfig = getServletConfig();
             servletContext = servletConfig.getServletContext();
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             destroy();
         }
     }
@@ -97,44 +100,76 @@ public class SimpleSimon extends HttpServlet {
         if (page == null)
             page = "home";
         else if (page.equals("journal"))
-            journal(map);
+            journal(map, request);
         response.getWriter().println(replace(page, map));
     }
 
-    void journal(Map<String, String> map) {
+    void journal(Map<String, String> map, HttpServletRequest request) {
+        String oldLast = request.getParameter("last");
+        String prefix = Timestamp.PREFIX;
+        int limit = 5;
+        if (oldLast == null || !oldLast.startsWith(prefix))
+            oldLast = prefix;
+        long timestamp = FactoryRegistry.MAX_TIMESTAMP;
+        boolean haveMore = true;
         while (true) {
             try {
+                String last = oldLast;
                 StringBuilder sb = new StringBuilder();
                 MapAccessor ma = db.mapAccessor();
-                long timestamp = FactoryRegistry.MAX_TIMESTAMP;
                 int jc = 0;
-                for (ListAccessor la: ma.iterable(Timestamp.PREFIX)) {
+
+                String next = last;
+                while (true) {
+                    Comparable hk = ma.higherKey(next);
+                    if (hk == null) {
+                        last = prefix + "~~~";
+                        haveMore = false;
+                        break;
+                    }
+                    next = hk.toString();
+                    if (!next.startsWith(prefix)) {
+                        last = prefix + "~~~";
+                        haveMore = false;
+                        break;
+                    }
+                    ListAccessor la = ma.listAccessor(next);
+                    if (la == null)
+                        continue;
                     VersionedMapNode vmn = (VersionedMapNode) la.get(0);
-                    if (!vmn.isEmpty(timestamp)) {
-                        if (jc++ > 20)
-                            break;
-                        String tsId = la.key().toString();
-                        sb.append(tsId);
-                        sb.append("<br />");
-                        MapAccessor vma = vmn.mapAccessor(timestamp);
-                        for (ListAccessor vla: vma) {
-                            int sz = vla.size();
-                            for (int i = 0; i < sz; ++i) {
-                                String s = vla.key() + "[" + i + "] = ";
-                                sb.append("&nbsp;&nbsp;&nbsp;&nbsp;" + s + encode("" + vla.get(i), s.length() + 4));
-                                sb.append("<br />");
-                            }
+                    if (vmn == null)
+                        continue;
+                    if (vmn.isEmpty(timestamp))
+                        continue;
+                    if (++jc > 5) {
+                        break;
+                    }
+                    String tsId = la.key().toString();
+                    sb.append(tsId);
+                    sb.append("<br />");
+                    MapAccessor vma = vmn.mapAccessor(timestamp);
+                    for (ListAccessor vla : vma) {
+                        int sz = vla.size();
+                        for (int i = 0; i < sz; ++i) {
+                            String s = vla.key() + "[" + i + "] = ";
+                            sb.append("&nbsp;&nbsp;&nbsp;&nbsp;" + s + encode("" + vla.get(i), s.length() + 4));
+                            sb.append("<br />");
                         }
                     }
+                    last = la.key().toString();
                 }
+
+                map.put("more", haveMore ? "more" : "");
+                map.put("last", last);
                 map.put("journal", sb.toString());
                 return;
-            } catch (UnexpectedChecksumException uce) {}
+            } catch (UnexpectedChecksumException uce) {
+            }
         }
     }
 
     public void doPost(HttpServletRequest request,
-                      HttpServletResponse response)
+                       HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html");
         response.setStatus(HttpServletResponse.SC_OK);
@@ -158,28 +193,28 @@ public class SimpleSimon extends HttpServlet {
 
     public String encode(String s, int indent) {
         StringBuilder sb = new StringBuilder();
-        for (char c: s.toCharArray()) {
+        for (char c : s.toCharArray()) {
             String a;
-            switch(c) {
-                case '\n' :
+            switch (c) {
+                case '\n':
                     a = "<br />";
                     for (int i = 0; i < indent; ++i) {
                         a += "&nbsp;";
                     }
                     break;
-                case '&' :
+                case '&':
                     a = "&amp;";
                     break;
-                case '<' :
+                case '<':
                     a = "&lt;";
                     break;
-                case '>' :
+                case '>':
                     a = "&gt;";
                     break;
-                case '\'' :
+                case '\'':
                     a = "&apos;";
                     break;
-                case '"' :
+                case '"':
                     a = "&quot;";
                     break;
                 default:
