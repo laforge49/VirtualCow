@@ -6,7 +6,6 @@ import org.agilewiki.utils.immutable.BaseRegistry;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.ListAccessor;
 import org.agilewiki.utils.immutable.collections.MapAccessor;
-import org.agilewiki.utils.immutable.collections.VersionedListNode;
 import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.Db;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
@@ -208,8 +207,10 @@ public class SimpleSimon extends HttpServlet {
                         lb.append(body);
                     }
                     String line = lb.toString();
+                    line = line.replace((CharSequence) "\r", (CharSequence) "");
                     if (line.length() > 60)
                         line = line.substring(0, 60);
+                    line = encode(line, 0, false);
                     sb.append("<font style=\"font-family:courier\">");
                     sb.append(line);
                     sb.append("</font>");
@@ -235,14 +236,14 @@ public class SimpleSimon extends HttpServlet {
         String body = request.getParameter("body");
         Map<String, String> map = new HashMap<>();
         map.put("body", encode(body, 0, false));
-            try {
-                if (subject.length() > 0)
-                    map.put("subject", encode(subject, 0, false));
-                String timestampId = new NpjeTransaction().update(db, subject, body, request);
-                map.put("success", "posted: " + timestampId);
-            } catch (Exception e) {
-                throw new ServletException("transaction exception", e);
-            }
+        try {
+            if (subject.length() > 0)
+                map.put("subject", encode(subject, 0, false));
+            String timestampId = new NpjeTransaction().update(db, subject, body, request);
+            map.put("success", "posted: " + timestampId);
+        } catch (Exception e) {
+            throw new ServletException("transaction exception", e);
+        }
         response.getWriter().println(replace("post", map));
     }
 
@@ -262,6 +263,9 @@ public class SimpleSimon extends HttpServlet {
                     break;
                 case '&':
                     a = "&amp;";
+                    break;
+                case ' ':
+                    a = "&nbsp;";
                     break;
                 case '<':
                     a = "&lt;";
