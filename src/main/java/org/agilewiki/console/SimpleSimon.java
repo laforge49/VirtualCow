@@ -6,6 +6,7 @@ import org.agilewiki.utils.immutable.BaseRegistry;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.ListAccessor;
 import org.agilewiki.utils.immutable.collections.MapAccessor;
+import org.agilewiki.utils.immutable.collections.VersionedListNode;
 import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.Db;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
@@ -27,6 +28,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SimpleSimon extends HttpServlet {
@@ -128,7 +130,7 @@ public class SimpleSimon extends HttpServlet {
                             int sz = vla.size();
                             for (int i = 0; i < sz; ++i) {
                                 String s = vla.key() + "[" + i + "] = ";
-                                sb.append("&nbsp;&nbsp;&nbsp;&nbsp;" + s + encode("" + vla.get(i), s.length() + 4));
+                                sb.append("&nbsp;&nbsp;&nbsp;&nbsp;" + s + encode("" + vla.get(i), s.length() + 4, true));
                                 sb.append("<br />");
                             }
                         }
@@ -189,6 +191,28 @@ public class SimpleSimon extends HttpServlet {
                                     "\">" +
                                     niceTime(tsId) +
                                     "</a>");
+                    sb.append(' ');
+                    StringBuilder lb = new StringBuilder();
+                    String transactionName = vmn.getList(NameIds.TRANSACTION_NAME).flatList(timestamp).get(0).toString();
+                    lb.append(transactionName);
+                    List subjectList = vmn.getList(NameIds.SUBJECT).flatList(timestamp);
+                    if (subjectList.size() > 0) {
+                        lb.append(' ');
+                        String subject = subjectList.get(0).toString();
+                        lb.append(subject);
+                    }
+                    lb.append(" | ");
+                    List bodyList = vmn.getList(NameIds.BODY).flatList(timestamp);
+                    if (bodyList.size() > 0) {
+                        String body = bodyList.get(0).toString();
+                        lb.append(body);
+                    }
+                    String line = lb.toString();
+                    if (line.length() > 60)
+                        line = line.substring(0, 60);
+                    sb.append("<font style=\"font-family:courier\">");
+                    sb.append(line);
+                    sb.append("</font>");
                     sb.append("<br />");
                     last = la.key().toString();
                 }
@@ -210,31 +234,31 @@ public class SimpleSimon extends HttpServlet {
         String subject = request.getParameter("subject");
         String body = request.getParameter("body");
         Map<String, String> map = new HashMap<>();
-        map.put("body", encode(body, 0));
-        if (subject.length() == 0)
-            map.put("error", "Subject is required");
-        else {
+        map.put("body", encode(body, 0, false));
             try {
-                map.put("subject", encode(subject, 0));
+                if (subject.length() > 0)
+                    map.put("subject", encode(subject, 0, false));
                 String timestampId = new NpjeTransaction().update(db, subject, body, request);
                 map.put("success", "posted: " + timestampId);
             } catch (Exception e) {
                 throw new ServletException("transaction exception", e);
             }
-        }
         response.getWriter().println(replace("post", map));
     }
 
-    public String encode(String s, int indent) {
+    public String encode(String s, int indent, boolean lines) {
         StringBuilder sb = new StringBuilder();
         for (char c : s.toCharArray()) {
             String a;
             switch (c) {
                 case '\n':
-                    a = "<br />";
-                    for (int i = 0; i < indent; ++i) {
-                        a += "&nbsp;";
-                    }
+                    if (lines) {
+                        a = "<br />";
+                        for (int i = 0; i < indent; ++i) {
+                            a += "&nbsp;";
+                        }
+                    } else
+                        a = "\n";
                     break;
                 case '&':
                     a = "&amp;";
