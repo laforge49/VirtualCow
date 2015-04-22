@@ -172,7 +172,7 @@ public class SimpleSimon extends HttpServlet {
             sb.append("<br />");
         }
         map.put("subjects", sb.toString());
-        map.put("startingAt", hasMore ? startingAt : "");
+        map.put("startingAt", hasMore ? encode(startingAt, 0, false) : "");
     }
 
     void journal(Map<String, String> map, HttpServletRequest request) {
@@ -295,7 +295,10 @@ public class SimpleSimon extends HttpServlet {
                     a = "&amp;";
                     break;
                 case ' ':
-                    a = "&nbsp;";
+                    if (lines)
+                        a = "&nbsp;";
+                    else
+                        a = "" + c;
                     break;
                 case '<':
                     a = "&lt;";
