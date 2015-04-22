@@ -25,8 +25,6 @@ public class IdIterable implements Iterable<String>, Iterator<String> {
         this.servletContext = servletContext;
         this.db = db;
         this.prefix = prefix;
-        if (last == null)
-            last = "";
         this.last = prefix + last;
         this.timestamp = timestamp;
     }

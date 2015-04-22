@@ -2,6 +2,7 @@ package org.agilewiki.console;
 
 import org.agilewiki.jactor2.core.impl.Plant;
 import org.agilewiki.utils.ids.Timestamp;
+import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.BaseRegistry;
 import org.agilewiki.utils.immutable.FactoryRegistry;
@@ -150,17 +151,19 @@ public class SimpleSimon extends HttpServlet {
         long timestamp = FactoryRegistry.MAX_TIMESTAMP;
         String prefix = SecondaryId.SECONDARY_ID + NameIds.SUBJECT;
         String last = request.getParameter("last");
+        if (last == null)
+            last = "";
         int limit = 25;
         boolean hasMore = false;
         StringBuilder sb = new StringBuilder();
-        for (String id: new IdIterable(servletContext, db, prefix, last, timestamp)) {
+        for (String id: new IdIterable(servletContext, db, prefix, ValueId.generate(last), timestamp)) {
             if (limit == 0) {
                 hasMore = true;
                 break;
             }
-            last = id;
             --limit;
-            String line = id.substring(2);
+            last = ValueId.value(id);
+            String line = last;
             line = line.replace((CharSequence) "\r", (CharSequence) "");
             if (line.length() > 60)
                 line = line.substring(0, 60);
