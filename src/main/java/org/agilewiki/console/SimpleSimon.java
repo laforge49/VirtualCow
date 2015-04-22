@@ -150,21 +150,21 @@ public class SimpleSimon extends HttpServlet {
     void subjects(Map<String, String> map, HttpServletRequest request) {
         long timestamp = FactoryRegistry.MAX_TIMESTAMP;
         String prefix = SecondaryId.SECONDARY_ID + NameIds.SUBJECT;
-        String last = request.getParameter("last");
-        if (last == null)
-            last = "";
+        String startingAt = request.getParameter("startingAt");
+        if (startingAt == null)
+            startingAt = "";
         int limit = 25;
         boolean hasMore = false;
         StringBuilder sb = new StringBuilder();
-        for (String id: new IdIterable(servletContext, db, prefix, ValueId.generate(last), timestamp)) {
+        for (String id: new IdIterable(servletContext, db, prefix, ValueId.generate(startingAt), timestamp)) {
             if (limit == 0) {
                 hasMore = true;
+                startingAt = ValueId.value(id);
                 break;
             }
             --limit;
-            last = ValueId.value(id);
-            String line = last;
-            line = line.replace((CharSequence) "\r", (CharSequence) "");
+            String line = ValueId.value(id);
+            line = line.replaceAll("\r", "");
             if (line.length() > 60)
                 line = line.substring(0, 60);
             line = encode(line, 0, false);
@@ -172,8 +172,7 @@ public class SimpleSimon extends HttpServlet {
             sb.append("<br />");
         }
         map.put("subjects", sb.toString());
-        map.put("more", hasMore ? "more" : "");
-        map.put("last", last);
+        map.put("startingAt", hasMore ? startingAt : "");
     }
 
     void journal(Map<String, String> map, HttpServletRequest request) {

@@ -20,12 +20,13 @@ public class IdIterable implements Iterable<String>, Iterator<String> {
     String next = null;
     final long timestamp;
     String last;
+    String startingAt;
 
-    public IdIterable(ServletContext servletContext, Db db, String prefix, String last, long timestamp) {
+    public IdIterable(ServletContext servletContext, Db db, String prefix, String startingAt, long timestamp) {
         this.servletContext = servletContext;
         this.db = db;
         this.prefix = prefix;
-        this.last = prefix + last;
+        this.startingAt = prefix + startingAt;
         this.timestamp = timestamp;
     }
 
@@ -44,7 +45,12 @@ public class IdIterable implements Iterable<String>, Iterator<String> {
                 MapAccessor ma = db.mapAccessor();
                 next = last;
                 while (true) {
-                    Comparable hk = ma.higherKey(next);
+                    Comparable hk;
+                    if (startingAt != null) {
+                        hk = ma.ceilingKey(startingAt);
+                        startingAt = null;
+                    } else
+                        hk = ma.higherKey(next);
                     if (hk == null) {
                         return false;
                     }
