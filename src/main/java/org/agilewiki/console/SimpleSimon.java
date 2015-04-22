@@ -149,59 +149,28 @@ public class SimpleSimon extends HttpServlet {
     void subjects(Map<String, String> map, HttpServletRequest request) {
         long timestamp = FactoryRegistry.MAX_TIMESTAMP;
         String prefix = SecondaryId.SECONDARY_ID + NameIds.SUBJECT;
-        String oldLast = request.getParameter("last");
+        String last = request.getParameter("last");
         int limit = 25;
-        if (oldLast == null || !oldLast.startsWith(prefix))
-            oldLast = prefix;
-        boolean haveMore = true;
-        while (true) {
-            try {
-                String last = oldLast;
-                StringBuilder sb = new StringBuilder();
-                MapAccessor ma = db.mapAccessor();
-                int jc = 0;
-
-                String next = last;
-                while (true) {
-                    Comparable hk = ma.higherKey(next);
-                    if (hk == null) {
-                        last = prefix + "~~~";
-                        haveMore = false;
-                        break;
-                    }
-                    next = hk.toString();
-                    if (!next.startsWith(prefix)) {
-                        last = prefix + "~~~";
-                        haveMore = false;
-                        break;
-                    }
-                    ListAccessor la = ma.listAccessor(next);
-                    if (la == null)
-                        continue;
-                    VersionedMapNode vmn = (VersionedMapNode) la.get(0);
-                    if (vmn.isEmpty(timestamp))
-                        continue;
-                    if (++jc > limit) {
-                        break;
-                    }
-                    String id = la.key().toString();
-                    String line = id.substring(prefix.length() + 2);
-                    line = line.replace((CharSequence) "\r", (CharSequence) "");
-                    if (line.length() > 60)
-                        line = line.substring(0, 60);
-                    line = encode(line, 0, false);
-                    sb.append(line);
-                    sb.append("<br />");
-                    last = la.key().toString();
-                }
-                map.put("subjects", sb.toString());
-                map.put("more", haveMore ? "more" : "");
-                map.put("last", last);
-                return;
-            } catch (UnexpectedChecksumException uce) {
-                continue;
+        boolean hasMore = false;
+        StringBuilder sb = new StringBuilder();
+        for (String id: new IdIterable(db, prefix, last, timestamp)) {
+            if (limit == 0) {
+                hasMore = true;
+                break;
             }
+            last = id;
+            --limit;
+            String line = id.substring(prefix.length() + 2);
+            line = line.replace((CharSequence) "\r", (CharSequence) "");
+            if (line.length() > 60)
+                line = line.substring(0, 60);
+            line = encode(line, 0, false);
+            sb.append(line);
+            sb.append("<br />");
         }
+        map.put("subjects", sb.toString());
+        map.put("more", hasMore ? "more" : "");
+        map.put("last", last);
     }
 
     void journal(Map<String, String> map, HttpServletRequest request) {
