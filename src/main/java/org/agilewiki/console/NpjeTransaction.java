@@ -42,7 +42,7 @@ public class NpjeTransaction implements Transaction {
         List subjectList = vmn.getList(NameIds.SUBJECT).flatList(timestamp);
         if (subjectList.size() > 0) {
             String subject = subjectList.get(0).toString();
-            String subjectVId = ValueId.generate(subject);
+            String subjectVId = ValueId.generate(subject.toLowerCase());
             String subjectSID = SecondaryId.secondaryId(NameIds.SUBJECT, subjectVId);
             SecondaryId.createSecondaryId(db, jeName, subjectSID);
         }

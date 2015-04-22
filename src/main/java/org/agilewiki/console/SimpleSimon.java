@@ -2,6 +2,7 @@ package org.agilewiki.console;
 
 import org.agilewiki.jactor2.core.impl.Plant;
 import org.agilewiki.utils.ids.Timestamp;
+import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.BaseRegistry;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.ListAccessor;
@@ -107,6 +108,8 @@ public class SimpleSimon extends HttpServlet {
             journal(map, request);
         else if (page.equals("journalEntry"))
             journalEntry(map, request);
+        else if (page.equals("subjects"))
+            subjects(map, request);
         response.getWriter().println(replace(page, map));
     }
 
@@ -143,13 +146,13 @@ public class SimpleSimon extends HttpServlet {
         }
     }
 
-    void journal(Map<String, String> map, HttpServletRequest request) {
+    void subjects(Map<String, String> map, HttpServletRequest request) {
+        long timestamp = FactoryRegistry.MAX_TIMESTAMP;
+        String prefix = SecondaryId.SECONDARY_ID + NameIds.SUBJECT;
         String oldLast = request.getParameter("last");
-        String prefix = Timestamp.PREFIX;
         int limit = 25;
         if (oldLast == null || !oldLast.startsWith(prefix))
             oldLast = prefix;
-        long timestamp = FactoryRegistry.MAX_TIMESTAMP;
         boolean haveMore = true;
         while (true) {
             try {
@@ -176,8 +179,64 @@ public class SimpleSimon extends HttpServlet {
                     if (la == null)
                         continue;
                     VersionedMapNode vmn = (VersionedMapNode) la.get(0);
-                    if (vmn == null)
+                    if (vmn.isEmpty(timestamp))
                         continue;
+                    if (++jc > limit) {
+                        break;
+                    }
+                    String id = la.key().toString();
+                    String line = id.substring(prefix.length() + 2);
+                    line = line.replace((CharSequence) "\r", (CharSequence) "");
+                    if (line.length() > 60)
+                        line = line.substring(0, 60);
+                    line = encode(line, 0, false);
+                    sb.append(line);
+                    sb.append("<br />");
+                    last = la.key().toString();
+                }
+                map.put("subjects", sb.toString());
+                map.put("more", haveMore ? "more" : "");
+                map.put("last", last);
+                return;
+            } catch (UnexpectedChecksumException uce) {
+                continue;
+            }
+        }
+    }
+
+    void journal(Map<String, String> map, HttpServletRequest request) {
+        long timestamp = FactoryRegistry.MAX_TIMESTAMP;
+        String prefix = Timestamp.PREFIX;
+        String oldLast = request.getParameter("last");
+        int limit = 25;
+        if (oldLast == null || !oldLast.startsWith(prefix))
+            oldLast = prefix;
+        boolean haveMore = true;
+        while (true) {
+            try {
+                String last = oldLast;
+                StringBuilder sb = new StringBuilder();
+                MapAccessor ma = db.mapAccessor();
+                int jc = 0;
+
+                String next = last;
+                while (true) {
+                    Comparable hk = ma.higherKey(next);
+                    if (hk == null) {
+                        last = prefix + "~~~";
+                        haveMore = false;
+                        break;
+                    }
+                    next = hk.toString();
+                    if (!next.startsWith(prefix)) {
+                        last = prefix + "~~~";
+                        haveMore = false;
+                        break;
+                    }
+                    ListAccessor la = ma.listAccessor(next);
+                    if (la == null)
+                        continue;
+                    VersionedMapNode vmn = (VersionedMapNode) la.get(0);
                     if (vmn.isEmpty(timestamp))
                         continue;
                     if (++jc > limit) {
