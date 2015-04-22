@@ -153,14 +153,14 @@ public class SimpleSimon extends HttpServlet {
         int limit = 25;
         boolean hasMore = false;
         StringBuilder sb = new StringBuilder();
-        for (String id: new IdIterable(db, prefix, last, timestamp)) {
+        for (String id: new IdIterable(servletContext, db, prefix, last, timestamp)) {
             if (limit == 0) {
                 hasMore = true;
                 break;
             }
             last = id;
             --limit;
-            String line = id.substring(prefix.length() + 2);
+            String line = id.substring(2);
             line = line.replace((CharSequence) "\r", (CharSequence) "");
             if (line.length() > 60)
                 line = line.substring(0, 60);

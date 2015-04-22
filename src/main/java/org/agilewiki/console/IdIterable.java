@@ -6,6 +6,7 @@ import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.Db;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
+import javax.servlet.ServletContext;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -13,18 +14,20 @@ import java.util.NoSuchElementException;
  * Iterates over the non-empty ids.
  */
 public class IdIterable implements Iterable<String>, Iterator<String> {
+    ServletContext servletContext;
     final Db db;
     final String prefix;
     String next = null;
     final long timestamp;
-    String last = null;
+    String last;
 
-    public IdIterable(Db db, String prefix, String last, long timestamp) {
+    public IdIterable(ServletContext servletContext, Db db, String prefix, String last, long timestamp) {
+        this.servletContext = servletContext;
         this.db = db;
         this.prefix = prefix;
-        this.last = last;
-        if (last == null || last.length() == 0)
-            this.last = prefix;
+        if (last == null)
+            last = "";
+        this.last = prefix + last;
         this.timestamp = timestamp;
     }
 
@@ -70,7 +73,7 @@ public class IdIterable implements Iterable<String>, Iterator<String> {
     public String next() {
         if (!hasNext())
             throw new NoSuchElementException();
-        String rv = next;
+        String rv = next.substring(prefix.length());
         next = null;
         return rv;
     }
