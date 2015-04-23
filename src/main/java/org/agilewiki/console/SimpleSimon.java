@@ -118,7 +118,7 @@ public class SimpleSimon extends HttpServlet {
     }
 
     void journalEntry(Map<String, String> map, HttpServletRequest request) {
-        String id = request.getParameter("id");
+        String id = TimestampIds.generate(request.getParameter("timestamp"));
         long timestamp = FactoryRegistry.MAX_TIMESTAMP;
         while (true) {
             try {
@@ -199,7 +199,7 @@ public class SimpleSimon extends HttpServlet {
             ListAccessor la = ma.listAccessor(tsId);
             VersionedMapNode vmn = (VersionedMapNode) la.get(0);
             sb.append(
-                    "<a href=\"?from=journal&to=journalEntry&id=" +
+                    "<a href=\"?from=journal&to=journalEntry&timestamp=" +
                             next +
                             "\">" +
                             niceTime(tsId) +
