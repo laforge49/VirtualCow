@@ -159,7 +159,7 @@ public class SimpleSimon extends HttpServlet {
         int limit = 25;
         boolean hasMore = false;
         StringBuilder sb = new StringBuilder();
-        for (String id: new IdIterable(servletContext, db, prefix, ValueId.generate(startingAt), timestamp)) {
+        for (String id : new IdIterable(servletContext, db, prefix, ValueId.generate(startingAt), timestamp)) {
             if (limit == 0) {
                 hasMore = true;
                 startingAt = ValueId.value(id);
@@ -181,83 +181,58 @@ public class SimpleSimon extends HttpServlet {
     void journal(Map<String, String> map, HttpServletRequest request) {
         long timestamp = FactoryRegistry.MAX_TIMESTAMP;
         String prefix = Timestamp.PREFIX;
-        String oldLast = request.getParameter("last");
+        String startingAt = request.getParameter("startingAt");
+        if (startingAt == null)
+            startingAt = "";
         int limit = 25;
-        if (oldLast == null || !oldLast.startsWith(prefix))
-            oldLast = prefix;
-        boolean haveMore = true;
-        while (true) {
-            try {
-                String last = oldLast;
-                StringBuilder sb = new StringBuilder();
-                MapAccessor ma = db.mapAccessor();
-                int jc = 0;
-
-                String next = last;
-                while (true) {
-                    Comparable hk = ma.higherKey(next);
-                    if (hk == null) {
-                        last = prefix + "~~~";
-                        haveMore = false;
-                        break;
-                    }
-                    next = hk.toString();
-                    if (!next.startsWith(prefix)) {
-                        last = prefix + "~~~";
-                        haveMore = false;
-                        break;
-                    }
-                    ListAccessor la = ma.listAccessor(next);
-                    if (la == null)
-                        continue;
-                    VersionedMapNode vmn = (VersionedMapNode) la.get(0);
-                    if (vmn.isEmpty(timestamp))
-                        continue;
-                    if (++jc > limit) {
-                        break;
-                    }
-                    String tsId = la.key().toString();
-                    sb.append(
-                            "<a href=\"?from=journal&to=journalEntry&id=" +
-                                    tsId +
-                                    "\">" +
-                                    niceTime(tsId) +
-                                    "</a>");
-                    sb.append(' ');
-                    StringBuilder lb = new StringBuilder();
-                    String transactionName = vmn.getList(NameIds.TRANSACTION_NAME).flatList(timestamp).get(0).toString();
-                    lb.append(transactionName);
-                    List subjectList = vmn.getList(NameIds.SUBJECT).flatList(timestamp);
-                    if (subjectList.size() > 0) {
-                        lb.append(' ');
-                        String subject = subjectList.get(0).toString();
-                        lb.append(subject);
-                    }
-                    lb.append(" | ");
-                    List bodyList = vmn.getList(NameIds.BODY).flatList(timestamp);
-                    if (bodyList.size() > 0) {
-                        String body = bodyList.get(0).toString();
-                        lb.append(body);
-                    }
-                    String line = lb.toString();
-                    line = line.replace((CharSequence) "\r", (CharSequence) "");
-                    if (line.length() > 60)
-                        line = line.substring(0, 60);
-                    line = encode(line, 0, ENCODE_SINGLE_LINE); //line text
-                    sb.append("<font style=\"font-family:courier\">");
-                    sb.append(line);
-                    sb.append("</font>");
-                    sb.append("<br />");
-                    last = la.key().toString();
-                }
-
-                map.put("more", haveMore ? "more" : "");
-                map.put("last", last);
-                map.put("journal", sb.toString());
-                return;
-            } catch (UnexpectedChecksumException uce) {
+        boolean hasMore = false;
+        StringBuilder sb = new StringBuilder();
+        for (String next : new IdIterable(servletContext, db, prefix, startingAt, timestamp)) {
+            if (limit == 0) {
+                hasMore = true;
+                startingAt = next;
+                break;
             }
+            --limit;
+            String tsId = TimestampIds.generate(next);
+            MapAccessor ma = db.mapAccessor();
+            ListAccessor la = ma.listAccessor(tsId);
+            VersionedMapNode vmn = (VersionedMapNode) la.get(0);
+            sb.append(
+                    "<a href=\"?from=journal&to=journalEntry&id=" +
+                            next +
+                            "\">" +
+                            niceTime(tsId) +
+                            "</a>");
+            sb.append(' ');
+            StringBuilder lb = new StringBuilder();
+            String transactionName = vmn.getList(NameIds.TRANSACTION_NAME).flatList(timestamp).get(0).toString();
+            lb.append(transactionName);
+            List subjectList = vmn.getList(NameIds.SUBJECT).flatList(timestamp);
+            if (subjectList.size() > 0) {
+                lb.append(' ');
+                String subject = subjectList.get(0).toString();
+                lb.append(subject);
+            }
+            lb.append(" | ");
+            List bodyList = vmn.getList(NameIds.BODY).flatList(timestamp);
+            if (bodyList.size() > 0) {
+                String body = bodyList.get(0).toString();
+                lb.append(body);
+            }
+            String line = lb.toString();
+            line = line.replace("\r", "");
+            if (line.length() > 60)
+                line = line.substring(0, 60);
+            line = encode(line, 0, ENCODE_SINGLE_LINE); //line text
+            sb.append("<font style=\"font-family:courier\">");
+            sb.append(line);
+            sb.append("</font>");
+            sb.append("<br />");
         }
+        map.put("journal", sb.toString());
+        map.put("more", hasMore ? "more" : "");
+        map.put("startingAt", hasMore ? encode(startingAt, 0, ENCODE_FIELD) : ""); //field
     }
 
     public void doPost(HttpServletRequest request,
