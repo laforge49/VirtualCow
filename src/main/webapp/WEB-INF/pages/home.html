@@ -14,8 +14,12 @@
 <body>
 <h1>Virtual COW</h1>
 <p>
-    <a href="?from=home&to=journal">journal</a><br />
-    <a href="?from=home&to=subjects">subjects</a><br />
+    {selectedTime}<br />
+    <a href="?from=home&to=journal{setStartingAt}{setTimestamp}">journal</a><br />
+    <a href="?from=home&to=subjects{setTimestamp}">subjects</a><br />
+    {clearTime}
+</p>
+<p>
     <a href="?from=home&to=post">post</a><br />
 </p>
 </body>

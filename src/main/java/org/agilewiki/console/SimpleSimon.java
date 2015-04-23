@@ -108,6 +108,8 @@ public class SimpleSimon extends HttpServlet {
         String page = request.getParameter("to");
         if (page == null)
             page = "home";
+        if (page.equals("home"))
+            home(map, request);
         else if (page.equals("journal"))
             journal(map, request);
         else if (page.equals("journalEntry"))
@@ -117,11 +119,23 @@ public class SimpleSimon extends HttpServlet {
         response.getWriter().println(replace(page, map));
     }
 
+    void home(Map<String, String> map, HttpServletRequest request) {
+        String timestamp = request.getParameter("timestamp");
+        if (timestamp == null)
+            return;
+        String timestampId = TimestampIds.generate(timestamp);
+        map.put("setTimestamp", "&timestamp=" + timestamp);
+        map.put("setStartingAt", "&startingAt=" + timestamp);
+        map.put("selectedTime", "Selected time: " + niceTime(timestampId));
+        map.put("clearTime", "<a href=\".\">Clear selected time</a>");
+    }
+
     void journalEntry(Map<String, String> map, HttpServletRequest request) {
-        String id = TimestampIds.generate(request.getParameter("timestamp"));
+        String id = TimestampIds.generate(request.getParameter("jeTimestamp"));
         long timestamp = FactoryRegistry.MAX_TIMESTAMP;
         while (true) {
             try {
+                String time = niceTime(id);
                 StringBuilder sb = new StringBuilder();
                 MapAccessor ma = db.mapAccessor();
 
@@ -129,7 +143,7 @@ public class SimpleSimon extends HttpServlet {
                 if (la != null) {
                     VersionedMapNode vmn = (VersionedMapNode) la.get(0);
                     if (vmn != null && !vmn.isEmpty(timestamp)) {
-                        sb.append(niceTime(id));
+                        sb.append(time);
                         sb.append("<br />");
                         MapAccessor vma = vmn.mapAccessor(timestamp);
                         for (ListAccessor vla : vma) {
@@ -144,6 +158,8 @@ public class SimpleSimon extends HttpServlet {
                 }
 
                 map.put("journalEntry", sb.toString());
+                map.put("jeTimestamp", TimestampIds.value(id));
+                map.put("time", time);
                 return;
             } catch (UnexpectedChecksumException uce) {
             }
@@ -179,7 +195,12 @@ public class SimpleSimon extends HttpServlet {
     }
 
     void journal(Map<String, String> map, HttpServletRequest request) {
-        long timestamp = FactoryRegistry.MAX_TIMESTAMP;
+        String timestamp = request.getParameter("timestamp");
+        if (timestamp != null) {
+            map.put("setTimestamp", "&timestamp=" + timestamp);
+            map.put("atTime", "at " + niceTime(TimestampIds.generate(timestamp)));
+        }
+        long longTimestamp = FactoryRegistry.MAX_TIMESTAMP;
         String prefix = Timestamp.PREFIX;
         String startingAt = request.getParameter("startingAt");
         if (startingAt == null)
@@ -187,7 +208,7 @@ public class SimpleSimon extends HttpServlet {
         int limit = 25;
         boolean hasMore = false;
         StringBuilder sb = new StringBuilder();
-        for (String next : new IdIterable(servletContext, db, prefix, startingAt, timestamp)) {
+        for (String next : new IdIterable(servletContext, db, prefix, startingAt, longTimestamp)) {
             if (limit == 0) {
                 hasMore = true;
                 startingAt = next;
@@ -199,23 +220,23 @@ public class SimpleSimon extends HttpServlet {
             ListAccessor la = ma.listAccessor(tsId);
             VersionedMapNode vmn = (VersionedMapNode) la.get(0);
             sb.append(
-                    "<a href=\"?from=journal&to=journalEntry&timestamp=" +
+                    "<a href=\"?from=journal&to=journalEntry&jeTimestamp=" +
                             next +
                             "\">" +
                             niceTime(tsId) +
                             "</a>");
             sb.append(' ');
             StringBuilder lb = new StringBuilder();
-            String transactionName = vmn.getList(NameIds.TRANSACTION_NAME).flatList(timestamp).get(0).toString();
+            String transactionName = vmn.getList(NameIds.TRANSACTION_NAME).flatList(longTimestamp).get(0).toString();
             lb.append(transactionName);
-            List subjectList = vmn.getList(NameIds.SUBJECT).flatList(timestamp);
+            List subjectList = vmn.getList(NameIds.SUBJECT).flatList(longTimestamp);
             if (subjectList.size() > 0) {
                 lb.append(' ');
                 String subject = subjectList.get(0).toString();
                 lb.append(subject);
             }
             lb.append(" | ");
-            List bodyList = vmn.getList(NameIds.BODY).flatList(timestamp);
+            List bodyList = vmn.getList(NameIds.BODY).flatList(longTimestamp);
             if (bodyList.size() > 0) {
                 String body = bodyList.get(0).toString();
                 lb.append(body);
@@ -232,7 +253,8 @@ public class SimpleSimon extends HttpServlet {
         }
         map.put("journal", sb.toString());
         map.put("more", hasMore ? "more" : "");
-        map.put("startingAt", hasMore ? encode(startingAt, 0, ENCODE_FIELD) : ""); //field
+        if (hasMore)
+            map.put("setStartingAt", "&startingAt=" + encode(startingAt, 0, ENCODE_FIELD)); //field
     }
 
     public void doPost(HttpServletRequest request,
