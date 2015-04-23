@@ -38,6 +38,9 @@ public class SimpleSimon extends HttpServlet {
     ServletContext servletContext;
     final static Charset utf8 = Charset.forName("UTF-8");
     final static String SPECIAL = "&<>'\"";
+    public final static int ENCODE_MULTIPLE_LINES = 1;
+    public final static int ENCODE_SINGLE_LINE = 2;
+    public final static int ENCODE_FIELD = 3;
 
     String readResource(String pageName) throws IOException {
         InputStream is = servletContext.getResourceAsStream("/WEB-INF/pages/" + pageName + ".html");
@@ -133,7 +136,7 @@ public class SimpleSimon extends HttpServlet {
                             int sz = vla.size();
                             for (int i = 0; i < sz; ++i) {
                                 String s = vla.key() + "[" + i + "] = ";
-                                sb.append("&nbsp;&nbsp;&nbsp;&nbsp;" + s + encode("" + vla.get(i), s.length() + 4, true));
+                                sb.append("&nbsp;&nbsp;&nbsp;&nbsp;" + s + encode("" + vla.get(i), s.length() + 4, ENCODE_MULTIPLE_LINES)); //body text
                                 sb.append("<br />");
                             }
                         }
@@ -167,12 +170,12 @@ public class SimpleSimon extends HttpServlet {
             line = line.replaceAll("\r", "");
             if (line.length() > 60)
                 line = line.substring(0, 60);
-            line = encode(line, 0, false);
+            line = encode(line, 0, ENCODE_SINGLE_LINE); //line text
             sb.append(line);
             sb.append("<br />");
         }
         map.put("subjects", sb.toString());
-        map.put("startingAt", hasMore ? encode(startingAt, 0, false) : "");
+        map.put("startingAt", hasMore ? encode(startingAt, 0, ENCODE_FIELD) : ""); //field
     }
 
     void journal(Map<String, String> map, HttpServletRequest request) {
@@ -240,7 +243,7 @@ public class SimpleSimon extends HttpServlet {
                     line = line.replace((CharSequence) "\r", (CharSequence) "");
                     if (line.length() > 60)
                         line = line.substring(0, 60);
-                    line = encode(line, 0, false);
+                    line = encode(line, 0, ENCODE_SINGLE_LINE); //line text
                     sb.append("<font style=\"font-family:courier\">");
                     sb.append(line);
                     sb.append("</font>");
@@ -265,10 +268,10 @@ public class SimpleSimon extends HttpServlet {
         String subject = request.getParameter("subject");
         String body = request.getParameter("body");
         Map<String, String> map = new HashMap<>();
-        map.put("body", encode(body, 0, false));
+        map.put("body", encode(body, 0, ENCODE_FIELD)); //text area
         try {
             if (subject.length() > 0)
-                map.put("subject", encode(subject, 0, false));
+                map.put("subject", encode(subject, 0, ENCODE_FIELD)); //field
             String timestampId = new NpjeTransaction().update(db, subject, body, request);
             map.put("success", "posted: " + timestampId);
         } catch (Exception e) {
@@ -277,13 +280,13 @@ public class SimpleSimon extends HttpServlet {
         response.getWriter().println(replace("post", map));
     }
 
-    public String encode(String s, int indent, boolean lines) {
+    public String encode(String s, int indent, int mode) {
         StringBuilder sb = new StringBuilder();
         for (char c : s.toCharArray()) {
             String a;
             switch (c) {
                 case '\n':
-                    if (lines) {
+                    if (mode == ENCODE_MULTIPLE_LINES) {
                         a = "<br />";
                         for (int i = 0; i < indent; ++i) {
                             a += "&nbsp;";
@@ -295,7 +298,7 @@ public class SimpleSimon extends HttpServlet {
                     a = "&amp;";
                     break;
                 case ' ':
-                    if (lines)
+                    if (mode != ENCODE_FIELD)
                         a = "&nbsp;";
                     else
                         a = "" + c;
