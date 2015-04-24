@@ -75,8 +75,9 @@ public class IdIterable implements Iterable<String>, Iterator<String> {
 
     @Override
     public String next() {
-        if (!hasNext())
+        if (!hasNext()) {
             throw new NoSuchElementException();
+        }
         String rv = next.substring(prefix.length());
         next = null;
         return rv;

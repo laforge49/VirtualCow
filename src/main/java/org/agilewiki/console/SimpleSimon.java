@@ -121,8 +121,10 @@ public class SimpleSimon extends HttpServlet {
 
     void home(Map<String, String> map, HttpServletRequest request) {
         String timestamp = request.getParameter("timestamp");
-        if (timestamp == null)
+        if (timestamp == null) {
+            map.put("post", "post");
             return;
+        }
         map.put("setTimestamp", "&timestamp=" + timestamp);
         map.put("setStartingAt", "&startingAt=" + timestamp);
         map.put("atTime", "at " + niceTime(TimestampIds.generate(timestamp)));
@@ -173,7 +175,15 @@ public class SimpleSimon extends HttpServlet {
     }
 
     void subjects(Map<String, String> map, HttpServletRequest request) {
-        long timestamp = FactoryRegistry.MAX_TIMESTAMP;
+        String timestamp = request.getParameter("timestamp");
+        long longTimestamp;
+        if (timestamp != null) {
+            map.put("formTimestamp", "<input type=\"hidden\" name=\"timestamp\" value=\"" + timestamp + "\"/>");
+            map.put("setTimestamp", "&timestamp=" + timestamp);
+            map.put("atTime", "at " + niceTime(TimestampIds.generate(timestamp)));
+            longTimestamp = TimestampIds.timestamp(TimestampIds.generate(timestamp));
+        } else
+            longTimestamp = FactoryRegistry.MAX_TIMESTAMP;
         String prefix = SecondaryId.SECONDARY_ID + NameIds.SUBJECT;
         String startingAt = request.getParameter("startingAt");
         if (startingAt == null)
@@ -181,7 +191,7 @@ public class SimpleSimon extends HttpServlet {
         int limit = 25;
         boolean hasMore = false;
         StringBuilder sb = new StringBuilder();
-        for (String id : new IdIterable(servletContext, db, prefix, ValueId.generate(startingAt), timestamp)) {
+        for (String id : new IdIterable(servletContext, db, prefix, ValueId.generate(startingAt), longTimestamp)) {
             if (limit == 0) {
                 hasMore = true;
                 startingAt = ValueId.value(id);
