@@ -123,16 +123,22 @@ public class SimpleSimon extends HttpServlet {
         String timestamp = request.getParameter("timestamp");
         if (timestamp == null)
             return;
-        String timestampId = TimestampIds.generate(timestamp);
         map.put("setTimestamp", "&timestamp=" + timestamp);
         map.put("setStartingAt", "&startingAt=" + timestamp);
-        map.put("selectedTime", "Selected time: " + niceTime(timestampId));
+        map.put("atTime", "at " + niceTime(TimestampIds.generate(timestamp)));
         map.put("clearTime", "<a href=\".\">Clear selected time</a>");
     }
 
     void journalEntry(Map<String, String> map, HttpServletRequest request) {
+        String timestamp = request.getParameter("timestamp");
+        long longTimestamp;
+        if (timestamp != null) {
+            map.put("setTimestamp", "&timestamp=" + timestamp);
+            map.put("atTime", "at " + niceTime(TimestampIds.generate(timestamp)));
+            longTimestamp = TimestampIds.timestamp(TimestampIds.generate(timestamp));
+        } else
+            longTimestamp = FactoryRegistry.MAX_TIMESTAMP;
         String id = TimestampIds.generate(request.getParameter("jeTimestamp"));
-        long timestamp = FactoryRegistry.MAX_TIMESTAMP;
         while (true) {
             try {
                 String time = niceTime(id);
@@ -142,10 +148,10 @@ public class SimpleSimon extends HttpServlet {
                 ListAccessor la = ma.listAccessor(id);
                 if (la != null) {
                     VersionedMapNode vmn = (VersionedMapNode) la.get(0);
-                    if (vmn != null && !vmn.isEmpty(timestamp)) {
+                    if (vmn != null && !vmn.isEmpty(longTimestamp)) {
                         sb.append(time);
                         sb.append("<br />");
-                        MapAccessor vma = vmn.mapAccessor(timestamp);
+                        MapAccessor vma = vmn.mapAccessor(longTimestamp);
                         for (ListAccessor vla : vma) {
                             int sz = vla.size();
                             for (int i = 0; i < sz; ++i) {
@@ -196,11 +202,14 @@ public class SimpleSimon extends HttpServlet {
 
     void journal(Map<String, String> map, HttpServletRequest request) {
         String timestamp = request.getParameter("timestamp");
+        long longTimestamp;
         if (timestamp != null) {
             map.put("setTimestamp", "&timestamp=" + timestamp);
-            map.put("atTime", "at " + niceTime(TimestampIds.generate(timestamp)));
+            String timestampId = TimestampIds.generate(timestamp);
+            map.put("atTime", "at " + niceTime(timestampId));
+            longTimestamp = TimestampIds.timestamp(timestampId);
         }
-        long longTimestamp = FactoryRegistry.MAX_TIMESTAMP;
+        longTimestamp = FactoryRegistry.MAX_TIMESTAMP;
         String prefix = Timestamp.PREFIX;
         String startingAt = request.getParameter("startingAt");
         if (startingAt == null)
@@ -219,12 +228,11 @@ public class SimpleSimon extends HttpServlet {
             MapAccessor ma = db.mapAccessor();
             ListAccessor la = ma.listAccessor(tsId);
             VersionedMapNode vmn = (VersionedMapNode) la.get(0);
-            sb.append(
-                    "<a href=\"?from=journal&to=journalEntry&jeTimestamp=" +
-                            next +
-                            "\">" +
-                            niceTime(tsId) +
-                            "</a>");
+            sb.append("<a href=\"?from=journal&to=journalEntry&jeTimestamp=" + next);
+            if (timestamp != null) {
+                sb.append("&timestamp=" + timestamp);
+            }
+            sb.append("\">" + niceTime(tsId) + "</a>");
             sb.append(' ');
             StringBuilder lb = new StringBuilder();
             String transactionName = vmn.getList(NameIds.TRANSACTION_NAME).flatList(longTimestamp).get(0).toString();
