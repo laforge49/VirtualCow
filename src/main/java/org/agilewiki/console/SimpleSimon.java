@@ -26,11 +26,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SimpleSimon extends HttpServlet {
     private Db db;
@@ -119,8 +117,25 @@ public class SimpleSimon extends HttpServlet {
         response.getWriter().println(replace(page, map));
     }
 
-    void home(Map<String, String> map, HttpServletRequest request) {
+    void home(Map<String, String> map, HttpServletRequest request) throws ServletException {
         String timestamp = request.getParameter("timestamp");
+        String dateInString = request.getParameter("date");
+        if (dateInString != null && dateInString.length() > 0) {
+            Date date;
+            SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+            try {
+                date = formatter.parse(dateInString);
+            } catch (ParseException e) {
+                throw new ServletException(e);
+            }
+            GregorianCalendar calendar = new GregorianCalendar();
+            calendar.setTime(date);
+            calendar.set(Calendar.HOUR_OF_DAY, 23);
+            calendar.set(Calendar.MINUTE, 59);
+            calendar.set(Calendar.SECOND, 59);
+            long time = calendar.getTimeInMillis() + 999;
+            timestamp = TimestampIds.value(TimestampIds.timestampId((time << 10) + 1023));
+        }
         if (timestamp == null) {
             map.put("post", "post");
             return;
