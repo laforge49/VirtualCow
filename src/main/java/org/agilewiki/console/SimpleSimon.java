@@ -121,8 +121,9 @@ public class SimpleSimon extends HttpServlet {
         String timestamp = request.getParameter("timestamp");
         String dateInString = request.getParameter("date");
         if (dateInString != null && dateInString.length() > 0) {
+            log(dateInString);
             Date date;
-            SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+            SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
             try {
                 date = formatter.parse(dateInString);
             } catch (ParseException e) {
@@ -130,8 +131,6 @@ public class SimpleSimon extends HttpServlet {
             }
             GregorianCalendar calendar = new GregorianCalendar();
             calendar.setTime(date);
-            calendar.set(Calendar.HOUR_OF_DAY, 23);
-            calendar.set(Calendar.MINUTE, 59);
             calendar.set(Calendar.SECOND, 59);
             long time = calendar.getTimeInMillis() + 999;
             timestamp = TimestampIds.value(TimestampIds.timestampId((time << 10) + 1023));
