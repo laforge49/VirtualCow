@@ -61,14 +61,14 @@ public class SimpleSimon extends HttpServlet {
         int i = 0;
         StringBuilder sb = new StringBuilder();
         while (i < t.length()) {
-            int k = t.indexOf('{', i);
+            int k = t.indexOf("{{", i);
             if (k == -1)
                 break;
             if (k > i)
                 sb.append(t.substring(i, k));
-            int j = t.indexOf('}', k);
-            String n = t.substring(k + 1, j);
-            i = j + 1;
+            int j = t.indexOf("}}", k);
+            String n = t.substring(k + 2, j);
+            i = j + 2;
             if (sub.containsKey(n))
                 sb.append(sub.get(n));
         }
@@ -288,7 +288,7 @@ public class SimpleSimon extends HttpServlet {
             if (subject.length() > 0)
                 map.put("subject", encode(subject, 0, ENCODE_FIELD)); //field
             String timestampId = new NpjeTransaction().update(db, subject, body, request);
-            map.put("success", "posted: " + timestampId);
+            map.put("success", "posted: " + niceTime(timestampId));
         } catch (Exception e) {
             throw new ServletException("transaction exception", e);
         }

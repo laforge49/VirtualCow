@@ -12,32 +12,30 @@
     <meta name="robot" content="noindex, nofollow"/>
 </head>
 <body>
-<h1>Virtual COW {atTime}</h1>
+<h1>Virtual COW {{atTime}}</h1>
 
 <h2>Subjects</h2>
 
 <p>
-
 <form method="GET">
     <input type="hidden" name="from" value="subjects"/>
     <input type="hidden" name="to" value="subjects"/>
-    {formTimestamp}
-    More subjects, starting at <input type="text" name="startingAt" size="60" value="{startingAt}">
+    {{formTimestamp}}
+    More subjects, starting at <input type="text" name="startingAt" size="60" value="{{startingAt}}">
     <input type="submit" value="OK"/>
 </form>
-<a href="?from=subjects{setTimestamp}">home</a>
+<a href="?from=subjects{{setTimestamp}}">home</a>
 </p>
-<p style="font-family:courier">{subjects}</p>
-
+<p style="font-family:courier">{{subjects}}</p>
 <p>
-
 <form method="GET">
     <input type="hidden" name="from" value="subjects"/>
     <input type="hidden" name="to" value="subjects"/>
-    More subjects, starting at <input type="text" name="startingAt" size="60" value="{startingAt}">
+    {{formTimestamp}}
+    More subjects, starting at <input type="text" name="startingAt" size="60" value="{{startingAt}}">
     <input type="submit" value="OK"/>
 </form>
-<a href="?from=subjects{setTimestamp}">home</a>
+<a href="?from=subjects{{setTimestamp}}">home</a>
 </p>
 </body>
 </html>

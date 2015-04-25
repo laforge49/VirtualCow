@@ -17,16 +17,16 @@
 <p>
     <a href="?from=post">home</a>
 </p>
-<p style="color:red"><strong>{error}</strong></p>
+<p style="color:red"><strong>{{error}}</strong></p>
 <form method="POST">
     <p>
-    Subject: <input type="text" name="subject" size="60" value="{subject}">
+    Subject: <input type="text" name="subject" size="60" value="{{subject}}">
     </p><p>
-    <textarea name="body" rows="10" cols="60">{body}</textarea>
+    <textarea name="body" rows="10" cols="60">{{body}}</textarea>
     </p>
     <input type="submit" value="Submit" />
 </form>
-<h3>{success}</h3>
+<h3>{{success}}</h3>
 <p>
     <a href="?from=post">home</a>
 </p>
