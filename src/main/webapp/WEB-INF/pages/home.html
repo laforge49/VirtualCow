@@ -11,8 +11,18 @@
     <meta name="author" content=""/>
     <meta name="copyright" content="&copy; 2015"/>
     <meta name="robot" content="noindex, nofollow"/>
-    <!--script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script-->
+    <link rel="stylesheet" href="css/jquery-1.11.4-smoothness.css">
     <script src="js/jquery-1.11.2.min.js"></script>
+    <script src="js/jquery-1.11.4.ui.js"></script>
+    <link rel="stylesheet" href="css/demoStyle.css">
+    <script>
+  $(function() {
+    $( "#datepicker" ).datepicker({
+      changeMonth: true,
+      changeYear: true
+    });
+  });
+  </script>
 </head>
 <body>
 
@@ -22,6 +32,12 @@
     <a href="?from=home&to=journal{{setStartingAt}}{{setTimestamp}}">journal</a><br/>
     <a href="?from=home&to=subjects{{setTimestamp}}">subjects</a><br/>
     {{clearTime}}
+<form method="GET">
+    <input type="hidden" name="from" value="home"/>
+    <input type="hidden" name="to" value="home"/>
+    Select Date: <input type="text" name="date" id="datepicker">
+    <input type="submit" value="OK"/>
+</form>
 </p>
 
 <p>
