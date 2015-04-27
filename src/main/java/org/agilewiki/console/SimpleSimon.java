@@ -1,6 +1,7 @@
 package org.agilewiki.console;
 
 import org.agilewiki.jactor2.core.impl.Plant;
+import org.agilewiki.utils.ids.RandomId;
 import org.agilewiki.utils.ids.Timestamp;
 import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.ids.composites.SecondaryId;
@@ -144,6 +145,8 @@ public class SimpleSimon extends HttpServlet {
         map.put("atTime", "at " + niceTime(TimestampIds.generate(timestamp)));
         map.put("clearTime", "<a href=\".\">Clear selected time</a>");
     }
+
+    //MailOut.send("laforge49@gmail.com", "test", "<h1>Hi!</h1>");
 
     void journalEntry(Map<String, String> map, HttpServletRequest request) {
         String timestamp = request.getParameter("timestamp");
@@ -298,9 +301,9 @@ public class SimpleSimon extends HttpServlet {
         String body = request.getParameter("body");
         Map<String, String> map = new HashMap<>();
         map.put("body", encode(body, 0, ENCODE_FIELD)); //text area
+        if (subject.length() > 0)
+            map.put("subject", encode(subject, 0, ENCODE_FIELD)); //field
         try {
-            if (subject.length() > 0)
-                map.put("subject", encode(subject, 0, ENCODE_FIELD)); //field
             String timestampId = new NpjeTransaction().update(db, subject, body, request);
             map.put("success", "posted: " + niceTime(timestampId));
         } catch (Exception e) {
