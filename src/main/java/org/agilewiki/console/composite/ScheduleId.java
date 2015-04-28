@@ -40,16 +40,10 @@ public class ScheduleId {
         String scheduleId = scheduleId(timeId);
         String scheduledId = scheduledId(itemId);
         MapAccessor ma = db.mapAccessor();
-        ListNode ln = (ListNode) ma.get(scheduleId);
-        if (ln != null) {
-            ln.remove(scheduledId);
-            db.removeIfEmpty(scheduleId);
-        }
-        ln = (ListNode) ma.get(scheduledId);
-        if (ln != null) {
-            ln.remove(scheduleId);
-            db.removeIfEmpty(scheduledId);
-        }
+        db.remove(scheduleId, scheduledId);
+        db.removeIfEmpty(scheduleId);
+        db.remove(scheduledId, scheduleId);
+        db.removeIfEmpty(scheduledId);
     }
 
     public static boolean isScheduled(Db db, String itemId) {
