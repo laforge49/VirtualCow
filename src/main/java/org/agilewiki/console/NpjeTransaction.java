@@ -35,13 +35,8 @@ public class NpjeTransaction implements Transaction {
     @Override
     public void transform(Db db, MapNode mapNode) {
         String jeName = db.getJEName();
-        MapAccessor ma = db.mapAccessor();
-        ListAccessor la = ma.listAccessor(jeName);
-        VersionedMapNode vmn = (VersionedMapNode) la.get(0);
-        long timestamp = FactoryRegistry.MAX_TIMESTAMP;
-        List subjectList = vmn.getList(NameIds.SUBJECT).flatList(timestamp);
-        if (subjectList.size() > 0) {
-            String subject = subjectList.get(0).toString();
+        String subject = (String) mapNode.get(NameIds.SUBJECT);
+        if (subject != null) {
             String subjectVId = ValueId.generate(subject.toLowerCase());
             String subjectSID = SecondaryId.secondaryId(NameIds.SUBJECT, subjectVId);
             SecondaryId.createSecondaryId(db, jeName, subjectSID);

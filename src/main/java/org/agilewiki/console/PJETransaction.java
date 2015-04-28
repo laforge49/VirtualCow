@@ -27,14 +27,20 @@ public abstract class PJETransaction implements Transaction {
         return pjeId;
     }
 
-    public static String update(Db db, String pjeId) throws Exception {
-        MapAccessor ma = db.mapAccessor();
-        ListAccessor la = ma.listAccessor(pjeId);
-        if (la == null)
-            throw new IllegalArgumentException("missing pje: " + pjeId);
-        VersionedMapNode pje = (VersionedMapNode) la.get(0);
+    /**
+     * Returns null if unable to process.
+     *
+     * @param db
+     * @param pjeId
+     * @return
+     * @throws Exception
+     */
+    public String update(Db db, String pjeId) throws Exception {
+        VersionedMapNode pje = db.get(pjeId);
         if (pje == null)
             throw new IllegalArgumentException("missing pje: " + pjeId);
+        if (!ready(db, pjeId))
+            return null;
         List names = pje.getList(Db.transactionNameId).flatList(FactoryRegistry.MAX_TIMESTAMP);
         if (names.isEmpty())
             throw new IllegalArgumentException("missing transaction name from pje: " + pjeId);
@@ -51,5 +57,9 @@ public abstract class PJETransaction implements Transaction {
             }
         }
         return db.update(name, mn).call();
+    }
+
+    protected boolean ready(Db db, String pje) {
+        return true;
     }
 }

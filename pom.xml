@@ -13,7 +13,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jettyVersion>9.2.10.v20150310</jettyVersion>
-        <cow.version>0.12.0</cow.version>
+        <cow.version>0.13.0</cow.version>
         <slf4j.version>1.7.7</slf4j.version>
         <junit.version>4.11</junit.version>
     </properties>
