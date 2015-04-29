@@ -323,9 +323,21 @@ public class SimpleSimon extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html");
         response.setStatus(HttpServletResponse.SC_OK);
+        String userId = null;
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null)
+            for (Cookie cookie: cookies) {
+                if(cookie.getName().equals("userId")) {
+                    userId = cookie.getValue();
+                    break;
+                }
+            }
         String page = request.getParameter("to");
+        if (userId == null) {
+            page = "login";
+        }
         if ("post".equals(page))
-            postJournal(request, response);
+            postJournal(request, response, userId);
         else if ("login".equals(page))
             login(request, response);
         else if ("logout".equals(page))
@@ -377,7 +389,8 @@ public class SimpleSimon extends HttpServlet {
     }
 
     public void postJournal(HttpServletRequest request,
-                            HttpServletResponse response)
+                            HttpServletResponse response,
+                            String userId)
             throws ServletException, IOException {
         String subject = request.getParameter("subject");
         String body = request.getParameter("body");
@@ -386,7 +399,7 @@ public class SimpleSimon extends HttpServlet {
         if (subject.length() > 0)
             map.put("subject", encode(subject, 0, ENCODE_FIELD)); //field
         try {
-            String timestampId = new NpjeTransaction().update(db, subject, body, request);
+            String timestampId = new NpjeTransaction().update(db, subject, body, request, userId);
             map.put("success", "posted: " + niceTime(timestampId));
         } catch (Exception e) {
             throw new ServletException("transaction exception", e);

@@ -22,6 +22,7 @@ public class User {
     public static final String USER_TYPE_ID = NameId.generate("userType");
     public static final String PASSWORD_KEY = NameId.generate("password");
     public static final String ADMIN_USER_ID = NameId.generate("adminUser");
+    public static final String USER_KEY = NameId.generate("user");
 
     public static String createUser(Db db,
                                     ServletContext servletContext,
@@ -76,7 +77,7 @@ public class User {
         String storedPassword = (String) db.get(userId, PASSWORD_KEY, db.getTimestamp());
         if (!storedPassword.equals(encodePassword(servletContext, userId, password))) {
             try {
-                new BadUserPasswordTransaction().update(db, email, request);
+                new BadUserPasswordTransaction().update(db, email, request, userId);
             } catch (Exception e) {
                 servletContext.log("Update failure", e);
             }
@@ -96,7 +97,8 @@ public class User {
             servletContext.log("no such algorithm: SHA-256");
             return null;
         }
-        return bytesToHex(md.digest((userId + password).getBytes()));
+        String digest = bytesToHex(md.digest((userId + password).getBytes()));
+        return digest;
     }
 
     final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
