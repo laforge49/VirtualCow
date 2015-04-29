@@ -1,5 +1,6 @@
 package org.agilewiki.console;
 
+import org.agilewiki.console.transactions.BadUserAddressTransaction;
 import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.virtualcow.Db;
@@ -7,6 +8,7 @@ import org.agilewiki.utils.virtualcow.Db;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -46,6 +48,7 @@ public class User {
 
     public static String login(Db db,
                                ServletContext servletContext,
+                               HttpServletRequest request,
                                HttpServletResponse response,
                                String email,
                                String password) {
@@ -53,6 +56,11 @@ public class User {
         String emailSecondaryId = SecondaryIds.secondaryId(EMAIL_ID, emailId);
         for (String userId: SecondaryIds.vmnIdIterable(db, emailSecondaryId, db.getTimestamp())) {
             return login2(db, servletContext, response, email, password, userId);
+        }
+        try {
+            new BadUserAddressTransaction().update(db, email, request);
+        } catch (Exception e) {
+            servletContext.log("Update failure", e);
         }
         return "Invalid email address / password";
     }

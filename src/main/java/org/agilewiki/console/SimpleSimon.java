@@ -1,5 +1,6 @@
 package org.agilewiki.console;
 
+import org.agilewiki.console.transactions.BadUserAddressTransaction;
 import org.agilewiki.console.transactions.NpjeTransaction;
 import org.agilewiki.console.transactions.ServletStartTransaction;
 import org.agilewiki.console.transactions.ServletStopTransaction;
@@ -91,6 +92,7 @@ public class SimpleSimon extends HttpServlet {
             db.registerTransaction(ServletStartTransaction.NAME, ServletStartTransaction.class);
             ServletStartTransaction.servletConfig = servletConfig;
             db.registerTransaction(ServletStopTransaction.NAME, ServletStopTransaction.class);
+            db.registerTransaction(BadUserAddressTransaction.NAME, BadUserAddressTransaction.class);
             if (Files.exists(dbPath))
                 db.open();
             else
@@ -360,7 +362,9 @@ public class SimpleSimon extends HttpServlet {
         else if (password == null || password.length() == 0)
             error = "Password is required";
         else
-            error = User.login(db, servletContext,
+            error = User.login(db,
+                    servletContext,
+                    request,
                     response,
                     emailAddress,
                     password);
