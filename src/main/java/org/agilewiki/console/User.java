@@ -1,6 +1,7 @@
 package org.agilewiki.console;
 
 import org.agilewiki.console.transactions.BadUserAddressTransaction;
+import org.agilewiki.console.transactions.BadUserPasswordTransaction;
 import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.virtualcow.Db;
@@ -55,7 +56,7 @@ public class User {
         String emailId = ValueId.generate(email);
         String emailSecondaryId = SecondaryIds.secondaryId(EMAIL_ID, emailId);
         for (String userId: SecondaryIds.vmnIdIterable(db, emailSecondaryId, db.getTimestamp())) {
-            return login2(db, servletContext, response, email, password, userId);
+            return login2(db, servletContext, request, response, email, password, userId);
         }
         try {
             new BadUserAddressTransaction().update(db, email, request);
@@ -67,13 +68,20 @@ public class User {
 
     static String login2(Db db,
                          ServletContext servletContext,
+                         HttpServletRequest request,
                          HttpServletResponse response,
                          String email,
                          String password,
                          String userId) {
         String storedPassword = (String) db.get(userId, PASSWORD_KEY, db.getTimestamp());
-        if (!storedPassword.equals(encodePassword(servletContext, userId, password)))
+        if (!storedPassword.equals(encodePassword(servletContext, userId, password))) {
+            try {
+                new BadUserPasswordTransaction().update(db, email, request);
+            } catch (Exception e) {
+                servletContext.log("Update failure", e);
+            }
             return "Invalid email address / password";
+        }
         Cookie loginCookie = new Cookie("userId", userId);
         loginCookie.setMaxAge(Integer.MAX_VALUE);
         response.addCookie(loginCookie);

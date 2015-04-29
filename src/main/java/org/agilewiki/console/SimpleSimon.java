@@ -1,9 +1,6 @@
 package org.agilewiki.console;
 
-import org.agilewiki.console.transactions.BadUserAddressTransaction;
-import org.agilewiki.console.transactions.NpjeTransaction;
-import org.agilewiki.console.transactions.ServletStartTransaction;
-import org.agilewiki.console.transactions.ServletStopTransaction;
+import org.agilewiki.console.transactions.*;
 import org.agilewiki.jactor2.core.impl.Plant;
 import org.agilewiki.utils.ids.Timestamp;
 import org.agilewiki.utils.ids.ValueId;
@@ -93,6 +90,7 @@ public class SimpleSimon extends HttpServlet {
             ServletStartTransaction.servletConfig = servletConfig;
             db.registerTransaction(ServletStopTransaction.NAME, ServletStopTransaction.class);
             db.registerTransaction(BadUserAddressTransaction.NAME, BadUserAddressTransaction.class);
+            db.registerTransaction(BadUserPasswordTransaction.NAME, BadUserPasswordTransaction.class);
             if (Files.exists(dbPath))
                 db.open();
             else
