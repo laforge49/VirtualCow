@@ -1,7 +1,9 @@
 package org.agilewiki.console;
 
+import org.agilewiki.console.transactions.NpjeTransaction;
+import org.agilewiki.console.transactions.ServletStartTransaction;
+import org.agilewiki.console.transactions.ServletStopTransaction;
 import org.agilewiki.jactor2.core.impl.Plant;
-import org.agilewiki.utils.ids.RandomId;
 import org.agilewiki.utils.ids.Timestamp;
 import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.ids.composites.SecondaryId;
@@ -78,23 +80,32 @@ public class SimpleSimon extends HttpServlet {
 
     public void init() {
         try {
+            servletConfig = getServletConfig();
+            servletContext = servletConfig.getServletContext();
             new Plant();
             Path dbPath = Paths.get("vcow.db");
             int maxRootBlockSize = 100000;
             db = new Db(new BaseRegistry(), dbPath, maxRootBlockSize);
             db.registerTransaction(NpjeTransaction.NAME, NpjeTransaction.class);
+            db.registerTransaction(ServletStartTransaction.NAME, ServletStartTransaction.class);
+            ServletStartTransaction.servletConfig = servletConfig;
+            db.registerTransaction(ServletStopTransaction.NAME, ServletStopTransaction.class);
             if (Files.exists(dbPath))
                 db.open();
             else
                 db.open(true);
-            servletConfig = getServletConfig();
-            servletContext = servletConfig.getServletContext();
+            ServletStartTransaction.update(db);
         } catch (Exception ex) {
             destroy();
         }
     }
 
     public void destroy() {
+        try {
+            ServletStopTransaction.update(db);
+        } catch (Exception e) {
+
+        }
         db.close();
     }
 
@@ -269,10 +280,13 @@ public class SimpleSimon extends HttpServlet {
                 lb.append(' ');
                 String subject = subjectList.get(0).toString();
                 lb.append(subject);
+                lb.append(" | ");
             }
-            lb.append(" | ");
             List bodyList = vmn.getList(NameIds.BODY).flatList(longTimestamp);
             if (bodyList.size() > 0) {
+                if (subjectList.size() == 0) {
+                    lb.append(" | ");
+                }
                 String body = bodyList.get(0).toString();
                 lb.append(body);
             }
@@ -297,6 +311,38 @@ public class SimpleSimon extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html");
         response.setStatus(HttpServletResponse.SC_OK);
+        String page = request.getParameter("to");
+        if ("post".equals(page))
+            postJournal(request, response);
+        else if ("login".equals(page))
+            login(request, response);
+        else
+            throw new ServletException("unknown post: " + page);
+    }
+
+    public void login(HttpServletRequest request,
+                            HttpServletResponse response)
+            throws ServletException, IOException {
+        String emailAddress = request.getParameter("emailAddress");
+        String password = request.getParameter("password");
+        String error = null;
+        if (emailAddress == null || emailAddress.length() == 0)
+            error = "Email address is required";
+        else if (password == null || password.length() == 0)
+            error = "Password is required";
+        else
+            error = User.login(db, servletContext, emailAddress, password);
+        Map<String, String> map = new HashMap<>();
+        if (emailAddress != null)
+            map.put("emailAddress", encode(emailAddress, 0, ENCODE_FIELD)); //field
+        if (error != null)
+            map.put("error", encode(error, 0, ENCODE_FIELD)); //field
+        response.getWriter().println(replace("login", map));
+    }
+
+    public void postJournal(HttpServletRequest request,
+                            HttpServletResponse response)
+            throws ServletException, IOException {
         String subject = request.getParameter("subject");
         String body = request.getParameter("body");
         Map<String, String> map = new HashMap<>();

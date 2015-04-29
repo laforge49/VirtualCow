@@ -11,6 +11,15 @@
         <servlet-class>
             org.agilewiki.console.SimpleSimon
         </servlet-class>
+        <load-on-startup>1</load-on-startup>
+        <init-param>
+            <param-name>adminPassword</param-name>
+            <param-value>123</param-value>
+        </init-param>
+        <init-param>
+            <param-name>adminEmail</param-name>
+            <param-value>laforge49@gmail.com</param-value>
+        </init-param>
     </servlet>
     <servlet-mapping>
         <servlet-name>Console</servlet-name>
