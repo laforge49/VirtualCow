@@ -18,6 +18,7 @@ import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -116,10 +117,21 @@ public class SimpleSimon extends HttpServlet {
         response.setStatus(HttpServletResponse.SC_OK);
         Map<String, String> map = new HashMap<>();
         String page = request.getParameter("to");
-        if (page == null)
+        String userId = null;
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null)
+            for (Cookie cookie: cookies) {
+                if(cookie.getName().equals("userId")) {
+                    userId = cookie.getValue();
+                    break;
+                }
+            }
+        if (userId == null)
+            page = "login";
+        else if (page == null || page.equals("home")) {
             page = "home";
-        if (page.equals("home"))
             home(map, request);
+        }
         else if (page.equals("journal"))
             journal(map, request);
         else if (page.equals("journalEntry"))
@@ -316,12 +328,29 @@ public class SimpleSimon extends HttpServlet {
             postJournal(request, response);
         else if ("login".equals(page))
             login(request, response);
+        else if ("logout".equals(page))
+            logout(request, response);
         else
             throw new ServletException("unknown post: " + page);
     }
 
+    public void logout(HttpServletRequest request,
+                      HttpServletResponse response)
+            throws ServletException, IOException {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null)
+            for (Cookie cookie: cookies) {
+                if(cookie.getName().equals("userId")) {
+                    cookie.setMaxAge(0);
+                    response.addCookie(cookie);
+                    break;
+                }
+            }
+        response.sendRedirect("?from=logout");
+    }
+
     public void login(HttpServletRequest request,
-                            HttpServletResponse response)
+                      HttpServletResponse response)
             throws ServletException, IOException {
         String emailAddress = request.getParameter("emailAddress");
         String password = request.getParameter("password");
@@ -331,13 +360,18 @@ public class SimpleSimon extends HttpServlet {
         else if (password == null || password.length() == 0)
             error = "Password is required";
         else
-            error = User.login(db, servletContext, emailAddress, password);
+            error = User.login(db, servletContext,
+                    response,
+                    emailAddress,
+                    password);
         Map<String, String> map = new HashMap<>();
         if (emailAddress != null)
             map.put("emailAddress", encode(emailAddress, 0, ENCODE_FIELD)); //field
-        if (error != null)
+        if (error != null) {
             map.put("error", encode(error, 0, ENCODE_FIELD)); //field
-        response.getWriter().println(replace("login", map));
+            response.getWriter().println(replace("login", map));
+        } else
+            response.sendRedirect("?from=login");
     }
 
     public void postJournal(HttpServletRequest request,

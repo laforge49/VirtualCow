@@ -6,6 +6,8 @@ import org.agilewiki.utils.virtualcow.Db;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -42,19 +44,31 @@ public class User {
         return null;
     }
 
-    public static String login(Db db, ServletContext servletContext, String email, String password) {
+    public static String login(Db db,
+                               ServletContext servletContext,
+                               HttpServletResponse response,
+                               String email,
+                               String password) {
         String emailId = ValueId.generate(email);
         String emailSecondaryId = SecondaryIds.secondaryId(EMAIL_ID, emailId);
         for (String userId: SecondaryIds.vmnIdIterable(db, emailSecondaryId, db.getTimestamp())) {
-            return login2(db, servletContext, email, password, userId);
+            return login2(db, servletContext, response, email, password, userId);
         }
         return "Invalid email address / password";
     }
 
-    static String login2(Db db, ServletContext servletContext, String email, String password, String userId) {
+    static String login2(Db db,
+                         ServletContext servletContext,
+                         HttpServletResponse response,
+                         String email,
+                         String password,
+                         String userId) {
         String storedPassword = (String) db.get(userId, PASSWORD_KEY, db.getTimestamp());
         if (!storedPassword.equals(encodePassword(servletContext, userId, password)))
             return "Invalid email address / password";
+        Cookie loginCookie = new Cookie("userId", userId);
+        loginCookie.setMaxAge(Integer.MAX_VALUE);
+        response.addCookie(loginCookie);
         return null;
     }
 
