@@ -23,33 +23,31 @@ public class ScheduleId {
         return SCHEDULED_ID + itemId;
     }
 
-    public static void schedule(Db db, String timeId, String itemId) {
+    public static void schedule(Db db, String itemId, String timeId) {
         if (isScheduled(db, itemId))
             throw new IllegalStateException("already scheduled");
-        String scheduleId = scheduleId(timeId);
         String scheduledId = scheduledId(itemId);
-        ListNode listNode = db.create(scheduleId);
-        listNode.add(itemId);
-        listNode = db.create(scheduledId);
-        listNode.add(timeId);
+        String scheduleId = scheduleId(timeId);
+        db.add(scheduledId, timeId);
+        db.add(scheduleId, itemId);
     }
 
-    public static void unschedule(Db db, String timeId, String itemId) {
-        if (!isScheduled(db, itemId))
-            return;
-        String scheduleId = scheduleId(timeId);
+    public static void unschedule(Db db, String itemId) {
         String scheduledId = scheduledId(itemId);
         MapAccessor ma = db.mapAccessor();
-        db.remove(scheduleId, scheduledId);
-        db.removeIfEmpty(scheduleId);
+        String scheduleId = (String) ma.get(scheduledId);
+        if (scheduleId == null)
+            return;
         db.remove(scheduledId, scheduleId);
         db.removeIfEmpty(scheduledId);
+        db.remove(scheduleId, scheduledId);
+        db.removeIfEmpty(scheduleId);
     }
 
     public static boolean isScheduled(Db db, String itemId) {
         String scheduledId = scheduledId(itemId);
         MapAccessor ma = db.mapAccessor();
-        ListNode ln = (ListNode) ma.get(scheduledId);
-        return ln != null && !ln.isEmpty();
+        String scheduleId = (String) ma.get(scheduledId);
+        return scheduleId != null;
     }
 }
