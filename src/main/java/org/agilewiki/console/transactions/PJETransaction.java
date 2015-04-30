@@ -1,6 +1,7 @@
 package org.agilewiki.console.transactions;
 
 import org.agilewiki.console.RandomIds;
+import org.agilewiki.console.User;
 import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.*;
@@ -22,9 +23,11 @@ public abstract class PJETransaction implements Transaction {
      */
     public abstract String getName();
 
-    public String createPJE(Db db) {
+    public String createPJE(Db db, String userId) {
         String pjeId = RandomIds.randomId.generate();
         db.set(pjeId, Db.transactionNameId, getName());
+        if (userId != null)
+            db.set(pjeId, User.USER_KEY, userId);
         return pjeId;
     }
 

@@ -91,6 +91,8 @@ public class SimpleSimon extends HttpServlet {
             db.registerTransaction(ServletStopTransaction.NAME, ServletStopTransaction.class);
             db.registerTransaction(BadUserAddressTransaction.NAME, BadUserAddressTransaction.class);
             db.registerTransaction(BadUserPasswordTransaction.NAME, BadUserPasswordTransaction.class);
+            db.registerTransaction(LoginTransaction.NAME, LoginTransaction.class);
+            db.registerTransaction(LogoutTransaction.NAME, LogoutTransaction.class);
             if (Files.exists(dbPath))
                 db.open();
             else
@@ -120,8 +122,8 @@ public class SimpleSimon extends HttpServlet {
         String userId = null;
         Cookie[] cookies = request.getCookies();
         if (cookies != null)
-            for (Cookie cookie: cookies) {
-                if(cookie.getName().equals("userId")) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("userId")) {
                     userId = cookie.getValue();
                     break;
                 }
@@ -131,8 +133,7 @@ public class SimpleSimon extends HttpServlet {
         else if (page == null || page.equals("home")) {
             page = "home";
             home(map, request);
-        }
-        else if (page.equals("journal"))
+        } else if (page.equals("journal"))
             journal(map, request);
         else if (page.equals("journalEntry"))
             journalEntry(map, request);
@@ -326,8 +327,8 @@ public class SimpleSimon extends HttpServlet {
         String userId = null;
         Cookie[] cookies = request.getCookies();
         if (cookies != null)
-            for (Cookie cookie: cookies) {
-                if(cookie.getName().equals("userId")) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("userId")) {
                     userId = cookie.getValue();
                     break;
                 }
@@ -341,18 +342,25 @@ public class SimpleSimon extends HttpServlet {
         else if ("login".equals(page))
             login(request, response);
         else if ("logout".equals(page))
-            logout(request, response);
+            logout(request, response, userId);
         else
             throw new ServletException("unknown post: " + page);
     }
 
     public void logout(HttpServletRequest request,
-                      HttpServletResponse response)
+                       HttpServletResponse response,
+                       String userId)
             throws ServletException, IOException {
+        String email = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
+        try {
+            new LogoutTransaction().update(db, email, request, userId);
+        } catch (Exception e) {
+            log("failed update", e);
+        }
         Cookie[] cookies = request.getCookies();
         if (cookies != null)
-            for (Cookie cookie: cookies) {
-                if(cookie.getName().equals("userId")) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("userId")) {
                     cookie.setMaxAge(0);
                     response.addCookie(cookie);
                     break;

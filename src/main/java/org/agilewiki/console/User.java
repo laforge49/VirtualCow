@@ -2,6 +2,8 @@ package org.agilewiki.console;
 
 import org.agilewiki.console.transactions.BadUserAddressTransaction;
 import org.agilewiki.console.transactions.BadUserPasswordTransaction;
+import org.agilewiki.console.transactions.LoginTransaction;
+import org.agilewiki.console.transactions.LogoutTransaction;
 import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.virtualcow.Db;
@@ -31,7 +33,7 @@ public class User {
                                     String userTypeId) {
         String emailId = ValueId.generate(email);
         String emailSecondaryId = SecondaryIds.secondaryId(EMAIL_ID, emailId);
-        for (String userId: SecondaryIds.vmnIdIterable(db, emailSecondaryId, db.getTimestamp())) {
+        for (String userId : SecondaryIds.vmnIdIterable(db, emailSecondaryId, db.getTimestamp())) {
             return "duplicate email: " + email;
         }
         String userId = RandomIds.randomId.generate();
@@ -48,6 +50,14 @@ public class User {
         return null;
     }
 
+    public static String email(Db db, String userId, long timestamp) {
+        String emailSecondaryInv = SecondaryIds.secondaryInv(userId, EMAIL_ID);
+        for (String emailId : db.keysIterable(emailSecondaryInv, timestamp)) {
+            return ValueId.value(emailId);
+        }
+        return null;
+    }
+
     public static String login(Db db,
                                ServletContext servletContext,
                                HttpServletRequest request,
@@ -56,7 +66,7 @@ public class User {
                                String password) {
         String emailId = ValueId.generate(email);
         String emailSecondaryId = SecondaryIds.secondaryId(EMAIL_ID, emailId);
-        for (String userId: SecondaryIds.vmnIdIterable(db, emailSecondaryId, db.getTimestamp())) {
+        for (String userId : SecondaryIds.vmnIdIterable(db, emailSecondaryId, db.getTimestamp())) {
             return login2(db, servletContext, request, response, email, password, userId);
         }
         try {
@@ -86,6 +96,11 @@ public class User {
         Cookie loginCookie = new Cookie("userId", userId);
         loginCookie.setMaxAge(Integer.MAX_VALUE);
         response.addCookie(loginCookie);
+        try {
+            new LoginTransaction().update(db, email, request, userId);
+        } catch (Exception e) {
+            servletContext.log("failed update", e);
+        }
         return null;
     }
 
@@ -101,11 +116,11 @@ public class User {
         return digest;
     }
 
-    final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
+final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
 
     public static String bytesToHex(byte[] bytes) {
         char[] hexChars = new char[bytes.length * 2];
-        for ( int j = 0; j < bytes.length; j++ ) {
+        for (int j = 0; j < bytes.length; j++) {
             int v = bytes[j] & 0xFF;
             hexChars[j * 2] = hexArray[v >>> 4];
             hexChars[j * 2 + 1] = hexArray[v & 0x0F];

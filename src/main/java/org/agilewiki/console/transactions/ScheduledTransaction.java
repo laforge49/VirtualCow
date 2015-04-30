@@ -11,8 +11,8 @@ import org.agilewiki.utils.virtualcow.Db;
  */
 public abstract class ScheduledTransaction extends PJETransaction {
 
-    public String createPJE(Db db, long time) {
-        String pjeId = super.createPJE(db);
+    public String createPJE(Db db, long time, String userId) {
+        String pjeId = super.createPJE(db, userId);
         String timeId = TimeId.generate(time);
         ScheduleId.schedule(db, pjeId, timeId);
         return pjeId;
