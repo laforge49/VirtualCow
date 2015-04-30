@@ -6,6 +6,7 @@ import org.agilewiki.console.transactions.LoginTransaction;
 import org.agilewiki.console.transactions.LogoutTransaction;
 import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.ValueId;
+import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.virtualcow.Db;
 
 import javax.servlet.ServletConfig;
@@ -56,6 +57,11 @@ public class User {
             return ValueId.value(emailId);
         }
         return null;
+    }
+
+    public static boolean send(Db db, String userId, String subject, String body) {
+        String email = email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
+        return MailOut.send(email, subject, body);
     }
 
     public static String login(Db db,

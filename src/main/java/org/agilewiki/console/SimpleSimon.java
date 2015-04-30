@@ -401,9 +401,15 @@ public class SimpleSimon extends HttpServlet {
                 error = "system error--unable to update database";
                 log("update failure", e);
             }
-            if (error == null)
+            if (error == null) {
+                if (!User.send(db,
+                        userId,
+                        "Password Change Notification",
+                        "<p>Your password has been changed.</p>" +
+                                "<p>--Virtual Cow</p>"))
+                    log("unable to send email");
                 map.put("success", "The password has been changed");
-            else
+            } else
                 map.put("error", error);
         }
         response.getWriter().println(replace("changePassword", map));
