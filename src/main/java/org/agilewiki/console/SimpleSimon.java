@@ -93,6 +93,7 @@ public class SimpleSimon extends HttpServlet {
             db.registerTransaction(BadUserPasswordTransaction.NAME, BadUserPasswordTransaction.class);
             db.registerTransaction(LoginTransaction.NAME, LoginTransaction.class);
             db.registerTransaction(LogoutTransaction.NAME, LogoutTransaction.class);
+            db.registerTransaction(ChangePasswordTransaction.NAME, ChangePasswordTransaction.class);
             if (Files.exists(dbPath))
                 db.open();
             else
@@ -341,6 +342,8 @@ public class SimpleSimon extends HttpServlet {
             postJournal(request, response, userId);
         else if ("login".equals(page))
             login(request, response);
+        else if ("changePassword".equals(page))
+            changePassword(request, response, userId);
         else if ("logout".equals(page))
             logout(request, response, userId);
         else
@@ -353,7 +356,7 @@ public class SimpleSimon extends HttpServlet {
             throws ServletException, IOException {
         String email = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
         try {
-            new LogoutTransaction().update(db, email, request, userId);
+            new LogoutTransaction().update(db, email, userId);
         } catch (Exception e) {
             log("failed update", e);
         }
@@ -367,6 +370,43 @@ public class SimpleSimon extends HttpServlet {
                 }
             }
         response.sendRedirect("?from=logout");
+    }
+
+    public void changePassword(HttpServletRequest request,
+                               HttpServletResponse response,
+                               String userId)
+            throws ServletException, IOException {
+        String oldPassword = request.getParameter("old");
+        String newPassword = request.getParameter("new");
+        String confirmNewPassword = request.getParameter("confirm");
+        Map<String, String> map = new HashMap<>();
+        if (oldPassword == null || oldPassword.length() == 0)
+            map.put("error", "Enter your password in the old password field");
+        else if (newPassword == null || newPassword.length() == 0)
+            map.put("error", "Enter your new password in the new password field");
+        else if (!newPassword.equals(confirmNewPassword))
+            map.put("error", "The new password and confirm new password fields must be the same");
+        else if (oldPassword.equals(newPassword))
+            map.put("error", "The old password and new password fields must not be the same");
+        else if (!User.confirmPassword(db, servletContext, userId, oldPassword))
+            map.put("error", "Enter your current password in the old password field");
+        else {
+            String error = null;
+            try {
+                new ChangePasswordTransaction().update(
+                        db,
+                        userId,
+                        User.encodePassword(servletContext, userId, newPassword));
+            } catch (Exception e) {
+                error = "system error--unable to update database";
+                log("update failure", e);
+            }
+            if (error == null)
+                map.put("success", "The password has been changed");
+            else
+                map.put("error", error);
+        }
+        response.getWriter().println(replace("changePassword", map));
     }
 
     public void login(HttpServletRequest request,

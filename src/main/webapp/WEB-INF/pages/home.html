@@ -24,21 +24,26 @@
       showButtonPanel: false
     });
   });
+
     </script>
 </head>
 <body>
 
 <h1>Virtual COW {{atTime}}</h1>
 
+<h2>Home</h2>
+
 <p>
+
 <form method="POST">
     <input type="hidden" name="from" value="home"/>
     <input type="hidden" name="to" value="logout"/>
-    <input type="submit" value="Logout" />
+    <input type="submit" value="Logout"/>
 </form>
-    <a href="?from=home&to=journal{{setStartingAt}}{{setTimestamp}}">journal</a><br/>
-    <a href="?from=home&to=subjects{{setTimestamp}}">subjects</a><br/>
-    {{clearTime}}
+<a href="?from=home&to=changePassword">Change Password</a><br/>
+<a href="?from=home&to=journal{{setStartingAt}}{{setTimestamp}}">journal</a><br/>
+<a href="?from=home&to=subjects{{setTimestamp}}">subjects</a><br/>
+{{clearTime}}
 <form method="GET">
     <input type="hidden" name="from" value="home"/>
     <input type="hidden" name="to" value="home"/>

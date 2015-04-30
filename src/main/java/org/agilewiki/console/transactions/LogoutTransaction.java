@@ -16,15 +16,12 @@ import javax.servlet.http.HttpServletRequest;
 public class LogoutTransaction implements Transaction {
     public final static String NAME = "logout";
 
-    public String update(Db db, String subject, HttpServletRequest request, String userId)
+    public String update(Db db, String subject, String userId)
             throws Exception {
         MapNode mn = db.dbFactoryRegistry.nilMap;
         if (subject.length() > 0)
             mn = mn.add(NameIds.SUBJECT, subject);
         mn = mn.add(User.USER_KEY, userId);
-        mn = mn.add(NameIds.REMOTE_HOST, request.getRemoteHost());
-        mn = mn.add(NameIds.REMOTE_ADDR, request.getRemoteAddr());
-        mn = mn.add(NameIds.REMOTE_PORT, request.getRemotePort());
         return db.update(NAME, mn).call();
     }
 

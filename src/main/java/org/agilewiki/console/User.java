@@ -84,8 +84,7 @@ public class User {
                          String email,
                          String password,
                          String userId) {
-        String storedPassword = (String) db.get(userId, PASSWORD_KEY, db.getTimestamp());
-        if (!storedPassword.equals(encodePassword(servletContext, userId, password))) {
+        if (!confirmPassword(db, servletContext, userId, password)) {
             try {
                 new BadUserPasswordTransaction().update(db, email, request, userId);
             } catch (Exception e) {
@@ -102,6 +101,14 @@ public class User {
             servletContext.log("failed update", e);
         }
         return null;
+    }
+
+    public static boolean confirmPassword(Db db,
+                                   ServletContext servletContext,
+                                   String userId,
+                                   String password) {
+        String storedPassword = (String) db.get(userId, PASSWORD_KEY, db.getTimestamp());
+        return storedPassword.equals(encodePassword(servletContext, userId, password));
     }
 
     public static String encodePassword(ServletContext servletContext, String userId, String password) {
