@@ -13,17 +13,17 @@
 </head>
 <body>
 <h1>Virtual COW</h1>
-<h2>Change Password</h2>
-<p>
-    <a href="?from=post">home</a>
-</p>
+<h2>Address Validated</h2>
+<p>Thank you for validating your email address.</p>
+<p>Use the form below to create your account.</p>
+<p>--Virtual Cow</p>
 <p style="color:red"><strong>{{error}}&nbsp;</strong></p>
 <form method="POST">
-    <input type="hidden" name="from" value="changePassword"/>
-    <input type="hidden" name="to" value="changePassword"/>
+    <input type="hidden" name="from" value="validated"/>
+    <input type="hidden" name="to" value="validated"/>
+    <input type="hidden" name="email" value="{{email}}"/>
+    <input type="hidden" name="key" value="{{key}}"/>
     <p>
-        Old Password: <input type="password" name="old" size="60">
-    </p><p>
     New Password: <input type="password" name="new" size="60">
     <br/>
     Confirm New Password: <input type="password" name="confirm" size="60">
@@ -31,8 +31,5 @@
     <input type="submit" value="Submit" />
 </form>
 <h3>{{success}}&nbsp;</h3>
-<p>
-    <a href="?from=changePassword">home</a>
-</p>
 </body>
 </html>

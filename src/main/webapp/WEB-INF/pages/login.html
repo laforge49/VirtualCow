@@ -13,22 +13,33 @@
 </head>
 <body>
 <h1>Virtual COW</h1>
-<h2>Login</h2>
+<h2>New Account &amp; Login</h2>
 <p>
     <a href="?from=post">home</a>
 </p>
-<p style="color:red"><strong>{{error}}</strong></p>
+<h3>New Account</h3>
+<p style="color:red"><strong>{{error2}}&nbsp;</strong></p>
 <form method="POST">
     <input type="hidden" name="from" value="login"/>
     <input type="hidden" name="to" value="login"/>
     <p>
-    Email Address: <input type="text" name="emailAddress" size="60" value="{{emailAddress}}">
+        Email Address: <input type="text" name="emailAddress2" size="60" value="{{emailAddress}}">
+</p>
+    <input type="submit" name="newAccount" value="Submit" />
+</form>
+<h4>{{success2}}&nbsp;</h4>
+<h3>Login</h3>
+<p style="color:red"><strong>{{error}}&nbsp;</strong></p>
+<form method="POST">
+    <input type="hidden" name="from" value="login"/>
+    <input type="hidden" name="to" value="login"/>
+    <p>
+        Email Address: <input type="text" name="emailAddress" size="60" value="{{emailAddress}}">
     </p><p>
     Password: <input type="password" name="password" size="60">
-    </p>
-    <input type="submit" value="Submit" />
+</p>
+    <input type="submit" name="login" value="Submit" />
 </form>
-<h3>{{success}}</h3>
 <p>
     <a href="?from=login">home</a>
 </p>

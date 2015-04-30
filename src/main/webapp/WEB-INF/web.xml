@@ -20,6 +20,10 @@
             <param-name>adminEmail</param-name>
             <param-value>laforge49@gmail.com</param-value>
         </init-param>
+        <init-param>
+            <param-name>self</param-name>
+            <param-value>http://localhost:8080/virtualCow</param-value>
+        </init-param>
     </servlet>
     <servlet-mapping>
         <servlet-name>Console</servlet-name>

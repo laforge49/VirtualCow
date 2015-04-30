@@ -59,6 +59,15 @@ public class User {
         return null;
     }
 
+    public static String userId(Db db, String email, long timestamp) {
+        String emailId = ValueId.generate(email);
+        String emailSecondaryId = SecondaryIds.secondaryId(EMAIL_ID, emailId);
+        for (String userId : db.keysIterable(emailSecondaryId, timestamp)) {
+            return userId;
+        }
+        return null;
+    }
+
     public static boolean send(Db db, String userId, String subject, String body) {
         String email = email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
         return MailOut.send(email, subject, body);

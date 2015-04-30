@@ -27,6 +27,8 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -129,7 +131,7 @@ public class SimpleSimon extends HttpServlet {
                     break;
                 }
             }
-        if (userId == null)
+        if (userId == null && !"validated".equals(page))
             page = "login";
         else if (page == null || page.equals("home")) {
             page = "home";
@@ -140,7 +142,25 @@ public class SimpleSimon extends HttpServlet {
             journalEntry(map, request);
         else if (page.equals("subjects"))
             subjects(map, request);
+        else if (page.equals("validated"))
+            validated(map, request);
         response.getWriter().println(replace(page, map));
+    }
+
+    void validated(Map<String, String> map, HttpServletRequest request) {
+        String key = request.getParameter("key");
+        String email = request.getParameter("email");
+        boolean go = true;
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            String digest = User.bytesToHex(md.digest(email.getBytes()));
+            go = digest.equals(key);
+        } catch (NoSuchAlgorithmException e) {
+            servletContext.log("no such algorithm: SHA-256");
+            go = false;
+        }
+        map.put("key", key);
+        map.put("email", email);
     }
 
     void home(Map<String, String> map, HttpServletRequest request) throws ServletException {
@@ -418,28 +438,75 @@ public class SimpleSimon extends HttpServlet {
     public void login(HttpServletRequest request,
                       HttpServletResponse response)
             throws ServletException, IOException {
-        String emailAddress = request.getParameter("emailAddress");
-        String password = request.getParameter("password");
         String error = null;
+        Map<String, String> map = new HashMap<>();
+        String login = request.getParameter("login");
+        if (login != null && login.equals("Submit")) {
+            String emailAddress = request.getParameter("emailAddress");
+            String password = request.getParameter("password");
+            if (emailAddress == null || emailAddress.length() == 0)
+                error = "Email address is required";
+            else if (password == null || password.length() == 0)
+                error = "Password is required";
+            else
+                error = User.login(db,
+                        servletContext,
+                        request,
+                        response,
+                        emailAddress,
+                        password);
+            if (emailAddress != null)
+                map.put("emailAddress", encode(emailAddress, 0, ENCODE_FIELD)); //field
+            if (error != null) {
+                map.put("error", encode(error, 0, ENCODE_FIELD)); //field
+                response.getWriter().println(replace("login", map));
+            } else
+                response.sendRedirect("?from=login");
+            return;
+        }
+        String emailAddress = request.getParameter("emailAddress2");
         if (emailAddress == null || emailAddress.length() == 0)
             error = "Email address is required";
-        else if (password == null || password.length() == 0)
-            error = "Password is required";
-        else
-            error = User.login(db,
-                    servletContext,
-                    request,
-                    response,
-                    emailAddress,
-                    password);
-        Map<String, String> map = new HashMap<>();
         if (emailAddress != null)
-            map.put("emailAddress", encode(emailAddress, 0, ENCODE_FIELD)); //field
+            map.put("emailAddress2", encode(emailAddress, 0, ENCODE_FIELD)); //field
         if (error != null) {
-            map.put("error", encode(error, 0, ENCODE_FIELD)); //field
-            response.getWriter().println(replace("login", map));
-        } else
-            response.sendRedirect("?from=login");
+            map.put("error2", encode(error, 0, ENCODE_FIELD)); //field
+        } else {
+            String userId = User.userId(db, emailAddress, FactoryRegistry.MAX_TIMESTAMP);
+            String subject = null;
+            String body = null;
+            boolean go = true;
+            if (userId == null) {
+                String self = servletConfig.getInitParameter("self");
+                MessageDigest md;
+                String digest;
+                try {
+                    md = MessageDigest.getInstance("SHA-256");
+                    digest = User.bytesToHex(md.digest(emailAddress.getBytes()));
+                    subject = "Address Validation Request";
+                    body = "<p>To validate your email address and begin opening an account, please click " +
+                            "<a href=\"" + self + "?to=validated&email=" + emailAddress +
+                            "&key=" + digest + "\">here</a>.</p>" +
+                            "<p>--Virtual Cow</p>";
+                } catch (NoSuchAlgorithmException e) {
+                    servletContext.log("no such algorithm: SHA-256");
+                    go = false;
+                }
+            } else {
+                subject = "New Account Notification";
+                body = "<p>An attempt was made to open another account with your email address.</p>" +
+                        "<p>--Virtual Cow</p>";
+            }
+            if (go && MailOut.send(emailAddress, subject, body))
+                map.put("success2", encode(
+                        "An email has been sent to verify your address. Please check your inbox.",
+                        0, ENCODE_FIELD)); //field
+            else
+                map.put("success2", encode(
+                        "Unable to send an email to your address at this time. Please try again later.",
+                        0, ENCODE_FIELD)); //field
+        }
+        response.getWriter().println(replace("login", map));
     }
 
     public void postJournal(HttpServletRequest request,
