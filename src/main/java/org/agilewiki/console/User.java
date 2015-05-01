@@ -25,31 +25,8 @@ public class User {
     public static final String USER_TYPE_ID = NameId.generate("userType");
     public static final String PASSWORD_KEY = NameId.generate("password");
     public static final String ADMIN_USER_ID = NameId.generate("adminUser");
+    public static final String GUEST_USER_ID = NameId.generate("guestUser");
     public static final String USER_KEY = NameId.generate("user");
-
-    public static String createUser(Db db,
-                                    ServletContext servletContext,
-                                    String email,
-                                    String password,
-                                    String userTypeId) {
-        String emailId = ValueId.generate(email);
-        String emailSecondaryId = SecondaryIds.secondaryId(EMAIL_ID, emailId);
-        for (String userId : SecondaryIds.vmnIdIterable(db, emailSecondaryId, db.getTimestamp())) {
-            return "duplicate email: " + email;
-        }
-        String userId = RandomIds.randomId.generate();
-
-        String passwordHash = encodePassword(servletContext, userId, password);
-        if (passwordHash == null) {
-            servletContext.log("unable to hash password");
-            return "unable to hash password";
-        }
-        db.set(userId, PASSWORD_KEY, passwordHash);
-        SecondaryIds.createSecondaryId(db, userId, emailSecondaryId);
-        String userTypeSecondaryId = SecondaryIds.secondaryId(USER_TYPE_ID, userTypeId);
-        SecondaryIds.createSecondaryId(db, userId, userTypeSecondaryId);
-        return null;
-    }
 
     public static String email(Db db, String userId, long timestamp) {
         String emailSecondaryInv = SecondaryIds.secondaryInv(userId, EMAIL_ID);
@@ -156,14 +133,40 @@ final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
         if (adminEmail == null || adminPassword == null) {
             return false;
         }
+        ServletContext servletContext = servletConfig.getServletContext();
+        String userId = RandomIds.randomId.generate();
+        String passwordHash = encodePassword(
+                servletContext, userId, adminPassword);
+        if (passwordHash == null) {
+            servletContext.log("unable to hash password");
+            return false;
+        }
+        String emailId = ValueId.generate(adminEmail);
         String error = createUser(db,
-                servletConfig.getServletContext(),
-                adminEmail,
-                adminPassword,
+                userId,
+                emailId,
+                passwordHash,
                 ADMIN_USER_ID);
         if (error == null)
             return true;
         servletConfig.getServletContext().log(error);
         return false;
+    }
+
+    public static String createUser(Db db,
+                                    String userId,
+                                    String emailId,
+                                    String passwordHash,
+                                    String userTypeId) {
+        String emailSecondaryId = SecondaryIds.secondaryId(EMAIL_ID, emailId);
+        for (String uId : SecondaryIds.vmnIdIterable(db, emailSecondaryId, db.getTimestamp())) {
+            return "duplicate email: " + ValueId.value(emailId);
+        }
+
+        db.set(userId, PASSWORD_KEY, passwordHash);
+        SecondaryIds.createSecondaryId(db, userId, emailSecondaryId);
+        String userTypeSecondaryId = SecondaryIds.secondaryId(USER_TYPE_ID, userTypeId);
+        SecondaryIds.createSecondaryId(db, userId, userTypeSecondaryId);
+        return null;
     }
 }

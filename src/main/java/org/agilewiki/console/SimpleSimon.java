@@ -96,6 +96,7 @@ public class SimpleSimon extends HttpServlet {
             db.registerTransaction(LoginTransaction.NAME, LoginTransaction.class);
             db.registerTransaction(LogoutTransaction.NAME, LogoutTransaction.class);
             db.registerTransaction(ChangePasswordTransaction.NAME, ChangePasswordTransaction.class);
+            db.registerTransaction(NewUserTransaction.NAME, NewUserTransaction.class);
             if (Files.exists(dbPath))
                 db.open();
             else
@@ -150,15 +151,6 @@ public class SimpleSimon extends HttpServlet {
     void validated(Map<String, String> map, HttpServletRequest request) {
         String key = request.getParameter("key");
         String email = request.getParameter("email");
-        boolean go = true;
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            String digest = User.bytesToHex(md.digest(email.getBytes()));
-            go = digest.equals(key);
-        } catch (NoSuchAlgorithmException e) {
-            servletContext.log("no such algorithm: SHA-256");
-            go = false;
-        }
         map.put("key", key);
         map.put("email", email);
     }
@@ -355,13 +347,15 @@ public class SimpleSimon extends HttpServlet {
                 }
             }
         String page = request.getParameter("to");
-        if (userId == null) {
+        if (userId == null && !"validated".equals(page)) {
             page = "login";
         }
         if ("post".equals(page))
             postJournal(request, response, userId);
         else if ("login".equals(page))
             login(request, response);
+        else if ("validated".equals(page))
+            validated(request, response);
         else if ("changePassword".equals(page))
             changePassword(request, response, userId);
         else if ("logout".equals(page))
@@ -433,6 +427,65 @@ public class SimpleSimon extends HttpServlet {
                 map.put("error", error);
         }
         response.getWriter().println(replace("changePassword", map));
+    }
+
+    public void validated(HttpServletRequest request,
+                          HttpServletResponse response)
+            throws ServletException, IOException {
+        String key = request.getParameter("key");
+        String email = request.getParameter("email");
+        String password = request.getParameter("new");
+        String confirm = request.getParameter("confirm");
+        String error = null;
+        if (password == null || password.length() == 0)
+            error = "Enter your new password in the new password field";
+        else if (!password.equals(confirm))
+            error = "The new password and confirm new password fields must be the same";
+        Map<String, String> map = new HashMap<>();
+        if (error != null) {
+            map.put("error", encode(error, 0, ENCODE_FIELD)); //field
+        } else {
+            boolean go = true;
+            try {
+                MessageDigest md = MessageDigest.getInstance("SHA-256");
+                String digest = User.bytesToHex(md.digest(email.getBytes()));
+                go = digest.equals(key);
+            } catch (NoSuchAlgorithmException e) {
+                servletContext.log("no such algorithm: SHA-256");
+                go = false;
+            }
+            if (!go) {
+                error = "Unable to create your account at this time. Please try again later.";
+                map.put("error", encode(error, 0, ENCODE_FIELD)); //field
+            } else {
+                String userId = RandomIds.randomId.generate();
+                String passwordHash = User.encodePassword(servletContext, userId, password);
+                if (passwordHash == null) {
+                    error = "Unable to create your account at this time. Please try again later.";
+                    map.put("error", encode(error, 0, ENCODE_FIELD)); //field
+                } else {
+                    try {
+                        new NewUserTransaction().update(
+                                db,
+                                userId,
+                                email,
+                                passwordHash,
+                                User.USER_TYPE_ID);
+                    } catch (Exception e) {
+                        go = false;
+                        log("failed update", e);
+                    }
+                    if (!go) {
+                        error = "Unable to create your account at this time. Please try again later.";
+                        map.put("error", encode(error, 0, ENCODE_FIELD)); //field
+                    } else {
+                        map.put("success", "Your account has been created and you can now " +
+                                "<a href=\"?from=validated&to=login\">login</a>.");
+                    }
+                }
+            }
+        }
+        response.getWriter().println(replace("validated", map));
     }
 
     public void login(HttpServletRequest request,
