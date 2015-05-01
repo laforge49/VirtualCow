@@ -30,7 +30,7 @@ public class NewUserTransaction implements Transaction {
     @Override
     public void transform(Db db, MapNode mapNode) {
         String userId = (String) mapNode.get(User.USER_KEY);
-        String emailId = (String) mapNode.get(User.USER_KEY);
+        String emailId = (String) mapNode.get(User.EMAIL_ID);
         String passwordHash = (String) mapNode.get(User.PASSWORD_KEY);
         String userTypeId = (String) mapNode.get(User.USER_TYPE_ID);
         User.createUser(db, userId, emailId, passwordHash, userTypeId);

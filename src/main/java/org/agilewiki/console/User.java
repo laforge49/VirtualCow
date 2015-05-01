@@ -3,7 +3,6 @@ package org.agilewiki.console;
 import org.agilewiki.console.transactions.BadUserAddressTransaction;
 import org.agilewiki.console.transactions.BadUserPasswordTransaction;
 import org.agilewiki.console.transactions.LoginTransaction;
-import org.agilewiki.console.transactions.LogoutTransaction;
 import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.immutable.FactoryRegistry;
@@ -58,7 +57,7 @@ public class User {
                                String password) {
         String emailId = ValueId.generate(email);
         String emailSecondaryId = SecondaryIds.secondaryId(EMAIL_ID, emailId);
-        for (String userId : SecondaryIds.vmnIdIterable(db, emailSecondaryId, db.getTimestamp())) {
+        for (String userId : SecondaryIds.vmnIdIterable(db, emailSecondaryId, FactoryRegistry.MAX_TIMESTAMP)) {
             return login2(db, servletContext, request, response, email, password, userId);
         }
         try {
@@ -96,9 +95,9 @@ public class User {
     }
 
     public static boolean confirmPassword(Db db,
-                                   ServletContext servletContext,
-                                   String userId,
-                                   String password) {
+                                          ServletContext servletContext,
+                                          String userId,
+                                          String password) {
         String storedPassword = (String) db.get(userId, PASSWORD_KEY, db.getTimestamp());
         return storedPassword.equals(encodePassword(servletContext, userId, password));
     }
@@ -115,7 +114,7 @@ public class User {
         return digest;
     }
 
-final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
+    final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
 
     public static String bytesToHex(byte[] bytes) {
         char[] hexChars = new char[bytes.length * 2];
