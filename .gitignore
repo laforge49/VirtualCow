@@ -6,7 +6,6 @@
 *.aw5db
 *.bat
 target
-jetty
 .settings
 .metadata
 .project
