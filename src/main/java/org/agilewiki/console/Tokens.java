@@ -9,16 +9,15 @@ import java.security.NoSuchAlgorithmException;
  * Security tokens.
  */
 public class Tokens {
-    public static String generate(Db db, String userId, long duration)
+    public static String generate(Db db, String identifier, long expTime)
             throws NoSuchAlgorithmException {
-        String expirationTime = Long.toHexString(System.currentTimeMillis() + duration);
-        String passwordDigest = User.passwordDigest(db, userId);
+        String expirationTime = Long.toHexString(expTime);
         MessageDigest md = MessageDigest.getInstance("SHA-256");
-        String digest = User.bytesToHex(md.digest((passwordDigest + expirationTime).getBytes()));
+        String digest = User.bytesToHex(md.digest((identifier + expirationTime).getBytes()));
         return expirationTime + "|" + digest;
     }
 
-    public static boolean validate(Db db, String userId, String token)
+    public static boolean validate(Db db, String identifier, String token)
         throws NoSuchAlgorithmException {
         int i = token.indexOf("|");
         if (i == -1)
@@ -33,7 +32,7 @@ public class Tokens {
         long time = System.currentTimeMillis();
         if (time > expTime)
             return false;
-        String t = generate(db, userId, expTime);
+        String t = generate(db, identifier, expTime);
         return t.equals(token);
     }
 }

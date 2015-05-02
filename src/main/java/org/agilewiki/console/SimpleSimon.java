@@ -448,9 +448,7 @@ public class SimpleSimon extends HttpServlet {
         } else {
             boolean go = true;
             try {
-                MessageDigest md = MessageDigest.getInstance("SHA-256");
-                String digest = User.bytesToHex(md.digest(email.getBytes()));
-                go = digest.equals(key);
+                go = Tokens.validate(db, email, key);
             } catch (NoSuchAlgorithmException e) {
                 servletContext.log("no such algorithm: SHA-256");
                 go = false;
@@ -534,15 +532,13 @@ public class SimpleSimon extends HttpServlet {
                 boolean go = true;
                 if (userId == null) {
                     String self = servletConfig.getInitParameter("self");
-                    MessageDigest md;
-                    String digest;
                     try {
-                        md = MessageDigest.getInstance("SHA-256");
-                        digest = User.bytesToHex(md.digest(emailAddress.getBytes()));
+                        String token = Tokens.generate(db, emailAddress,
+                                1000*60*60*24 + System.currentTimeMillis()); //1 day validity
                         subject = "Address Validation Request";
                         body = "<p>To validate your email address and begin opening an account, please click " +
                                 "<a href=\"" + self + "?to=validated&email=" + emailAddress +
-                                "&key=" + digest + "\">here</a>.</p>" +
+                                "&key=" + token + "\">here</a>.</p>" +
                                 "<p>--Virtual Cow</p>";
                     } catch (NoSuchAlgorithmException e) {
                         servletContext.log("no such algorithm: SHA-256");
@@ -593,7 +589,8 @@ public class SimpleSimon extends HttpServlet {
                     MessageDigest md;
                     String digest;
                     try {
-                        String token = Tokens.generate(db, userId, 1000*60*60*24); //1 day validity
+                        String token = Tokens.generate(db, User.passwordDigest(db, userId),
+                                1000*60*60*24 + System.currentTimeMillis()); //1 day validity
                         subject = "Forgot Password";
                         body = "<p>To change your password, please click " +
                                 "<a href=\"" + self + "?to=forgotPassword&email=" + emailAddress +
