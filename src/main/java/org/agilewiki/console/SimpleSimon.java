@@ -13,6 +13,7 @@ import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.Db;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
+import javax.mail.MessagingException;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -416,12 +417,12 @@ public class SimpleSimon extends HttpServlet {
                 log("update failure", e);
             }
             if (error == null) {
-                if (!User.send(db,
+                User.send(db,
+                        servletContext,
                         userId,
                         "Password Change Notification",
                         "<p>Your password has been changed.</p>" +
-                                "<p>--Virtual Cow</p>"))
-                    log("unable to send email");
+                                "<p>--Virtual Cow</p>");
                 map.put("success", "The password has been changed");
             } else
                 map.put("error", error);
@@ -494,7 +495,7 @@ public class SimpleSimon extends HttpServlet {
         String error = null;
         Map<String, String> map = new HashMap<>();
         String login = request.getParameter("login");
-        if (login != null && login.equals("Submit")) {
+        if (login != null && login.equals("Login")) {
             String emailAddress = request.getParameter("emailAddress");
             String password = request.getParameter("password");
             if (emailAddress == null || emailAddress.length() == 0)
@@ -517,49 +518,112 @@ public class SimpleSimon extends HttpServlet {
                 response.sendRedirect("?from=login");
             return;
         }
-        String emailAddress = request.getParameter("emailAddress2");
-        if (emailAddress == null || emailAddress.length() == 0)
-            error = "Email address is required";
-        if (emailAddress != null)
-            map.put("emailAddress2", encode(emailAddress, 0, ENCODE_FIELD)); //field
-        if (error != null) {
-            map.put("error2", encode(error, 0, ENCODE_FIELD)); //field
-        } else {
-            String userId = User.userId(db, emailAddress, FactoryRegistry.MAX_TIMESTAMP);
-            String subject = null;
-            String body = null;
-            boolean go = true;
-            if (userId == null) {
-                String self = servletConfig.getInitParameter("self");
-                MessageDigest md;
-                String digest;
-                try {
-                    md = MessageDigest.getInstance("SHA-256");
-                    digest = User.bytesToHex(md.digest(emailAddress.getBytes()));
-                    subject = "Address Validation Request";
-                    body = "<p>To validate your email address and begin opening an account, please click " +
-                            "<a href=\"" + self + "?to=validated&email=" + emailAddress +
-                            "&key=" + digest + "\">here</a>.</p>" +
-                            "<p>--Virtual Cow</p>";
-                } catch (NoSuchAlgorithmException e) {
-                    servletContext.log("no such algorithm: SHA-256");
-                    go = false;
-                }
+        String newAccount = request.getParameter("newAccount");
+        if (newAccount != null && newAccount.equals("Validate Address")) {
+            String emailAddress = request.getParameter("emailAddress2");
+            if (emailAddress == null || emailAddress.length() == 0)
+                error = "Email address is required";
+            if (emailAddress != null)
+                map.put("emailAddress2", encode(emailAddress, 0, ENCODE_FIELD)); //field
+            if (error != null) {
+                map.put("error2", encode(error, 0, ENCODE_FIELD)); //field
             } else {
-                subject = "New Account Notification";
-                body = "<p>An attempt was made to open another account with your email address.</p>" +
-                        "<p>--Virtual Cow</p>";
+                String userId = User.userId(db, emailAddress, FactoryRegistry.MAX_TIMESTAMP);
+                String subject = null;
+                String body = null;
+                boolean go = true;
+                if (userId == null) {
+                    String self = servletConfig.getInitParameter("self");
+                    MessageDigest md;
+                    String digest;
+                    try {
+                        md = MessageDigest.getInstance("SHA-256");
+                        digest = User.bytesToHex(md.digest(emailAddress.getBytes()));
+                        subject = "Address Validation Request";
+                        body = "<p>To validate your email address and begin opening an account, please click " +
+                                "<a href=\"" + self + "?to=validated&email=" + emailAddress +
+                                "&key=" + digest + "\">here</a>.</p>" +
+                                "<p>--Virtual Cow</p>";
+                    } catch (NoSuchAlgorithmException e) {
+                        servletContext.log("no such algorithm: SHA-256");
+                        go = false;
+                    }
+                } else {
+                    subject = "New Account Notification";
+                    body = "<p>An attempt was made to open another account with your email address.</p>" +
+                            "<p>--Virtual Cow</p>";
+                }
+                boolean sent = true;
+                try {
+                    sent = MailOut.send(emailAddress, subject, body);
+                    if (go && sent)
+                        map.put("success2", encode(
+                                "An email has been sent to verify your address. Please check your inbox.",
+                                0, ENCODE_FIELD)); //field
+                    else
+                        map.put("success2", encode(
+                                "Unable to send an email to your address at this time. Please try again later.",
+                                0, ENCODE_FIELD)); //field
+                } catch (MessagingException me) {
+                    map.put("success2", encode(me.getMessage(), 0, ENCODE_FIELD)); //field
+                }
             }
-            if (go && MailOut.send(emailAddress, subject, body))
-                map.put("success2", encode(
-                        "An email has been sent to verify your address. Please check your inbox.",
-                        0, ENCODE_FIELD)); //field
-            else
-                map.put("success2", encode(
-                        "Unable to send an email to your address at this time. Please try again later.",
-                        0, ENCODE_FIELD)); //field
+            response.getWriter().println(replace("login", map));
+            return;
         }
-        response.getWriter().println(replace("login", map));
+        String forgotPassword = request.getParameter("forgotPassword");
+        if (forgotPassword != null && forgotPassword.equals("Validate Address")) {
+            String emailAddress = request.getParameter("emailAddress3");
+            if (emailAddress == null || emailAddress.length() == 0)
+                error = "Email address is required";
+            if (emailAddress != null)
+                map.put("emailAddress3", encode(emailAddress, 0, ENCODE_FIELD)); //field
+            if (error != null) {
+                map.put("error3", encode(error, 0, ENCODE_FIELD)); //field
+            } else {
+                String userId = User.userId(db, emailAddress, FactoryRegistry.MAX_TIMESTAMP);
+                String subject = null;
+                String body = null;
+                boolean go = true;
+                String msg = "An email has been sent to verify your address. Please check your inbox.";
+                if (userId == null) {
+                    go = false;
+                } else {
+                    String self = servletConfig.getInitParameter("self");
+                    MessageDigest md;
+                    String digest;
+                    try {
+                        md = MessageDigest.getInstance("SHA-256");
+                        String passwordDigest = User.passwordDigest(db, userId);
+                        String time = User.bytesToHex(("" + System.currentTimeMillis()).getBytes());
+                        digest = User.bytesToHex(md.digest((passwordDigest + time).getBytes()));
+                        subject = "Forgot Password";
+                        body = "<p>To change your password, please click " +
+                                "<a href=\"" + self + "?to=forgotPassword&email=" + emailAddress +
+                                "&time=" + time +
+                                "&key=" + digest + "\">here</a>.</p>" +
+                                "<p>--Virtual Cow</p>";
+                    } catch (NoSuchAlgorithmException e) {
+                        servletContext.log("no such algorithm: SHA-256");
+                        go = false;
+                        msg = "Unable to send an email to your address at this time. Please try again later.";
+                    }
+                }
+                if (go) {
+                    try {
+                        boolean sent = true;
+                        sent = MailOut.send(emailAddress, subject, body);
+                        if (!sent)
+                            msg = "Unable to send an email to your address at this time. Please try again later.";
+                    } catch (MessagingException me) {
+                        msg = me.getMessage();
+                    }
+                }
+                map.put("success3", encode(msg, 0, ENCODE_FIELD)); //field
+            }
+            response.getWriter().println(replace("login", map));
+            return;
+        }
     }
 
     public void postJournal(HttpServletRequest request,

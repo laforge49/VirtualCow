@@ -1,45 +1,71 @@
 <html>
 <head>
     <title>Virtual Cow</title>
-    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-    <meta http-equiv="content-language" content="en-us" />
-    <meta http-equiv="cache-control" content="no-cache" />
-    <meta http-equiv="pragma" content="no-cache" />
-    <meta name="keywords" content="" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <meta name="copyright" content="&copy; 2015" />
-    <meta name="robot" content="noindex, nofollow" />
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
+    <meta http-equiv="content-language" content="en-us"/>
+    <meta http-equiv="cache-control" content="no-cache"/>
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <meta name="copyright" content="&copy; 2015"/>
+    <meta name="robot" content="noindex, nofollow"/>
 </head>
 <body>
 <h1>Virtual COW</h1>
-<h2>New Account &amp; Login</h2>
+
+<h2>New Account / Login / Forgot Password</h2>
+
 <p>
     <a href="?from=post">home</a>
 </p>
-<h3>New Account</h3>
-<p style="color:red"><strong>{{error2}}&nbsp;</strong></p>
+
 <form method="POST">
-    <input type="hidden" name="from" value="login"/>
-    <input type="hidden" name="to" value="login"/>
-    <p>
-        Email Address: <input type="text" name="emailAddress2" size="60" value="{{emailAddress}}">
-</p>
-    <input type="submit" name="newAccount" value="Submit" />
+    <fieldset>
+        <legend>New Account</legend>
+        <p style="color:red"><strong>{{error2}}&nbsp;</strong></p>
+        <input type="hidden" name="from" value="login"/>
+        <input type="hidden" name="to" value="login"/>
+        <p>
+            Email Address: <input type="text" name="emailAddress2" size="60" value="{{emailAddress2}}">
+        </p>
+        <input type="submit" name="newAccount" value="Validate Address"/>
+
+        <p>{{success2}}&nbsp;</p>
+    </fieldset>
 </form>
-<h4>{{success2}}&nbsp;</h4>
-<h3>Login</h3>
-<p style="color:red"><strong>{{error}}&nbsp;</strong></p>
+
 <form method="POST">
-    <input type="hidden" name="from" value="login"/>
-    <input type="hidden" name="to" value="login"/>
-    <p>
-        Email Address: <input type="text" name="emailAddress" size="60" value="{{emailAddress}}">
-    </p><p>
-    Password: <input type="password" name="password" size="60">
-</p>
-    <input type="submit" name="login" value="Submit" />
+    <fieldset>
+        <legend>Login</legend>
+        <p style="color:red"><strong>{{error}}&nbsp;</strong></p>
+        <input type="hidden" name="from" value="login"/>
+        <input type="hidden" name="to" value="login"/>
+        <p>
+            Email Address: <input type="text" name="emailAddress" size="60" value="{{emailAddress}}">
+        </p>
+        <p>
+            Password: <input type="password" name="password" size="60">
+        </p>
+        <input type="submit" name="login" value="Login"/>
+    </fieldset>
 </form>
+
+<form method="POST">
+    <fieldset>
+        <legend>Forgot Password</legend>
+        <p style="color:red"><strong>{{error3}}&nbsp;</strong></p>
+        <input type="hidden" name="from" value="login"/>
+        <input type="hidden" name="to" value="login"/>
+        <p>
+            Email Address: <input type="text" name="emailAddress3" size="60" value="{{emailAddress3}}">
+        </p>
+        <input type="submit" name="forgotPassword" value="Validate Address"/>
+
+        <p>{{success3}}&nbsp;</p>
+    </fieldset>
+</form>
+
 <p>
     <a href="?from=login">home</a>
 </p>

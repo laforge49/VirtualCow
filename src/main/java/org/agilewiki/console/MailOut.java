@@ -1,16 +1,17 @@
 package org.agilewiki.console;
 
-import java.util.Date;
-import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.util.Date;
+import java.util.Properties;
 
 /**
  * SSL sender.
  */
 public class MailOut {
-    public static boolean send(String toAddress, String subject, String body) {
+    public static boolean send(String toAddress, String subject, String body)
+            throws MessagingException {
 
         final String username = "laforge49@gmail.com";
         final String password = "Frankly#2";
@@ -44,8 +45,6 @@ public class MailOut {
 
         } catch (AuthenticationFailedException e) {
             return false;
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
         }
     }
 }

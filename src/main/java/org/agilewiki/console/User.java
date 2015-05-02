@@ -8,6 +8,7 @@ import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.virtualcow.Db;
 
+import javax.mail.MessagingException;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
@@ -44,9 +45,16 @@ public class User {
         return null;
     }
 
-    public static boolean send(Db db, String userId, String subject, String body) {
+    public static boolean send(Db db, ServletContext servletContext, String userId, String subject, String body) {
         String email = email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
-        return MailOut.send(email, subject, body);
+        boolean sent = true;
+        try {
+            sent = MailOut.send(email, subject, body);
+        } catch (MessagingException me) {
+            sent = false;
+            servletContext.log("unable to send to " + email, me);
+        }
+        return sent;
     }
 
     public static String login(Db db,
@@ -98,8 +106,12 @@ public class User {
                                           ServletContext servletContext,
                                           String userId,
                                           String password) {
-        String storedPassword = (String) db.get(userId, PASSWORD_KEY, db.getTimestamp());
-        return storedPassword.equals(encodePassword(servletContext, userId, password));
+        String passwordDigest = passwordDigest(db, userId);
+        return passwordDigest.equals(encodePassword(servletContext, userId, password));
+    }
+
+    public static String passwordDigest(Db db, String userId) {
+        return (String) db.get(userId, PASSWORD_KEY, db.getTimestamp());
     }
 
     public static String encodePassword(ServletContext servletContext, String userId, String password) {
