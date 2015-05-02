@@ -22,7 +22,7 @@
         </init-param>
         <init-param>
             <param-name>self</param-name>
-            <param-value>http://192.168.0.4/virtualCow</param-value>
+            <param-value>http://192.168.0.4</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>
