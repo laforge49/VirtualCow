@@ -11,7 +11,7 @@ import java.security.NoSuchAlgorithmException;
 public class Tokens {
     public static String generate(Db db, String userId, long duration)
             throws NoSuchAlgorithmException {
-        String expirationTime = User.bytesToHex(("" + System.currentTimeMillis() + duration).getBytes());
+        String expirationTime = Long.toHexString(System.currentTimeMillis() + duration);
         String passwordDigest = User.passwordDigest(db, userId);
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         String digest = User.bytesToHex(md.digest((passwordDigest + expirationTime).getBytes()));

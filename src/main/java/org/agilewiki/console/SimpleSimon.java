@@ -593,15 +593,11 @@ public class SimpleSimon extends HttpServlet {
                     MessageDigest md;
                     String digest;
                     try {
-                        md = MessageDigest.getInstance("SHA-256");
-                        String passwordDigest = User.passwordDigest(db, userId);
-                        String time = User.bytesToHex(("" + System.currentTimeMillis()).getBytes());
-                        digest = User.bytesToHex(md.digest((passwordDigest + time).getBytes()));
+                        String token = Tokens.generate(db, userId, 1000*60*60*24); //1 day validity
                         subject = "Forgot Password";
                         body = "<p>To change your password, please click " +
                                 "<a href=\"" + self + "?to=forgotPassword&email=" + emailAddress +
-                                "&time=" + time +
-                                "&key=" + digest + "\">here</a>.</p>" +
+                                "&key=" + token + "\">here</a>.</p>" +
                                 "<p>--Virtual Cow</p>";
                     } catch (NoSuchAlgorithmException e) {
                         servletContext.log("no such algorithm: SHA-256");
