@@ -91,8 +91,16 @@ public class User {
             }
             return "Invalid email address / password";
         }
-        Cookie loginCookie = new Cookie("userId", userId);
-        loginCookie.setMaxAge(Integer.MAX_VALUE);
+        long expTime = System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 3; // 3 days
+        String token = null;
+        try {
+            token = Tokens.generate(db, passwordDigest(db, userId), expTime);
+        } catch (NoSuchAlgorithmException e) {
+            servletContext.log("no such algorithm: SHA-256");
+            return "Unable to create your account at this time. Please try again later.";
+        }
+        Cookie loginCookie = new Cookie("userId", userId + "|" + token);
+        loginCookie.setMaxAge(60 * 60 * 24 * 3); //3 days
         response.addCookie(loginCookie);
         try {
             new LoginTransaction().update(db, email, request, userId);

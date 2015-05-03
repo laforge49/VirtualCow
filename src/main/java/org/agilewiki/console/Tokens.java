@@ -17,6 +17,23 @@ public class Tokens {
         return expirationTime + "|" + digest;
     }
 
+    public static String parse(Db db, String idToken) {
+        int i = idToken.indexOf("|");
+        if (i == -1)
+            return null;
+        String userId = idToken.substring(0, i);
+        String token = idToken.substring(i + 1);
+        try {
+            if (validate(db, User.passwordDigest(db, userId), token)) {
+                return userId;
+            } else {
+                return null;
+            }
+        } catch (NoSuchAlgorithmException nsae) {
+            return null;
+        }
+    }
+
     public static boolean validate(Db db, String identifier, String token)
         throws NoSuchAlgorithmException {
         int i = token.indexOf("|");
@@ -30,8 +47,9 @@ public class Tokens {
             return false;
         }
         long time = System.currentTimeMillis();
-        if (time > expTime)
+        if (time > expTime) {
             return false;
+        }
         String t = generate(db, identifier, expTime);
         return t.equals(token);
     }

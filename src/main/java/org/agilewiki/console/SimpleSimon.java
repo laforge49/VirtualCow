@@ -124,15 +124,18 @@ public class SimpleSimon extends HttpServlet {
         response.setStatus(HttpServletResponse.SC_OK);
         Map<String, String> map = new HashMap<>();
         String page = request.getParameter("to");
-        String userId = null;
+        String userIdToken = null;
         Cookie[] cookies = request.getCookies();
         if (cookies != null)
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("userId")) {
-                    userId = cookie.getValue();
+                    userIdToken = cookie.getValue();
                     break;
                 }
             }
+        String userId = null;
+        if (userIdToken != null)
+            userId = Tokens.parse(db, userIdToken);
         if (userId == null && !"validated".equals(page))
             page = "login";
         else if (page == null || page.equals("home")) {
@@ -160,7 +163,6 @@ public class SimpleSimon extends HttpServlet {
         String timestamp = request.getParameter("timestamp");
         String dateInString = request.getParameter("date");
         if (dateInString != null && dateInString.length() > 0) {
-            log(dateInString);
             Date date;
             SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
             try {
@@ -338,15 +340,18 @@ public class SimpleSimon extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html");
         response.setStatus(HttpServletResponse.SC_OK);
-        String userId = null;
+        String userIdToken = null;
         Cookie[] cookies = request.getCookies();
         if (cookies != null)
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("userId")) {
-                    userId = cookie.getValue();
+                    userIdToken = cookie.getValue();
                     break;
                 }
             }
+        String userId = null;
+        if (userIdToken != null)
+            userId = Tokens.parse(db, userIdToken);
         String page = request.getParameter("to");
         if (userId == null && !"validated".equals(page)) {
             page = "login";
