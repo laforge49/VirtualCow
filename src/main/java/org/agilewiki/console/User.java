@@ -94,7 +94,7 @@ public class User {
         long expTime = System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 3; // 3 days
         String token = null;
         try {
-            token = Tokens.generate(db, passwordDigest(db, userId), expTime);
+            token = Tokens.generate(db, passwordDigest(db, userId, FactoryRegistry.MAX_TIMESTAMP), expTime);
         } catch (NoSuchAlgorithmException e) {
             servletContext.log("no such algorithm: SHA-256");
             return "Unable to create your account at this time. Please try again later.";
@@ -114,12 +114,12 @@ public class User {
                                           ServletContext servletContext,
                                           String userId,
                                           String password) {
-        String passwordDigest = passwordDigest(db, userId);
+        String passwordDigest = passwordDigest(db, userId, FactoryRegistry.MAX_TIMESTAMP);
         return passwordDigest.equals(encodePassword(servletContext, userId, password));
     }
 
-    public static String passwordDigest(Db db, String userId) {
-        return (String) db.get(userId, PASSWORD_KEY, db.getTimestamp());
+    public static String passwordDigest(Db db, String userId, long timestamp) {
+        return (String) db.get(userId, PASSWORD_KEY, timestamp);
     }
 
     public static String encodePassword(ServletContext servletContext, String userId, String password) {

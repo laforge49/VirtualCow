@@ -136,7 +136,7 @@ public class SimpleSimon extends HttpServlet {
         String userId = null;
         if (userIdToken != null)
             userId = Tokens.parse(db, userIdToken);
-        if (userId == null && !"validated".equals(page))
+        if (userId == null && !"validated".equals(page) && !"forgotPassword".equals(page))
             page = "login";
         else if (page == null || page.equals("home")) {
             page = "home";
@@ -149,7 +149,16 @@ public class SimpleSimon extends HttpServlet {
             subjects(map, request);
         else if (page.equals("validated"))
             validated(map, request);
+        else if (page.equals("forgotPassword"))
+            forgotPassword(map, request);
         response.getWriter().println(replace(page, map));
+    }
+
+    void forgotPassword(Map<String, String> map, HttpServletRequest request) {
+        String key = request.getParameter("key");
+        String email = request.getParameter("email");
+        map.put("key", key);
+        map.put("email", email);
     }
 
     void validated(Map<String, String> map, HttpServletRequest request) {
@@ -353,7 +362,7 @@ public class SimpleSimon extends HttpServlet {
         if (userIdToken != null)
             userId = Tokens.parse(db, userIdToken);
         String page = request.getParameter("to");
-        if (userId == null && !"validated".equals(page)) {
+        if (userId == null && !"validated".equals(page) && !"forgotPassword".equals(page)) {
             page = "login";
         }
         if ("post".equals(page))
@@ -362,6 +371,8 @@ public class SimpleSimon extends HttpServlet {
             login(request, response);
         else if ("validated".equals(page))
             validated(request, response);
+        else if ("forgotPassword".equals(page))
+            forgotPassword(request, response);
         else if ("changePassword".equals(page))
             changePassword(request, response, userId);
         else if ("logout".equals(page))
@@ -428,11 +439,65 @@ public class SimpleSimon extends HttpServlet {
                         "Password Change Notification",
                         "<p>Your password has been changed.</p>" +
                                 "<p>--Virtual Cow</p>");
-                map.put("success", "The password has been changed");
+                map.put("success", "The password has been changed.");
             } else
                 map.put("error", error);
         }
         response.getWriter().println(replace("changePassword", map));
+    }
+
+    public void forgotPassword(HttpServletRequest request,
+                          HttpServletResponse response)
+            throws ServletException, IOException {
+        String key = request.getParameter("key");
+        String email = request.getParameter("email");
+        String newPassword = request.getParameter("new");
+        String confirmNewPassword = request.getParameter("confirm");
+        Map<String, String> map = new HashMap<>();
+        if (newPassword == null || newPassword.length() == 0)
+            map.put("error", "Enter your new password in the new password field");
+        else if (!newPassword.equals(confirmNewPassword))
+            map.put("error", "The new password and confirm new password fields must be the same");
+        else {
+            boolean go = true;
+            try {
+                go = Tokens.validate(db, email, key);
+            } catch (NoSuchAlgorithmException e) {
+                servletContext.log("no such algorithm: SHA-256");
+                go = false;
+            }
+            if (!go) {
+                String error = "Unable to change your password at this time. Please try again later.";
+                map.put("error", encode(error, 0, ENCODE_FIELD)); //field
+            } else {
+                String error = null;
+                String userId = User.userId(db, email, FactoryRegistry.MAX_TIMESTAMP);
+                try {
+                    new ChangePasswordTransaction().update(
+                            db,
+                            userId,
+                            User.encodePassword(servletContext, userId, newPassword));
+                } catch (Exception e) {
+                    error = "system error--unable to update database";
+                    log("update failure", e);
+                }
+                if (error == null) {
+                    String subject = "Password Change Notification";
+                    String body = "<p>Your password has been changed.</p>" +
+                            "<p>--Virtual Cow</p>";
+                    map.put("success", "The password has been changed");
+                    try {
+                        MailOut.send(email, subject, body);
+                    } catch (MessagingException me) {
+                        log("unable to send to " + email, me);
+                    }
+                    map.put("success", "The password has been changed and you can now " +
+                            "<a href=\"?from=validated&to=login\">login</a>.");
+                } else
+                    map.put("error", error);
+            }
+        }
+        response.getWriter().println(replace("forgotPassword", map));
     }
 
     public void validated(HttpServletRequest request,
@@ -591,10 +656,8 @@ public class SimpleSimon extends HttpServlet {
                     go = false;
                 } else {
                     String self = servletConfig.getInitParameter("self");
-                    MessageDigest md;
-                    String digest;
                     try {
-                        String token = Tokens.generate(db, User.passwordDigest(db, userId),
+                        String token = Tokens.generate(db, emailAddress,
                                 1000*60*60*24 + System.currentTimeMillis()); //1 day validity
                         subject = "Forgot Password";
                         body = "<p>To change your password, please click " +

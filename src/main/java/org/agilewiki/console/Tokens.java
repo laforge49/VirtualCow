@@ -1,5 +1,6 @@
 package org.agilewiki.console;
 
+import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.virtualcow.Db;
 
 import java.security.MessageDigest;
@@ -24,7 +25,7 @@ public class Tokens {
         String userId = idToken.substring(0, i);
         String token = idToken.substring(i + 1);
         try {
-            if (validate(db, User.passwordDigest(db, userId), token)) {
+            if (validate(db, User.passwordDigest(db, userId, FactoryRegistry.MAX_TIMESTAMP), token)) {
                 return userId;
             } else {
                 return null;
