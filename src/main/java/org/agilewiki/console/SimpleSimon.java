@@ -98,6 +98,7 @@ public class SimpleSimon extends HttpServlet {
             db.registerTransaction(LogoutTransaction.NAME, LogoutTransaction.class);
             db.registerTransaction(ChangePasswordTransaction.NAME, ChangePasswordTransaction.class);
             db.registerTransaction(NewUserTransaction.NAME, NewUserTransaction.class);
+            db.registerTransaction(DeleteTransaction.NAME, DeleteTransaction.class);
             if (Files.exists(dbPath))
                 db.open();
             else
@@ -375,6 +376,8 @@ public class SimpleSimon extends HttpServlet {
             forgotPassword(request, response);
         else if ("changePassword".equals(page))
             changePassword(request, response, userId);
+        else if ("deleteAccount".equals(page))
+            deleteAccount(request, response, userId);
         else if ("logout".equals(page))
             logout(request, response, userId);
         else
@@ -401,6 +404,42 @@ public class SimpleSimon extends HttpServlet {
                 }
             }
         response.sendRedirect("?from=logout");
+    }
+
+    public void deleteAccount(HttpServletRequest request,
+                               HttpServletResponse response,
+                               String userId)
+            throws ServletException, IOException {
+        String oldPassword = request.getParameter("password");
+        Map<String, String> map = new HashMap<>();
+        if (oldPassword == null || oldPassword.length() == 0)
+            map.put("error", "Enter your password in the old password field");
+        else if (!User.confirmPassword(db, servletContext, userId, oldPassword))
+            map.put("error", "Incorrect password");
+        else {
+            String error = null;
+            try {
+                new DeleteTransaction().update(
+                        db,
+                        userId,
+                        User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP));
+            } catch (Exception e) {
+                error = "system error--unable to update database";
+                log("update failure", e);
+            }
+            if (error == null) {
+                User.send(db,
+                        servletContext,
+                        userId,
+                        "Delete Account Notification",
+                        "<p>Your account has been deleted.</p>" +
+                                "<p>--Virtual Cow</p>");
+                response.sendRedirect("?to=login&from=deleteAccount");
+                return;
+            } else
+                map.put("error", error);
+        }
+        response.getWriter().println(replace("changePassword", map));
     }
 
     public void changePassword(HttpServletRequest request,

@@ -12,4 +12,5 @@ public class NameIds extends NameId {
     public final static String REMOTE_HOST = generate("remoteHost");
     public final static String REMOTE_ADDR = generate("remoteAddr");
     public final static String REMOTE_PORT = generate("remotePort");
+    public final static String AN_ID = generate("anId");
 }

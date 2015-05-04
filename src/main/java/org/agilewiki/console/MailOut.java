@@ -10,9 +10,9 @@ import java.util.Properties;
  * SSL sender.
  */
 public class MailOut {
-    public static boolean send(String toAddress, String subject, String body)
-            throws MessagingException {
+    static Session session;
 
+    static {
         final String username = "laforge49@gmail.com";
         final String password = "Frankly#2";
 
@@ -22,15 +22,19 @@ public class MailOut {
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
 
-        Session session = Session.getInstance(props,
+        session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(username, password);
                     }
                 });
+    }
+
+    public static boolean send(String toAddress, String subject, String body)
+            throws MessagingException {
+
 
         try {
-
             Message message = new MimeMessage(session);
             message.setSentDate(new Date());
             message.setFrom(new InternetAddress("laforge49@gmail.com"));

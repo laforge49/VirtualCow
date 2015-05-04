@@ -115,6 +115,8 @@ public class User {
                                           String userId,
                                           String password) {
         String passwordDigest = passwordDigest(db, userId, FactoryRegistry.MAX_TIMESTAMP);
+        if (passwordDigest == null)
+            return false;
         return passwordDigest.equals(encodePassword(servletContext, userId, password));
     }
 
