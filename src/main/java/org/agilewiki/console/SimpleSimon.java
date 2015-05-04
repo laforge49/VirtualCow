@@ -418,22 +418,25 @@ public class SimpleSimon extends HttpServlet {
             map.put("error", "Incorrect password");
         else {
             String error = null;
+            String email = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
             try {
                 new DeleteTransaction().update(
                         db,
                         userId,
-                        User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP));
+                        email);
             } catch (Exception e) {
                 error = "system error--unable to update database";
                 log("update failure", e);
             }
             if (error == null) {
-                User.send(db,
-                        servletContext,
-                        userId,
-                        "Delete Account Notification",
-                        "<p>Your account has been deleted.</p>" +
-                                "<p>--Virtual Cow</p>");
+                try {
+                    MailOut.send(email,
+                            "Delete Account Notification",
+                            "<p>Your account has been deleted.</p>" +
+                                    "<p>--Virtual Cow</p>");
+                } catch (MessagingException me) {
+                    log("unable to send to " + email, me);
+                }
                 response.sendRedirect("?to=login&from=deleteAccount");
                 return;
             } else
