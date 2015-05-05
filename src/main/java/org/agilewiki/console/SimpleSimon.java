@@ -376,6 +376,8 @@ public class SimpleSimon extends HttpServlet {
             forgotPassword(request, response);
         else if ("changePassword".equals(page))
             changePassword(request, response, userId);
+        else if ("changeEmailAddress".equals(page))
+            changeEmailAddress(request, response, userId);
         else if ("deleteAccount".equals(page))
             deleteAccount(request, response, userId);
         else if ("logout".equals(page))
@@ -407,8 +409,8 @@ public class SimpleSimon extends HttpServlet {
     }
 
     public void deleteAccount(HttpServletRequest request,
-                               HttpServletResponse response,
-                               String userId)
+                              HttpServletResponse response,
+                              String userId)
             throws ServletException, IOException {
         String oldPassword = request.getParameter("password");
         Map<String, String> map = new HashMap<>();
@@ -489,7 +491,7 @@ public class SimpleSimon extends HttpServlet {
     }
 
     public void forgotPassword(HttpServletRequest request,
-                          HttpServletResponse response)
+                               HttpServletResponse response)
             throws ServletException, IOException {
         String key = request.getParameter("key");
         String email = request.getParameter("email");
@@ -646,7 +648,7 @@ public class SimpleSimon extends HttpServlet {
                     String self = servletConfig.getInitParameter("self");
                     try {
                         String token = Tokens.generate(db, emailAddress,
-                                1000*60*60*24 + System.currentTimeMillis()); //1 day validity
+                                1000 * 60 * 60 * 24 + System.currentTimeMillis()); //1 day validity
                         subject = "Address Validation Request";
                         body = "<p>To validate your email address and begin opening an account, please click " +
                                 "<a href=\"" + self + "?to=validated&email=" + emailAddress +
@@ -680,7 +682,7 @@ public class SimpleSimon extends HttpServlet {
             return;
         }
         String forgotPassword = request.getParameter("forgotPassword");
-        if (forgotPassword != null && forgotPassword.equals("Validate Address")) {
+        if (forgotPassword != null && forgotPassword.equals("Revalidate Address")) {
             String emailAddress = request.getParameter("emailAddress3");
             if (emailAddress == null || emailAddress.length() == 0)
                 error = "Email address is required";
@@ -700,7 +702,7 @@ public class SimpleSimon extends HttpServlet {
                     String self = servletConfig.getInitParameter("self");
                     try {
                         String token = Tokens.generate(db, emailAddress,
-                                1000*60*60*24 + System.currentTimeMillis()); //1 day validity
+                                1000 * 60 * 60 * 24 + System.currentTimeMillis()); //1 day validity
                         subject = "Forgot Password";
                         body = "<p>To change your password, please click " +
                                 "<a href=\"" + self + "?to=forgotPassword&email=" + emailAddress +
@@ -727,6 +729,86 @@ public class SimpleSimon extends HttpServlet {
             response.getWriter().println(replace("login", map));
             return;
         }
+    }
+
+    public void changeEmailAddress(HttpServletRequest request,
+                                   HttpServletResponse response,
+                                   String userId)
+            throws ServletException, IOException {
+        String emailAddress = request.getParameter("emailAddress");
+        Map<String, String> map = new HashMap<>();
+        if (emailAddress != null)
+            map.put("emailAddress", encode(emailAddress, 0, ENCODE_FIELD)); //field
+        String error = null;
+        String oldEmailAddress = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
+        if (emailAddress == null || emailAddress.length() == 0) {
+            error = "Enter your new email address.";
+        } else if (emailAddress.equals(oldEmailAddress)) {
+            error = "Your new email address should not be the same as your old email address.";
+        }
+        if (error != null) {
+            map.put("error", error);
+            response.getWriter().println(replace("changeEmailAddress", map));
+            return;
+        }
+        String subject = null;
+        String body = null;
+        String userId2 = User.userId(db, emailAddress, FactoryRegistry.MAX_TIMESTAMP);
+        if (userId2 != null) {
+            subject = "Notification of attempt to reassign email address";
+            body = "<p>There was an attempt made to change the email of an account " +
+                    "from " + oldEmailAddress + " to your email account." +
+                    "<p>--Virtual Cow</p>";
+            boolean sent = false;
+            try {
+                sent = MailOut.send(emailAddress, subject, body);
+            } catch (MessagingException e) {
+            }
+            String msg;
+            if (sent)
+                msg = "An email has been sent to verify your new address. Please check your inbox.";
+            else {
+                msg = "Unable to send an email to your address at this time. Please try again later.";
+            }
+            map.put("success", msg);
+            response.getWriter().println(replace("changeEmailAddress", map));
+            return;
+        }
+        long expTime = System.currentTimeMillis() + 1000 * 60 * 60 * 24; // 1 day
+        String token = null;
+        try {
+            token = Tokens.generate(db, userId + emailAddress, expTime);
+        } catch (NoSuchAlgorithmException e) {
+        }
+        if (token == null) {
+            String msg = "Unable to send an email to your address at this time. Please try again later.";
+            map.put("success", msg);
+            response.getWriter().println(replace("changeEmailAddress", map));
+            return;
+        }
+        String self = servletConfig.getInitParameter("self");
+        String href = self +
+                "?to=newEmailAddress&oldEmailAddress=" + oldEmailAddress +
+                "&newEmailAddress=" + emailAddress +
+                "&key=" + token;
+        subject = "Address Validation Request";
+        body = "<p>To validate your new email address, please click " +
+                "<a href=\"" + href + "\">here</a>.</p>" +
+                "<p>--Virtual Cow</p>";
+        boolean sent = false;
+        try {
+            sent = MailOut.send(emailAddress, subject, body);
+        } catch (MessagingException e) {
+        }
+        if (!sent) {
+            String msg = "Unable to send an email to your address at this time. Please try again later.";
+            map.put("success", msg);
+            response.getWriter().println(replace("changeEmailAddress", map));
+            return;
+        }
+        String msg = "An email has been sent to verify your address. Please check your inbox.";
+        map.put("success", msg);
+        response.getWriter().println(replace("changeEmailAddress", map));
     }
 
     public void postJournal(HttpServletRequest request,
