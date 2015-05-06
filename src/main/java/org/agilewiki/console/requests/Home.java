@@ -23,10 +23,11 @@ public class Home extends NonBlockingBladeBase {
         this.servletContext = servletContext;
     }
 
-    public AReq<Void> getHome(AsyncContext asyncContext) {
-        return new AReq<Void>("getHome") {
+    public ASig getHome(AsyncContext asyncContext) {
+        return new ASig("getHome") {
             HttpServletRequest request = (HttpServletRequest) asyncContext.getRequest();
             HttpServletResponse response = (HttpServletResponse) asyncContext.getResponse();
+
             @Override
             protected void processAsyncOperation(AsyncRequestImpl _asyncRequestImpl,
                                                  AsyncResponseProcessor<Void> _asyncResponseProcessor)
