@@ -1,5 +1,6 @@
 package org.agilewiki.console;
 
+import org.agilewiki.console.requests.Home;
 import org.agilewiki.console.transactions.*;
 import org.agilewiki.jactor2.core.impl.Plant;
 import org.agilewiki.utils.ids.Timestamp;
@@ -44,7 +45,7 @@ public class SimpleSimon extends HttpServlet {
     public final static int ENCODE_SINGLE_LINE = 2;
     public final static int ENCODE_FIELD = 3;
 
-    String readResource(String pageName) throws IOException {
+    public static String readResource(ServletContext servletContext, String pageName) throws IOException {
         InputStream is = servletContext.getResourceAsStream("/WEB-INF/pages/" + pageName + ".html");
         InputStreamReader isr = new InputStreamReader(is, utf8);
         StringBuilder sb = new StringBuilder();
@@ -58,8 +59,10 @@ public class SimpleSimon extends HttpServlet {
         }
     }
 
-    String replace(String pageName, Map<String, String> sub) throws IOException {
-        String t = readResource(pageName);
+    public static String replace(ServletContext servletContext,
+                                 String pageName,
+                                 Map<String, String> sub) throws IOException {
+        String t = readResource(servletContext, pageName);
         int i = 0;
         StringBuilder sb = new StringBuilder();
         while (i < t.length()) {
@@ -139,7 +142,7 @@ public class SimpleSimon extends HttpServlet {
             page = "login";
 
         if (page == null || page.equals("home")) {
-            home(request, response);
+            Home.getHome(servletContext, request, response);
             return;
         }
         response.setStatus(HttpServletResponse.SC_OK);
@@ -156,7 +159,7 @@ public class SimpleSimon extends HttpServlet {
             newEmailAddress(map, request);
         else if (page.equals("forgotPassword"))
             forgotPassword(map, request);
-        response.getWriter().println(replace(page, map));
+        response.getWriter().println(replace(servletContext, page, map));
     }
 
     void newEmailAddress(Map<String, String> map, HttpServletRequest request) {
@@ -178,46 +181,6 @@ public class SimpleSimon extends HttpServlet {
         String email = request.getParameter("email");
         map.put("key", key);
         map.put("email", email);
-    }
-
-    void home(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            Map<String, String> map = new HashMap<>();
-            String timestamp = request.getParameter("timestamp");
-            String dateInString = request.getParameter("date");
-            if (dateInString != null && dateInString.length() > 0) {
-                Date date;
-                SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
-                try {
-                    date = formatter.parse(dateInString);
-                } catch (ParseException e) {
-                    throw new ServletException(e);
-                }
-                GregorianCalendar calendar = new GregorianCalendar();
-                calendar.setTime(date);
-                calendar.set(Calendar.SECOND, 59);
-                long time = calendar.getTimeInMillis() + 999;
-                timestamp = TimestampIds.value(TimestampIds.timestampId((time << 10) + 1023));
-            }
-            if (timestamp == null) {
-                map.put("post", "post");
-                response.getWriter().println(replace("home", map));
-                response.setStatus(HttpServletResponse.SC_OK);
-                return;
-            }
-            map.put("setTimestamp", "&timestamp=" + timestamp);
-            map.put("setStartingAt", "&startingAt=" + timestamp);
-            map.put("atTime", "at " + niceTime(TimestampIds.generate(timestamp)));
-            map.put("clearTime", "<a href=\".\">Clear selected time</a>");
-            response.getWriter().println(replace("home", map));
-            response.setStatus(HttpServletResponse.SC_OK);
-        } catch (Exception ex) {
-            log("home", ex);
-            try {
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            } catch (Exception e) {
-            }
-        }
     }
 
     void journalEntry(Map<String, String> map, HttpServletRequest request) {
@@ -468,7 +431,7 @@ public class SimpleSimon extends HttpServlet {
             } else
                 map.put("error", error);
         }
-        response.getWriter().println(replace("changePassword", map));
+        response.getWriter().println(replace(servletContext, "changePassword", map));
     }
 
     public void changePassword(HttpServletRequest request,
@@ -511,7 +474,7 @@ public class SimpleSimon extends HttpServlet {
             } else
                 map.put("error", error);
         }
-        response.getWriter().println(replace("changePassword", map));
+        response.getWriter().println(replace(servletContext, "changePassword", map));
     }
 
     public void forgotPassword(HttpServletRequest request,
@@ -565,7 +528,7 @@ public class SimpleSimon extends HttpServlet {
                     map.put("error", error);
             }
         }
-        response.getWriter().println(replace("forgotPassword", map));
+        response.getWriter().println(replace(servletContext, "forgotPassword", map));
     }
 
     public void validated(HttpServletRequest request,
@@ -622,7 +585,7 @@ public class SimpleSimon extends HttpServlet {
                 }
             }
         }
-        response.getWriter().println(replace("validated", map));
+        response.getWriter().println(replace(servletContext, "validated", map));
     }
 
     public void login(HttpServletRequest request,
@@ -649,7 +612,7 @@ public class SimpleSimon extends HttpServlet {
                 map.put("emailAddress", encode(emailAddress, 0, ENCODE_FIELD)); //field
             if (error != null) {
                 map.put("error", encode(error, 0, ENCODE_FIELD)); //field
-                response.getWriter().println(replace("login", map));
+                response.getWriter().println(replace(servletContext, "login", map));
             } else
                 response.sendRedirect("?from=login");
             return;
@@ -702,7 +665,7 @@ public class SimpleSimon extends HttpServlet {
                     map.put("success2", encode(me.getMessage(), 0, ENCODE_FIELD)); //field
                 }
             }
-            response.getWriter().println(replace("login", map));
+            response.getWriter().println(replace(servletContext, "login", map));
             return;
         }
         String forgotPassword = request.getParameter("forgotPassword");
@@ -750,7 +713,7 @@ public class SimpleSimon extends HttpServlet {
                 }
                 map.put("success3", encode(msg, 0, ENCODE_FIELD)); //field
             }
-            response.getWriter().println(replace("login", map));
+            response.getWriter().println(replace(servletContext, "login", map));
             return;
         }
     }
@@ -768,12 +731,12 @@ public class SimpleSimon extends HttpServlet {
         if (password == null || password.length() == 0) {
             String error = "Password is required";
             map.put("error", error);
-            response.getWriter().println(replace("newEmailAddress", map));
+            response.getWriter().println(replace(servletContext, "newEmailAddress", map));
             return;
         }
         if (!User.confirmPassword(db, servletContext, userId, password)) {
             map.put("error", "Password does not match.");
-            response.getWriter().println(replace("newEmailAddress", map));
+            response.getWriter().println(replace(servletContext, "newEmailAddress", map));
             return;
         }
         Boolean go = false;
@@ -783,7 +746,7 @@ public class SimpleSimon extends HttpServlet {
         }
         if (!go) {
             map.put("success", "Unable to update your account at this time. Please try again later.");
-            response.getWriter().println(replace("newEmailAddress", map));
+            response.getWriter().println(replace(servletContext, "newEmailAddress", map));
             return;
         }
         String oldEmailAddress = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
@@ -793,7 +756,7 @@ public class SimpleSimon extends HttpServlet {
             log("unable to update", e);
             String msg = "Unable to update your account at this time. Please try again later.";
             map.put("success", msg);
-            response.getWriter().println(replace("changeEmailAddress", map));
+            response.getWriter().println(replace(servletContext, "changeEmailAddress", map));
             return;
         }
         String subject = "Address change notification";
@@ -809,7 +772,7 @@ public class SimpleSimon extends HttpServlet {
         if (!go)
             log("Unable to send email");
         map.put("success", "The email address for your account has been updated.");
-        response.getWriter().println(replace("newEmailAddress", map));
+        response.getWriter().println(replace(servletContext, "newEmailAddress", map));
     }
 
     public void changeEmailAddress(HttpServletRequest request,
@@ -829,7 +792,7 @@ public class SimpleSimon extends HttpServlet {
         }
         if (error != null) {
             map.put("error", error);
-            response.getWriter().println(replace("changeEmailAddress", map));
+            response.getWriter().println(replace(servletContext, "changeEmailAddress", map));
             return;
         }
         String subject = null;
@@ -852,7 +815,7 @@ public class SimpleSimon extends HttpServlet {
                 msg = "Unable to send an email to your address at this time. Please try again later.";
             }
             map.put("success", msg);
-            response.getWriter().println(replace("changeEmailAddress", map));
+            response.getWriter().println(replace(servletContext, "changeEmailAddress", map));
             return;
         }
         long expTime = System.currentTimeMillis() + 1000 * 60 * 60 * 24; // 1 day
@@ -864,7 +827,7 @@ public class SimpleSimon extends HttpServlet {
         if (token == null) {
             String msg = "Unable to send an email to your address at this time. Please try again later.";
             map.put("success", msg);
-            response.getWriter().println(replace("changeEmailAddress", map));
+            response.getWriter().println(replace(servletContext, "changeEmailAddress", map));
             return;
         }
         String self = servletConfig.getInitParameter("self");
@@ -883,12 +846,12 @@ public class SimpleSimon extends HttpServlet {
         if (!sent) {
             String msg = "Unable to send an email to your address at this time. Please try again later.";
             map.put("success", msg);
-            response.getWriter().println(replace("changeEmailAddress", map));
+            response.getWriter().println(replace(servletContext, "changeEmailAddress", map));
             return;
         }
         String msg = "An email has been sent to verify your new address. Please check your inbox.";
         map.put("success", msg);
-        response.getWriter().println(replace("changeEmailAddress", map));
+        response.getWriter().println(replace(servletContext, "changeEmailAddress", map));
     }
 
     public void postJournal(HttpServletRequest request,
@@ -907,7 +870,7 @@ public class SimpleSimon extends HttpServlet {
         } catch (Exception e) {
             throw new ServletException("transaction exception", e);
         }
-        response.getWriter().println(replace("post", map));
+        response.getWriter().println(replace(servletContext, "post", map));
     }
 
     public String encode(String s, int indent, int mode) {
@@ -953,7 +916,7 @@ public class SimpleSimon extends HttpServlet {
         return sb.toString();
     }
 
-    public String niceTime(String timestampId) {
+    public static String niceTime(String timestampId) {
         Date date = new Date(Timestamp.time(timestampId));
         DateFormat formatter = new SimpleDateFormat("MM/dd/yy HH:mm");
         return formatter.format(date);
