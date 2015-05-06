@@ -15,6 +15,7 @@ import org.agilewiki.utils.virtualcow.Db;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
 import javax.mail.MessagingException;
+import javax.servlet.AsyncContext;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -31,7 +32,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -44,6 +44,8 @@ public class SimpleSimon extends HttpServlet {
     public final static int ENCODE_MULTIPLE_LINES = 1;
     public final static int ENCODE_SINGLE_LINE = 2;
     public final static int ENCODE_FIELD = 3;
+
+    Home home;
 
     public static String readResource(ServletContext servletContext, String pageName) throws IOException {
         InputStream is = servletContext.getResourceAsStream("/WEB-INF/pages/" + pageName + ".html");
@@ -106,6 +108,9 @@ public class SimpleSimon extends HttpServlet {
                 db.open();
             else
                 db.open(true);
+
+            home = new Home();
+
             ServletStartTransaction.update(db);
         } catch (Exception ex) {
             destroy();
@@ -141,9 +146,14 @@ public class SimpleSimon extends HttpServlet {
         if (userId == null && !"validated".equals(page) && !"forgotPassword".equals(page))
             page = "login";
 
-        if (page == null || page.equals("home")) {
-            Home.getHome(servletContext, request, response);
-            return;
+        try {
+            if (page == null || page.equals("home")) {
+                AsyncContext asyncContext = request.startAsync();
+                home.getHome(servletContext, asyncContext).call();
+                return;
+            }
+        } catch (Exception ex) {
+            throw new ServletException(ex);
         }
         response.setStatus(HttpServletResponse.SC_OK);
         Map<String, String> map = new HashMap<>();
