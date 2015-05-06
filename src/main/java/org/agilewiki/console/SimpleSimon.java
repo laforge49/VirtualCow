@@ -1,6 +1,7 @@
 package org.agilewiki.console;
 
 import org.agilewiki.console.requests.Home;
+import org.agilewiki.console.requests.NPJE;
 import org.agilewiki.console.transactions.*;
 import org.agilewiki.jactor2.core.impl.Plant;
 import org.agilewiki.utils.ids.Timestamp;
@@ -46,6 +47,7 @@ public class SimpleSimon extends HttpServlet {
     public final static int ENCODE_FIELD = 3;
 
     Home home;
+    NPJE npje;
 
     public static String readResource(ServletContext servletContext, String pageName) throws IOException {
         InputStream is = servletContext.getResourceAsStream("/WEB-INF/pages/" + pageName + ".html");
@@ -88,6 +90,7 @@ public class SimpleSimon extends HttpServlet {
         try {
             servletConfig = getServletConfig();
             servletContext = servletConfig.getServletContext();
+
             new Plant();
             Path dbPath = Paths.get("vcow.db");
             int maxRootBlockSize = 100000;
@@ -104,12 +107,14 @@ public class SimpleSimon extends HttpServlet {
             db.registerTransaction(NewUserTransaction.NAME, NewUserTransaction.class);
             db.registerTransaction(DeleteTransaction.NAME, DeleteTransaction.class);
             db.registerTransaction(ChangeEmailAddressTransaction.NAME, ChangeEmailAddressTransaction.class);
+
             if (Files.exists(dbPath))
                 db.open();
             else
                 db.open(true);
 
-            home = new Home();
+            home = new Home(servletContext);
+            npje = new NPJE(servletContext);
 
             ServletStartTransaction.update(db);
         } catch (Exception ex) {
@@ -121,7 +126,6 @@ public class SimpleSimon extends HttpServlet {
         try {
             ServletStopTransaction.update(db);
         } catch (Exception e) {
-
         }
         db.close();
     }
@@ -149,7 +153,12 @@ public class SimpleSimon extends HttpServlet {
         try {
             if (page == null || page.equals("home")) {
                 AsyncContext asyncContext = request.startAsync();
-                home.getHome(servletContext, asyncContext).call();
+                home.getHome(asyncContext).signal();
+                return;
+            }
+            if (page.equals("post")) {
+                AsyncContext asyncContext = request.startAsync();
+                npje.getNPJE(asyncContext).signal();
                 return;
             }
         } catch (Exception ex) {
