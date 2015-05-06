@@ -12,6 +12,7 @@
             org.agilewiki.console.SimpleSimon
         </servlet-class>
         <load-on-startup>1</load-on-startup>
+        <async-supported>true</async-supported>
         <init-param>
             <param-name>adminPassword</param-name>
             <param-value>123</param-value>

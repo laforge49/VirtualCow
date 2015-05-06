@@ -122,8 +122,6 @@ public class SimpleSimon extends HttpServlet {
                       HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html");
-        response.setStatus(HttpServletResponse.SC_OK);
-        Map<String, String> map = new HashMap<>();
         String page = request.getParameter("to");
         String userIdToken = null;
         Cookie[] cookies = request.getCookies();
@@ -139,10 +137,14 @@ public class SimpleSimon extends HttpServlet {
             userId = Tokens.parse(db, userIdToken);
         if (userId == null && !"validated".equals(page) && !"forgotPassword".equals(page))
             page = "login";
-        else if (page == null || page.equals("home")) {
-            page = "home";
-            home(map, request);
-        } else if (page.equals("journal"))
+
+        if (page == null || page.equals("home")) {
+            home(request, response);
+            return;
+        }
+        response.setStatus(HttpServletResponse.SC_OK);
+        Map<String, String> map = new HashMap<>();
+        if (page.equals("journal"))
             journal(map, request);
         else if (page.equals("journalEntry"))
             journalEntry(map, request);
@@ -178,34 +180,45 @@ public class SimpleSimon extends HttpServlet {
         map.put("email", email);
     }
 
-    void home(Map<String, String> map, HttpServletRequest request) throws ServletException {
-        String timestamp = request.getParameter("timestamp");
-        String dateInString = request.getParameter("date");
-        if (dateInString != null && dateInString.length() > 0) {
-            Date date;
-            SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
-            try {
-                date = formatter.parse(dateInString);
-            } catch (ParseException e) {
-                throw new ServletException(e);
+    void home(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            Map<String, String> map = new HashMap<>();
+            String timestamp = request.getParameter("timestamp");
+            String dateInString = request.getParameter("date");
+            if (dateInString != null && dateInString.length() > 0) {
+                Date date;
+                SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+                try {
+                    date = formatter.parse(dateInString);
+                } catch (ParseException e) {
+                    throw new ServletException(e);
+                }
+                GregorianCalendar calendar = new GregorianCalendar();
+                calendar.setTime(date);
+                calendar.set(Calendar.SECOND, 59);
+                long time = calendar.getTimeInMillis() + 999;
+                timestamp = TimestampIds.value(TimestampIds.timestampId((time << 10) + 1023));
             }
-            GregorianCalendar calendar = new GregorianCalendar();
-            calendar.setTime(date);
-            calendar.set(Calendar.SECOND, 59);
-            long time = calendar.getTimeInMillis() + 999;
-            timestamp = TimestampIds.value(TimestampIds.timestampId((time << 10) + 1023));
+            if (timestamp == null) {
+                map.put("post", "post");
+                response.getWriter().println(replace("home", map));
+                response.setStatus(HttpServletResponse.SC_OK);
+                return;
+            }
+            map.put("setTimestamp", "&timestamp=" + timestamp);
+            map.put("setStartingAt", "&startingAt=" + timestamp);
+            map.put("atTime", "at " + niceTime(TimestampIds.generate(timestamp)));
+            map.put("clearTime", "<a href=\".\">Clear selected time</a>");
+            response.getWriter().println(replace("home", map));
+            response.setStatus(HttpServletResponse.SC_OK);
+        } catch (Exception ex) {
+            log("home", ex);
+            try {
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            } catch (Exception e) {
+            }
         }
-        if (timestamp == null) {
-            map.put("post", "post");
-            return;
-        }
-        map.put("setTimestamp", "&timestamp=" + timestamp);
-        map.put("setStartingAt", "&startingAt=" + timestamp);
-        map.put("atTime", "at " + niceTime(TimestampIds.generate(timestamp)));
-        map.put("clearTime", "<a href=\".\">Clear selected time</a>");
     }
-
-    //MailOut.send("laforge49@gmail.com", "test", "<h1>Hi!</h1>");
 
     void journalEntry(Map<String, String> map, HttpServletRequest request) {
         String timestamp = request.getParameter("timestamp");
