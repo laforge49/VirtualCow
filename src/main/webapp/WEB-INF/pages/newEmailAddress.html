@@ -13,26 +13,27 @@
 </head>
 <body>
 <h1>Virtual COW</h1>
-<h2>Change Password</h2>
+<h2>New Email Address</h2>
+<p>Thank you for validating your new email address.</p>
+<p>Use the form below to update your account.</p>
+<p>--Virtual Cow</p>
 <p>
-    <a href="?from=changePassword">home</a>
+    <a href="?from=newEmailAddress">home</a>
 </p>
 <p style="color:red"><strong>{{error}}&nbsp;</strong></p>
 <form method="POST">
     <input type="hidden" name="from" value="changePassword"/>
     <input type="hidden" name="to" value="changePassword"/>
+    <input type="hidden" name="emailAddress" value="{{emailAddress}}"/>
+    <input type="hidden" name="key" value="{{key}}"/>
     <p>
-        Old Password: <input type="password" name="old" size="60">
-    </p><p>
-    New Password: <input type="password" name="new" size="60">
-    <br/>
-    Confirm New Password: <input type="password" name="confirm" size="60">
+    Password: <input type="password" name="password" size="60">
     </p>
     <input type="submit" value="Submit" />
 </form>
 <h3>{{success}}&nbsp;</h3>
 <p>
-    <a href="?from=changePassword">home</a>
+    <a href="?from=newEmailAddress">home</a>
 </p>
 </body>
 </html>

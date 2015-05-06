@@ -28,7 +28,6 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -150,9 +149,18 @@ public class SimpleSimon extends HttpServlet {
             subjects(map, request);
         else if (page.equals("validated"))
             validated(map, request);
+        else if (page.equals("newEmailAddress"))
+            newEmailAddress(map, request);
         else if (page.equals("forgotPassword"))
             forgotPassword(map, request);
         response.getWriter().println(replace(page, map));
+    }
+
+    void newEmailAddress(Map<String, String> map, HttpServletRequest request) {
+        String key = request.getParameter("key");
+        String email = request.getParameter("emailAddress");
+        map.put("key", key);
+        map.put("emailAddress", email);
     }
 
     void forgotPassword(Map<String, String> map, HttpServletRequest request) {
@@ -378,6 +386,8 @@ public class SimpleSimon extends HttpServlet {
             changePassword(request, response, userId);
         else if ("changeEmailAddress".equals(page))
             changeEmailAddress(request, response, userId);
+        else if ("newEmailAddress".equals(page))
+            newEmailAddress(request, response, userId);
         else if ("deleteAccount".equals(page))
             deleteAccount(request, response, userId);
         else if ("logout".equals(page))
@@ -731,6 +741,48 @@ public class SimpleSimon extends HttpServlet {
         }
     }
 
+    public void newEmailAddress(HttpServletRequest request,
+                                HttpServletResponse response,
+                                String userId)
+            throws ServletException, IOException {
+        String emailAddress = request.getParameter("emailAddress");
+        String token = request.getParameter("key");
+        String password = request.getParameter("password");
+        Map<String, String> map = new HashMap<>();
+        map.put("emailAddress", encode(emailAddress, 0, ENCODE_FIELD)); //field
+        map.put("key", encode(token, 0, ENCODE_FIELD)); //field
+        if (password == null || password.length() == 0) {
+            String error = "Password is required";
+            map.put("error", error);
+            response.getWriter().println(replace("newEmailAddress", map));
+            return;
+        }
+        if (!User.confirmPassword(db, servletContext, userId, password)) {
+            map.put("error", "Password does not match.");
+            response.getWriter().println(replace("newEmailAddress", map));
+            return;
+        }
+        Boolean go = false;
+        try {
+            go = Tokens.validate(db, userId + emailAddress, token);
+        } catch (NoSuchAlgorithmException e) {
+        }
+        if (!go) {
+            map.put("success", "Unable to update your account at this time. Please try again later.");
+            response.getWriter().println(replace("newEmailAddress", map));
+            return;
+        }
+        String subject = "Address change notification";
+        String body = "<p>Your account is now tied to your new email address: " +
+                emailAddress + "</p>" +
+                "<p>--Virtual Cow</p>";
+        go = User.send(db, servletContext, userId, subject, body);
+        if (!go)
+            log("Unable to send email");
+        map.put("success", "The email address for your account has been updated.");
+        response.getWriter().println(replace("newEmailAddress", map));
+    }
+
     public void changeEmailAddress(HttpServletRequest request,
                                    HttpServletResponse response,
                                    String userId)
@@ -788,8 +840,7 @@ public class SimpleSimon extends HttpServlet {
         }
         String self = servletConfig.getInitParameter("self");
         String href = self +
-                "?to=newEmailAddress&oldEmailAddress=" + oldEmailAddress +
-                "&newEmailAddress=" + emailAddress +
+                "?to=newEmailAddress&emailAddress=" + emailAddress +
                 "&key=" + token;
         subject = "Address Validation Request";
         body = "<p>To validate your new email address, please click " +
