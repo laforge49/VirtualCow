@@ -98,6 +98,7 @@ public class SimpleSimon extends HttpServlet {
             db.registerTransaction(ChangePasswordTransaction.NAME, ChangePasswordTransaction.class);
             db.registerTransaction(NewUserTransaction.NAME, NewUserTransaction.class);
             db.registerTransaction(DeleteTransaction.NAME, DeleteTransaction.class);
+            db.registerTransaction(ChangeEmailAddressTransaction.NAME, ChangeEmailAddressTransaction.class);
             if (Files.exists(dbPath))
                 db.open();
             else
@@ -772,11 +773,26 @@ public class SimpleSimon extends HttpServlet {
             response.getWriter().println(replace("newEmailAddress", map));
             return;
         }
+        String oldEmailAddress = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
+        try {
+            new ChangeEmailAddressTransaction().update(db, userId, emailAddress);
+        } catch (Exception e) {
+            log("unable to update", e);
+            String msg = "Unable to update your account at this time. Please try again later.";
+            map.put("success", msg);
+            response.getWriter().println(replace("changeEmailAddress", map));
+            return;
+        }
         String subject = "Address change notification";
         String body = "<p>Your account is now tied to your new email address: " +
                 emailAddress + "</p>" +
                 "<p>--Virtual Cow</p>";
-        go = User.send(db, servletContext, userId, subject, body);
+        try {
+            go = MailOut.send(oldEmailAddress, subject, body);
+        } catch (MessagingException me) {
+            go = false;
+            log("unable to send to " + oldEmailAddress, me);
+        }
         if (!go)
             log("Unable to send email");
         map.put("success", "The email address for your account has been updated.");
@@ -857,7 +873,7 @@ public class SimpleSimon extends HttpServlet {
             response.getWriter().println(replace("changeEmailAddress", map));
             return;
         }
-        String msg = "An email has been sent to verify your address. Please check your inbox.";
+        String msg = "An email has been sent to verify your new address. Please check your inbox.";
         map.put("success", msg);
         response.getWriter().println(replace("changeEmailAddress", map));
     }
