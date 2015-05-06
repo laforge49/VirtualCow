@@ -17,12 +17,13 @@ import java.util.*;
  * Request for home page.
  */
 public class Home extends NonBlockingBladeBase {
+    ServletContext servletContext;
 
-    public Home() throws Exception {
+    public Home(ServletContext servletContext) throws Exception {
+        this.servletContext = servletContext;
     }
 
-    public AReq<Void> getHome(ServletContext servletContext,
-                              AsyncContext asyncContext) {
+    public AReq<Void> getHome(AsyncContext asyncContext) {
         return new AReq<Void>("getHome") {
             HttpServletRequest request = (HttpServletRequest) asyncContext.getRequest();
             HttpServletResponse response = (HttpServletResponse) asyncContext.getResponse();
@@ -50,16 +51,12 @@ public class Home extends NonBlockingBladeBase {
                     }
                     if (timestamp == null) {
                         map.put("post", "post");
-                        response.getWriter().println(SimpleSimon.replace(servletContext, "home", map));
-                        response.setStatus(HttpServletResponse.SC_OK);
-                        asyncContext.complete();
-                        _asyncResponseProcessor.processAsyncResponse(null);
-                        return;
+                    } else {
+                        map.put("setTimestamp", "&timestamp=" + timestamp);
+                        map.put("setStartingAt", "&startingAt=" + timestamp);
+                        map.put("atTime", "at " + SimpleSimon.niceTime(TimestampIds.generate(timestamp)));
+                        map.put("clearTime", "<a href=\".\">Clear selected time</a>");
                     }
-                    map.put("setTimestamp", "&timestamp=" + timestamp);
-                    map.put("setStartingAt", "&startingAt=" + timestamp);
-                    map.put("atTime", "at " + SimpleSimon.niceTime(TimestampIds.generate(timestamp)));
-                    map.put("clearTime", "<a href=\".\">Clear selected time</a>");
                     response.getWriter().println(SimpleSimon.replace(servletContext, "home", map));
                     response.setStatus(HttpServletResponse.SC_OK);
                     asyncContext.complete();
