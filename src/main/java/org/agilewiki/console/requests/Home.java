@@ -4,6 +4,7 @@ import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.TimestampIds;
 import org.agilewiki.jactor2.core.blades.NonBlockingBladeBase;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
+import org.agilewiki.jactor2.core.messages.ExceptionHandler;
 import org.agilewiki.jactor2.core.messages.impl.AsyncRequestImpl;
 
 import javax.servlet.AsyncContext;
@@ -34,41 +35,45 @@ public class Home extends NonBlockingBladeBase {
             protected void processAsyncOperation(AsyncRequestImpl _asyncRequestImpl,
                                                  AsyncResponseProcessor<Void> _asyncResponseProcessor)
                     throws Exception {
-                try {
-                    Map<String, String> map = new HashMap<>();
-                    String timestamp = request.getParameter("timestamp");
-                    String dateInString = request.getParameter("date");
-                    if (dateInString != null && dateInString.length() > 0) {
-                        Date date;
-                        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
-                        try {
-                            date = formatter.parse(dateInString);
-                        } catch (ParseException e) {
-                            throw new ServletException(e);
-                        }
-                        GregorianCalendar calendar = new GregorianCalendar();
-                        calendar.setTime(date);
-                        calendar.set(Calendar.SECOND, 59);
-                        long time = calendar.getTimeInMillis() + 999;
-                        timestamp = TimestampIds.value(TimestampIds.timestampId((time << 10) + 1023));
+                _asyncRequestImpl.setExceptionHandler(new ExceptionHandler() {
+                    @Override
+                    public Object processException(Exception e) throws Exception {
+                        servletContext.log("home", e);
+                        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                        asyncContext.complete();
+                        _asyncResponseProcessor.processAsyncResponse(null);
+                        return null;
                     }
-                    if (timestamp == null) {
-                        map.put("post", "post");
-                    } else {
-                        map.put("setTimestamp", "&timestamp=" + timestamp);
-                        map.put("setStartingAt", "&startingAt=" + timestamp);
-                        map.put("atTime", "at " + SimpleSimon.niceTime(TimestampIds.generate(timestamp)));
-                        map.put("clearTime", "<a href=\".\">Clear selected time</a>");
+                });
+                Map<String, String> map = new HashMap<>();
+                String timestamp = request.getParameter("timestamp");
+                String dateInString = request.getParameter("date");
+                if (dateInString != null && dateInString.length() > 0) {
+                    Date date;
+                    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+                    try {
+                        date = formatter.parse(dateInString);
+                    } catch (ParseException e) {
+                        throw new ServletException(e);
                     }
-                    response.getWriter().println(SimpleSimon.replace(servletContext, "home", map));
-                    response.setStatus(HttpServletResponse.SC_OK);
-                } catch (Exception ex) {
-                    servletContext.log("home", ex);
-                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                } finally {
-                    asyncContext.complete();
-                    _asyncResponseProcessor.processAsyncResponse(null);
+                    GregorianCalendar calendar = new GregorianCalendar();
+                    calendar.setTime(date);
+                    calendar.set(Calendar.SECOND, 59);
+                    long time = calendar.getTimeInMillis() + 999;
+                    timestamp = TimestampIds.value(TimestampIds.timestampId((time << 10) + 1023));
                 }
+                if (timestamp == null) {
+                    map.put("post", "post");
+                } else {
+                    map.put("setTimestamp", "&timestamp=" + timestamp);
+                    map.put("setStartingAt", "&startingAt=" + timestamp);
+                    map.put("atTime", "at " + SimpleSimon.niceTime(TimestampIds.generate(timestamp)));
+                    map.put("clearTime", "<a href=\".\">Clear selected time</a>");
+                }
+                response.getWriter().println(SimpleSimon.replace(servletContext, "home", map));
+                response.setStatus(HttpServletResponse.SC_OK);
+                asyncContext.complete();
+                _asyncResponseProcessor.processAsyncResponse(null);
             }
         };
     }
