@@ -323,7 +323,7 @@ public class SimpleSimon extends HttpServlet {
             } else
                 map.put("error", error);
         }
-        response.getWriter().println(replace(servletContext, "changePassword", map));
+        response.getWriter().println(replace(servletContext, "deleteAccount", map));
     }
 
     public void changePassword(HttpServletRequest request,
