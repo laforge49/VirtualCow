@@ -21,8 +21,8 @@ public class Home extends RequestBlade {
         super(servletContext, db);
     }
 
-    public ASig getHome(AsyncContext asyncContext) {
-        return new SR("home", asyncContext) {
+    public void getHome(String page, AsyncContext asyncContext) {
+        new SR(page, asyncContext) {
             @Override
             protected void process()
                     throws Exception {
@@ -52,6 +52,6 @@ public class Home extends RequestBlade {
                 }
                 finish();
             }
-        };
+        }.signal();
     }
 }

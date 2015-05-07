@@ -5,17 +5,11 @@ import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.User;
 import org.agilewiki.console.transactions.NpjeTransaction;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
-import org.agilewiki.jactor2.core.messages.ExceptionHandler;
-import org.agilewiki.jactor2.core.messages.impl.AsyncRequestImpl;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
 import javax.servlet.AsyncContext;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Request for home page.
@@ -25,18 +19,18 @@ public class NPJE extends RequestBlade {
         super(servletContext, db);
     }
 
-    public ASig getNPJE(AsyncContext asyncContext) {
-        return new SR("post", asyncContext) {
+    public void getNPJE(String page, AsyncContext asyncContext) {
+        new SR(page, asyncContext) {
             @Override
             protected void process()
                     throws Exception {
                 finish();
             }
-        };
+        }.signal();
     }
 
-    public ASig postNPJE(AsyncContext asyncContext, String userId) {
-        return new SR("post", asyncContext) {
+    public void postNPJE(String page, AsyncContext asyncContext, String userId) {
+        new SR(page, asyncContext) {
             @Override
             protected void process()
                     throws Exception {
@@ -64,6 +58,6 @@ public class NPJE extends RequestBlade {
                     }
                 });
             }
-        };
+        }.signal();
     }
 }

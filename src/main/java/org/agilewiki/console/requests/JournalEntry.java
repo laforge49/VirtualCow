@@ -20,8 +20,8 @@ public class JournalEntry extends RequestBlade {
         super(servletContext, db);
     }
 
-    public ASig display(AsyncContext asyncContext) {
-        return new SR("journalEntry", asyncContext) {
+    public void display(String page, AsyncContext asyncContext) {
+        new SR(page, asyncContext) {
             @Override
             protected void process()
                     throws Exception {
@@ -69,6 +69,6 @@ public class JournalEntry extends RequestBlade {
                     }
                 }
             }
-        };
+        }.signal();
     }
 }

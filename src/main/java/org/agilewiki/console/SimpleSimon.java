@@ -158,17 +158,17 @@ public class SimpleSimon extends HttpServlet {
         try {
             if (page == null || page.equals("home")) {
                 AsyncContext asyncContext = request.startAsync();
-                home.getHome(asyncContext).signal();
+                home.getHome("home", asyncContext);
                 return;
             }
             if (page.equals("post")) {
                 AsyncContext asyncContext = request.startAsync();
-                npje.getNPJE(asyncContext).signal();
+                npje.getNPJE(page, asyncContext);
                 return;
             }
             if (page.equals("journalEntry")) {
                 AsyncContext asyncContext = request.startAsync();
-                journalEntry.display(asyncContext).signal();
+                journalEntry.display(page, asyncContext);
                 return;
             }
         } catch (Exception ex) {
@@ -337,7 +337,7 @@ public class SimpleSimon extends HttpServlet {
         try {
             if ("post".equals(page)) {
                 AsyncContext asyncContext = request.startAsync();
-                npje.postNPJE(asyncContext, userId).signal();
+                npje.postNPJE(page, asyncContext, userId);
                 return;
             }
         } catch (Exception ex) {
