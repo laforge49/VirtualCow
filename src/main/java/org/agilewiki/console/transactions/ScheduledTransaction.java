@@ -2,7 +2,6 @@ package org.agilewiki.console.transactions;
 
 import org.agilewiki.console.TimeId;
 import org.agilewiki.console.composite.ScheduleId;
-import org.agilewiki.console.transactions.PJETransaction;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 

@@ -19,14 +19,17 @@
 <p>
     <a href="?from=changeEmailAddress">home</a>
 </p>
+
 <form method="POST">
     <p style="color:red"><strong>{{error}}&nbsp;</strong></p>
     <input type="hidden" name="from" value="changeEmailAddress"/>
     <input type="hidden" name="to" value="changeEmailAddress"/>
+
     <p>
         Email Address: <input type="text" name="emailAddress" size="60" value="{{emailAddress}}">
     </p>
     <input type="submit" value="Validate New Address"/>
+
     <p>{{success}}&nbsp;</p>
 </form>
 <p>

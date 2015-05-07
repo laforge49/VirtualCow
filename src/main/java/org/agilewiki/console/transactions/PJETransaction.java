@@ -4,7 +4,10 @@ import org.agilewiki.console.RandomIds;
 import org.agilewiki.console.User;
 import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.immutable.FactoryRegistry;
-import org.agilewiki.utils.immutable.collections.*;
+import org.agilewiki.utils.immutable.collections.ListAccessor;
+import org.agilewiki.utils.immutable.collections.MapAccessor;
+import org.agilewiki.utils.immutable.collections.MapNode;
+import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.Db;
 import org.agilewiki.utils.virtualcow.Transaction;
 
@@ -52,11 +55,11 @@ public abstract class PJETransaction implements Transaction {
         MapNode mn = db.dbFactoryRegistry.nilMap;
         mn.set(PJE_ID, pjeId);
         MapAccessor pjeMA = pje.mapAccessor();
-        for (ListAccessor pjeLA: pjeMA) {
+        for (ListAccessor pjeLA : pjeMA) {
             String key = pjeLA.key().toString();
             if (Db.transactionNameId.equals(key))
                 continue;
-            for (Object value: pjeLA) {
+            for (Object value : pjeLA) {
                 mn.add(key, value);
             }
         }

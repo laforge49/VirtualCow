@@ -10,7 +10,7 @@ public class TimestampIds extends Timestamp {
     /**
      * Generate an id by prefixing a string value with $t.
      *
-     * @param value    A string.
+     * @param value A string.
      * @return The string $t + value.
      */
     public static String generate(String value) {
@@ -20,7 +20,7 @@ public class TimestampIds extends Timestamp {
     /**
      * Returns the value of a timestampId.
      *
-     * @param timestampId    The timestampId.
+     * @param timestampId The timestampId.
      * @return The timestamp.
      */
     public static String value(String timestampId) {

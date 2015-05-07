@@ -36,7 +36,7 @@ public class Tokens {
     }
 
     public static boolean validate(Db db, String identifier, String token)
-        throws NoSuchAlgorithmException {
+            throws NoSuchAlgorithmException {
         int i = token.indexOf("|");
         if (i == -1)
             return false;

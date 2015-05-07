@@ -1,9 +1,6 @@
 package org.agilewiki.console.transactions;
 
-import org.agilewiki.console.NameIds;
 import org.agilewiki.console.User;
-import org.agilewiki.utils.ids.ValueId;
-import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 import org.agilewiki.utils.virtualcow.Transaction;

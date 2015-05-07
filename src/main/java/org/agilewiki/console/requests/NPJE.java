@@ -4,7 +4,6 @@ import org.agilewiki.console.NameIds;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.User;
 import org.agilewiki.console.transactions.NpjeTransaction;
-import org.agilewiki.jactor2.core.blades.NonBlockingBladeBase;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.jactor2.core.messages.ExceptionHandler;
 import org.agilewiki.jactor2.core.messages.impl.AsyncRequestImpl;
@@ -21,64 +20,26 @@ import java.util.Map;
 /**
  * Request for home page.
  */
-public class NPJE extends NonBlockingBladeBase {
-    ServletContext servletContext;
-    Db db;
-
+public class NPJE extends RequestBlade {
     public NPJE(ServletContext servletContext, Db db) throws Exception {
-        this.servletContext = servletContext;
-        this.db = db;
+        super(servletContext, db);
     }
 
     public ASig getNPJE(AsyncContext asyncContext) {
-        return new ASig("getNPJE") {
-            HttpServletRequest request = (HttpServletRequest) asyncContext.getRequest();
-            HttpServletResponse response = (HttpServletResponse) asyncContext.getResponse();
-
+        return new SR("post", asyncContext) {
             @Override
-            protected void processAsyncOperation(AsyncRequestImpl _asyncRequestImpl,
-                                                 AsyncResponseProcessor<Void> _asyncResponseProcessor)
+            protected void process()
                     throws Exception {
-                _asyncRequestImpl.setExceptionHandler(new ExceptionHandler() {
-                    @Override
-                    public Object processException(Exception e) throws Exception {
-                        servletContext.log("getNPJE", e);
-                        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                        asyncContext.complete();
-                        _asyncResponseProcessor.processAsyncResponse(null);
-                        return null;
-                    }
-                });
-                Map<String, String> map = new HashMap<>();
-                response.getWriter().println(SimpleSimon.replace(servletContext, "post", map));
-                response.setStatus(HttpServletResponse.SC_OK);
-                asyncContext.complete();
-                _asyncResponseProcessor.processAsyncResponse(null);
+                finish();
             }
         };
     }
 
     public ASig postNPJE(AsyncContext asyncContext, String userId) {
-        return new ASig("postNPJE") {
-            HttpServletRequest request = (HttpServletRequest) asyncContext.getRequest();
-            HttpServletResponse response = (HttpServletResponse) asyncContext.getResponse();
-
+        return new SR("post", asyncContext) {
             @Override
-            protected void processAsyncOperation(AsyncRequestImpl _asyncRequestImpl,
-                                                 AsyncResponseProcessor<Void> _asyncResponseProcessor)
+            protected void process()
                     throws Exception {
-                _asyncRequestImpl.setExceptionHandler(new ExceptionHandler() {
-                    @Override
-                    public Object processException(Exception e) throws Exception {
-                        servletContext.log("postNPJE", e);
-                        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                        asyncContext.complete();
-                        _asyncResponseProcessor.processAsyncResponse(null);
-                        return null;
-                    }
-                });
-                Map<String, String> map = new HashMap<>();
-
                 String subject = request.getParameter("subject");
                 String body = request.getParameter("body");
                 map.put("body", SimpleSimon.encode(body, 0, SimpleSimon.ENCODE_FIELD)); //text area
@@ -95,14 +56,11 @@ public class NPJE extends NonBlockingBladeBase {
                 mn = mn.add(NameIds.REMOTE_ADDR, request.getRemoteAddr());
                 mn = mn.add(NameIds.REMOTE_PORT, request.getRemotePort());
 
-                _asyncRequestImpl.send(db.update(NpjeTransaction.NAME, mn), new AsyncResponseProcessor<String>() {
+                asyncRequestImpl.send(db.update(NpjeTransaction.NAME, mn), new AsyncResponseProcessor<String>() {
                     @Override
                     public void processAsyncResponse(String _response) throws Exception {
                         map.put("success", "posted: " + SimpleSimon.niceTime(_response));
-                        response.getWriter().println(SimpleSimon.replace(servletContext, "post", map));
-                        response.setStatus(HttpServletResponse.SC_OK);
-                        asyncContext.complete();
-                        _asyncResponseProcessor.processAsyncResponse(null);
+                        finish();
                     }
                 });
             }

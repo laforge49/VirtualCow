@@ -14,7 +14,6 @@ import org.agilewiki.utils.immutable.collections.ListAccessor;
 import org.agilewiki.utils.immutable.collections.MapAccessor;
 import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.Db;
-import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
 import javax.mail.MessagingException;
 import javax.servlet.AsyncContext;
@@ -35,7 +34,10 @@ import java.nio.file.Paths;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SimpleSimon extends HttpServlet {
     private Db db;
@@ -115,7 +117,7 @@ public class SimpleSimon extends HttpServlet {
             else
                 db.open(true);
 
-            home = new Home(servletContext);
+            home = new Home(servletContext, db);
             npje = new NPJE(servletContext, db);
             journalEntry = new JournalEntry(servletContext, db);
 
