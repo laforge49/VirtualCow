@@ -15,8 +15,8 @@ import javax.servlet.ServletContext;
 /**
  * Request for home page.
  */
-public class JournalEntry extends RequestBlade {
-    public JournalEntry(ServletContext servletContext, Db db) throws Exception {
+public class JournalEntryBlade extends RequestBlade {
+    public JournalEntryBlade(ServletContext servletContext, Db db) throws Exception {
         super(servletContext, db);
     }
 
@@ -34,10 +34,11 @@ public class JournalEntry extends RequestBlade {
                 } else
                     longTimestamp = FactoryRegistry.MAX_TIMESTAMP;
                 String id = TimestampIds.generate(request.getParameter("jeTimestamp"));
+                String time = SimpleSimon.niceTime(id);
+                StringBuilder sb;
                 while (true) {
                     try {
-                        String time = SimpleSimon.niceTime(id);
-                        StringBuilder sb = new StringBuilder();
+                        sb = new StringBuilder();
                         MapAccessor ma = db.mapAccessor();
 
                         ListAccessor la = ma.listAccessor(id);
@@ -59,15 +60,14 @@ public class JournalEntry extends RequestBlade {
                                 }
                             }
                         }
-
-                        map.put("journalEntry", sb.toString());
-                        map.put("jeTimestamp", TimestampIds.value(id));
-                        map.put("time", time);
-                        finish();
-                        return;
+                        break;
                     } catch (UnexpectedChecksumException uce) {
                     }
                 }
+                map.put("journalEntry", sb.toString());
+                map.put("jeTimestamp", TimestampIds.value(id));
+                map.put("time", time);
+                finish();
             }
         }.signal();
     }

@@ -1,8 +1,9 @@
 package org.agilewiki.console;
 
-import org.agilewiki.console.requests.Home;
-import org.agilewiki.console.requests.JournalEntry;
-import org.agilewiki.console.requests.NPJE;
+import org.agilewiki.console.requests.HomeBlade;
+import org.agilewiki.console.requests.JournalBlade;
+import org.agilewiki.console.requests.JournalEntryBlade;
+import org.agilewiki.console.requests.NPJEBlade;
 import org.agilewiki.console.transactions.*;
 import org.agilewiki.jactor2.core.impl.Plant;
 import org.agilewiki.utils.ids.Timestamp;
@@ -10,9 +11,6 @@ import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.BaseRegistry;
 import org.agilewiki.utils.immutable.FactoryRegistry;
-import org.agilewiki.utils.immutable.collections.ListAccessor;
-import org.agilewiki.utils.immutable.collections.MapAccessor;
-import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
 import javax.mail.MessagingException;
@@ -36,7 +34,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class SimpleSimon extends HttpServlet {
@@ -49,9 +46,10 @@ public class SimpleSimon extends HttpServlet {
     public final static int ENCODE_SINGLE_LINE = 2;
     public final static int ENCODE_FIELD = 3;
 
-    Home home;
-    NPJE npje;
-    JournalEntry journalEntry;
+    HomeBlade homeBlade;
+    NPJEBlade npjeBlade;
+    JournalEntryBlade journalEntryBlade;
+    JournalBlade journalBlade;
 
     public static String readResource(ServletContext servletContext, String pageName) throws IOException {
         InputStream is = servletContext.getResourceAsStream("/WEB-INF/pages/" + pageName + ".html");
@@ -117,9 +115,10 @@ public class SimpleSimon extends HttpServlet {
             else
                 db.open(true);
 
-            home = new Home(servletContext, db);
-            npje = new NPJE(servletContext, db);
-            journalEntry = new JournalEntry(servletContext, db);
+            homeBlade = new HomeBlade(servletContext, db);
+            npjeBlade = new NPJEBlade(servletContext, db);
+            journalEntryBlade = new JournalEntryBlade(servletContext, db);
+            journalBlade = new JournalBlade(servletContext, db);
 
             ServletStartTransaction.update(db);
         } catch (Exception ex) {
@@ -158,17 +157,22 @@ public class SimpleSimon extends HttpServlet {
         try {
             if (page == null || page.equals("home")) {
                 AsyncContext asyncContext = request.startAsync();
-                home.getHome("home", asyncContext);
+                homeBlade.getHome("home", asyncContext);
                 return;
             }
             if (page.equals("post")) {
                 AsyncContext asyncContext = request.startAsync();
-                npje.getNPJE(page, asyncContext);
+                npjeBlade.getNPJE(page, asyncContext);
                 return;
             }
             if (page.equals("journalEntry")) {
                 AsyncContext asyncContext = request.startAsync();
-                journalEntry.display(page, asyncContext);
+                journalEntryBlade.display(page, asyncContext);
+                return;
+            }
+            if (page.equals("journal")) {
+                AsyncContext asyncContext = request.startAsync();
+                journalBlade.display(page, asyncContext);
                 return;
             }
         } catch (Exception ex) {
@@ -176,9 +180,7 @@ public class SimpleSimon extends HttpServlet {
         }
         response.setStatus(HttpServletResponse.SC_OK);
         Map<String, String> map = new HashMap<>();
-        if (page.equals("journal"))
-            journal(map, request);
-        else if (page.equals("subjects"))
+        if (page.equals("subjects"))
             subjects(map, request);
         else if (page.equals("validated"))
             validated(map, request);
@@ -246,74 +248,6 @@ public class SimpleSimon extends HttpServlet {
         map.put("startingAt", hasMore ? encode(startingAt, 0, ENCODE_FIELD) : ""); //field
     }
 
-    void journal(Map<String, String> map, HttpServletRequest request) {
-        String timestamp = request.getParameter("timestamp");
-        long longTimestamp;
-        if (timestamp != null) {
-            map.put("setTimestamp", "&timestamp=" + timestamp);
-            String timestampId = TimestampIds.generate(timestamp);
-            map.put("atTime", "at " + niceTime(timestampId));
-            longTimestamp = TimestampIds.timestamp(timestampId);
-        }
-        longTimestamp = FactoryRegistry.MAX_TIMESTAMP;
-        String prefix = Timestamp.PREFIX;
-        String startingAt = request.getParameter("startingAt");
-        if (startingAt == null)
-            startingAt = "";
-        int limit = 25;
-        boolean hasMore = false;
-        StringBuilder sb = new StringBuilder();
-        for (String next : new IdIterable(servletContext, db, prefix, startingAt, longTimestamp)) {
-            if (limit == 0) {
-                hasMore = true;
-                startingAt = next;
-                break;
-            }
-            --limit;
-            String tsId = TimestampIds.generate(next);
-            MapAccessor ma = db.mapAccessor();
-            ListAccessor la = ma.listAccessor(tsId);
-            VersionedMapNode vmn = (VersionedMapNode) la.get(0);
-            sb.append("<a href=\"?from=journal&to=journalEntry&jeTimestamp=" + next);
-            if (timestamp != null) {
-                sb.append("&timestamp=" + timestamp);
-            }
-            sb.append("\">" + niceTime(tsId) + "</a>");
-            sb.append(' ');
-            StringBuilder lb = new StringBuilder();
-            String transactionName = vmn.getList(NameIds.TRANSACTION_NAME).flatList(longTimestamp).get(0).toString();
-            lb.append(transactionName);
-            List subjectList = vmn.getList(NameIds.SUBJECT).flatList(longTimestamp);
-            if (subjectList.size() > 0) {
-                lb.append(' ');
-                String subject = subjectList.get(0).toString();
-                lb.append(subject);
-                lb.append(" | ");
-            }
-            List bodyList = vmn.getList(NameIds.BODY).flatList(longTimestamp);
-            if (bodyList.size() > 0) {
-                if (subjectList.size() == 0) {
-                    lb.append(" | ");
-                }
-                String body = bodyList.get(0).toString();
-                lb.append(body);
-            }
-            String line = lb.toString();
-            line = line.replace("\r", "");
-            if (line.length() > 60)
-                line = line.substring(0, 60);
-            line = encode(line, 0, ENCODE_SINGLE_LINE); //line text
-            sb.append("<font style=\"font-family:courier\">");
-            sb.append(line);
-            sb.append("</font>");
-            sb.append("<br />");
-        }
-        map.put("journal", sb.toString());
-        map.put("more", hasMore ? "more" : "");
-        if (hasMore)
-            map.put("setStartingAt", "&startingAt=" + encode(startingAt, 0, ENCODE_FIELD)); //field
-    }
-
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response)
             throws ServletException, IOException {
@@ -337,7 +271,7 @@ public class SimpleSimon extends HttpServlet {
         try {
             if ("post".equals(page)) {
                 AsyncContext asyncContext = request.startAsync();
-                npje.postNPJE(page, asyncContext, userId);
+                npjeBlade.postNPJE(page, asyncContext, userId);
                 return;
             }
         } catch (Exception ex) {

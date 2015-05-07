@@ -16,8 +16,8 @@ import java.util.GregorianCalendar;
 /**
  * Request for home page.
  */
-public class Home extends RequestBlade {
-    public Home(ServletContext servletContext, Db db) throws Exception {
+public class HomeBlade extends RequestBlade {
+    public HomeBlade(ServletContext servletContext, Db db) throws Exception {
         super(servletContext, db);
     }
 

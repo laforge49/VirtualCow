@@ -14,8 +14,8 @@ import javax.servlet.ServletContext;
 /**
  * Request for home page.
  */
-public class NPJE extends RequestBlade {
-    public NPJE(ServletContext servletContext, Db db) throws Exception {
+public class NPJEBlade extends RequestBlade {
+    public NPJEBlade(ServletContext servletContext, Db db) throws Exception {
         super(servletContext, db);
     }
 
