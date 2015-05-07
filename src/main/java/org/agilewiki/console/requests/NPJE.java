@@ -23,9 +23,11 @@ import java.util.Map;
  */
 public class NPJE extends NonBlockingBladeBase {
     ServletContext servletContext;
+    Db db;
 
-    public NPJE(ServletContext servletContext) throws Exception {
+    public NPJE(ServletContext servletContext, Db db) throws Exception {
         this.servletContext = servletContext;
+        this.db = db;
     }
 
     public ASig getNPJE(AsyncContext asyncContext) {
@@ -56,7 +58,7 @@ public class NPJE extends NonBlockingBladeBase {
         };
     }
 
-    public ASig postNPJE(AsyncContext asyncContext, Db db, String userId) {
+    public ASig postNPJE(AsyncContext asyncContext, String userId) {
         return new ASig("postNPJE") {
             HttpServletRequest request = (HttpServletRequest) asyncContext.getRequest();
             HttpServletResponse response = (HttpServletResponse) asyncContext.getResponse();

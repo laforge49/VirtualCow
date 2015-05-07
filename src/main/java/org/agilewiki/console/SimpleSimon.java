@@ -1,6 +1,7 @@
 package org.agilewiki.console;
 
 import org.agilewiki.console.requests.Home;
+import org.agilewiki.console.requests.JournalEntry;
 import org.agilewiki.console.requests.NPJE;
 import org.agilewiki.console.transactions.*;
 import org.agilewiki.jactor2.core.impl.Plant;
@@ -48,6 +49,7 @@ public class SimpleSimon extends HttpServlet {
 
     Home home;
     NPJE npje;
+    JournalEntry journalEntry;
 
     public static String readResource(ServletContext servletContext, String pageName) throws IOException {
         InputStream is = servletContext.getResourceAsStream("/WEB-INF/pages/" + pageName + ".html");
@@ -114,7 +116,8 @@ public class SimpleSimon extends HttpServlet {
                 db.open(true);
 
             home = new Home(servletContext);
-            npje = new NPJE(servletContext);
+            npje = new NPJE(servletContext, db);
+            journalEntry = new JournalEntry(servletContext, db);
 
             ServletStartTransaction.update(db);
         } catch (Exception ex) {
@@ -161,6 +164,11 @@ public class SimpleSimon extends HttpServlet {
                 npje.getNPJE(asyncContext).signal();
                 return;
             }
+            if (page.equals("journalEntry")) {
+                AsyncContext asyncContext = request.startAsync();
+                journalEntry.display(asyncContext).signal();
+                return;
+            }
         } catch (Exception ex) {
             throw new ServletException(ex);
         }
@@ -168,8 +176,6 @@ public class SimpleSimon extends HttpServlet {
         Map<String, String> map = new HashMap<>();
         if (page.equals("journal"))
             journal(map, request);
-        else if (page.equals("journalEntry"))
-            journalEntry(map, request);
         else if (page.equals("subjects"))
             subjects(map, request);
         else if (page.equals("validated"))
@@ -200,49 +206,6 @@ public class SimpleSimon extends HttpServlet {
         String email = request.getParameter("email");
         map.put("key", key);
         map.put("email", email);
-    }
-
-    void journalEntry(Map<String, String> map, HttpServletRequest request) {
-        String timestamp = request.getParameter("timestamp");
-        long longTimestamp;
-        if (timestamp != null) {
-            map.put("setTimestamp", "&timestamp=" + timestamp);
-            map.put("atTime", "at " + niceTime(TimestampIds.generate(timestamp)));
-            longTimestamp = TimestampIds.timestamp(TimestampIds.generate(timestamp));
-        } else
-            longTimestamp = FactoryRegistry.MAX_TIMESTAMP;
-        String id = TimestampIds.generate(request.getParameter("jeTimestamp"));
-        while (true) {
-            try {
-                String time = niceTime(id);
-                StringBuilder sb = new StringBuilder();
-                MapAccessor ma = db.mapAccessor();
-
-                ListAccessor la = ma.listAccessor(id);
-                if (la != null) {
-                    VersionedMapNode vmn = (VersionedMapNode) la.get(0);
-                    if (vmn != null && !vmn.isEmpty(longTimestamp)) {
-                        sb.append(time);
-                        sb.append("<br />");
-                        MapAccessor vma = vmn.mapAccessor(longTimestamp);
-                        for (ListAccessor vla : vma) {
-                            int sz = vla.size();
-                            for (int i = 0; i < sz; ++i) {
-                                String s = vla.key() + "[" + i + "] = ";
-                                sb.append("&nbsp;&nbsp;&nbsp;&nbsp;" + s + encode("" + vla.get(i), s.length() + 4, ENCODE_MULTIPLE_LINES)); //body text
-                                sb.append("<br />");
-                            }
-                        }
-                    }
-                }
-
-                map.put("journalEntry", sb.toString());
-                map.put("jeTimestamp", TimestampIds.value(id));
-                map.put("time", time);
-                return;
-            } catch (UnexpectedChecksumException uce) {
-            }
-        }
     }
 
     void subjects(Map<String, String> map, HttpServletRequest request) {
@@ -372,7 +335,7 @@ public class SimpleSimon extends HttpServlet {
         try {
             if ("post".equals(page)) {
                 AsyncContext asyncContext = request.startAsync();
-                npje.postNPJE(asyncContext, db, userId).signal();
+                npje.postNPJE(asyncContext, userId).signal();
                 return;
             }
         } catch (Exception ex) {
