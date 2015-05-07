@@ -353,7 +353,6 @@ public class SimpleSimon extends HttpServlet {
                        HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html");
-        response.setStatus(HttpServletResponse.SC_OK);
         String userIdToken = null;
         Cookie[] cookies = request.getCookies();
         if (cookies != null)
@@ -370,9 +369,18 @@ public class SimpleSimon extends HttpServlet {
         if (userId == null && !"validated".equals(page) && !"forgotPassword".equals(page)) {
             page = "login";
         }
-        if ("post".equals(page))
-            postJournal(request, response, userId);
-        else if ("login".equals(page))
+        try {
+            if ("post".equals(page)) {
+                AsyncContext asyncContext = request.startAsync();
+                npje.postNPJE(asyncContext, db, userId).signal();
+                return;
+            }
+        } catch (Exception ex) {
+            throw new ServletException(ex);
+        }
+
+        response.setStatus(HttpServletResponse.SC_OK);
+        if ("login".equals(page))
             login(request, response);
         else if ("validated".equals(page))
             validated(request, response);
@@ -873,26 +881,7 @@ public class SimpleSimon extends HttpServlet {
         response.getWriter().println(replace(servletContext, "changeEmailAddress", map));
     }
 
-    public void postJournal(HttpServletRequest request,
-                            HttpServletResponse response,
-                            String userId)
-            throws ServletException, IOException {
-        String subject = request.getParameter("subject");
-        String body = request.getParameter("body");
-        Map<String, String> map = new HashMap<>();
-        map.put("body", encode(body, 0, ENCODE_FIELD)); //text area
-        if (subject.length() > 0)
-            map.put("subject", encode(subject, 0, ENCODE_FIELD)); //field
-        try {
-            String timestampId = new NpjeTransaction().update(db, subject, body, request, userId);
-            map.put("success", "posted: " + niceTime(timestampId));
-        } catch (Exception e) {
-            throw new ServletException("transaction exception", e);
-        }
-        response.getWriter().println(replace(servletContext, "post", map));
-    }
-
-    public String encode(String s, int indent, int mode) {
+    public static String encode(String s, int indent, int mode) {
         StringBuilder sb = new StringBuilder();
         for (char c : s.toCharArray()) {
             String a;

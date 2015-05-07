@@ -2,6 +2,8 @@ package org.agilewiki.console.transactions;
 
 import org.agilewiki.console.NameIds;
 import org.agilewiki.console.User;
+import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
+import org.agilewiki.jactor2.core.messages.impl.AsyncRequestImpl;
 import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.FactoryRegistry;
@@ -20,21 +22,6 @@ import java.util.List;
  */
 public class NpjeTransaction implements Transaction {
     public final static String NAME = "npje";
-
-    public String update(Db db, String subject, String body, HttpServletRequest request, String userId)
-            throws Exception {
-        MapNode mn = db.dbFactoryRegistry.nilMap;
-        if (subject.length() > 0)
-            mn = mn.add(NameIds.SUBJECT, subject);
-        if (body.length() > 0)
-            mn = mn.add(NameIds.BODY, body);
-        if (userId != null)
-            mn = mn.add(User.USER_KEY, userId);
-        mn = mn.add(NameIds.REMOTE_HOST, request.getRemoteHost());
-        mn = mn.add(NameIds.REMOTE_ADDR, request.getRemoteAddr());
-        mn = mn.add(NameIds.REMOTE_PORT, request.getRemotePort());
-        return db.update(NAME, mn).call();
-    }
 
     @Override
     public void transform(Db db, MapNode mapNode) {

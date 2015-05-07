@@ -6,7 +6,9 @@ import org.agilewiki.jactor2.core.blades.NonBlockingBladeBase;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.jactor2.core.messages.impl.AsyncRequestImpl;
 
-import javax.servlet.*;
+import javax.servlet.AsyncContext;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
@@ -60,16 +62,12 @@ public class Home extends NonBlockingBladeBase {
                     }
                     response.getWriter().println(SimpleSimon.replace(servletContext, "home", map));
                     response.setStatus(HttpServletResponse.SC_OK);
-                    asyncContext.complete();
-                    _asyncResponseProcessor.processAsyncResponse(null);
                 } catch (Exception ex) {
                     servletContext.log("home", ex);
-                    try {
-                        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                        asyncContext.complete();
-                    } catch (Exception e) {
-                    }
-                    throw ex;
+                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                } finally {
+                    asyncContext.complete();
+                    _asyncResponseProcessor.processAsyncResponse(null);
                 }
             }
         };
