@@ -43,51 +43,58 @@ public class JournalBlade extends RequestBlade {
                     startingAt = "";
                 int limit = 25;
                 boolean hasMore = false;
-                StringBuilder sb = new StringBuilder();
-                for (String next : new IdIterable(servletContext, db, prefix, startingAt, longTimestamp)) {
-                    if (limit == 0) {
-                        hasMore = true;
-                        startingAt = next;
-                        break;
-                    }
-                    --limit;
-                    String tsId = TimestampIds.generate(next);
-                    MapAccessor ma = db.mapAccessor();
-                    ListAccessor la = ma.listAccessor(tsId);
-                    VersionedMapNode vmn = (VersionedMapNode) la.get(0);
-                    sb.append("<a href=\"?from=journal&to=journalEntry&jeTimestamp=" + next);
-                    if (timestamp != null) {
-                        sb.append("&timestamp=" + timestamp);
-                    }
-                    sb.append("\">" + SimpleSimon.niceTime(tsId) + "</a>");
-                    sb.append(' ');
-                    StringBuilder lb = new StringBuilder();
-                    String transactionName = vmn.getList(NameIds.TRANSACTION_NAME).flatList(longTimestamp).get(0).toString();
-                    lb.append(transactionName);
-                    List subjectList = vmn.getList(NameIds.SUBJECT).flatList(longTimestamp);
-                    if (subjectList.size() > 0) {
-                        lb.append(' ');
-                        String subject = subjectList.get(0).toString();
-                        lb.append(subject);
-                        lb.append(" | ");
-                    }
-                    List bodyList = vmn.getList(NameIds.BODY).flatList(longTimestamp);
-                    if (bodyList.size() > 0) {
-                        if (subjectList.size() == 0) {
-                            lb.append(" | ");
+                StringBuilder sb;
+                while (true) {
+                    try {
+                        sb = new StringBuilder();
+                        for (String next : new IdIterable(servletContext, db, prefix, startingAt, longTimestamp)) {
+                            if (limit == 0) {
+                                hasMore = true;
+                                startingAt = next;
+                                break;
+                            }
+                            --limit;
+                            String tsId = TimestampIds.generate(next);
+                            MapAccessor ma = db.mapAccessor();
+                            ListAccessor la = ma.listAccessor(tsId);
+                            VersionedMapNode vmn = (VersionedMapNode) la.get(0);
+                            sb.append("<a href=\"?from=journal&to=journalEntry&jeTimestamp=" + next);
+                            if (timestamp != null) {
+                                sb.append("&timestamp=" + timestamp);
+                            }
+                            sb.append("\">" + SimpleSimon.niceTime(tsId) + "</a>");
+                            sb.append(' ');
+                            StringBuilder lb = new StringBuilder();
+                            String transactionName = vmn.getList(NameIds.TRANSACTION_NAME).flatList(longTimestamp).get(0).toString();
+                            lb.append(transactionName);
+                            List subjectList = vmn.getList(NameIds.SUBJECT).flatList(longTimestamp);
+                            if (subjectList.size() > 0) {
+                                lb.append(' ');
+                                String subject = subjectList.get(0).toString();
+                                lb.append(subject);
+                                lb.append(" | ");
+                            }
+                            List bodyList = vmn.getList(NameIds.BODY).flatList(longTimestamp);
+                            if (bodyList.size() > 0) {
+                                if (subjectList.size() == 0) {
+                                    lb.append(" | ");
+                                }
+                                String body = bodyList.get(0).toString();
+                                lb.append(body);
+                            }
+                            String line = lb.toString();
+                            line = line.replace("\r", "");
+                            if (line.length() > 60)
+                                line = line.substring(0, 60);
+                            line = SimpleSimon.encode(line, 0, SimpleSimon.ENCODE_SINGLE_LINE); //line text
+                            sb.append("<font style=\"font-family:courier\">");
+                            sb.append(line);
+                            sb.append("</font>");
+                            sb.append("<br />");
                         }
-                        String body = bodyList.get(0).toString();
-                        lb.append(body);
+                        break;
+                    } catch (UnexpectedChecksumException uce) {
                     }
-                    String line = lb.toString();
-                    line = line.replace("\r", "");
-                    if (line.length() > 60)
-                        line = line.substring(0, 60);
-                    line = SimpleSimon.encode(line, 0, SimpleSimon.ENCODE_SINGLE_LINE); //line text
-                    sb.append("<font style=\"font-family:courier\">");
-                    sb.append(line);
-                    sb.append("</font>");
-                    sb.append("<br />");
                 }
                 map.put("journal", sb.toString());
                 map.put("more", hasMore ? "more" : "");
