@@ -13,7 +13,7 @@ import javax.servlet.AsyncContext;
 import javax.servlet.ServletContext;
 
 /**
- * Request for home page.
+ * Request for a journal entry.
  */
 public class JournalEntryBlade extends RequestBlade {
     public JournalEntryBlade(ServletContext servletContext, Db db) throws Exception {

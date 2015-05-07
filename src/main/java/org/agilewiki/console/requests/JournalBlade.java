@@ -17,7 +17,7 @@ import javax.servlet.ServletContext;
 import java.util.List;
 
 /**
- * Request for home page.
+ * Request the journal.
  */
 public class JournalBlade extends RequestBlade {
     public JournalBlade(ServletContext servletContext, Db db) throws Exception {
@@ -41,11 +41,12 @@ public class JournalBlade extends RequestBlade {
                 String startingAt = request.getParameter("startingAt");
                 if (startingAt == null)
                     startingAt = "";
-                int limit = 25;
-                boolean hasMore = false;
                 StringBuilder sb;
+                boolean hasMore;
                 while (true) {
                     try {
+                        int limit = 25;
+                        hasMore = false;
                         sb = new StringBuilder();
                         for (String next : new IdIterable(servletContext, db, prefix, startingAt, longTimestamp)) {
                             if (limit == 0) {

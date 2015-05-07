@@ -1,9 +1,6 @@
 package org.agilewiki.console;
 
-import org.agilewiki.console.requests.HomeBlade;
-import org.agilewiki.console.requests.JournalBlade;
-import org.agilewiki.console.requests.JournalEntryBlade;
-import org.agilewiki.console.requests.NPJEBlade;
+import org.agilewiki.console.requests.*;
 import org.agilewiki.console.transactions.*;
 import org.agilewiki.jactor2.core.impl.Plant;
 import org.agilewiki.utils.ids.Timestamp;
@@ -50,6 +47,7 @@ public class SimpleSimon extends HttpServlet {
     NPJEBlade npjeBlade;
     JournalEntryBlade journalEntryBlade;
     JournalBlade journalBlade;
+    SubjectsBlade subjectsBlade;
 
     public static String readResource(ServletContext servletContext, String pageName) throws IOException {
         InputStream is = servletContext.getResourceAsStream("/WEB-INF/pages/" + pageName + ".html");
@@ -119,6 +117,7 @@ public class SimpleSimon extends HttpServlet {
             npjeBlade = new NPJEBlade(servletContext, db);
             journalEntryBlade = new JournalEntryBlade(servletContext, db);
             journalBlade = new JournalBlade(servletContext, db);
+            subjectsBlade = new SubjectsBlade(servletContext, db);
 
             ServletStartTransaction.update(db);
         } catch (Exception ex) {
@@ -175,14 +174,17 @@ public class SimpleSimon extends HttpServlet {
                 journalBlade.display(page, asyncContext);
                 return;
             }
+            if (page.equals("subjects")) {
+                AsyncContext asyncContext = request.startAsync();
+                subjectsBlade.display(page, asyncContext);
+                return;
+            }
         } catch (Exception ex) {
             throw new ServletException(ex);
         }
         response.setStatus(HttpServletResponse.SC_OK);
         Map<String, String> map = new HashMap<>();
-        if (page.equals("subjects"))
-            subjects(map, request);
-        else if (page.equals("validated"))
+        if (page.equals("validated"))
             validated(map, request);
         else if (page.equals("newEmailAddress"))
             newEmailAddress(map, request);
@@ -210,42 +212,6 @@ public class SimpleSimon extends HttpServlet {
         String email = request.getParameter("email");
         map.put("key", key);
         map.put("email", email);
-    }
-
-    void subjects(Map<String, String> map, HttpServletRequest request) {
-        String timestamp = request.getParameter("timestamp");
-        long longTimestamp;
-        if (timestamp != null) {
-            map.put("formTimestamp", "<input type=\"hidden\" name=\"timestamp\" value=\"" + timestamp + "\"/>");
-            map.put("setTimestamp", "&timestamp=" + timestamp);
-            map.put("atTime", "at " + niceTime(TimestampIds.generate(timestamp)));
-            longTimestamp = TimestampIds.timestamp(TimestampIds.generate(timestamp));
-        } else
-            longTimestamp = FactoryRegistry.MAX_TIMESTAMP;
-        String prefix = SecondaryId.SECONDARY_ID + NameIds.SUBJECT;
-        String startingAt = request.getParameter("startingAt");
-        if (startingAt == null)
-            startingAt = "";
-        int limit = 25;
-        boolean hasMore = false;
-        StringBuilder sb = new StringBuilder();
-        for (String id : new IdIterable(servletContext, db, prefix, ValueId.generate(startingAt), longTimestamp)) {
-            if (limit == 0) {
-                hasMore = true;
-                startingAt = ValueId.value(id);
-                break;
-            }
-            --limit;
-            String line = ValueId.value(id);
-            line = line.replaceAll("\r", "");
-            if (line.length() > 60)
-                line = line.substring(0, 60);
-            line = encode(line, 0, ENCODE_SINGLE_LINE); //line text
-            sb.append(line);
-            sb.append("<br />");
-        }
-        map.put("subjects", sb.toString());
-        map.put("startingAt", hasMore ? encode(startingAt, 0, ENCODE_FIELD) : ""); //field
     }
 
     public void doPost(HttpServletRequest request,

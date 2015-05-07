@@ -12,7 +12,7 @@ import javax.servlet.AsyncContext;
 import javax.servlet.ServletContext;
 
 /**
- * Request for home page.
+ * Request for a non-performing journal entry.
  */
 public class NPJEBlade extends RequestBlade {
     public NPJEBlade(ServletContext servletContext, Db db) throws Exception {
