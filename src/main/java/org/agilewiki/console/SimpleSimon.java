@@ -263,7 +263,7 @@ public class SimpleSimon extends HttpServlet {
                 npjeBlade.postNPJE(page, asyncContext, userId);
                 return;
             }
-            if ("profile".equals(page)) {
+            if ("logout".equals(page)) {
                 AsyncContext asyncContext = request.startAsync();
                 logoutBlade.post(page, asyncContext, userId);
                 return;
