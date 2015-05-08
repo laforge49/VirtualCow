@@ -52,6 +52,7 @@ public class SimpleSimon extends HttpServlet {
     JournalBlade journalBlade;
     SubjectsBlade subjectsBlade;
     LogoutBlade logoutBlade;
+    DeleteAccountBlade deleteAccountBlade;
 
     public static String readResource(ServletContext servletContext, String pageName) throws IOException {
         InputStream is = servletContext.getResourceAsStream("/WEB-INF/pages/" + pageName + ".html");
@@ -125,6 +126,7 @@ public class SimpleSimon extends HttpServlet {
             journalBlade = new JournalBlade(servletContext, db);
             subjectsBlade = new SubjectsBlade(servletContext, db);
             logoutBlade = new LogoutBlade(servletContext, db);
+            deleteAccountBlade = new DeleteAccountBlade(servletContext, db, mailOut);
 
             ServletStartTransaction.update(db);
         } catch (Exception ex) {
@@ -186,6 +188,11 @@ public class SimpleSimon extends HttpServlet {
             if (page.equals("subjects")) {
                 AsyncContext asyncContext = request.startAsync();
                 subjectsBlade.display(page, asyncContext);
+                return;
+            }
+            if (page.equals("deleteAccount")) {
+                AsyncContext asyncContext = request.startAsync();
+                deleteAccountBlade.get(page, asyncContext);
                 return;
             }
         } catch (Exception ex) {
@@ -254,6 +261,11 @@ public class SimpleSimon extends HttpServlet {
                 logoutBlade.post(page, asyncContext, userId);
                 return;
             }
+            if ("deleteAccount".equals(page)) {
+                AsyncContext asyncContext = request.startAsync();
+                deleteAccountBlade.post(page, asyncContext, userId);
+                return;
+            }
         } catch (Exception ex) {
             throw new ServletException(ex);
         }
@@ -271,49 +283,8 @@ public class SimpleSimon extends HttpServlet {
             changeEmailAddress(request, response, userId);
         else if ("newEmailAddress".equals(page))
             newEmailAddress(request, response, userId);
-        else if ("deleteAccount".equals(page))
-            deleteAccount(request, response, userId);
         else
             throw new ServletException("unknown post: " + page);
-    }
-
-    public void deleteAccount(HttpServletRequest request,
-                              HttpServletResponse response,
-                              String userId)
-            throws ServletException, IOException {
-        String oldPassword = request.getParameter("password");
-        Map<String, String> map = new HashMap<>();
-        if (oldPassword == null || oldPassword.length() == 0)
-            map.put("error", "Enter your password in the old password field");
-        else if (!User.confirmPassword(db, servletContext, userId, oldPassword))
-            map.put("error", "Incorrect password");
-        else {
-            String error = null;
-            String email = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
-            try {
-                new DeleteTransaction().update(
-                        db,
-                        userId,
-                        email);
-            } catch (Exception e) {
-                error = "system error--unable to update database";
-                log("update failure", e);
-            }
-            if (error == null) {
-                try {
-                    MailOut.send(email,
-                            "Delete Account Notification",
-                            "<p>Your account has been deleted.</p>" +
-                                    "<p>--Virtual Cow</p>");
-                } catch (MessagingException me) {
-                    log("unable to send to " + email, me);
-                }
-                response.sendRedirect("?to=login&from=deleteAccount");
-                return;
-            } else
-                map.put("error", error);
-        }
-        response.getWriter().println(replace(servletContext, "deleteAccount", map));
     }
 
     public void changePassword(HttpServletRequest request,

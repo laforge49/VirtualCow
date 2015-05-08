@@ -7,6 +7,7 @@ import org.agilewiki.jactor2.core.messages.impl.AsyncRequestImpl;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.ServletContext;
 import java.util.Date;
 import java.util.Properties;
 
@@ -59,13 +60,32 @@ public class MailOut extends BlockingBladeBase {
     public MailOut() throws Exception {
     }
 
-    public AReq<Boolean> sendEmail(String toAddress, String subject, String body) {
+    public AReq<Boolean> sendEmail(ServletContext servletContext,
+                                   String toAddress,
+                                   String subject,
+                                   String body,
+                                   StringBuilder errorBuilder) {
         return new AReq<Boolean>("sendEmail") {
             @Override
             protected void processAsyncOperation(AsyncRequestImpl _asyncRequestImpl,
                                                  AsyncResponseProcessor<Boolean> _asyncResponseProcessor)
                     throws Exception {
-                _asyncResponseProcessor.processAsyncResponse(MailOut.this.send(toAddress, subject, body));
+                boolean success = false;
+                try {
+                    success = MailOut.this.send(toAddress, subject, body);
+                    if (!success) {
+                        servletContext.log("email authentication error");
+                        if (errorBuilder != null) {
+                            errorBuilder.append(
+                                    "Unable to send an email to your address at this time. Please try again later.");
+                        }
+                    }
+                } catch (MessagingException e) {
+                    if (errorBuilder != null) {
+                        errorBuilder.append(e.getMessage());
+                    }
+                }
+                _asyncResponseProcessor.processAsyncResponse(success);
             }
         };
     }
