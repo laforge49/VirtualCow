@@ -13,7 +13,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 
 /**
- * Request for a non-performing journal entry.
+ * Request for logging out.
  */
 public class LogoutBlade extends RequestBlade {
     public LogoutBlade(ServletContext servletContext, Db db) throws Exception {

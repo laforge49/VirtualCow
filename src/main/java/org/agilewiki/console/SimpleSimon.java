@@ -53,6 +53,7 @@ public class SimpleSimon extends HttpServlet {
     SubjectsBlade subjectsBlade;
     LogoutBlade logoutBlade;
     DeleteAccountBlade deleteAccountBlade;
+    ChangePasswordBlade changePasswordBlade;
 
     public static String readResource(ServletContext servletContext, String pageName) throws IOException {
         InputStream is = servletContext.getResourceAsStream("/WEB-INF/pages/" + pageName + ".html");
@@ -127,6 +128,7 @@ public class SimpleSimon extends HttpServlet {
             subjectsBlade = new SubjectsBlade(servletContext, db);
             logoutBlade = new LogoutBlade(servletContext, db);
             deleteAccountBlade = new DeleteAccountBlade(servletContext, db, mailOut);
+            changePasswordBlade = new ChangePasswordBlade(servletContext, db, mailOut);
 
             ServletStartTransaction.update(db);
         } catch (Exception ex) {
@@ -191,6 +193,11 @@ public class SimpleSimon extends HttpServlet {
                 return;
             }
             if (page.equals("deleteAccount")) {
+                AsyncContext asyncContext = request.startAsync();
+                deleteAccountBlade.get(page, asyncContext);
+                return;
+            }
+            if (page.equals("changePassword")) {
                 AsyncContext asyncContext = request.startAsync();
                 deleteAccountBlade.get(page, asyncContext);
                 return;

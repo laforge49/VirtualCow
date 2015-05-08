@@ -9,17 +9,16 @@ import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
-import javax.mail.MessagingException;
 import javax.servlet.AsyncContext;
 import javax.servlet.ServletContext;
 
 /**
- * Request for deleting an account.
+ * Requests for changing a password.
  */
-public class DeleteAccountBlade extends RequestBlade {
+public class ChangePasswordBlade extends RequestBlade {
     final MailOut mailOut;
 
-    public DeleteAccountBlade(ServletContext servletContext, Db db, MailOut mailOut) throws Exception {
+    public ChangePasswordBlade(ServletContext servletContext, Db db, MailOut mailOut) throws Exception {
         super(servletContext, db);
         this.mailOut = mailOut;
     }
