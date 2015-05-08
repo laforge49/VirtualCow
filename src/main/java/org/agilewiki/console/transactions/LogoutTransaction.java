@@ -14,15 +14,6 @@ import org.agilewiki.utils.virtualcow.Transaction;
 public class LogoutTransaction implements Transaction {
     public final static String NAME = "logout";
 
-    public String update(Db db, String subject, String userId)
-            throws Exception {
-        MapNode mn = db.dbFactoryRegistry.nilMap;
-        if (subject.length() > 0)
-            mn = mn.add(NameIds.SUBJECT, subject);
-        mn = mn.add(User.USER_KEY, userId);
-        return db.update(NAME, mn).call();
-    }
-
     @Override
     public void transform(Db db, MapNode mapNode) {
         String jeName = db.getJEName();

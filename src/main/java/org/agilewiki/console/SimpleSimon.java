@@ -48,6 +48,7 @@ public class SimpleSimon extends HttpServlet {
     JournalEntryBlade journalEntryBlade;
     JournalBlade journalBlade;
     SubjectsBlade subjectsBlade;
+    LogoutBlade logoutBlade;
 
     public static String readResource(ServletContext servletContext, String pageName) throws IOException {
         InputStream is = servletContext.getResourceAsStream("/WEB-INF/pages/" + pageName + ".html");
@@ -118,6 +119,7 @@ public class SimpleSimon extends HttpServlet {
             journalEntryBlade = new JournalEntryBlade(servletContext, db);
             journalBlade = new JournalBlade(servletContext, db);
             subjectsBlade = new SubjectsBlade(servletContext, db);
+            logoutBlade = new LogoutBlade(servletContext, db);
 
             ServletStartTransaction.update(db);
         } catch (Exception ex) {
@@ -240,6 +242,11 @@ public class SimpleSimon extends HttpServlet {
                 npjeBlade.postNPJE(page, asyncContext, userId);
                 return;
             }
+            if ("logout".equals(page)) {
+                AsyncContext asyncContext = request.startAsync();
+                logoutBlade.post(page, asyncContext, userId);
+                return;
+            }
         } catch (Exception ex) {
             throw new ServletException(ex);
         }
@@ -259,32 +266,8 @@ public class SimpleSimon extends HttpServlet {
             newEmailAddress(request, response, userId);
         else if ("deleteAccount".equals(page))
             deleteAccount(request, response, userId);
-        else if ("logout".equals(page))
-            logout(request, response, userId);
         else
             throw new ServletException("unknown post: " + page);
-    }
-
-    public void logout(HttpServletRequest request,
-                       HttpServletResponse response,
-                       String userId)
-            throws ServletException, IOException {
-        String email = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
-        try {
-            new LogoutTransaction().update(db, email, userId);
-        } catch (Exception e) {
-            log("failed update", e);
-        }
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null)
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("userId")) {
-                    cookie.setMaxAge(0);
-                    response.addCookie(cookie);
-                    break;
-                }
-            }
-        response.sendRedirect("?from=logout");
     }
 
     public void deleteAccount(HttpServletRequest request,

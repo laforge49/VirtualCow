@@ -71,5 +71,11 @@ public class RequestBlade extends NonBlockingBladeBase {
             asyncContext.complete();
             asyncResponseProcessor.processAsyncResponse(null);
         }
+
+        protected void redirect(String url) throws Exception {
+            response.sendRedirect(url);
+            asyncContext.complete();
+            asyncResponseProcessor.processAsyncResponse(null);
+        }
     }
 }
