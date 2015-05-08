@@ -15,11 +15,18 @@
 <p>
 <h1>Virtual COW</h1>
 
-<h2>Welcome</h2>
+<h2>My Profile</h2>
+<p><a href="?from=profile">home</a></p>
 
-<p>Welcome. --Virtual Cow</p>
-
-<a href="?from=welcome&to=login">New Account / Login / Forgot Password</a>
+<form method="POST">
+    <input type="hidden" name="from" value="home"/>
+    <input type="hidden" name="to" value="logout"/>
+    <input type="submit" value="Logout"/>
+</form>
+<a href="?from=home&to=changePassword">Change Password</a><br/>
+<a href="?from=home&to=changeEmailAddress">Change Email Address</a><br/>
+<a href="?from=home&to=deleteAccount">Delete Account</a><br/>
+<p><a href="?from=profile">home</a></p>
 
 </body>
 </html>
