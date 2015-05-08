@@ -32,6 +32,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SimpleSimon extends HttpServlet {
+
+    public final static String self = System.getProperties().getProperty("self", "http://localhost/");
+
     private Db db;
     ServletConfig servletConfig;
     ServletContext servletContext;
@@ -509,7 +512,6 @@ public class SimpleSimon extends HttpServlet {
                 String body = null;
                 boolean go = true;
                 if (userId == null) {
-                    String self = servletConfig.getInitParameter("self");
                     try {
                         String token = Tokens.generate(db, emailAddress,
                                 1000 * 60 * 60 * 24 + System.currentTimeMillis()); //1 day validity
@@ -563,7 +565,6 @@ public class SimpleSimon extends HttpServlet {
                 if (userId == null) {
                     go = false;
                 } else {
-                    String self = servletConfig.getInitParameter("self");
                     try {
                         String token = Tokens.generate(db, emailAddress,
                                 1000 * 60 * 60 * 24 + System.currentTimeMillis()); //1 day validity
@@ -707,7 +708,6 @@ public class SimpleSimon extends HttpServlet {
             response.getWriter().println(replace(servletContext, "changeEmailAddress", map));
             return;
         }
-        String self = servletConfig.getInitParameter("self");
         String href = self +
                 "?to=newEmailAddress&emailAddress=" + emailAddress +
                 "&key=" + token;
