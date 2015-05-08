@@ -157,8 +157,10 @@ public class SimpleSimon extends HttpServlet {
         String userId = null;
         if (userIdToken != null)
             userId = Tokens.parse(db, userIdToken);
-        if (userId == null && !"validated".equals(page) && !"forgotPassword".equals(page))
-            page = "login";
+        if (userId == null &&
+                !"validated".equals(page) &&
+                !"forgotPassword".equals(page) && !"login".equals(page))
+            page = "welcome";
 
         try {
             if (page == null || page.equals("home")) {
