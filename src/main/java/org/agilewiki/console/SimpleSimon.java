@@ -4,8 +4,6 @@ import org.agilewiki.console.requests.*;
 import org.agilewiki.console.transactions.*;
 import org.agilewiki.jactor2.core.impl.Plant;
 import org.agilewiki.utils.ids.Timestamp;
-import org.agilewiki.utils.ids.ValueId;
-import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.BaseRegistry;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.virtualcow.Db;
@@ -42,6 +40,8 @@ public class SimpleSimon extends HttpServlet {
     public final static int ENCODE_MULTIPLE_LINES = 1;
     public final static int ENCODE_SINGLE_LINE = 2;
     public final static int ENCODE_FIELD = 3;
+
+    MailOut mailOut;
 
     HomeBlade homeBlade;
     NPJEBlade npjeBlade;
@@ -113,6 +113,8 @@ public class SimpleSimon extends HttpServlet {
                 db.open();
             else
                 db.open(true);
+
+            mailOut = new MailOut();
 
             homeBlade = new HomeBlade(servletContext, db);
             npjeBlade = new NPJEBlade(servletContext, db);

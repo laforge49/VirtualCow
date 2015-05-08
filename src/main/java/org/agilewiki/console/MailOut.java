@@ -1,5 +1,9 @@
 package org.agilewiki.console;
 
+import org.agilewiki.jactor2.core.blades.BlockingBladeBase;
+import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
+import org.agilewiki.jactor2.core.messages.impl.AsyncRequestImpl;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -9,7 +13,7 @@ import java.util.Properties;
 /**
  * SSL sender.
  */
-public class MailOut {
+public class MailOut extends BlockingBladeBase {
     static Session session;
 
     static {
@@ -50,5 +54,19 @@ public class MailOut {
         } catch (AuthenticationFailedException e) {
             return false;
         }
+    }
+
+    public MailOut() throws Exception {
+    }
+
+    public AReq<Boolean> sendEmail(String toAddress, String subject, String body) {
+        return new AReq<Boolean>("sendEmail") {
+            @Override
+            protected void processAsyncOperation(AsyncRequestImpl _asyncRequestImpl,
+                                                 AsyncResponseProcessor<Boolean> _asyncResponseProcessor)
+                    throws Exception {
+                _asyncResponseProcessor.processAsyncResponse(MailOut.this.send(toAddress, subject, body));
+            }
+        };
     }
 }
