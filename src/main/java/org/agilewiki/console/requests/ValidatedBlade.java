@@ -2,10 +2,8 @@ package org.agilewiki.console.requests;
 
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.transactions.NewUserTransaction;
-import org.agilewiki.utils.virtualcow.Db;
 
 import javax.servlet.AsyncContext;
-import javax.servlet.ServletContext;
 
 /**
  * Create a new user with a validated email address.

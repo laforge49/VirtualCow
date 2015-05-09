@@ -6,10 +6,8 @@ import org.agilewiki.console.User;
 import org.agilewiki.console.transactions.NpjeTransaction;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.utils.immutable.collections.MapNode;
-import org.agilewiki.utils.virtualcow.Db;
 
 import javax.servlet.AsyncContext;
-import javax.servlet.ServletContext;
 
 /**
  * Request for a non-performing journal entry.

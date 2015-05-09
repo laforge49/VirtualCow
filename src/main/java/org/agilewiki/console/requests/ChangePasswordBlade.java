@@ -1,6 +1,5 @@
 package org.agilewiki.console.requests;
 
-import org.agilewiki.console.MailOut;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.Tokens;
 import org.agilewiki.console.User;
@@ -8,10 +7,8 @@ import org.agilewiki.console.transactions.ChangePasswordTransaction;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.MapNode;
-import org.agilewiki.utils.virtualcow.Db;
 
 import javax.servlet.AsyncContext;
-import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import java.security.NoSuchAlgorithmException;
 

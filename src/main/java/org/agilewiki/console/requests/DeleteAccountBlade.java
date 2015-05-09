@@ -1,6 +1,5 @@
 package org.agilewiki.console.requests;
 
-import org.agilewiki.console.MailOut;
 import org.agilewiki.console.NameIds;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.User;
@@ -8,11 +7,8 @@ import org.agilewiki.console.transactions.DeleteTransaction;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.MapNode;
-import org.agilewiki.utils.virtualcow.Db;
 
-import javax.mail.MessagingException;
 import javax.servlet.AsyncContext;
-import javax.servlet.ServletContext;
 
 /**
  * Request for deleting an account.
@@ -60,18 +56,18 @@ public class DeleteAccountBlade extends PostRequestBlade {
                         new AsyncResponseProcessor<String>() {
                             @Override
                             public void processAsyncResponse(String _response) throws Exception {
-                                    asyncRequestImpl.send(mailOut.sendEmail(servletContext,
-                                                    email,
-                                                    "Delete Account Notification",
-                                                    "<p>Your account has been deleted.</p>" +
-                                                            "<p>--Virtual Cow</p>",
-                                                    null),
-                                            new AsyncResponseProcessor<Boolean>() {
-                                                @Override
-                                                public void processAsyncResponse(Boolean _response) throws Exception {
-                                                    redirect("?to=login&from=deleteAccount");
-                                                }
-                                            });
+                                asyncRequestImpl.send(mailOut.sendEmail(servletContext,
+                                                email,
+                                                "Delete Account Notification",
+                                                "<p>Your account has been deleted.</p>" +
+                                                        "<p>--Virtual Cow</p>",
+                                                null),
+                                        new AsyncResponseProcessor<Boolean>() {
+                                            @Override
+                                            public void processAsyncResponse(Boolean _response) throws Exception {
+                                                redirect("?to=login&from=deleteAccount");
+                                            }
+                                        });
                             }
                         });
             }

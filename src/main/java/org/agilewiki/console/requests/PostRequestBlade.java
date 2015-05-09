@@ -1,15 +1,9 @@
 package org.agilewiki.console.requests;
 
-import org.agilewiki.console.NameIds;
 import org.agilewiki.console.SimpleSimon;
-import org.agilewiki.console.User;
 import org.agilewiki.console.transactions.LogoutTransaction;
-import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
-import org.agilewiki.utils.immutable.FactoryRegistry;
-import org.agilewiki.utils.immutable.collections.MapNode;
 
 import javax.servlet.AsyncContext;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 

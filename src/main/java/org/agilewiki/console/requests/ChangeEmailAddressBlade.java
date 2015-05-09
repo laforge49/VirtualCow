@@ -1,19 +1,9 @@
 package org.agilewiki.console.requests;
 
-import org.agilewiki.console.MailOut;
 import org.agilewiki.console.SimpleSimon;
-import org.agilewiki.console.TimestampIds;
 import org.agilewiki.console.transactions.ChangeEmailAddressTransaction;
-import org.agilewiki.utils.virtualcow.Db;
 
 import javax.servlet.AsyncContext;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 /**
  * Change the email address of the user.
