@@ -2,6 +2,7 @@ package org.agilewiki.console.requests;
 
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.TimestampIds;
+import org.agilewiki.console.transactions.ChangeEmailAddressTransaction;
 import org.agilewiki.utils.virtualcow.Db;
 
 import javax.servlet.AsyncContext;
@@ -19,8 +20,10 @@ import java.util.GregorianCalendar;
 public class ChangeEmailAddressBlade extends RequestBlade {
     public ChangeEmailAddressBlade(ServletContext servletContext, Db db) throws Exception {
         super(servletContext, db);
+        db.registerTransaction(ChangeEmailAddressTransaction.NAME, ChangeEmailAddressTransaction.class);
     }
 
+    @Override
     public void get(String page, AsyncContext asyncContext) {
         new SR(page, asyncContext) {
             @Override

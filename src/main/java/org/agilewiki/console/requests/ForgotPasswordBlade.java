@@ -13,6 +13,7 @@ public class ForgotPasswordBlade extends RequestBlade {
         super(servletContext, db);
     }
 
+    @Override
     public void get(String page, AsyncContext asyncContext) {
         new SR(page, asyncContext) {
             @Override

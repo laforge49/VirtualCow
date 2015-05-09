@@ -17,9 +17,11 @@ import javax.servlet.ServletContext;
 public class PostBlade extends RequestBlade {
     public PostBlade(ServletContext servletContext, Db db) throws Exception {
         super(servletContext, db);
+        db.registerTransaction(NpjeTransaction.NAME, NpjeTransaction.class);
     }
 
-    public void getNPJE(String page, AsyncContext asyncContext) {
+    @Override
+    public void get(String page, AsyncContext asyncContext) {
         new SR(page, asyncContext) {
             @Override
             protected void process()

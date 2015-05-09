@@ -21,7 +21,8 @@ public class SubjectsBlade extends RequestBlade {
         super(servletContext, db);
     }
 
-    public void display(String page, AsyncContext asyncContext) {
+    @Override
+    public void get(String page, AsyncContext asyncContext) {
         new SR(page, asyncContext) {
             @Override
             protected void process()

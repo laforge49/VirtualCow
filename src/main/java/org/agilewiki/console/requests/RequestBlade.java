@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * Base page for requests.
  */
-public class RequestBlade extends NonBlockingBladeBase {
+public abstract class RequestBlade extends NonBlockingBladeBase {
     ServletContext servletContext;
     Db db;
 
@@ -25,6 +25,8 @@ public class RequestBlade extends NonBlockingBladeBase {
         this.servletContext = servletContext;
         this.db = db;
     }
+
+    public abstract void get(String page, AsyncContext asyncContext);
 
     protected abstract class SR extends ASig {
         protected final AsyncContext asyncContext;

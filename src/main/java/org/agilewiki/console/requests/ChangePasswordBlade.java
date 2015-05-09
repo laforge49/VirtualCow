@@ -23,8 +23,10 @@ public class ChangePasswordBlade extends RequestBlade {
     public ChangePasswordBlade(ServletContext servletContext, Db db, MailOut mailOut) throws Exception {
         super(servletContext, db);
         this.mailOut = mailOut;
+        db.registerTransaction(ChangePasswordTransaction.NAME, ChangePasswordTransaction.class);
     }
 
+    @Override
     public void get(String page, AsyncContext asyncContext) {
         new SR(page, asyncContext) {
             @Override

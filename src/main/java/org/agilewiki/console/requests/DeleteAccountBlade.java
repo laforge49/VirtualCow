@@ -22,8 +22,10 @@ public class DeleteAccountBlade extends RequestBlade {
     public DeleteAccountBlade(ServletContext servletContext, Db db, MailOut mailOut) throws Exception {
         super(servletContext, db);
         this.mailOut = mailOut;
+        db.registerTransaction(DeleteTransaction.NAME, DeleteTransaction.class);
     }
 
+    @Override
     public void get(String page, AsyncContext asyncContext) {
         new SR(page, asyncContext) {
             @Override

@@ -11,6 +11,8 @@ import org.agilewiki.utils.virtualcow.Db;
 import javax.servlet.AsyncContext;
 import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * Request for logging out.
@@ -18,6 +20,17 @@ import javax.servlet.http.Cookie;
 public class LogoutBlade extends RequestBlade {
     public LogoutBlade(ServletContext servletContext, Db db) throws Exception {
         super(servletContext, db);
+        db.registerTransaction(LogoutTransaction.NAME, LogoutTransaction.class);
+    }
+
+    @Override
+    public void get(String page, AsyncContext asyncContext) {
+        try {
+            ((HttpServletResponse) asyncContext.getResponse()).
+                    sendError(HttpServletResponse.SC_NOT_FOUND);
+        } catch (IOException e) {
+        }
+        asyncContext.complete();
     }
 
     public void post(String page, AsyncContext asyncContext, String userId) {
