@@ -7,7 +7,7 @@ import javax.servlet.AsyncContext;
 /**
  * Change the email address of the user.
  */
-public class NewEmailAddressBlade extends RequestBlade {
+public class NewEmailAddressBlade extends PostRequestBlade {
     public NewEmailAddressBlade(SimpleSimon simpleSimon) throws Exception {
         super(simpleSimon);
     }
@@ -23,6 +23,16 @@ public class NewEmailAddressBlade extends RequestBlade {
                 map.put("key", key);
                 map.put("emailAddress", email);
                 finish();
+            }
+        }.signal();
+    }
+
+    @Override
+    public void post(String page, AsyncContext asyncContext, String userId) {
+        new SR(page, asyncContext) {
+            @Override
+            protected void process()
+                    throws Exception {
             }
         }.signal();
     }

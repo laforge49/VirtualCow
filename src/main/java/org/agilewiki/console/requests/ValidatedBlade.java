@@ -8,7 +8,7 @@ import javax.servlet.AsyncContext;
 /**
  * Create a new user with a validated email address.
  */
-public class ValidatedBlade extends RequestBlade {
+public class ValidatedBlade extends PostRequestBlade {
     public ValidatedBlade(SimpleSimon simpleSimon) throws Exception {
         super(simpleSimon);
         db.registerTransaction(NewUserTransaction.NAME, NewUserTransaction.class);
@@ -24,6 +24,16 @@ public class ValidatedBlade extends RequestBlade {
                 map.put("key", key);
                 map.put("email", email);
                 finish();
+            }
+        }.signal();
+    }
+
+    @Override
+    public void post(String page, AsyncContext asyncContext, String userId) {
+        new SR(page, asyncContext) {
+            @Override
+            protected void process()
+                    throws Exception {
             }
         }.signal();
     }
