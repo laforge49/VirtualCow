@@ -1,6 +1,7 @@
 package org.agilewiki.console.requests;
 
 import org.agilewiki.console.MailOut;
+import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.Tokens;
 import org.agilewiki.console.User;
 import org.agilewiki.console.transactions.ChangePasswordTransaction;
@@ -17,12 +18,10 @@ import java.security.NoSuchAlgorithmException;
 /**
  * Requests for changing a password.
  */
-public class ChangePasswordBlade extends RequestBlade {
-    final MailOut mailOut;
+public class ChangePasswordBlade extends PostRequestBlade {
 
-    public ChangePasswordBlade(ServletContext servletContext, Db db, MailOut mailOut) throws Exception {
-        super(servletContext, db);
-        this.mailOut = mailOut;
+    public ChangePasswordBlade(SimpleSimon simpleSimon) throws Exception {
+        super(simpleSimon);
         db.registerTransaction(ChangePasswordTransaction.NAME, ChangePasswordTransaction.class);
     }
 
@@ -37,6 +36,7 @@ public class ChangePasswordBlade extends RequestBlade {
         }.signal();
     }
 
+    @Override
     public void post(String page, AsyncContext asyncContext, String userId) {
         new SR(page, asyncContext) {
             @Override

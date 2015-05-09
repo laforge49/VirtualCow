@@ -1,5 +1,6 @@
 package org.agilewiki.console.requests;
 
+import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.transactions.NewUserTransaction;
 import org.agilewiki.utils.virtualcow.Db;
 
@@ -10,8 +11,8 @@ import javax.servlet.ServletContext;
  * Create a new user with a validated email address.
  */
 public class ValidatedBlade extends RequestBlade {
-    public ValidatedBlade(ServletContext servletContext, Db db) throws Exception {
-        super(servletContext, db);
+    public ValidatedBlade(SimpleSimon simpleSimon) throws Exception {
+        super(simpleSimon);
         db.registerTransaction(NewUserTransaction.NAME, NewUserTransaction.class);
     }
 

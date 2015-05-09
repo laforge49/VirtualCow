@@ -1,9 +1,6 @@
 package org.agilewiki.console.requests;
 
-import org.agilewiki.console.IdIterable;
-import org.agilewiki.console.NameIds;
-import org.agilewiki.console.SimpleSimon;
-import org.agilewiki.console.TimestampIds;
+import org.agilewiki.console.*;
 import org.agilewiki.utils.ids.Timestamp;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.ListAccessor;
@@ -20,8 +17,8 @@ import java.util.List;
  * Request the journal.
  */
 public class JournalBlade extends RequestBlade {
-    public JournalBlade(ServletContext servletContext, Db db) throws Exception {
-        super(servletContext, db);
+    public JournalBlade(SimpleSimon simpleSimon) throws Exception {
+        super(simpleSimon);
     }
 
     @Override

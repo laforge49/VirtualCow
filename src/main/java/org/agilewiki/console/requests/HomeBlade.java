@@ -1,5 +1,6 @@
 package org.agilewiki.console.requests;
 
+import org.agilewiki.console.MailOut;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.TimestampIds;
 import org.agilewiki.utils.virtualcow.Db;
@@ -17,8 +18,8 @@ import java.util.GregorianCalendar;
  * Request for home page.
  */
 public class HomeBlade extends RequestBlade {
-    public HomeBlade(ServletContext servletContext, Db db) throws Exception {
-        super(servletContext, db);
+    public HomeBlade(SimpleSimon simpleSimon) throws Exception {
+        super(simpleSimon);
     }
 
     @Override

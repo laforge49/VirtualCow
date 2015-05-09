@@ -14,9 +14,9 @@ import javax.servlet.ServletContext;
 /**
  * Request for a non-performing journal entry.
  */
-public class PostBlade extends RequestBlade {
-    public PostBlade(ServletContext servletContext, Db db) throws Exception {
-        super(servletContext, db);
+public class PostBlade extends PostRequestBlade {
+    public PostBlade(SimpleSimon simpleSimon) throws Exception {
+        super(simpleSimon);
         db.registerTransaction(NpjeTransaction.NAME, NpjeTransaction.class);
     }
 
@@ -31,7 +31,8 @@ public class PostBlade extends RequestBlade {
         }.signal();
     }
 
-    public void postNPJE(String page, AsyncContext asyncContext, String userId) {
+    @Override
+    public void post(String page, AsyncContext asyncContext, String userId) {
         new SR(page, asyncContext) {
             @Override
             protected void process()

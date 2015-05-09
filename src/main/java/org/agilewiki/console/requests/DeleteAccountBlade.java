@@ -2,6 +2,7 @@ package org.agilewiki.console.requests;
 
 import org.agilewiki.console.MailOut;
 import org.agilewiki.console.NameIds;
+import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.User;
 import org.agilewiki.console.transactions.DeleteTransaction;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
@@ -16,12 +17,10 @@ import javax.servlet.ServletContext;
 /**
  * Request for deleting an account.
  */
-public class DeleteAccountBlade extends RequestBlade {
-    final MailOut mailOut;
+public class DeleteAccountBlade extends PostRequestBlade {
 
-    public DeleteAccountBlade(ServletContext servletContext, Db db, MailOut mailOut) throws Exception {
-        super(servletContext, db);
-        this.mailOut = mailOut;
+    public DeleteAccountBlade(SimpleSimon simpleSimon) throws Exception {
+        super(simpleSimon);
         db.registerTransaction(DeleteTransaction.NAME, DeleteTransaction.class);
     }
 
@@ -36,6 +35,7 @@ public class DeleteAccountBlade extends RequestBlade {
         }.signal();
     }
 
+    @Override
     public void post(String page, AsyncContext asyncContext, String userId) {
         new SR(page, asyncContext) {
             @Override

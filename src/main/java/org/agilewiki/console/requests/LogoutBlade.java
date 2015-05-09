@@ -1,6 +1,7 @@
 package org.agilewiki.console.requests;
 
 import org.agilewiki.console.NameIds;
+import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.User;
 import org.agilewiki.console.transactions.LogoutTransaction;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
@@ -17,22 +18,13 @@ import java.io.IOException;
 /**
  * Request for logging out.
  */
-public class LogoutBlade extends RequestBlade {
-    public LogoutBlade(ServletContext servletContext, Db db) throws Exception {
-        super(servletContext, db);
+public class LogoutBlade extends PostRequestBlade {
+    public LogoutBlade(SimpleSimon simpleSimon) throws Exception {
+        super(simpleSimon);
         db.registerTransaction(LogoutTransaction.NAME, LogoutTransaction.class);
     }
 
     @Override
-    public void get(String page, AsyncContext asyncContext) {
-        try {
-            ((HttpServletResponse) asyncContext.getResponse()).
-                    sendError(HttpServletResponse.SC_NOT_FOUND);
-        } catch (IOException e) {
-        }
-        asyncContext.complete();
-    }
-
     public void post(String page, AsyncContext asyncContext, String userId) {
         new SR(page, asyncContext) {
             @Override

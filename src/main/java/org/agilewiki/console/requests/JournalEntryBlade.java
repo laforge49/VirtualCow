@@ -1,5 +1,6 @@
 package org.agilewiki.console.requests;
 
+import org.agilewiki.console.MailOut;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.TimestampIds;
 import org.agilewiki.utils.immutable.FactoryRegistry;
@@ -16,8 +17,8 @@ import javax.servlet.ServletContext;
  * Request for a journal entry.
  */
 public class JournalEntryBlade extends RequestBlade {
-    public JournalEntryBlade(ServletContext servletContext, Db db) throws Exception {
-        super(servletContext, db);
+    public JournalEntryBlade(SimpleSimon simpleSimon) throws Exception {
+        super(simpleSimon);
     }
 
     @Override

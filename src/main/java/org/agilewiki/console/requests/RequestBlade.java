@@ -1,5 +1,6 @@
 package org.agilewiki.console.requests;
 
+import org.agilewiki.console.MailOut;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.jactor2.core.blades.NonBlockingBladeBase;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
@@ -18,12 +19,15 @@ import java.util.Map;
  * Base page for requests.
  */
 public abstract class RequestBlade extends NonBlockingBladeBase {
-    ServletContext servletContext;
-    Db db;
+    protected final ServletContext servletContext;
+    protected final Db db;
+    protected final MailOut mailOut;
 
-    public RequestBlade(ServletContext servletContext, Db db) throws Exception {
-        this.servletContext = servletContext;
-        this.db = db;
+    public RequestBlade(SimpleSimon simpleSimon)
+            throws Exception {
+        this.servletContext = simpleSimon.servletContext;
+        this.db = simpleSimon.db;
+        this.mailOut = simpleSimon.mailOut;
     }
 
     public abstract void get(String page, AsyncContext asyncContext);

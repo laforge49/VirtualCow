@@ -17,8 +17,8 @@ import javax.servlet.ServletContext;
  * Request for subjects.
  */
 public class SubjectsBlade extends RequestBlade {
-    public SubjectsBlade(ServletContext servletContext, Db db) throws Exception {
-        super(servletContext, db);
+    public SubjectsBlade(SimpleSimon simpleSimon) throws Exception {
+        super(simpleSimon);
     }
 
     @Override

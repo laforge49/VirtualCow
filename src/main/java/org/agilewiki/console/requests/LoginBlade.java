@@ -1,5 +1,6 @@
 package org.agilewiki.console.requests;
 
+import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.transactions.LoginTransaction;
 import org.agilewiki.utils.virtualcow.Db;
 
@@ -10,8 +11,8 @@ import javax.servlet.ServletContext;
  * Change the email address of the user.
  */
 public class LoginBlade extends RequestBlade {
-    public LoginBlade(ServletContext servletContext, Db db) throws Exception {
-        super(servletContext, db);
+    public LoginBlade(SimpleSimon simpleSimon) throws Exception {
+        super(simpleSimon);
         db.registerTransaction(LoginTransaction.NAME, LoginTransaction.class);
     }
 

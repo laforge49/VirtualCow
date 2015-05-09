@@ -1,5 +1,7 @@
 package org.agilewiki.console.requests;
 
+import org.agilewiki.console.MailOut;
+import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.utils.virtualcow.Db;
 
 import javax.servlet.AsyncContext;
@@ -9,8 +11,8 @@ import javax.servlet.ServletContext;
  * Change the email address of the user.
  */
 public class ForgotPasswordBlade extends RequestBlade {
-    public ForgotPasswordBlade(ServletContext servletContext, Db db) throws Exception {
-        super(servletContext, db);
+    public ForgotPasswordBlade(SimpleSimon simpleSimon) throws Exception {
+        super(simpleSimon);
     }
 
     @Override

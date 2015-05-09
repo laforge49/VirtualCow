@@ -1,5 +1,6 @@
 package org.agilewiki.console.requests;
 
+import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.utils.virtualcow.Db;
 
 import javax.servlet.AsyncContext;
@@ -9,8 +10,8 @@ import javax.servlet.ServletContext;
  * Change the email address of the user.
  */
 public class NewEmailAddressBlade extends RequestBlade {
-    public NewEmailAddressBlade(ServletContext servletContext, Db db) throws Exception {
-        super(servletContext, db);
+    public NewEmailAddressBlade(SimpleSimon simpleSimon) throws Exception {
+        super(simpleSimon);
     }
 
     @Override

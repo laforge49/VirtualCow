@@ -35,16 +35,16 @@ public class SimpleSimon extends HttpServlet {
 
     public final static String self = System.getProperties().getProperty("self", "http://localhost/");
 
-    private Db db;
+    public Db db;
     ServletConfig servletConfig;
-    ServletContext servletContext;
+    public ServletContext servletContext;
     final static Charset utf8 = Charset.forName("UTF-8");
     final static String SPECIAL = "&<>'\"";
     public final static int ENCODE_MULTIPLE_LINES = 1;
     public final static int ENCODE_SINGLE_LINE = 2;
     public final static int ENCODE_FIELD = 3;
 
-    MailOut mailOut;
+    public MailOut mailOut;
 
     ChangeEmailAddressBlade changeEmailAddressBlade;
     ChangePasswordBlade changePasswordBlade;
@@ -127,21 +127,21 @@ public class SimpleSimon extends HttpServlet {
 
             mailOut = new MailOut();
 
-            homeBlade = new HomeBlade(servletContext, db);
-            postBlade = new PostBlade(servletContext, db);
-            journalEntryBlade = new JournalEntryBlade(servletContext, db);
-            journalBlade = new JournalBlade(servletContext, db);
-            subjectsBlade = new SubjectsBlade(servletContext, db);
-            logoutBlade = new LogoutBlade(servletContext, db);
-            deleteAccountBlade = new DeleteAccountBlade(servletContext, db, mailOut);
-            changePasswordBlade = new ChangePasswordBlade(servletContext, db, mailOut);
-            changeEmailAddressBlade = new ChangeEmailAddressBlade(servletContext, db);
-            validatedBlade = new ValidatedBlade(servletContext, db);
-            forgotPasswordBlade = new ForgotPasswordBlade(servletContext, db);
-            newEmailAddressBlade = new NewEmailAddressBlade(servletContext, db);
-            loginBlade = new LoginBlade(servletContext, db);
-            profileBlade = new ProfileBlade(servletContext, db);
-            welcomeBlade = new WelcomeBlade(servletContext, db);
+            homeBlade = new HomeBlade(this);
+            postBlade = new PostBlade(this);
+            journalEntryBlade = new JournalEntryBlade(this);
+            journalBlade = new JournalBlade(this);
+            subjectsBlade = new SubjectsBlade(this);
+            logoutBlade = new LogoutBlade(this);
+            deleteAccountBlade = new DeleteAccountBlade(this);
+            changePasswordBlade = new ChangePasswordBlade(this);
+            changeEmailAddressBlade = new ChangeEmailAddressBlade(this);
+            validatedBlade = new ValidatedBlade(this);
+            forgotPasswordBlade = new ForgotPasswordBlade(this);
+            newEmailAddressBlade = new NewEmailAddressBlade(this);
+            loginBlade = new LoginBlade(this);
+            profileBlade = new ProfileBlade(this);
+            welcomeBlade = new WelcomeBlade(this);
 
             unknownRequests = new HashMap<String, RequestBlade>();
             unknownRequests.put("welcome", welcomeBlade);
@@ -243,7 +243,7 @@ public class SimpleSimon extends HttpServlet {
         try {
             if ("post".equals(page)) {
                 AsyncContext asyncContext = request.startAsync();
-                postBlade.postNPJE(page, asyncContext, userId);
+                postBlade.post(page, asyncContext, userId);
                 return;
             }
             if ("logout".equals(page)) {
