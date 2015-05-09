@@ -266,6 +266,11 @@ public class SimpleSimon extends HttpServlet {
                 validatedBlade.post(page, asyncContext, userId);
                 return;
             }
+            if ("forgotPassword".equals(page)) {
+                AsyncContext asyncContext = request.startAsync();
+                forgotPasswordBlade.post(page, asyncContext, userId);
+                return;
+            }
         } catch (Exception ex) {
             throw new ServletException(ex);
         }
@@ -273,68 +278,12 @@ public class SimpleSimon extends HttpServlet {
         response.setStatus(HttpServletResponse.SC_OK);
         if ("login".equals(page))
             login(request, response);
-        else if ("forgotPassword".equals(page))
-            forgotPassword(request, response);
         else if ("changeEmailAddress".equals(page))
             changeEmailAddress(request, response, userId);
         else if ("newEmailAddress".equals(page))
             newEmailAddress(request, response, userId);
         else
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
-    }
-
-    public void forgotPassword(HttpServletRequest request,
-                               HttpServletResponse response)
-            throws ServletException, IOException {
-        String key = request.getParameter("key");
-        String email = request.getParameter("email");
-        String newPassword = request.getParameter("new");
-        String confirmNewPassword = request.getParameter("confirm");
-        Map<String, String> map = new HashMap<>();
-        if (newPassword == null || newPassword.length() == 0)
-            map.put("error", "Enter your new password in the new password field");
-        else if (!newPassword.equals(confirmNewPassword))
-            map.put("error", "The new password and confirm new password fields must be the same");
-        else {
-            boolean go = true;
-            try {
-                go = Tokens.validate(db, email, key);
-            } catch (NoSuchAlgorithmException e) {
-                servletContext.log("no such algorithm: SHA-256");
-                go = false;
-            }
-            if (!go) {
-                String error = "Unable to change your password at this time. Please try again later.";
-                map.put("error", encode(error, 0, ENCODE_FIELD)); //field
-            } else {
-                String error = null;
-                String userId = User.userId(db, email, FactoryRegistry.MAX_TIMESTAMP);
-                try {
-                    new ChangePasswordTransaction().update(
-                            db,
-                            userId,
-                            User.encodePassword(servletContext, userId, newPassword));
-                } catch (Exception e) {
-                    error = "system error--unable to update database";
-                    log("update failure", e);
-                }
-                if (error == null) {
-                    String subject = "Password Change Notification";
-                    String body = "<p>Your password has been changed.</p>" +
-                            "<p>--Virtual Cow</p>";
-                    map.put("success", "The password has been changed");
-                    try {
-                        MailOut.send(email, subject, body);
-                    } catch (MessagingException me) {
-                        log("unable to send to " + email, me);
-                    }
-                    map.put("success", "The password has been changed and you can now " +
-                            "<a href=\"?from=validated&to=login\">login</a>.");
-                } else
-                    map.put("error", error);
-            }
-        }
-        response.getWriter().println(replace(servletContext, "forgotPassword", map));
     }
 
     public void login(HttpServletRequest request,
@@ -417,7 +366,7 @@ public class SimpleSimon extends HttpServlet {
             return;
         }
         String forgotPassword = request.getParameter("forgotPassword");
-        if (forgotPassword != null && forgotPassword.equals("Revalidate Address")) {
+        if (forgotPassword != null && forgotPassword.equals("Verify Address")) {
             String emailAddress = request.getParameter("emailAddress3");
             if (emailAddress == null || emailAddress.length() == 0)
                 error = "Email address is required";

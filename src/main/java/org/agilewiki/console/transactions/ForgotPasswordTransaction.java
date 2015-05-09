@@ -8,8 +8,8 @@ import org.agilewiki.utils.virtualcow.Transaction;
 /**
  * Changes the user's password.
  */
-public class ChangePasswordTransaction implements Transaction {
-    public final static String NAME = "changePassword";
+public class ForgotPasswordTransaction implements Transaction {
+    public final static String NAME = "forgotPassword";
 
     @Override
     public void transform(Db db, MapNode mapNode) {
