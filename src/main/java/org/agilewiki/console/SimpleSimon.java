@@ -273,6 +273,11 @@ public class SimpleSimon extends HttpServlet {
                 deleteAccountBlade.post(page, asyncContext, userId);
                 return;
             }
+            if ("changePassword".equals(page)) {
+                AsyncContext asyncContext = request.startAsync();
+                changePasswordBlade.post(page, asyncContext, userId);
+                return;
+            }
         } catch (Exception ex) {
             throw new ServletException(ex);
         }
@@ -284,57 +289,12 @@ public class SimpleSimon extends HttpServlet {
             validated(request, response);
         else if ("forgotPassword".equals(page))
             forgotPassword(request, response);
-        else if ("changePassword".equals(page))
-            changePassword(request, response, userId);
         else if ("changeEmailAddress".equals(page))
             changeEmailAddress(request, response, userId);
         else if ("newEmailAddress".equals(page))
             newEmailAddress(request, response, userId);
         else
             throw new ServletException("unknown post: " + page);
-    }
-
-    public void changePassword(HttpServletRequest request,
-                               HttpServletResponse response,
-                               String userId)
-            throws ServletException, IOException {
-        String oldPassword = request.getParameter("old");
-        String newPassword = request.getParameter("new");
-        String confirmNewPassword = request.getParameter("confirm");
-        Map<String, String> map = new HashMap<>();
-        if (oldPassword == null || oldPassword.length() == 0)
-            map.put("error", "Enter your password in the old password field");
-        else if (newPassword == null || newPassword.length() == 0)
-            map.put("error", "Enter your new password in the new password field");
-        else if (!newPassword.equals(confirmNewPassword))
-            map.put("error", "The new password and confirm new password fields must be the same");
-        else if (oldPassword.equals(newPassword))
-            map.put("error", "The old password and new password fields must not be the same");
-        else if (!User.confirmPassword(db, servletContext, userId, oldPassword))
-            map.put("error", "Enter your current password in the old password field");
-        else {
-            String error = null;
-            try {
-                new ChangePasswordTransaction().update(
-                        db,
-                        userId,
-                        User.encodePassword(servletContext, userId, newPassword));
-            } catch (Exception e) {
-                error = "system error--unable to update database";
-                log("update failure", e);
-            }
-            if (error == null) {
-                User.send(db,
-                        servletContext,
-                        userId,
-                        "Password Change Notification",
-                        "<p>Your password has been changed.</p>" +
-                                "<p>--Virtual Cow</p>");
-                map.put("success", "The password has been changed.");
-            } else
-                map.put("error", error);
-        }
-        response.getWriter().println(replace(servletContext, "changePassword", map));
     }
 
     public void forgotPassword(HttpServletRequest request,
