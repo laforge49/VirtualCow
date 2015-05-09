@@ -46,14 +46,21 @@ public class SimpleSimon extends HttpServlet {
 
     MailOut mailOut;
 
-    HomeBlade homeBlade;
-    NPJEBlade npjeBlade;
-    JournalEntryBlade journalEntryBlade;
-    JournalBlade journalBlade;
-    SubjectsBlade subjectsBlade;
-    LogoutBlade logoutBlade;
-    DeleteAccountBlade deleteAccountBlade;
+    ChangeEmailAddressBlade changeEmailAddressBlade;
     ChangePasswordBlade changePasswordBlade;
+    DeleteAccountBlade deleteAccountBlade;
+    ForgotPasswordBlade forgotPasswordBlade;
+    HomeBlade homeBlade;
+    JournalBlade journalBlade;
+    JournalEntryBlade journalEntryBlade;
+    LoginBlade loginBlade;
+    LogoutBlade logoutBlade;
+    NewEmailAddressBlade newEmailAddressBlade;
+    PostBlade postBlade;
+    ProfileBlade profileBlade;
+    SubjectsBlade subjectsBlade;
+    ValidatedBlade validatedBlade;
+    WelcomeBlade welcomeBlade;
 
     public static String readResource(ServletContext servletContext, String pageName) throws IOException {
         InputStream is = servletContext.getResourceAsStream("/WEB-INF/pages/" + pageName + ".html");
@@ -101,6 +108,7 @@ public class SimpleSimon extends HttpServlet {
             Path dbPath = Paths.get("vcow.db");
             int maxRootBlockSize = 100000;
             db = new Db(new BaseRegistry(), dbPath, maxRootBlockSize);
+
             db.registerTransaction(NpjeTransaction.NAME, NpjeTransaction.class);
             db.registerTransaction(ServletStartTransaction.NAME, ServletStartTransaction.class);
             ServletStartTransaction.servletConfig = servletConfig;
@@ -122,13 +130,20 @@ public class SimpleSimon extends HttpServlet {
             mailOut = new MailOut();
 
             homeBlade = new HomeBlade(servletContext, db);
-            npjeBlade = new NPJEBlade(servletContext, db);
+            postBlade = new PostBlade(servletContext, db);
             journalEntryBlade = new JournalEntryBlade(servletContext, db);
             journalBlade = new JournalBlade(servletContext, db);
             subjectsBlade = new SubjectsBlade(servletContext, db);
             logoutBlade = new LogoutBlade(servletContext, db);
             deleteAccountBlade = new DeleteAccountBlade(servletContext, db, mailOut);
             changePasswordBlade = new ChangePasswordBlade(servletContext, db, mailOut);
+            changeEmailAddressBlade = new ChangeEmailAddressBlade(servletContext, db);
+            validatedBlade = new ValidatedBlade(servletContext, db);
+            forgotPasswordBlade = new ForgotPasswordBlade(servletContext, db);
+            newEmailAddressBlade = new NewEmailAddressBlade(servletContext, db);
+            loginBlade = new LoginBlade(servletContext, db);
+            profileBlade = new ProfileBlade(servletContext, db);
+            welcomeBlade = new WelcomeBlade(servletContext, db);
 
             ServletStartTransaction.update(db);
         } catch (Exception ex) {
@@ -169,12 +184,12 @@ public class SimpleSimon extends HttpServlet {
         try {
             if (page == null || page.equals("home")) {
                 AsyncContext asyncContext = request.startAsync();
-                homeBlade.getHome("home", asyncContext);
+                homeBlade.get("home", asyncContext);
                 return;
             }
             if (page.equals("post")) {
                 AsyncContext asyncContext = request.startAsync();
-                npjeBlade.getNPJE(page, asyncContext);
+                postBlade.getNPJE(page, asyncContext);
                 return;
             }
             if (page.equals("journalEntry")) {
@@ -202,39 +217,45 @@ public class SimpleSimon extends HttpServlet {
                 deleteAccountBlade.get(page, asyncContext);
                 return;
             }
+            if (page.equals("changeEmailAddress")) {
+                AsyncContext asyncContext = request.startAsync();
+                changeEmailAddressBlade.get(page, asyncContext);
+                return;
+            }
+            if (page.equals("validated")) {
+                AsyncContext asyncContext = request.startAsync();
+                validatedBlade.get(page, asyncContext);
+                return;
+            }
+            if (page.equals("forgotPassword")) {
+                AsyncContext asyncContext = request.startAsync();
+                forgotPasswordBlade.get(page, asyncContext);
+                return;
+            }
+            if (page.equals("newEmailAddress")) {
+                AsyncContext asyncContext = request.startAsync();
+                newEmailAddressBlade.get(page, asyncContext);
+                return;
+            }
+            if (page.equals("login")) {
+                AsyncContext asyncContext = request.startAsync();
+                loginBlade.get(page, asyncContext);
+                return;
+            }
+            if (page.equals("profile")) {
+                AsyncContext asyncContext = request.startAsync();
+                profileBlade.get(page, asyncContext);
+                return;
+            }
+            if (page.equals("welcome")) {
+                AsyncContext asyncContext = request.startAsync();
+                welcomeBlade.get(page, asyncContext);
+                return;
+            }
         } catch (Exception ex) {
             throw new ServletException(ex);
         }
-        response.setStatus(HttpServletResponse.SC_OK);
-        Map<String, String> map = new HashMap<>();
-        if (page.equals("validated"))
-            validated(map, request);
-        else if (page.equals("newEmailAddress"))
-            newEmailAddress(map, request);
-        else if (page.equals("forgotPassword"))
-            forgotPassword(map, request);
-        response.getWriter().println(replace(servletContext, page, map));
-    }
-
-    void newEmailAddress(Map<String, String> map, HttpServletRequest request) {
-        String key = request.getParameter("key");
-        String email = request.getParameter("emailAddress");
-        map.put("key", key);
-        map.put("emailAddress", email);
-    }
-
-    void forgotPassword(Map<String, String> map, HttpServletRequest request) {
-        String key = request.getParameter("key");
-        String email = request.getParameter("email");
-        map.put("key", key);
-        map.put("email", email);
-    }
-
-    void validated(Map<String, String> map, HttpServletRequest request) {
-        String key = request.getParameter("key");
-        String email = request.getParameter("email");
-        map.put("key", key);
-        map.put("email", email);
+        response.sendError(HttpServletResponse.SC_NOT_FOUND);
     }
 
     public void doPost(HttpServletRequest request,
@@ -260,7 +281,7 @@ public class SimpleSimon extends HttpServlet {
         try {
             if ("post".equals(page)) {
                 AsyncContext asyncContext = request.startAsync();
-                npjeBlade.postNPJE(page, asyncContext, userId);
+                postBlade.postNPJE(page, asyncContext, userId);
                 return;
             }
             if ("logout".equals(page)) {
@@ -390,7 +411,7 @@ public class SimpleSimon extends HttpServlet {
                                 userId,
                                 email,
                                 passwordHash,
-                                User.USER_TYPE_ID);
+                                User.GUEST_USER_ID);
                     } catch (Exception e) {
                         go = false;
                         log("failed update", e);

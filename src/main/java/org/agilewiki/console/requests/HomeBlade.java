@@ -21,7 +21,7 @@ public class HomeBlade extends RequestBlade {
         super(servletContext, db);
     }
 
-    public void getHome(String page, AsyncContext asyncContext) {
+    public void get(String page, AsyncContext asyncContext) {
         new SR(page, asyncContext) {
             @Override
             protected void process()
