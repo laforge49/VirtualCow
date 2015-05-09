@@ -10,8 +10,8 @@ import org.agilewiki.utils.virtualcow.Transaction;
 /**
  * Changes the user's password.
  */
-public class ChangeEmailAddressTransaction implements Transaction {
-    public final static String NAME = "changeEmailAddress";
+public class NewEmailAddressTransaction implements Transaction {
+    public final static String NAME = "newEmailAddress";
 
     public String update(Db db, String userId, String emailAddress)
             throws Exception {

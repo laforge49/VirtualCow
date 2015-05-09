@@ -447,7 +447,7 @@ public class SimpleSimon extends HttpServlet {
         }
         String oldEmailAddress = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
         try {
-            new ChangeEmailAddressTransaction().update(db, userId, emailAddress);
+            new NewEmailAddressTransaction().update(db, userId, emailAddress);
         } catch (Exception e) {
             log("unable to update", e);
             String msg = "Unable to update your account at this time. Please try again later.";

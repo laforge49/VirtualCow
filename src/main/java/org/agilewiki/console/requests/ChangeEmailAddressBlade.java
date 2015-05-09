@@ -1,7 +1,6 @@
 package org.agilewiki.console.requests;
 
 import org.agilewiki.console.SimpleSimon;
-import org.agilewiki.console.transactions.ChangeEmailAddressTransaction;
 
 import javax.servlet.AsyncContext;
 
@@ -11,7 +10,6 @@ import javax.servlet.AsyncContext;
 public class ChangeEmailAddressBlade extends PostRequestBlade {
     public ChangeEmailAddressBlade(SimpleSimon simpleSimon) throws Exception {
         super(simpleSimon);
-        db.registerTransaction(ChangeEmailAddressTransaction.NAME, ChangeEmailAddressTransaction.class);
     }
 
     @Override
