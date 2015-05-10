@@ -119,7 +119,54 @@ public class LoginBlade extends PostRequestBlade {
             }
 
             void forgotPassword() throws Exception {
-
+                String error = null;
+                String emailAddress = request.getParameter("emailAddress3");
+                if (emailAddress == null || emailAddress.length() == 0)
+                    error = "Email address is required";
+                if (emailAddress != null)
+                    map.put("emailAddress3", SimpleSimon.encode(emailAddress, 0, SimpleSimon.ENCODE_FIELD)); //field
+                if (error != null) {
+                    map.put("error3", SimpleSimon.encode(error, 0, SimpleSimon.ENCODE_FIELD)); //field
+                    finish();
+                    return;
+                }
+                String userId = User.userId(db, emailAddress, FactoryRegistry.MAX_TIMESTAMP);
+                String msg = "An email has been sent to verify your address. Please check your inbox.";
+                if (userId == null) {
+                    map.put("success3", SimpleSimon.encode(msg, 0, SimpleSimon.ENCODE_FIELD)); //field
+                    finish();
+                    return;
+                }
+                String subject = null;
+                String body = null;
+                try {
+                    String token = Tokens.generate(db, emailAddress,
+                            1000 * 60 * 60 * 24 + System.currentTimeMillis()); //1 day validity
+                    subject = "Forgot Password";
+                    body = "<p>To change your password, please click " +
+                            "<a href=\"" + SimpleSimon.self + "?to=forgotPassword&email=" + emailAddress +
+                            "&key=" + token + "\">here</a>.</p>" +
+                            "<p>--Virtual Cow</p>";
+                } catch (NoSuchAlgorithmException e) {
+                    servletContext.log("no such algorithm: SHA-256");
+                    msg = "Unable to send an email to your address at this time. Please try again later.";
+                    map.put("success3", SimpleSimon.encode(msg, 0, SimpleSimon.ENCODE_FIELD)); //field
+                    finish();
+                    return;
+                }
+                asyncRequestImpl.send(mailOut.sendEmail(servletContext, emailAddress, subject, body, null),
+                        new AsyncResponseProcessor<Boolean>() {
+                            @Override
+                            public void processAsyncResponse(Boolean _response) throws Exception {
+                                String msg;
+                                if (_response)
+                                    msg = "An email has been sent to verify your address. Please check your inbox.";
+                                else
+                                    msg = "Unable to send an email to your address at this time. Please try again later.";
+                                map.put("success3", SimpleSimon.encode(msg, 0, SimpleSimon.ENCODE_FIELD)); //field
+                                finish();
+                            }
+                        });
             }
         }.signal();
     }

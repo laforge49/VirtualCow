@@ -278,7 +278,7 @@ public class SimpleSimon extends HttpServlet {
                 changeEmailAddressBlade.post(page, asyncContext, userId);
                 return;
             }
-            if ("login".equals(page) && request.getParameter("newAccount") != null) {
+            if ("login".equals(page) && (request.getParameter("newAccount") != null || request.getParameter("forgotPassword") != null)) {
                 AsyncContext asyncContext = request.startAsync();
                 loginBlade.post(page, asyncContext, userId);
                 return;
@@ -321,53 +321,6 @@ public class SimpleSimon extends HttpServlet {
                 response.getWriter().println(replace(servletContext, "login", map));
             } else
                 response.sendRedirect("?from=login");
-            return;
-        }
-        String forgotPassword = request.getParameter("forgotPassword");
-        if (forgotPassword != null && forgotPassword.equals("Verify Address")) {
-            String emailAddress = request.getParameter("emailAddress3");
-            if (emailAddress == null || emailAddress.length() == 0)
-                error = "Email address is required";
-            if (emailAddress != null)
-                map.put("emailAddress3", encode(emailAddress, 0, ENCODE_FIELD)); //field
-            if (error != null) {
-                map.put("error3", encode(error, 0, ENCODE_FIELD)); //field
-            } else {
-                String userId = User.userId(db, emailAddress, FactoryRegistry.MAX_TIMESTAMP);
-                String subject = null;
-                String body = null;
-                boolean go = true;
-                String msg = "An email has been sent to verify your address. Please check your inbox.";
-                if (userId == null) {
-                    go = false;
-                } else {
-                    try {
-                        String token = Tokens.generate(db, emailAddress,
-                                1000 * 60 * 60 * 24 + System.currentTimeMillis()); //1 day validity
-                        subject = "Forgot Password";
-                        body = "<p>To change your password, please click " +
-                                "<a href=\"" + self + "?to=forgotPassword&email=" + emailAddress +
-                                "&key=" + token + "\">here</a>.</p>" +
-                                "<p>--Virtual Cow</p>";
-                    } catch (NoSuchAlgorithmException e) {
-                        servletContext.log("no such algorithm: SHA-256");
-                        go = false;
-                        msg = "Unable to send an email to your address at this time. Please try again later.";
-                    }
-                }
-                if (go) {
-                    try {
-                        boolean sent = true;
-                        sent = MailOut.send(emailAddress, subject, body);
-                        if (!sent)
-                            msg = "Unable to send an email to your address at this time. Please try again later.";
-                    } catch (MessagingException me) {
-                        msg = me.getMessage();
-                    }
-                }
-                map.put("success3", encode(msg, 0, ENCODE_FIELD)); //field
-            }
-            response.getWriter().println(replace(servletContext, "login", map));
             return;
         }
     }
