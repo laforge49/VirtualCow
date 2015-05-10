@@ -117,9 +117,6 @@ public class SimpleSimon extends HttpServlet {
 
             db.registerTransaction(ServletStopTransaction.NAME, ServletStopTransaction.class);
 
-            db.registerTransaction(BadUserAddressTransaction.NAME, BadUserAddressTransaction.class);
-            db.registerTransaction(BadUserPasswordTransaction.NAME, BadUserPasswordTransaction.class);
-
             if (Files.exists(dbPath))
                 db.open();
             else
@@ -279,6 +276,11 @@ public class SimpleSimon extends HttpServlet {
             if ("changeEmailAddress".equals(page)) {
                 AsyncContext asyncContext = request.startAsync();
                 changeEmailAddressBlade.post(page, asyncContext, userId);
+                return;
+            }
+            if ("login".equals(page) && request.getParameter("newAccount") != null) {
+                AsyncContext asyncContext = request.startAsync();
+                loginBlade.post(page, asyncContext, userId);
                 return;
             }
         } catch (Exception ex) {
