@@ -7,6 +7,7 @@ import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.virtualcow.Db;
+import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletConfig;
@@ -29,20 +30,30 @@ public class User {
     public static final String USER_KEY = NameId.generate("user");
 
     public static String email(Db db, String userId, long timestamp) {
-        String emailSecondaryInv = SecondaryIds.secondaryInv(userId, EMAIL_ID);
-        for (String emailId : db.keysIterable(emailSecondaryInv, timestamp)) {
-            return ValueId.value(emailId);
+        while (true) {
+            try {
+                String emailSecondaryInv = SecondaryIds.secondaryInv(userId, EMAIL_ID);
+                for (String emailId : db.keysIterable(emailSecondaryInv, timestamp)) {
+                    return ValueId.value(emailId);
+                }
+                return null;
+            } catch (UnexpectedChecksumException uce) {
+            }
         }
-        return null;
     }
 
     public static String userId(Db db, String email, long timestamp) {
-        String emailId = ValueId.generate(email);
-        String emailSecondaryId = SecondaryIds.secondaryId(EMAIL_ID, emailId);
-        for (String userId : db.keysIterable(emailSecondaryId, timestamp)) {
-            return userId;
+        while (true) {
+            try {
+                String emailId = ValueId.generate(email);
+                String emailSecondaryId = SecondaryIds.secondaryId(EMAIL_ID, emailId);
+                for (String userId : db.keysIterable(emailSecondaryId, timestamp)) {
+                    return userId;
+                }
+                return null;
+            } catch (UnexpectedChecksumException uce) {
+            }
         }
-        return null;
     }
 
     public static boolean send(Db db, ServletContext servletContext, String userId, String subject, String body) {
@@ -63,11 +74,9 @@ public class User {
                                HttpServletResponse response,
                                String email,
                                String password) {
-        String emailId = ValueId.generate(email);
-        String emailSecondaryId = SecondaryIds.secondaryId(EMAIL_ID, emailId);
-        for (String userId : SecondaryIds.vmnIdIterable(db, emailSecondaryId, FactoryRegistry.MAX_TIMESTAMP)) {
+        String userId = userId(db, email, FactoryRegistry.MAX_TIMESTAMP);
+        if (userId != null)
             return login2(db, servletContext, request, response, email, password, userId);
-        }
         try {
             new BadUserAddressTransaction().update(db, email, request);
         } catch (Exception e) {
@@ -121,7 +130,12 @@ public class User {
     }
 
     public static String passwordDigest(Db db, String userId, long timestamp) {
-        return (String) db.get(userId, PASSWORD_KEY, timestamp);
+        while (true) {
+            try {
+                return (String) db.get(userId, PASSWORD_KEY, timestamp);
+            } catch (UnexpectedChecksumException uce) {
+            }
+        }
     }
 
     public static String encodePassword(ServletContext servletContext, String userId, String password) {
