@@ -323,56 +323,6 @@ public class SimpleSimon extends HttpServlet {
                 response.sendRedirect("?from=login");
             return;
         }
-        String newAccount = request.getParameter("newAccount");
-        if (newAccount != null && newAccount.equals("Validate Address")) {
-            String emailAddress = request.getParameter("emailAddress2");
-            if (emailAddress == null || emailAddress.length() == 0)
-                error = "Email address is required";
-            if (emailAddress != null)
-                map.put("emailAddress2", encode(emailAddress, 0, ENCODE_FIELD)); //field
-            if (error != null) {
-                map.put("error2", encode(error, 0, ENCODE_FIELD)); //field
-            } else {
-                String userId = User.userId(db, emailAddress, FactoryRegistry.MAX_TIMESTAMP);
-                String subject = null;
-                String body = null;
-                boolean go = true;
-                if (userId == null) {
-                    try {
-                        String token = Tokens.generate(db, emailAddress,
-                                1000 * 60 * 60 * 24 + System.currentTimeMillis()); //1 day validity
-                        subject = "Address Validation Request";
-                        body = "<p>To validate your email address and begin opening an account, please click " +
-                                "<a href=\"" + self + "?to=validated&email=" + emailAddress +
-                                "&key=" + token + "\">here</a>.</p>" +
-                                "<p>--Virtual Cow</p>";
-                    } catch (NoSuchAlgorithmException e) {
-                        servletContext.log("no such algorithm: SHA-256");
-                        go = false;
-                    }
-                } else {
-                    subject = "New Account Notification";
-                    body = "<p>An attempt was made to open another account with your email address.</p>" +
-                            "<p>--Virtual Cow</p>";
-                }
-                boolean sent = true;
-                try {
-                    sent = MailOut.send(emailAddress, subject, body);
-                    if (go && sent)
-                        map.put("success2", encode(
-                                "An email has been sent to verify your address. Please check your inbox.",
-                                0, ENCODE_FIELD)); //field
-                    else
-                        map.put("success2", encode(
-                                "Unable to send an email to your address at this time. Please try again later.",
-                                0, ENCODE_FIELD)); //field
-                } catch (MessagingException me) {
-                    map.put("success2", encode(me.getMessage(), 0, ENCODE_FIELD)); //field
-                }
-            }
-            response.getWriter().println(replace(servletContext, "login", map));
-            return;
-        }
         String forgotPassword = request.getParameter("forgotPassword");
         if (forgotPassword != null && forgotPassword.equals("Verify Address")) {
             String emailAddress = request.getParameter("emailAddress3");
