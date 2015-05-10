@@ -276,6 +276,11 @@ public class SimpleSimon extends HttpServlet {
                 newEmailAddressBlade.post(page, asyncContext, userId);
                 return;
             }
+            if ("changeEmailAddress".equals(page)) {
+                AsyncContext asyncContext = request.startAsync();
+                changeEmailAddressBlade.post(page, asyncContext, userId);
+                return;
+            }
         } catch (Exception ex) {
             throw new ServletException(ex);
         }
@@ -283,8 +288,6 @@ public class SimpleSimon extends HttpServlet {
         response.setStatus(HttpServletResponse.SC_OK);
         if ("login".equals(page))
             login(request, response);
-        else if ("changeEmailAddress".equals(page))
-            changeEmailAddress(request, response, userId);
         else
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
     }
@@ -415,84 +418,6 @@ public class SimpleSimon extends HttpServlet {
             response.getWriter().println(replace(servletContext, "login", map));
             return;
         }
-    }
-
-    public void changeEmailAddress(HttpServletRequest request,
-                                   HttpServletResponse response,
-                                   String userId)
-            throws ServletException, IOException {
-        String emailAddress = request.getParameter("emailAddress");
-        Map<String, String> map = new HashMap<>();
-        if (emailAddress != null)
-            map.put("emailAddress", encode(emailAddress, 0, ENCODE_FIELD)); //field
-        String error = null;
-        String oldEmailAddress = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
-        if (emailAddress == null || emailAddress.length() == 0) {
-            error = "Enter your new email address.";
-        } else if (emailAddress.equals(oldEmailAddress)) {
-            error = "Your new email address should not be the same as your old email address.";
-        }
-        if (error != null) {
-            map.put("error", error);
-            response.getWriter().println(replace(servletContext, "changeEmailAddress", map));
-            return;
-        }
-        String subject = null;
-        String body = null;
-        String userId2 = User.userId(db, emailAddress, FactoryRegistry.MAX_TIMESTAMP);
-        if (userId2 != null) {
-            subject = "Notification of attempt to reassign email address";
-            body = "<p>There was an attempt made to change the email of an account " +
-                    "from " + oldEmailAddress + " to your email account." +
-                    "<p>--Virtual Cow</p>";
-            boolean sent = false;
-            try {
-                sent = MailOut.send(emailAddress, subject, body);
-            } catch (MessagingException e) {
-            }
-            String msg;
-            if (sent)
-                msg = "An email has been sent to verify your new address. Please check your inbox.";
-            else {
-                msg = "Unable to send an email to your address at this time. Please try again later.";
-            }
-            map.put("success", msg);
-            response.getWriter().println(replace(servletContext, "changeEmailAddress", map));
-            return;
-        }
-        long expTime = System.currentTimeMillis() + 1000 * 60 * 60 * 24; // 1 day
-        String token = null;
-        try {
-            token = Tokens.generate(db, userId + emailAddress, expTime);
-        } catch (NoSuchAlgorithmException e) {
-        }
-        if (token == null) {
-            String msg = "Unable to send an email to your address at this time. Please try again later.";
-            map.put("success", msg);
-            response.getWriter().println(replace(servletContext, "changeEmailAddress", map));
-            return;
-        }
-        String href = self +
-                "?to=newEmailAddress&emailAddress=" + emailAddress +
-                "&key=" + token;
-        subject = "Address Validation Request";
-        body = "<p>To validate your new email address, please click " +
-                "<a href=\"" + href + "\">here</a>.</p>" +
-                "<p>--Virtual Cow</p>";
-        boolean sent = false;
-        try {
-            sent = MailOut.send(emailAddress, subject, body);
-        } catch (MessagingException e) {
-        }
-        if (!sent) {
-            String msg = "Unable to send an email to your address at this time. Please try again later.";
-            map.put("success", msg);
-            response.getWriter().println(replace(servletContext, "changeEmailAddress", map));
-            return;
-        }
-        String msg = "An email has been sent to verify your new address. Please check your inbox.";
-        map.put("success", msg);
-        response.getWriter().println(replace(servletContext, "changeEmailAddress", map));
     }
 
     public static String encode(String s, int indent, int mode) {
