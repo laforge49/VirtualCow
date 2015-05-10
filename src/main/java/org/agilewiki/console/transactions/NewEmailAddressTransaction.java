@@ -13,14 +13,6 @@ import org.agilewiki.utils.virtualcow.Transaction;
 public class NewEmailAddressTransaction implements Transaction {
     public final static String NAME = "newEmailAddress";
 
-    public String update(Db db, String userId, String emailAddress)
-            throws Exception {
-        MapNode mn = db.dbFactoryRegistry.nilMap;
-        mn = mn.add(User.USER_KEY, userId);
-        mn = mn.add(User.EMAIL_ID, emailAddress);
-        return db.update(NAME, mn).call();
-    }
-
     @Override
     public void transform(Db db, MapNode mapNode) {
         String userId = (String) mapNode.get(User.USER_KEY);
