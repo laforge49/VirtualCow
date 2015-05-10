@@ -278,7 +278,7 @@ public class SimpleSimon extends HttpServlet {
                 changeEmailAddressBlade.post(page, asyncContext, userId);
                 return;
             }
-            if ("login".equals(page) && (request.getParameter("newAccount") != null || request.getParameter("forgotPassword") != null)) {
+            if ("login".equals(page)) {
                 AsyncContext asyncContext = request.startAsync();
                 loginBlade.post(page, asyncContext, userId);
                 return;
@@ -287,42 +287,7 @@ public class SimpleSimon extends HttpServlet {
             throw new ServletException(ex);
         }
 
-        response.setStatus(HttpServletResponse.SC_OK);
-        if ("login".equals(page))
-            login(request, response);
-        else
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
-    }
-
-    public void login(HttpServletRequest request,
-                      HttpServletResponse response)
-            throws ServletException, IOException {
-        String error = null;
-        Map<String, String> map = new HashMap<>();
-        String login = request.getParameter("login");
-        if (login != null && login.equals("Login")) {
-            String emailAddress = request.getParameter("emailAddress");
-            String password = request.getParameter("password");
-            if (emailAddress == null || emailAddress.length() == 0)
-                error = "Email address is required";
-            else if (password == null || password.length() == 0)
-                error = "Password is required";
-            else
-                error = User.login(db,
-                        servletContext,
-                        request,
-                        response,
-                        emailAddress,
-                        password);
-            if (emailAddress != null)
-                map.put("emailAddress", encode(emailAddress, 0, ENCODE_FIELD)); //field
-            if (error != null) {
-                map.put("error", encode(error, 0, ENCODE_FIELD)); //field
-                response.getWriter().println(replace(servletContext, "login", map));
-            } else
-                response.sendRedirect("?from=login");
-            return;
-        }
+        response.sendError(HttpServletResponse.SC_NOT_FOUND);
     }
 
     public static String encode(String s, int indent, int mode) {

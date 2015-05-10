@@ -68,57 +68,6 @@ public class User {
         return sent;
     }
 
-    public static String login(Db db,
-                               ServletContext servletContext,
-                               HttpServletRequest request,
-                               HttpServletResponse response,
-                               String email,
-                               String password) {
-        String userId = userId(db, email, FactoryRegistry.MAX_TIMESTAMP);
-        if (userId != null)
-            return login2(db, servletContext, request, response, email, password, userId);
-        try {
-            new BadUserAddressTransaction().update(db, email, request);
-        } catch (Exception e) {
-            servletContext.log("Update failure", e);
-        }
-        return "Invalid email address / password";
-    }
-
-    static String login2(Db db,
-                         ServletContext servletContext,
-                         HttpServletRequest request,
-                         HttpServletResponse response,
-                         String email,
-                         String password,
-                         String userId) {
-        if (!confirmPassword(db, servletContext, userId, password)) {
-            try {
-                new BadUserPasswordTransaction().update(db, email, request, userId);
-            } catch (Exception e) {
-                servletContext.log("Update failure", e);
-            }
-            return "Invalid email address / password";
-        }
-        long expTime = System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 3; // 3 days
-        String token = null;
-        try {
-            token = Tokens.generate(db, passwordDigest(db, userId, FactoryRegistry.MAX_TIMESTAMP), expTime);
-        } catch (NoSuchAlgorithmException e) {
-            servletContext.log("no such algorithm: SHA-256");
-            return "Unable to create your account at this time. Please try again later.";
-        }
-        Cookie loginCookie = new Cookie("userId", userId + "|" + token);
-        loginCookie.setMaxAge(60 * 60 * 24 * 3); //3 days
-        response.addCookie(loginCookie);
-        try {
-            new LoginTransaction().update(db, email, request, userId);
-        } catch (Exception e) {
-            servletContext.log("failed update", e);
-        }
-        return null;
-    }
-
     public static boolean confirmPassword(Db db,
                                           ServletContext servletContext,
                                           String userId,

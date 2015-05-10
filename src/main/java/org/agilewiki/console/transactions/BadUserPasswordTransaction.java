@@ -16,18 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 public class BadUserPasswordTransaction implements Transaction {
     public final static String NAME = "badUserPassword";
 
-    public String update(Db db, String subject, HttpServletRequest request, String userId)
-            throws Exception {
-        MapNode mn = db.dbFactoryRegistry.nilMap;
-        if (subject.length() > 0)
-            mn = mn.add(NameIds.SUBJECT, subject);
-        mn = mn.add(User.USER_KEY, userId);
-        mn = mn.add(NameIds.REMOTE_HOST, request.getRemoteHost());
-        mn = mn.add(NameIds.REMOTE_ADDR, request.getRemoteAddr());
-        mn = mn.add(NameIds.REMOTE_PORT, request.getRemotePort());
-        return db.update(NAME, mn).call();
-    }
-
     @Override
     public void transform(Db db, MapNode mapNode) {
         String jeName = db.getJEName();
