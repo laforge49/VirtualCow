@@ -61,6 +61,8 @@ public class SimpleSimon extends HttpServlet {
     SubjectsBlade subjectsBlade;
     ValidatedBlade validatedBlade;
     WelcomeBlade welcomeBlade;
+    AboutBlade aboutBlade;
+    ContactBlade contactBlade;
 
     Map<String, RequestBlade> unknownRequests;
     Map<String, RequestBlade> guestRequests;
@@ -143,9 +145,13 @@ public class SimpleSimon extends HttpServlet {
             newAccountBlade = new NewAccountBlade(this);
             profileBlade = new ProfileBlade(this);
             welcomeBlade = new WelcomeBlade(this);
+            aboutBlade = new AboutBlade(this);
+            contactBlade = new ContactBlade(this);
 
             unknownRequests = new HashMap<String, RequestBlade>();
             unknownRequests.put("welcome", welcomeBlade);
+            unknownRequests.put("about", aboutBlade);
+            unknownRequests.put("contact", contactBlade);
             unknownRequests.put("login", loginBlade);
             unknownRequests.put("newAccount", newAccountBlade);
             unknownRequests.put("validated", validatedBlade);
