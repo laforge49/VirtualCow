@@ -64,6 +64,8 @@ public class SimpleSimon extends HttpServlet {
 
     Map<String, RequestBlade> unknownRequests;
     Map<String, RequestBlade> guestRequests;
+    Map<String, PostRequestBlade> unknownPosts;
+    Map<String, PostRequestBlade> guestPosts;
 
     public static String readResource(ServletContext servletContext, String pageName) throws IOException {
         InputStream is = servletContext.getResourceAsStream("/WEB-INF/pages/" + pageName + ".html");
@@ -146,6 +148,11 @@ public class SimpleSimon extends HttpServlet {
             unknownRequests.put("forgotPassword", forgotPasswordBlade);
             unknownRequests.put("login", loginBlade);
 
+            unknownPosts = new HashMap<String, PostRequestBlade>();
+            unknownPosts.put("login", loginBlade);
+            unknownPosts.put("validated", validatedBlade);
+            unknownPosts.put("forgotPassword", forgotPasswordBlade);
+
             guestRequests = new HashMap<String, RequestBlade>();
             guestRequests.put("welcome", welcomeBlade);
             guestRequests.put("home", homeBlade);
@@ -161,6 +168,14 @@ public class SimpleSimon extends HttpServlet {
             guestRequests.put("newEmailAddress", newEmailAddressBlade);
             guestRequests.put("login", loginBlade);
             guestRequests.put("profile", profileBlade);
+
+            guestPosts = new HashMap<String, PostRequestBlade>();
+            guestPosts.put("post", postBlade);
+            guestPosts.put("logout", logoutBlade);
+            guestPosts.put("deleteAccount", deleteAccountBlade);
+            guestPosts.put("changePassword", changePasswordBlade);
+            guestPosts.put("newEmailAddress", newEmailAddressBlade);
+            guestPosts.put("changeEmailAddress", changeEmailAddressBlade);
 
             ServletStartTransaction.update(db);
         } catch (Exception ex) {
@@ -196,7 +211,6 @@ public class SimpleSimon extends HttpServlet {
             userId = Tokens.parse(db, userIdToken);
         if (page == null)
             page = "home";
-
         if (userId == null) {
             RequestBlade rb = unknownRequests.get(page);
             if (rb == null) {
@@ -234,57 +248,17 @@ public class SimpleSimon extends HttpServlet {
         if (userIdToken != null)
             userId = Tokens.parse(db, userIdToken);
         String page = request.getParameter("to");
-        if (userId == null && !"validated".equals(page) && !"forgotPassword".equals(page)) {
-            page = "login";
+
+        PostRequestBlade pb = null;
+        if (userId == null) {
+            pb = unknownPosts.get(page);
+        } else {
+            pb = guestPosts.get(page);
         }
-        try {
-            if ("post".equals(page)) {
-                AsyncContext asyncContext = request.startAsync();
-                postBlade.post(page, asyncContext, userId);
-                return;
-            }
-            if ("logout".equals(page)) {
-                AsyncContext asyncContext = request.startAsync();
-                logoutBlade.post(page, asyncContext, userId);
-                return;
-            }
-            if ("deleteAccount".equals(page)) {
-                AsyncContext asyncContext = request.startAsync();
-                deleteAccountBlade.post(page, asyncContext, userId);
-                return;
-            }
-            if ("changePassword".equals(page)) {
-                AsyncContext asyncContext = request.startAsync();
-                changePasswordBlade.post(page, asyncContext, userId);
-                return;
-            }
-            if ("validated".equals(page)) {
-                AsyncContext asyncContext = request.startAsync();
-                validatedBlade.post(page, asyncContext, userId);
-                return;
-            }
-            if ("forgotPassword".equals(page)) {
-                AsyncContext asyncContext = request.startAsync();
-                forgotPasswordBlade.post(page, asyncContext, userId);
-                return;
-            }
-            if ("newEmailAddress".equals(page)) {
-                AsyncContext asyncContext = request.startAsync();
-                newEmailAddressBlade.post(page, asyncContext, userId);
-                return;
-            }
-            if ("changeEmailAddress".equals(page)) {
-                AsyncContext asyncContext = request.startAsync();
-                changeEmailAddressBlade.post(page, asyncContext, userId);
-                return;
-            }
-            if ("login".equals(page)) {
-                AsyncContext asyncContext = request.startAsync();
-                loginBlade.post(page, asyncContext, userId);
-                return;
-            }
-        } catch (Exception ex) {
-            throw new ServletException(ex);
+        if (pb != null) {
+            AsyncContext asyncContext = request.startAsync();
+            pb.post(page, asyncContext, userId);
+            return;
         }
 
         response.sendError(HttpServletResponse.SC_NOT_FOUND);
