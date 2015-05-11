@@ -17,7 +17,7 @@ body, div, h1, h2, h3, h4, h5, h6, p, ul, img {margin:0px; padding:0px; }
     float: left;
     background: #4b100b; 
 }
-#logo {background: url(/images/header.jpg) no-repeat;
+#logo {background: url(../images/header.jpg) no-repeat;
     height: 200px;
     width: 1096px;
     float: left; 
@@ -154,7 +154,7 @@ body, div, h1, h2, h3, h4, h5, h6, p, ul, img {margin:0px; padding:0px; }
 #content a:hover { color:#c63f33;
 }
 #footer {
-    background: url(/images/footer.jpg) repeat-x;
+    background: url(../images/footer.jpg) repeat-x;
     height: 200px;
     width: 1096px;
 	margin-left: 240px;
