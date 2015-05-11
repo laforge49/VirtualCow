@@ -1,8 +1,5 @@
 package org.agilewiki.console;
 
-import org.agilewiki.console.transactions.BadUserAddressTransaction;
-import org.agilewiki.console.transactions.BadUserPasswordTransaction;
-import org.agilewiki.console.transactions.LoginTransaction;
 import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.immutable.FactoryRegistry;
@@ -12,9 +9,6 @@ import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 import javax.mail.MessagingException;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 

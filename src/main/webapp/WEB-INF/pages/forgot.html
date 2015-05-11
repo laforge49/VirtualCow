@@ -14,25 +14,23 @@
 <body>
 <h1>Virtual COW</h1>
 
-<h2>Login</h2>
+<h2>Forgot Password</h2>
 
 <p><a href="?">Welcome</a></p>
 
 <form method="POST">
     <fieldset>
-        <legend>Login</legend>
-        <p style="color:red"><strong>{{error}}&nbsp;</strong></p>
+        <legend>Forgot Password</legend>
+        <p style="color:red"><strong>{{error3}}&nbsp;</strong></p>
         <input type="hidden" name="from" value="login"/>
         <input type="hidden" name="to" value="login"/>
 
         <p>
-            Email Address: <input type="text" name="emailAddress" size="60" value="{{emailAddress}}">
+            Email Address: <input type="text" name="emailAddress3" size="60" value="{{emailAddress3}}">
         </p>
+        <input type="submit" name="forgotPassword" value="Verify Address"/>
 
-        <p>
-            Password: <input type="password" name="password" size="60">
-        </p>
-        <input type="submit" name="login" value="Login"/>
+        <p>{{success3}}&nbsp;</p>
     </fieldset>
 </form>
 

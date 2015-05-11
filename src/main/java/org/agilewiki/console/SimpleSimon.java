@@ -1,14 +1,13 @@
 package org.agilewiki.console;
 
 import org.agilewiki.console.requests.*;
-import org.agilewiki.console.transactions.*;
+import org.agilewiki.console.transactions.ServletStartTransaction;
+import org.agilewiki.console.transactions.ServletStopTransaction;
 import org.agilewiki.jactor2.core.impl.Plant;
 import org.agilewiki.utils.ids.Timestamp;
 import org.agilewiki.utils.immutable.BaseRegistry;
-import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.virtualcow.Db;
 
-import javax.mail.MessagingException;
 import javax.servlet.AsyncContext;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -24,7 +23,6 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -54,6 +52,8 @@ public class SimpleSimon extends HttpServlet {
     JournalBlade journalBlade;
     JournalEntryBlade journalEntryBlade;
     LoginBlade loginBlade;
+    NewAccountBlade newAccountBlade;
+    ForgotBlade forgotBlade;
     LogoutBlade logoutBlade;
     NewEmailAddressBlade newEmailAddressBlade;
     PostBlade postBlade;
@@ -139,22 +139,27 @@ public class SimpleSimon extends HttpServlet {
             forgotPasswordBlade = new ForgotPasswordBlade(this);
             newEmailAddressBlade = new NewEmailAddressBlade(this);
             loginBlade = new LoginBlade(this);
+            forgotBlade = new ForgotBlade(this);
+            newAccountBlade = new NewAccountBlade(this);
             profileBlade = new ProfileBlade(this);
             welcomeBlade = new WelcomeBlade(this);
 
             unknownRequests = new HashMap<String, RequestBlade>();
             unknownRequests.put("welcome", welcomeBlade);
-            unknownRequests.put("validated", validatedBlade);
-            unknownRequests.put("forgotPassword", forgotPasswordBlade);
             unknownRequests.put("login", loginBlade);
+            unknownRequests.put("newAccount", newAccountBlade);
+            unknownRequests.put("validated", validatedBlade);
+            unknownRequests.put("forgot", forgotBlade);
+            unknownRequests.put("forgotPassword", forgotPasswordBlade);
 
             unknownPosts = new HashMap<String, PostRequestBlade>();
             unknownPosts.put("login", loginBlade);
+            unknownPosts.put("newAccount", newAccountBlade);
             unknownPosts.put("validated", validatedBlade);
+            unknownPosts.put("forgot", forgotBlade);
             unknownPosts.put("forgotPassword", forgotPasswordBlade);
 
             guestRequests = new HashMap<String, RequestBlade>();
-            guestRequests.put("welcome", welcomeBlade);
             guestRequests.put("home", homeBlade);
             guestRequests.put("post", postBlade);
             guestRequests.put("journalEntry", journalEntryBlade);
@@ -163,10 +168,7 @@ public class SimpleSimon extends HttpServlet {
             guestRequests.put("deleteAccount", deleteAccountBlade);
             guestRequests.put("changePassword", changePasswordBlade);
             guestRequests.put("changeEmailAddress", changeEmailAddressBlade);
-            guestRequests.put("validated", validatedBlade);
-            guestRequests.put("forgotPassword", forgotPasswordBlade);
             guestRequests.put("newEmailAddress", newEmailAddressBlade);
-            guestRequests.put("login", loginBlade);
             guestRequests.put("profile", profileBlade);
 
             guestPosts = new HashMap<String, PostRequestBlade>();

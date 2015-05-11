@@ -1,14 +1,11 @@
 package org.agilewiki.console.requests;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import org.agilewiki.console.MailOut;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.Tokens;
 import org.agilewiki.console.User;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
-import javax.mail.MessagingException;
 import javax.servlet.AsyncContext;
 import java.security.NoSuchAlgorithmException;
 

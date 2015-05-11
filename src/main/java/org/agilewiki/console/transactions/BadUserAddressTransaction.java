@@ -7,8 +7,6 @@ import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 import org.agilewiki.utils.virtualcow.Transaction;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * Non-performing Journal Entry.
  */
