@@ -58,7 +58,8 @@ public class JournalBlade extends RequestBlade {
                             MapAccessor ma = db.mapAccessor();
                             ListAccessor la = ma.listAccessor(tsId);
                             VersionedMapNode vmn = (VersionedMapNode) la.get(0);
-                            sb.append("<a href=\"?from=journal&to=journalEntry&jeTimestamp=" + next);
+                            String jeId = TimestampIds.generate(next);
+                            sb.append("<a href=\"?from=journal&to=node&nodeId=" + jeId);
                             if (timestamp != null) {
                                 sb.append("&timestamp=" + timestamp);
                             }

@@ -50,7 +50,7 @@ public class SimpleSimon extends HttpServlet {
     ForgotPasswordBlade forgotPasswordBlade;
     HomeBlade homeBlade;
     JournalBlade journalBlade;
-    JournalEntryBlade journalEntryBlade;
+    NodeBlade nodeBlade;
     LoginBlade loginBlade;
     NewAccountBlade newAccountBlade;
     ForgotBlade forgotBlade;
@@ -130,7 +130,7 @@ public class SimpleSimon extends HttpServlet {
 
             homeBlade = new HomeBlade(this);
             postBlade = new PostBlade(this);
-            journalEntryBlade = new JournalEntryBlade(this);
+            nodeBlade = new NodeBlade(this);
             journalBlade = new JournalBlade(this);
             subjectsBlade = new SubjectsBlade(this);
             logoutBlade = new LogoutBlade(this);
@@ -168,7 +168,7 @@ public class SimpleSimon extends HttpServlet {
             guestRequests = new HashMap<String, RequestBlade>();
             guestRequests.put("home", homeBlade);
             guestRequests.put("post", postBlade);
-            guestRequests.put("journalEntry", journalEntryBlade);
+            guestRequests.put("node", nodeBlade);
             guestRequests.put("journal", journalBlade);
             guestRequests.put("subjects", subjectsBlade);
             guestRequests.put("deleteAccount", deleteAccountBlade);

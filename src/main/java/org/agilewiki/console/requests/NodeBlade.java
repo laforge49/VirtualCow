@@ -13,8 +13,8 @@ import javax.servlet.AsyncContext;
 /**
  * Request for a journal entry.
  */
-public class JournalEntryBlade extends RequestBlade {
-    public JournalEntryBlade(SimpleSimon simpleSimon) throws Exception {
+public class NodeBlade extends RequestBlade {
+    public NodeBlade(SimpleSimon simpleSimon) throws Exception {
         super(simpleSimon);
     }
 
@@ -32,19 +32,24 @@ public class JournalEntryBlade extends RequestBlade {
                     longTimestamp = TimestampIds.timestamp(TimestampIds.generate(timestamp));
                 } else
                     longTimestamp = FactoryRegistry.MAX_TIMESTAMP;
-                String id = TimestampIds.generate(request.getParameter("jeTimestamp"));
-                String time = SimpleSimon.niceTime(id);
+                String nodeId = request.getParameter("nodeId");
+                String time = null;
+                if (nodeId.startsWith("$t"))
+                    time = SimpleSimon.niceTime(nodeId);
                 StringBuilder sb;
                 while (true) {
                     try {
                         sb = new StringBuilder();
                         MapAccessor ma = db.mapAccessor();
 
-                        ListAccessor la = ma.listAccessor(id);
+                        ListAccessor la = ma.listAccessor(nodeId);
                         if (la != null) {
                             VersionedMapNode vmn = (VersionedMapNode) la.get(0);
                             if (vmn != null && !vmn.isEmpty(longTimestamp)) {
-                                sb.append(time);
+                                if (time != null)
+                                    sb.append(time);
+                                else
+                                    sb.append(nodeId);
                                 sb.append("<br />");
                                 MapAccessor vma = vmn.mapAccessor(longTimestamp);
                                 for (ListAccessor vla : vma) {
@@ -63,9 +68,10 @@ public class JournalEntryBlade extends RequestBlade {
                     } catch (UnexpectedChecksumException uce) {
                     }
                 }
-                map.put("journalEntry", sb.toString());
-                map.put("jeTimestamp", TimestampIds.value(id));
-                map.put("time", time);
+                map.put("node", sb.toString());
+                map.put("nodeId", TimestampIds.value(nodeId));
+                if (time != null)
+                    map.put("time", "select " + time);
                 finish();
             }
         }.signal();
