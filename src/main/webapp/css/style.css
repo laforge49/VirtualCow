@@ -5,7 +5,7 @@ body, div, h1, h2, h3, h4, h5, h6, p, ul, img {margin:0px; padding:0px; }
 
 
 #main {background-color: #f8f0d5; 
-    width: 1096px;
+    width: 1010px;
     margin-left: 240px; }
 #header {
     padding-top: 40px; 
@@ -13,13 +13,13 @@ body, div, h1, h2, h3, h4, h5, h6, p, ul, img {margin:0px; padding:0px; }
 #header {
     
     height: 200px;
-    width: 1081px;
+    width: 1010px;
     float: left;
     background: #4b100b; 
 }
 #logo {background: url(../images/header.jpg) no-repeat;
     height: 200px;
-    width: 1096px;
+    width: 1010px;
     float: left; 
     margin-top: -40px;}
 }
@@ -32,13 +32,13 @@ body, div, h1, h2, h3, h4, h5, h6, p, ul, img {margin:0px; padding:0px; }
  
 /*----- Menu Outline -----*/
 .menu-wrap {
-    width:1081;
+    width:1010;
     box-shadow:0px 1px 3px rgba(0,0,0,0.2);
     background: #4b100b;
 }
  
 .menu {
-    width:1081px;
+    width:1010px;
     margin:0px auto;
 }
  
@@ -46,6 +46,7 @@ body, div, h1, h2, h3, h4, h5, h6, p, ul, img {margin:0px; padding:0px; }
     float: left; 
     padding-left: 100px;
     list-style:none;
+	font-size: 20px;
     
 }
  
@@ -103,7 +104,7 @@ body, div, h1, h2, h3, h4, h5, h6, p, ul, img {margin:0px; padding:0px; }
  
 .sub-menu li {
     display:block;
-    font-size:16px;
+    font-size:18px;
 }
  
 .sub-menu li a {
@@ -117,7 +118,7 @@ body, div, h1, h2, h3, h4, h5, h6, p, ul, img {margin:0px; padding:0px; }
 #content {
     margin-left: 70px;
     height: 0 auto;
-    width: 900px;
+    width: 950px;
     float: left; 
 }
 #content h1 {
@@ -155,11 +156,11 @@ body, div, h1, h2, h3, h4, h5, h6, p, ul, img {margin:0px; padding:0px; }
 }
 #footer {
     background: url(../images/footer.jpg) repeat-x;
-    height: 200px;
-    width: 1096px;
+    height: 175px;
+    width: 1010px;
 	margin-left: 240px;
     padding-top: 20px;
-    margin-top: 700px;
+    margin-top: 600px;
     color: #4b100b; 
     text-align: center;
 } 
