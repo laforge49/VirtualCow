@@ -50,10 +50,13 @@ public class NodeBlade extends RequestBlade {
                         if (la != null) {
                             VersionedMapNode vmn = (VersionedMapNode) la.get(0);
                             if (vmn != null && !vmn.isEmpty(longTimestamp)) {
-                                if (time != null)
+                                sb.append("node id: ");
+                                sb.append(nodeId);
+                                if (time != null) {
+                                    sb.append(" (");
                                     sb.append(time);
-                                else
-                                    sb.append(nodeId);
+                                    sb.append(")");
+                                }
                                 sb.append("<br />");
                                 MapAccessor vma = vmn.mapAccessor(longTimestamp);
                                 for (ListAccessor vla : vma) {
