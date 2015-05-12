@@ -2,6 +2,7 @@ package org.agilewiki.console.requests;
 
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.TimestampIds;
+import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.ListAccessor;
 import org.agilewiki.utils.immutable.collections.MapAccessor;
@@ -34,8 +35,11 @@ public class NodeBlade extends RequestBlade {
                     longTimestamp = FactoryRegistry.MAX_TIMESTAMP;
                 String nodeId = request.getParameter("nodeId");
                 String time = null;
-                if (nodeId.startsWith("$t"))
+                String jeTimestamp = "";
+                if (nodeId.startsWith("$t")) {
+                    jeTimestamp = TimestampIds.value(nodeId);
                     time = SimpleSimon.niceTime(nodeId);
+                }
                 StringBuilder sb;
                 while (true) {
                     try {
@@ -69,9 +73,11 @@ public class NodeBlade extends RequestBlade {
                     }
                 }
                 map.put("node", sb.toString());
-                map.put("nodeId", TimestampIds.value(nodeId));
-                if (time != null)
+                map.put("nodeId", nodeId);
+                if (time != null) {
+                    map.put("jeTimestamp", jeTimestamp);
                     map.put("time", "select " + time);
+                }
                 finish();
             }
         }.signal();
