@@ -3,6 +3,8 @@ package org.agilewiki.console.requests;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.TimestampIds;
 import org.agilewiki.utils.ids.NameId;
+import org.agilewiki.utils.ids.composites.Journal;
+import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.ListAccessor;
 import org.agilewiki.utils.immutable.collections.MapAccessor;
@@ -67,6 +69,25 @@ public class NodeBlade extends RequestBlade {
                                                 SimpleSimon.encode("" + vla.get(i), s.length() + 4,
                                                         SimpleSimon.ENCODE_MULTIPLE_LINES)); //body text
                                         sb.append("<br />");
+                                    }
+                                }
+                                if (time != null) {
+                                    sb.append("Modifies: <br />");
+                                    for (String nId: db.keysIterable(Journal.modifiesId(nodeId), longTimestamp)) {
+                                        if (nId.startsWith(SecondaryId.SECONDARY_ID))
+                                            continue;
+                                        sb.append("&nbsp;&nbsp;&nbsp;&nbsp;" + nId + "<br />");
+                                        if (nId.startsWith(SecondaryId.SECONDARY_INV)) {
+                                            VersionedMapNode icvmn = db.get(nId);
+                                            if (icvmn != null) {
+                                                MapAccessor icma = icvmn.mapAccessor(longTimestamp);
+                                                for (ListAccessor icla: icma) {
+                                                    sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                                                    sb.append(icla.key());
+                                                    sb.append("<br />");
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
