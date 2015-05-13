@@ -2,7 +2,6 @@ package org.agilewiki.console.requests;
 
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.TimestampIds;
-import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.composites.Journal;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.FactoryRegistry;
@@ -73,7 +72,7 @@ public class NodeBlade extends RequestBlade {
                                 }
                                 if (time != null) {
                                     sb.append("Modifies: <br />");
-                                    for (String nId: db.keysIterable(Journal.modifiesId(nodeId), longTimestamp)) {
+                                    for (String nId : db.keysIterable(Journal.modifiesId(nodeId), longTimestamp)) {
                                         if (nId.startsWith(SecondaryId.SECONDARY_ID))
                                             continue;
                                         sb.append("&nbsp;&nbsp;&nbsp;&nbsp;" + nId + "<br />");
@@ -81,13 +80,22 @@ public class NodeBlade extends RequestBlade {
                                             VersionedMapNode icvmn = db.get(nId);
                                             if (icvmn != null) {
                                                 MapAccessor icma = icvmn.mapAccessor(longTimestamp);
-                                                for (ListAccessor icla: icma) {
+                                                for (ListAccessor icla : icma) {
                                                     sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
                                                     sb.append(icla.key());
                                                     sb.append("<br />");
                                                 }
                                             }
                                         }
+                                    }
+                                }
+                                sb.append("Secondary Keys: <br />");
+                                for (String typeId : SecondaryId.typeIdIterable(db, nodeId)) {
+                                    sb.append("&nbsp;&nbsp;&nbsp;&nbsp;typeId: " + typeId + "<br />");
+                                    for (String secondaryId :
+                                            SecondaryId.secondaryIdIterable(db, nodeId, typeId, longTimestamp)) {
+                                        sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;secondaryId - " +
+                                                secondaryId + "<br />");
                                     }
                                 }
                             }
