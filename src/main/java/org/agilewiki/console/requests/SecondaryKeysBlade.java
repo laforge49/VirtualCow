@@ -54,7 +54,7 @@ public class SecondaryKeysBlade extends RequestBlade {
                                 break;
                             }
                             --limit;
-                            String line = ValueId.value(id);
+                            String line = id.substring(2);
                             line = line.replaceAll("\r", "");
                             if (line.length() > 60)
                                 line = line.substring(0, 60);
