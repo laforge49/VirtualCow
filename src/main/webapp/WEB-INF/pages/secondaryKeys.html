@@ -14,31 +14,35 @@
 <body>
 <h1>Virtual COW {{atTime}}</h1>
 
-<h2>Subjects</h2>
+<h2>SecondaryKeys, type = {{secondaryType}}</h2>
 
 <p>
 
 <form method="GET">
-    <input type="hidden" name="from" value="subjects"/>
-    <input type="hidden" name="to" value="subjects"/>
+    <input type="hidden" name="from" value="secondaryKeys"/>
+    <input type="hidden" name="to" value="secondaryKeys"/>
+    <input type="hidden" name="secondaryType" value="{{secondaryType}}"/>
+    <input type="hidden" name="keyPrefix" value="{{keyPrefix}}"/>
     {{formTimestamp}}
     More subjects, starting at <input type="text" name="startingAt" size="60" value="{{startingAt}}">
     <input type="submit" value="OK"/>
 </form>
-<a href="?from=subjects{{setTimestamp}}">home</a>
+<a href="?from=secondaryKeys{{setTimestamp}}">home</a>
 </p>
-<p style="font-family:courier">{{subjects}}</p>
+<p style="font-family:courier">{{secondaryKeys}}</p>
 
 <p>
 
 <form method="GET">
-    <input type="hidden" name="from" value="subjects"/>
-    <input type="hidden" name="to" value="subjects"/>
+    <input type="hidden" name="from" value="secondaryKeys"/>
+    <input type="hidden" name="to" value="secondaryKeys"/>
+    <input type="hidden" name="secondaryType" value="{{secondaryType}}"/>
+    <input type="hidden" name="keyPrefix" value="{{keyPrefix}}"/>
     {{formTimestamp}}
     More subjects, starting at <input type="text" name="startingAt" size="60" value="{{startingAt}}">
     <input type="submit" value="OK"/>
 </form>
-<a href="?from=subjects{{setTimestamp}}">home</a>
+<a href="?from=secondaryKeys{{setTimestamp}}">home</a>
 </p>
 </body>
 </html>

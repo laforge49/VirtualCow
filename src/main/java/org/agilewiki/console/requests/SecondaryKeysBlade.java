@@ -12,10 +12,10 @@ import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 import javax.servlet.AsyncContext;
 
 /**
- * Request for subjects.
+ * Request for secondary keys.
  */
-public class SubjectsBlade extends RequestBlade {
-    public SubjectsBlade(SimpleSimon simpleSimon) throws Exception {
+public class SecondaryKeysBlade extends RequestBlade {
+    public SecondaryKeysBlade(SimpleSimon simpleSimon) throws Exception {
         super(simpleSimon);
     }
 
@@ -34,7 +34,9 @@ public class SubjectsBlade extends RequestBlade {
                     longTimestamp = TimestampIds.timestamp(TimestampIds.generate(timestamp));
                 } else
                     longTimestamp = FactoryRegistry.MAX_TIMESTAMP;
-                String prefix = SecondaryId.SECONDARY_ID + NameIds.SUBJECT;
+                String secondaryType = request.getParameter("secondaryType");
+                String keyPrefix = request.getParameter("keyPrefix");
+                String prefix = SecondaryId.SECONDARY_ID + NameIds.generate(secondaryType);
                 String startingAt = request.getParameter("startingAt");
                 if (startingAt == null)
                     startingAt = "";
@@ -45,7 +47,7 @@ public class SubjectsBlade extends RequestBlade {
                         hasMore = false;
                         int limit = 25;
                         sb = new StringBuilder();
-                        for (String id : new IdIterable(servletContext, db, prefix, ValueId.generate(startingAt), longTimestamp)) {
+                        for (String id : new IdIterable(servletContext, db, prefix, keyPrefix + startingAt, longTimestamp)) {
                             if (limit == 0) {
                                 hasMore = true;
                                 startingAt = ValueId.value(id);
@@ -64,8 +66,10 @@ public class SubjectsBlade extends RequestBlade {
                     } catch (UnexpectedChecksumException uce) {
                     }
                 }
-                map.put("subjects", sb.toString());
+                map.put("secondaryKeys", sb.toString());
                 map.put("startingAt", hasMore ? SimpleSimon.encode(startingAt, 0, SimpleSimon.ENCODE_FIELD) : ""); //field
+                map.put("secondaryType", secondaryType);
+                map.put("keyPrefix", keyPrefix);
                 finish();
             }
         }.signal();
