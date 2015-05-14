@@ -119,7 +119,6 @@ public class NodeBlade extends RequestBlade {
                 }
                 map.put("node", sb.toString());
                 map.put("nodeId", nodeId);
-                servletContext.log(nodeId+" "+jeTimestamp+" "+timestamp);
                 if (time != null &&
                         (timestamp == null || !timestamp.equals(jeTimestamp))) {
                     map.put("jeTimestamp", jeTimestamp);

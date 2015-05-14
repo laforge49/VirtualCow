@@ -12,6 +12,12 @@ import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
 import javax.servlet.AsyncContext;
+import javax.servlet.ServletException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -29,6 +35,21 @@ public class JournalBlade extends RequestBlade {
             protected void process()
                     throws Exception {
                 String timestamp = request.getParameter("timestamp");
+                String dateInString = request.getParameter("date");
+                if (dateInString != null && dateInString.length() > 0) {
+                    Date date;
+                    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+                    try {
+                        date = formatter.parse(dateInString);
+                    } catch (ParseException e) {
+                        throw new ServletException(e);
+                    }
+                    GregorianCalendar calendar = new GregorianCalendar();
+                    calendar.setTime(date);
+                    calendar.set(Calendar.SECOND, 59);
+                    long time = calendar.getTimeInMillis() + 999;
+                    timestamp = TimestampIds.value(TimestampIds.timestampId((time << 10) + 1023));
+                }
                 long longTimestamp;
                 if (timestamp != null) {
                     map.put("setTimestamp", "&timestamp=" + timestamp);
@@ -40,6 +61,8 @@ public class JournalBlade extends RequestBlade {
                 String startingAt = request.getParameter("startingAt");
                 if (startingAt == null)
                     startingAt = "";
+                if (timestamp != null && startingAt.compareTo(timestamp) < 0)
+                    startingAt = timestamp;
                 StringBuilder sb;
                 boolean hasMore;
                 while (true) {
@@ -96,6 +119,9 @@ public class JournalBlade extends RequestBlade {
                         break;
                     } catch (UnexpectedChecksumException uce) {
                     }
+                }
+                if (timestamp != null) {
+                    map.put("clearTime", "<a href=\"?from=journal&to=journal\">Clear selected time</a>");
                 }
                 map.put("journal", sb.toString());
                 map.put("more", hasMore ? "more" : "");

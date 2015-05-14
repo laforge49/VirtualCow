@@ -24,9 +24,6 @@
       showButtonPanel: false
     });
   });
-
-
-
     </script>
 </head>
 <body>
@@ -35,20 +32,24 @@
 
 <h2>Home</h2>
 
-<p>
 
 <p><a href="?from=home&to=profile">My Profile</a></p>
-<a href="?from=home&to=journal{{setStartingAt}}{{setTimestamp}}">journal</a><br/>
-<a href="?from=home&to=secondaryKeys&secondaryType=subject&keyPrefix=$v{{setTimestamp}}">subjects</a><br/>
-<a href="?from=home&to=secondaryKeys&secondaryType=email&keyPrefix=$v{{setTimestamp}}">email addresses</a><br/>
-<a href="?from=home&to=secondaryKeys&secondaryType=userType&keyPrefix=$n{{setTimestamp}}">user types</a><br/>
-{{clearTime}}
+
+<p>
 <form method="GET">
     <input type="hidden" name="from" value="home"/>
     <input type="hidden" name="to" value="home"/>
-    Select Date: <input type="text" name="date" id="datepicker">
+    Select Date: <input type="text" name="date" id="datepicker"/>
     <input type="submit" value="OK"/>
 </form>
+{{clearTime}}
+</p>
+
+<p>
+<a href="?from=home&to=journal{{setTimestamp}}">journal</a><br/>
+<a href="?from=home&to=secondaryKeys&secondaryType=subject&keyPrefix=$v{{setTimestamp}}">subjects</a><br/>
+<a href="?from=home&to=secondaryKeys&secondaryType=email&keyPrefix=$v{{setTimestamp}}">email addresses</a><br/>
+<a href="?from=home&to=secondaryKeys&secondaryType=userType&keyPrefix=$n{{setTimestamp}}">user types</a><br/>
 </p>
 
 <p>

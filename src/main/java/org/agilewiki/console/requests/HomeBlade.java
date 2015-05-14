@@ -45,7 +45,6 @@ public class HomeBlade extends RequestBlade {
                     map.put("post", "post");
                 } else {
                     map.put("setTimestamp", "&timestamp=" + timestamp);
-                    map.put("setStartingAt", "&startingAt=" + timestamp);
                     map.put("atTime", "at " + SimpleSimon.niceTime(TimestampIds.generate(timestamp)));
                     map.put("clearTime", "<a href=\".\">Clear selected time</a>");
                 }
