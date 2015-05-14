@@ -119,9 +119,14 @@ public class NodeBlade extends RequestBlade {
                 }
                 map.put("node", sb.toString());
                 map.put("nodeId", nodeId);
-                if (time != null) {
+                servletContext.log(nodeId+" "+jeTimestamp+" "+timestamp);
+                if (time != null &&
+                        (timestamp == null || !timestamp.equals(jeTimestamp))) {
                     map.put("jeTimestamp", jeTimestamp);
                     map.put("time", "select " + time);
+                }
+                if (timestamp != null) {
+                    map.put("clearTime", "<a href=\"?from=node&to=node&nodeId=" + nodeId + "\">Clear selected time</a>");
                 }
                 finish();
             }
