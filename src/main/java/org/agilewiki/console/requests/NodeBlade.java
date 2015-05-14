@@ -11,6 +11,12 @@ import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
 import javax.servlet.AsyncContext;
+import javax.servlet.ServletException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Request for a journal entry.
@@ -27,6 +33,21 @@ public class NodeBlade extends RequestBlade {
             protected void process()
                     throws Exception {
                 String timestamp = request.getParameter("timestamp");
+                String dateInString = request.getParameter("date");
+                if (dateInString != null && dateInString.length() > 0) {
+                    Date date;
+                    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+                    try {
+                        date = formatter.parse(dateInString);
+                    } catch (ParseException e) {
+                        throw new ServletException(e);
+                    }
+                    GregorianCalendar calendar = new GregorianCalendar();
+                    calendar.setTime(date);
+                    calendar.set(Calendar.SECOND, 59);
+                    long time = calendar.getTimeInMillis() + 999;
+                    timestamp = TimestampIds.value(TimestampIds.timestampId((time << 10) + 1023));
+                }
                 long longTimestamp;
                 if (timestamp != null) {
                     map.put("setTimestamp", "&timestamp=" + timestamp);
