@@ -52,6 +52,7 @@ public class JournalBlade extends RequestBlade {
                 }
                 long longTimestamp;
                 if (timestamp != null) {
+                    map.put("clearTime", "<a href=\"?from=journal&to=journal\">Clear selected time</a>");
                     map.put("setTimestamp", "&timestamp=" + timestamp);
                     String timestampId = TimestampIds.generate(timestamp);
                     map.put("atTime", "at " + SimpleSimon.niceTime(timestampId));
@@ -119,9 +120,6 @@ public class JournalBlade extends RequestBlade {
                         break;
                     } catch (UnexpectedChecksumException uce) {
                     }
-                }
-                if (timestamp != null) {
-                    map.put("clearTime", "<a href=\"?from=journal&to=journal\">Clear selected time</a>");
                 }
                 map.put("journal", sb.toString());
                 map.put("more", hasMore ? "more" : "");

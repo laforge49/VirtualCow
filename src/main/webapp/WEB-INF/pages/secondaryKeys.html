@@ -10,6 +10,21 @@
     <meta name="author" content=""/>
     <meta name="copyright" content="&copy; 2015"/>
     <meta name="robot" content="noindex, nofollow"/>
+    <link rel="stylesheet" href="css/jquery-1.11.4-smoothness.css">
+    <script src="js/jquery-1.11.2.min.js"></script>
+    <script src="js/jquery-1.11.4.ui.js"></script>
+    <script src="js/jquery-ui-timepicker-addon.js"></script>
+    <link rel="stylesheet" href="css/jquery-ui-timepicker-addon.css">
+    <script>
+  $(function() {
+    $('#datepicker').datetimepicker({
+      changeMonth: true,
+      changeYear: true,
+      showButtonPanel: false
+    });
+  });
+
+    </script>
 </head>
 <body>
 <h1>Virtual COW {{atTime}}</h1>
@@ -17,7 +32,18 @@
 <h2>SecondaryKeys, type = {{secondaryType}}</h2>
 
 <p>
+<form method="GET">
+    <input type="hidden" name="from" value="secondaryKeys"/>
+    <input type="hidden" name="to" value="secondaryKeys"/>
+    <input type="hidden" name="secondaryType" value="{{secondaryType}}"/>
+    <input type="hidden" name="keyPrefix" value="{{keyPrefix}}"/>
+    Select Date: <input type="text" name="date" id="datepicker"/>
+    <input type="submit" value="OK"/>
+</form>
+{{clearTime}}
+</p>
 
+<p>
 <form method="GET">
     <input type="hidden" name="from" value="secondaryKeys"/>
     <input type="hidden" name="to" value="secondaryKeys"/>
@@ -29,6 +55,7 @@
 </form>
 <a href="?from=secondaryKeys{{setTimestamp}}">home</a>
 </p>
+
 <p style="font-family:courier">{{secondaryKeys}}</p>
 
 <p>
