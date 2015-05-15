@@ -58,8 +58,10 @@ public class SecondaryKeysBlade extends RequestBlade {
                     map.put("setTimestamp", "&timestamp=" + timestamp);
                     map.put("atTime", "at " + SimpleSimon.niceTime(TimestampIds.generate(timestamp)));
                     longTimestamp = TimestampIds.timestamp(TimestampIds.generate(timestamp));
-                } else
+                } else {
                     longTimestamp = FactoryRegistry.MAX_TIMESTAMP;
+                    map.put("post", "post");
+                }
                 String prefix = SecondaryId.SECONDARY_ID + NameIds.generate(secondaryType);
                 String startingAt = request.getParameter("startingAt");
                 if (startingAt == null)

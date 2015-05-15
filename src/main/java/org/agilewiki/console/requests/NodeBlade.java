@@ -53,8 +53,10 @@ public class NodeBlade extends RequestBlade {
                     map.put("setTimestamp", "&timestamp=" + timestamp);
                     map.put("atTime", "at " + SimpleSimon.niceTime(TimestampIds.generate(timestamp)));
                     longTimestamp = TimestampIds.timestamp(TimestampIds.generate(timestamp));
-                } else
+                } else {
                     longTimestamp = FactoryRegistry.MAX_TIMESTAMP;
+                    map.put("post", "post");
+                }
                 String nodeId = request.getParameter("nodeId");
                 String time = null;
                 String jeTimestamp = "";
@@ -143,7 +145,7 @@ public class NodeBlade extends RequestBlade {
                 if (time != null &&
                         (timestamp == null || !timestamp.equals(jeTimestamp))) {
                     map.put("jeTimestamp", jeTimestamp);
-                    map.put("time", "select " + time);
+                    map.put("time", "go to " + time);
                 }
                 if (timestamp != null) {
                     map.put("clearTime", "<a href=\"?from=node&to=node&nodeId=" + nodeId + "\">Clear selected time</a>");

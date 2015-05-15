@@ -56,7 +56,8 @@ public class JournalBlade extends RequestBlade {
                     map.put("setTimestamp", "&timestamp=" + timestamp);
                     String timestampId = TimestampIds.generate(timestamp);
                     map.put("atTime", "at " + SimpleSimon.niceTime(timestampId));
-                }
+                } else
+                    map.put("post", "post");
                 longTimestamp = FactoryRegistry.MAX_TIMESTAMP;
                 String prefix = Timestamp.PREFIX;
                 String startingAt = request.getParameter("startingAt");
