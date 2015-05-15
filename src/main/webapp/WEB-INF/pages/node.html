@@ -25,78 +25,81 @@
   });
 
 
+
+
     </script>
 </head>
 <body>
 <h1><a id="top">Virtual COW {{atTime}}</a></h1>
 
-<h2>Node</h2>
+<div>
+    <table style="float:right">
+        <tr>
+            <td>
+                <img src="/images/timeMachineSmall.jpg"/>
+            </td>
+            <td>
+                <form method="GET">
+                    <input type="hidden" name="from" value="node"/>
+                    <input type="hidden" name="to" value="node"/>
+                    <input type="hidden" name="nodeId" value="{{nodeId}}"/>
+                    Select Date: <input type="text" name="date" id="datepicker"/>
+                    <input type="submit" value="Go"/>
+                </form>
+                <a href="?from=node&to=node&nodeId={{nodeId}}&timestamp={{jeTimestamp}}">{{time}}</a><br/>
+                {{clearTime}}
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td valign="baseline">
+                <a href="?from=node&to=profile">My Profile</a><br/>
+            </td>
+            <td valign="baseline">
+                <a href="?from=node{{setTimestamp}}">home</a>
+            </td>
+            <td valign="baseline">
+                <form action="?from=node&to=logout" method="POST">
+                    <input type="submit" value="Logout"/>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td valign="baseline">
+                <a href="?from=node&to=journal{{setTimestamp}}">journal</a>
+            </td>
+            <td valign="baseline">
+                Secondary Keys:
+                <lu>
+                    <li>
+                        <a href="?from=node&to=secondaryKeys&secondaryType=subject&keyPrefix=$v{{setTimestamp}}">subjects</a>
+                    </li>
+                    <li>
+                        <a href="?from=node&to=secondaryKeys&secondaryType=email&keyPrefix=$v{{setTimestamp}}">email
+                            addresses</a>
+                    </li>
+                    <li>
+                        <a href="?from=node&to=secondaryKeys&secondaryType=userType&keyPrefix=$n{{setTimestamp}}">user
+                            types</a><br/>
+                    </li>
+                </lu>
+            </td>
+            <td valign="baseline">
+                <a href="?from=node&to=post">{{post}}</a>
+            </td>
+        </tr>
+    </table>
+</div>
 
-<table>
-    <tr>
-        <td>
-            <img src="/images/timeMachineSmall.jpg"/>
-        </td>
-        <td>
-            <form method="GET">
-                <input type="hidden" name="from" value="node"/>
-                <input type="hidden" name="to" value="node"/>
-                <input type="hidden" name="nodeId" value="{{nodeId}}"/>
-                Select Date: <input type="text" name="date" id="datepicker"/>
-                <input type="submit" value="Go"/>
-            </form>
-            <a href="?from=node&to=node&nodeId={{nodeId}}&timestamp={{jeTimestamp}}">{{time}}</a><br/>
-            {{clearTime}}
-        </td>
-    </tr>
-</table>
+<h2 align="center">Node</h2>
 
-<table>
-    <tr>
-        <td valign="baseline">
-            <a href="?from=node&to=profile">My Profile</a><br />
-        </td>
-        <td valign="baseline">
-            <a href="?from=node{{setTimestamp}}">home</a>
-        </td>
-        <td valign="baseline">
-            <form action="?from=node&to=logout" method="POST">
-                <input type="submit" value="Logout"/>
-            </form>
-        </td>
-    </tr>
-    <tr>
-        <td valign="baseline">
-            <a href="?from=node&to=journal{{setTimestamp}}">journal</a>
-        </td>
-        <td valign="baseline">
-            Secondary Keys:
-            <lu>
-                <li>
-                    <a href="?from=node&to=secondaryKeys&secondaryType=subject&keyPrefix=$v{{setTimestamp}}">subjects</a>
-                </li>
-                <li>
-                    <a href="?from=node&to=secondaryKeys&secondaryType=email&keyPrefix=$v{{setTimestamp}}">email addresses</a>
-                </li>
-                <li>
-                    <a href="?from=node&to=secondaryKeys&secondaryType=userType&keyPrefix=$n{{setTimestamp}}">user types</a><br/>
-                </li>
-            </lu>
-        </td>
-        <td valign="baseline">
-            <a href="?from=node&to=post">{{post}}</a>
-        </td>
-    </tr>
-</table>
+<div>
+    {{node}}
+</div>
 
-<p style="font-family:courier">{{node}}</p>
-
-<table>
-    <tr>
-        <td valign="baseline">
+<p align="center">
             <a href="#top">top</a>
-        </td>
-    </tr>
-</table>
+        </p>
 </body>
 </html>

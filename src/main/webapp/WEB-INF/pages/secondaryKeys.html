@@ -25,101 +25,91 @@
   });
 
 
+
     </script>
 </head>
 <body>
 <h1><a id="top">Virtual COW {{atTime}}</a></h1>
 
-<h2>SecondaryKeys, type = {{secondaryType}}</h2>
+<div>
+    <table style="float:right">
+        <tr>
+            <td>
+                <img src="/images/timeMachineSmall.jpg"/>
+            </td>
+            <td>
+                <form method="GET">
+                    <input type="hidden" name="from" value="secondaryKeys"/>
+                    <input type="hidden" name="to" value="secondaryKeys"/>
+                    <input type="hidden" name="secondaryType" value="{{secondaryType}}"/>
+                    <input type="hidden" name="keyPrefix" value="{{keyPrefix}}"/>
+                    Select Date: <input type="text" name="date" id="datepicker"/>
+                    <input type="submit" value="Go"/>
+                </form>
+                {{clearTime}}
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td valign="baseline">
+                <a href="?from=secondaryKeys&to=profile">My Profile</a><br/>
+            </td>
+            <td valign="baseline">
+                <a href="?from=secondaryKeys{{setTimestamp}}">home</a>
+            </td>
+            <td valign="baseline">
+                <form action="?from=secondaryKeys&to=logout" method="POST">
+                    <input type="submit" value="Logout"/>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td valign="baseline">
+                <a href="?from=secondaryKeys&to=journal{{setTimestamp}}">journal</a>
+            </td>
+            <td valign="baseline">
+                Secondary Keys:
+                <lu>
+                    <li>
+                        <a href="?from=secondaryKeys&to=secondaryKeys&secondaryType=subject&keyPrefix=$v{{setTimestamp}}">subjects</a>
+                    </li>
+                    <li>
+                        <a href="?from=secondaryKeys&to=secondaryKeys&secondaryType=email&keyPrefix=$v{{setTimestamp}}">email
+                            addresses</a>
+                    </li>
+                    <li>
+                        <a href="?from=secondaryKeys&to=secondaryKeys&secondaryType=userType&keyPrefix=$n{{setTimestamp}}">user
+                            types</a><br/>
+                    </li>
+                </lu>
+            </td>
+            <td valign="baseline">
+                <a href="?from=secondaryKeys&to=post">{{post}}</a>
+            </td>
+        </tr>
+    </table>
+</div>
 
-<table>
-    <tr>
-        <td>
-            <img src="/images/timeMachineSmall.jpg"/>
-        </td>
-        <td>
-            <form method="GET">
-                <input type="hidden" name="from" value="secondaryKeys"/>
-                <input type="hidden" name="to" value="secondaryKeys"/>
-                <input type="hidden" name="secondaryType" value="{{secondaryType}}"/>
-                <input type="hidden" name="keyPrefix" value="{{keyPrefix}}"/>
-                Select Date: <input type="text" name="date" id="datepicker"/>
-                <input type="submit" value="Go"/>
-            </form>
-            {{clearTime}}
-        </td>
-    </tr>
-</table>
+<h2 align="center">SecondaryKeys, type = {{secondaryType}}</h2>
 
-<table>
-    <tr>
-        <td valign="baseline">
-            <a href="?from=secondaryKeys&to=profile">My Profile</a><br />
-        </td>
-        <td valign="baseline">
-            <a href="?from=secondaryKeys{{setTimestamp}}">home</a>
-        </td>
-        <td valign="baseline">
-            <form action="?from=secondaryKeys&to=logout" method="POST">
-                <input type="submit" value="Logout"/>
-            </form>
-        </td>
-    </tr>
-    <tr>
-        <td valign="baseline">
-            <a href="?from=secondaryKeys&to=journal{{setTimestamp}}">journal</a>
-        </td>
-        <td valign="baseline">
-            Secondary Keys:
-            <lu>
-                <li>
-                    <a href="?from=secondaryKeys&to=secondaryKeys&secondaryType=subject&keyPrefix=$v{{setTimestamp}}">subjects</a>
-                </li>
-                <li>
-                    <a href="?from=secondaryKeys&to=secondaryKeys&secondaryType=email&keyPrefix=$v{{setTimestamp}}">email addresses</a>
-                </li>
-                <li>
-                    <a href="?from=secondaryKeys&to=secondaryKeys&secondaryType=userType&keyPrefix=$n{{setTimestamp}}">user types</a><br/>
-                </li>
-            </lu>
-        </td>
-        <td valign="baseline">
-            <a href="?from=secondaryKeys&to=post">{{post}}</a>
-        </td>
-    </tr>
-</table>
-
-<p>
-<form method="GET">
-    <input type="hidden" name="from" value="secondaryKeys"/>
-    <input type="hidden" name="to" value="secondaryKeys"/>
-    <input type="hidden" name="secondaryType" value="{{secondaryType}}"/>
-    <input type="hidden" name="keyPrefix" value="{{keyPrefix}}"/>
-    {{formTimestamp}}
-    More secondary keys, starting at <input type="text" name="startingAt" size="60" value="{{startingAt}}">
-    <input type="submit" value="OK"/>
-</form>
+<div>
+    <div style="float:right">
+        <form method="GET">
+            <input type="hidden" name="from" value="secondaryKeys"/>
+            <input type="hidden" name="to" value="secondaryKeys"/>
+            <input type="hidden" name="secondaryType" value="{{secondaryType}}"/>
+            <input type="hidden" name="keyPrefix" value="{{keyPrefix}}"/>
+            {{formTimestamp}}
+            More secondary keys, starting at <input type="text" name="startingAt" size="60" value="{{startingAt}}">
+            <input type="submit" value="OK"/>
+        </form>
+        </p>
+    </div>
+    <div style="font-family:courier">{{secondaryKeys}}</div>
+</div>
+<p align="center">
+    <a href="#top">top</a>
 </p>
-
-<p style="font-family:courier">{{secondaryKeys}}</p>
-
-<table>
-    <tr>
-        <td valign="baseline">
-            <form method="GET">
-                <input type="hidden" name="from" value="secondaryKeys"/>
-                <input type="hidden" name="to" value="secondaryKeys"/>
-                <input type="hidden" name="secondaryType" value="{{secondaryType}}"/>
-                <input type="hidden" name="keyPrefix" value="{{keyPrefix}}"/>
-                {{formTimestamp}}
-                More secondary keys, starting at <input type="text" name="startingAt" size="60" value="{{startingAt}}">
-                <input type="submit" value="OK"/>
-            </form>
-        </td>
-        <td valign="baseline">
-            <a href="#top">top</a>
-        </td>
-    </tr>
-</table>
 </body>
 </html>
