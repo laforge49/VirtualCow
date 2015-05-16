@@ -14,9 +14,7 @@
 <body>
 <h1><a id="top">Virtual COW</a></h1>
 
-<h2>Post</h2>
-
-<table>
+<table cellpadding="10">
     <tr>
         <td valign="baseline">
             <a href="?from=post&to=profile">My Profile</a><br />
@@ -35,7 +33,7 @@
             <a href="?from=post&to=journal{{setTimestamp}}">journal</a>
         </td>
         <td valign="baseline">
-            Secondary Keys:
+            Secondary Keys
             <lu>
                 <li>
                     <a href="?from=post&to=secondaryKeys&secondaryType=subject&keyPrefix=$v{{setTimestamp}}">subjects</a>
@@ -54,9 +52,11 @@
     </tr>
 </table>
 
-<p style="color:red"><strong>{{error}}&nbsp;</strong></p>
+<h2 align="center">Post</h2>
 
 <form method="POST">
+
+    <p style="color:red"><strong>{{error}}&nbsp;</strong></p>
     <p>
         Subject: <input type="text" name="subject" size="60" value="{{subject}}">
     </p>
@@ -68,12 +68,8 @@
 </form>
 <h3>{{success}}&nbsp;</h3>
 
-<table>
-    <tr>
-        <td valign="baseline">
+<p align="center">
             <a href="#top">top</a>
-        </td>
-    </tr>
-</table>
+        </p>
 </body>
 </html>
