@@ -111,8 +111,7 @@ public class SecondaryKeysBlade extends RequestBlade {
                                 sb.append("</a>");
                             } else {
                                 sb.append(line);
-//                                sb.append("<br />");
-                                sb.append("&nbsp;");
+                                sb.append(" -> ");
                                 sb.append("<a href=\"?from=secondaryKeys&to=node&nodeId=");
                                 sb.append(nodeId);
                                 sb.append("\">");

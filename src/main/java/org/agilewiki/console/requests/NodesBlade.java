@@ -53,7 +53,6 @@ public class NodesBlade extends RequestBlade {
                 }
                 long longTimestamp;
                 String secondaryId = request.getParameter("secondaryId");
-                String nodeId = request.getParameter("nodeId");
                 if (timestamp != null) {
                     map.put("clearTime", "<a href=\"?from=secondaryKeys&to=secondaryKeys&secondaryId=" + secondaryId +
                             "\">Clear selected time</a>");
@@ -83,31 +82,27 @@ public class NodesBlade extends RequestBlade {
                         VersionedMapNode vmn = (VersionedMapNode) la.get(0);
                         if (vmn == null)
                             break;
-                        /*
-                        for (ListAccessor : new vmn.iterable(prefix, keyPrefix + startingAt, longTimestamp)) {
+                        String nodeId = (String) vmn.ceilingKey(startingAt, longTimestamp);
+                        while (limit > 0) {
+                            if (nodeId == null)
+                                break;
+                            --limit;
                             if (limit == 0) {
                                 hasMore = true;
-                                startingAt = ValueId.value(id);
+                                startingAt = nodeId;
                                 break;
                             }
-                            --limit;
-                            String line = id.substring(2);
-                            line = line.replaceAll("\r", "");
-                            if (line.length() > 60)
-                                line = line.substring(0, 60);
-                            line = SimpleSimon.encode(line, 0, SimpleSimon.ENCODE_SINGLE_LINE); //line text
-                            sb.append(line);
+                            sb.append(nodeId);
                             sb.append("<br />");
+                            nodeId = (String) vmn.higherKey(nodeId, longTimestamp);
                         }
-                        */
                         break;
                     } catch (UnexpectedChecksumException uce) {
                     }
                 }
-                map.put("secondaryKeys", sb.toString());
-                map.put("startingAt", hasMore ? SimpleSimon.encode(startingAt, 0, SimpleSimon.ENCODE_FIELD) : ""); //field
+                map.put("nodes", sb.toString());
+                map.put("setStartingAt", hasMore ? "&startingAt=" + startingAt : ""); //field
                 map.put("secondaryId", secondaryId);
-                map.put("nodeId", nodeId);
                 finish();
             }
         }.signal();

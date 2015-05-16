@@ -39,7 +39,6 @@
                     <input type="hidden" name="from" value="nodes"/>
                     <input type="hidden" name="to" value="nodes"/>
                     <input type="hidden" name="secondaryId" value="{{secondaryId}}"/>
-                    <input type="hidden" name="nodeId" value="{{nodeId}}"/>
                     Select Date: <input type="text" name="date" id="datepicker"/>
                     <input type="submit" value="Go"/>
                 </form>
@@ -94,15 +93,7 @@
 
 <div>
     <div style="float:right">
-        <form method="GET">
-            <input type="hidden" name="from" value="nodes"/>
-            <input type="hidden" name="to" value="nodes"/>
-            <input type="hidden" name="secondaryId" value="{{secondaryId}}"/>
-            <input type="hidden" name="nodeId" value="{{nodeId}}"/>
-            {{formTimestamp}}
-            More nodes, starting at <input type="text" name="startingAt" size="60" value="{{startingAt}}">
-            <input type="submit" value="OK"/>
-        </form>
+        <a href="?from=nodes&to=nodes&secondaryId={{secondaryId}}{{setStartingAt}}{{setTimestamp}}">{{more}}</a>
     </div>
     <div>{{nodes}}</div>
 </div>
