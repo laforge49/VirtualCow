@@ -10,11 +10,11 @@ import org.agilewiki.utils.virtualcow.Transaction;
 /**
  * Changes the user's password.
  */
-public class NewEmailAddressTransaction implements Transaction {
+public class NewEmailAddressTransaction extends VCTransaction {
     public final static String NAME = "newEmailAddress";
 
     @Override
-    public void transform(Db db, MapNode mapNode) {
+    public void process(Db db, MapNode mapNode) {
         String userId = (String) mapNode.get(User.USER_KEY);
 
         String oldEmailAddressId = ValueId.generate(User.email(db, userId, db.getTimestamp()));

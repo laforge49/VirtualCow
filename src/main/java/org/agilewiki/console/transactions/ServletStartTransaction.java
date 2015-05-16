@@ -11,7 +11,7 @@ import javax.servlet.ServletContext;
 /**
  * Run when the servlet has started.
  */
-public class ServletStartTransaction implements Transaction {
+public class ServletStartTransaction extends VCTransaction {
     public final static String NAME = "servletStart";
 
     public static ServletConfig servletConfig;
@@ -23,7 +23,7 @@ public class ServletStartTransaction implements Transaction {
     }
 
     @Override
-    public void transform(Db db, MapNode tMapNode) {
+    public void process(Db db, MapNode tMapNode) {
         ServletContext servletContext = servletConfig.getServletContext();
         User.init(db, servletConfig);
     }

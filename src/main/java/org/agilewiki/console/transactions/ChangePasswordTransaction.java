@@ -8,11 +8,11 @@ import org.agilewiki.utils.virtualcow.Transaction;
 /**
  * Changes the user's password.
  */
-public class ChangePasswordTransaction implements Transaction {
+public class ChangePasswordTransaction extends VCTransaction {
     public final static String NAME = "changePassword";
 
     @Override
-    public void transform(Db db, MapNode mapNode) {
+    public void process(Db db, MapNode mapNode) {
         String userId = (String) mapNode.get(User.USER_KEY);
         String passwordHash = (String) mapNode.get(User.PASSWORD_KEY);
         db.set(userId, User.PASSWORD_KEY, passwordHash);

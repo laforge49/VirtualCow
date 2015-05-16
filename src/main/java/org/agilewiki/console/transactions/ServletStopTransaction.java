@@ -7,7 +7,7 @@ import org.agilewiki.utils.virtualcow.Transaction;
 /**
  * Run when the servlet has started.
  */
-public class ServletStopTransaction implements Transaction {
+public class ServletStopTransaction extends VCTransaction {
     public final static String NAME = "servletStop";
 
     public static String update(Db db)
@@ -17,6 +17,6 @@ public class ServletStopTransaction implements Transaction {
     }
 
     @Override
-    public void transform(Db db, MapNode tMapNode) {
+    public void process(Db db, MapNode tMapNode) {
     }
 }

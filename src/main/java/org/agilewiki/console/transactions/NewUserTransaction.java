@@ -8,11 +8,11 @@ import org.agilewiki.utils.virtualcow.Transaction;
 /**
  * Create a new user.
  */
-public class NewUserTransaction implements Transaction {
+public class NewUserTransaction extends VCTransaction {
     public final static String NAME = "newUser";
 
     @Override
-    public void transform(Db db, MapNode mapNode) {
+    public void process(Db db, MapNode mapNode) {
         String userId = (String) mapNode.get(User.USER_KEY);
         String emailId = (String) mapNode.get(User.EMAIL_ID);
         String passwordHash = (String) mapNode.get(User.PASSWORD_KEY);

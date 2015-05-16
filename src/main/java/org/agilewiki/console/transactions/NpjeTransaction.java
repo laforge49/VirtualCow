@@ -10,11 +10,11 @@ import org.agilewiki.utils.virtualcow.Transaction;
 /**
  * Non-performing Journal Entry.
  */
-public class NpjeTransaction implements Transaction {
+public class NpjeTransaction extends VCTransaction {
     public final static String NAME = "npje";
 
     @Override
-    public void transform(Db db, MapNode mapNode) {
+    public void process(Db db, MapNode mapNode) {
         String jeName = db.getJEName();
         String subject = (String) mapNode.get(NameIds.SUBJECT);
         if (subject != null) {

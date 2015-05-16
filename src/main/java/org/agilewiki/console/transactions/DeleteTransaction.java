@@ -7,24 +7,13 @@ import org.agilewiki.utils.virtualcow.Db;
 import org.agilewiki.utils.virtualcow.Transaction;
 
 /**
- * Create a new user.
+ * Delete a user.
  */
-public class DeleteTransaction implements Transaction {
+public class DeleteTransaction extends VCTransaction {
     public final static String NAME = "delete";
 
-    public String update(Db db,
-                         String id,
-                         String subject)
-            throws Exception {
-        MapNode mn = db.dbFactoryRegistry.nilMap;
-        mn = mn.add(NameIds.AN_ID, id);
-        if (subject.length() > 0)
-            mn = mn.add(NameIds.SUBJECT, subject);
-        return db.update(NAME, mn).call();
-    }
-
     @Override
-    public void transform(Db db, MapNode mapNode) {
+    public void process(Db db, MapNode mapNode) {
         String id = (String) mapNode.get(NameIds.AN_ID);
         Delete.delete(db, id);
     }
