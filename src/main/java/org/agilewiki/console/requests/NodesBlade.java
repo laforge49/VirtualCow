@@ -101,7 +101,8 @@ public class NodesBlade extends RequestBlade {
                     }
                 }
                 map.put("nodes", sb.toString());
-                map.put("setStartingAt", hasMore ? "&startingAt=" + startingAt : ""); //field
+                map.put("setStartingAt", hasMore ? "&startingAt=" + startingAt : "");
+                map.put("more", hasMore ? "more" : "");
                 map.put("secondaryId", secondaryId);
                 finish();
             }
