@@ -59,6 +59,7 @@ public class SimpleSimon extends HttpServlet {
     PostBlade postBlade;
     ProfileBlade profileBlade;
     SecondaryKeysBlade secondaryKeysBlade;
+    NodesBlade nodesBlade;
     ValidatedBlade validatedBlade;
     WelcomeBlade welcomeBlade;
     AboutBlade aboutBlade;
@@ -133,6 +134,7 @@ public class SimpleSimon extends HttpServlet {
             nodeBlade = new NodeBlade(this);
             journalBlade = new JournalBlade(this);
             secondaryKeysBlade = new SecondaryKeysBlade(this);
+            nodesBlade = new NodesBlade(this);
             logoutBlade = new LogoutBlade(this);
             deleteAccountBlade = new DeleteAccountBlade(this);
             changePasswordBlade = new ChangePasswordBlade(this);
@@ -171,6 +173,7 @@ public class SimpleSimon extends HttpServlet {
             guestRequests.put("node", nodeBlade);
             guestRequests.put("journal", journalBlade);
             guestRequests.put("secondaryKeys", secondaryKeysBlade);
+            guestRequests.put("nodes", nodesBlade);
             guestRequests.put("deleteAccount", deleteAccountBlade);
             guestRequests.put("changePassword", changePasswordBlade);
             guestRequests.put("changeEmailAddress", changeEmailAddressBlade);
