@@ -50,8 +50,7 @@ body, div, h1, h2, h3, h4, h5, h6, p, ul, img {margin:0px; padding:0px; }
 .menu li {
     float: left; 
     padding-left: 100px;
-    list-style:none;
-    
+    list-style:none;   
 }
  
 .menu a {
@@ -170,8 +169,6 @@ body, div, h1, h2, h3, h4, h5, h6, p, ul, img {margin:0px; padding:0px; }
        background:url(../images/log.jpg)  no-repeat;
 }
 
-
-
 #username_input {
 	margin-left:25px;
 	position:absolute;
@@ -185,7 +182,6 @@ body, div, h1, h2, h3, h4, h5, h6, p, ul, img {margin:0px; padding:0px; }
 	width:276px;
 	height:50px;
 }
-
 
 #url{
 	display:block;
@@ -220,7 +216,6 @@ body, div, h1, h2, h3, h4, h5, h6, p, ul, img {margin:0px; padding:0px; }
 	width:276px;
 	height:50px;
 }
-
 
 #url_password {
 	display:block;
@@ -259,7 +254,6 @@ body, div, h1, h2, h3, h4, h5, h6, p, ul, img {margin:0px; padding:0px; }
 	margin-right:35px;
 }
 
-
 #links_left a{
 	color:#f8f0d5;
 	font-size:9px;
@@ -293,20 +287,18 @@ body, div, h1, h2, h3, h4, h5, h6, p, ul, img {margin:0px; padding:0px; }
 #links_right a:hover{
 	color:#c63f33;
 }
-
-
-
-
 #footer {
-    background: url(../images/footer.jpg) repeat-x;
-    height: 200px;
-    width: 1010px ;
-    margin: 0 auto;
-    margin-top: 700px;
-    
-} 
+    position: relative;
+    width: 1015px;
+    margin-left:0px;
+}
+#footer p {
+    position: absolute;
+    padding-top: -10px;
+    margin-top: -100px;
+    margin-left:300px;
+    color: #4b100b;
+}
 
-#footer p {color: #4b100b; 
-         text-align: center;
-         padding-top:65px;
-  }  
+
+ 
