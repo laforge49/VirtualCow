@@ -4,6 +4,7 @@ import org.agilewiki.console.IdIterable;
 import org.agilewiki.console.NameIds;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.TimestampIds;
+import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.FactoryRegistry;
@@ -80,12 +81,17 @@ public class SecondaryKeysBlade extends RequestBlade {
                                 break;
                             }
                             --limit;
-                            String line = id.substring(2);
+                            String secondaryId = SecondaryId.secondaryId(NameId.generate(secondaryType), id);
+                            String line = id;
                             line = line.replaceAll("\r", "");
                             if (line.length() > 60)
                                 line = line.substring(0, 60);
                             line = SimpleSimon.encode(line, 0, SimpleSimon.ENCODE_SINGLE_LINE); //line text
+                            sb.append("<a href=\"?from=secondaryKeys&to=nodes&secondaryId=");
+                            sb.append(secondaryId);
+                            sb.append("\">");
                             sb.append(line);
+                            sb.append("</a>");
                             sb.append("<br />");
                         }
                         break;

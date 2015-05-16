@@ -48,12 +48,10 @@ public class NodesBlade extends RequestBlade {
                     timestamp = TimestampIds.value(TimestampIds.timestampId((time << 10) + 1023));
                 }
                 long longTimestamp;
-                String secondaryType = request.getParameter("secondaryType");
-                String value = request.getParameter("value");
-                String keyPrefix = request.getParameter("keyPrefix");
+                String secondaryId = request.getParameter("secondaryId");
+                String nodeId = request.getParameter("nodeId");
                 if (timestamp != null) {
-                    map.put("clearTime", "<a href=\"?from=secondaryKeys&to=secondaryKeys&secondaryType=" + secondaryType +
-                            "&keyPrefix=" + keyPrefix +
+                    map.put("clearTime", "<a href=\"?from=secondaryKeys&to=secondaryKeys&secondaryId=" + secondaryId +
                             "\">Clear selected time</a>");
                     map.put("formTimestamp", "<input type=\"hidden\" name=\"timestamp\" value=\"" + timestamp + "\"/>");
                     map.put("setTimestamp", "&timestamp=" + timestamp);
@@ -63,7 +61,6 @@ public class NodesBlade extends RequestBlade {
                     longTimestamp = FactoryRegistry.MAX_TIMESTAMP;
                     map.put("post", "post");
                 }
-                String prefix = SecondaryId.SECONDARY_ID + NameIds.generate(secondaryType);
                 String startingAt = request.getParameter("startingAt");
                 if (startingAt == null)
                     startingAt = "";
@@ -97,9 +94,8 @@ public class NodesBlade extends RequestBlade {
                 }
                 map.put("secondaryKeys", sb.toString());
                 map.put("startingAt", hasMore ? SimpleSimon.encode(startingAt, 0, SimpleSimon.ENCODE_FIELD) : ""); //field
-                map.put("secondaryType", secondaryType);
-                map.put("value", value);
-                map.put("keyPrefix", keyPrefix);
+                map.put("secondaryId", secondaryId);
+                map.put("nodeId", nodeId);
                 finish();
             }
         }.signal();

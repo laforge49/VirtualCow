@@ -38,9 +38,8 @@
                 <form method="GET">
                     <input type="hidden" name="from" value="nodes"/>
                     <input type="hidden" name="to" value="nodes"/>
-                    <input type="hidden" name="secondaryType" value="{{secondaryType}}"/>
-                    <input type="hidden" name="keyPrefix" value="{{keyPrefix}}"/>
-                    <input type="hidden" name="value" value="{{value}}"/>
+                    <input type="hidden" name="secondaryId" value="{{secondaryId}}"/>
+                    <input type="hidden" name="nodeId" value="{{nodeId}}"/>
                     Select Date: <input type="text" name="date" id="datepicker"/>
                     <input type="submit" value="Go"/>
                 </form>
@@ -91,16 +90,15 @@
     </table>
 </div>
 
-<h2 align="center">Nodes, type = {{secondaryType}}, value = {{value}}</h2>
+<h2 align="center">Nodes, SecondaryId = {{secondaryId}}</h2>
 
 <div>
     <div style="float:right">
         <form method="GET">
             <input type="hidden" name="from" value="nodes"/>
             <input type="hidden" name="to" value="nodes"/>
-            <input type="hidden" name="secondaryType" value="{{secondaryType}}"/>
-            <input type="hidden" name="value" value="{{value}}"/>
-            <input type="hidden" name="keyPrefix" value="{{keyPrefix}}"/>
+            <input type="hidden" name="secondaryId" value="{{secondaryId}}"/>
+            <input type="hidden" name="nodeId" value="{{nodeId}}"/>
             {{formTimestamp}}
             More nodes, starting at <input type="text" name="startingAt" size="60" value="{{startingAt}}">
             <input type="submit" value="OK"/>
