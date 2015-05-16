@@ -7,6 +7,10 @@ import org.agilewiki.console.TimestampIds;
 import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.FactoryRegistry;
+import org.agilewiki.utils.immutable.collections.EmptyIterable;
+import org.agilewiki.utils.immutable.collections.ListAccessor;
+import org.agilewiki.utils.immutable.collections.MapAccessor;
+import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
 import javax.servlet.AsyncContext;
@@ -71,8 +75,16 @@ public class NodesBlade extends RequestBlade {
                         hasMore = false;
                         int limit = 25;
                         sb = new StringBuilder();
+                        MapAccessor ma = db.mapAccessor();
+                        ListAccessor la = ma.listAccessor(secondaryId);
+                        if (la == null) {
+                            break;
+                        }
+                        VersionedMapNode vmn = (VersionedMapNode) la.get(0);
+                        if (vmn == null)
+                            break;
                         /*
-                        for (String id : new IdIterable(servletContext, db, prefix, keyPrefix + startingAt, longTimestamp)) {
+                        for (ListAccessor : new vmn.iterable(prefix, keyPrefix + startingAt, longTimestamp)) {
                             if (limit == 0) {
                                 hasMore = true;
                                 startingAt = ValueId.value(id);
