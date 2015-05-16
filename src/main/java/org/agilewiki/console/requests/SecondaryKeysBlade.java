@@ -8,6 +8,9 @@ import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.FactoryRegistry;
+import org.agilewiki.utils.immutable.collections.ListAccessor;
+import org.agilewiki.utils.immutable.collections.MapAccessor;
+import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
 import javax.servlet.AsyncContext;
@@ -82,16 +85,40 @@ public class SecondaryKeysBlade extends RequestBlade {
                             }
                             --limit;
                             String secondaryId = SecondaryId.secondaryId(NameId.generate(secondaryType), id);
+                            MapAccessor ma = db.mapAccessor();
+                            ListAccessor la = ma.listAccessor(secondaryId);
+                            String nodeId = null;
+                            if (la != null) {
+                                VersionedMapNode vmn = (VersionedMapNode) la.get(0);
+                                if (vmn != null) {
+                                    String first = (String) vmn.firstKey(longTimestamp);
+                                    String last = (String) vmn.lastKey(longTimestamp);
+                                    if (first.equals(last)) {
+                                        nodeId = first;
+                                    }
+                                }
+                            }
                             String line = id;
                             line = line.replaceAll("\r", "");
                             if (line.length() > 60)
                                 line = line.substring(0, 60);
                             line = SimpleSimon.encode(line, 0, SimpleSimon.ENCODE_SINGLE_LINE); //line text
-                            sb.append("<a href=\"?from=secondaryKeys&to=nodes&secondaryId=");
-                            sb.append(secondaryId);
-                            sb.append("\">");
-                            sb.append(line);
-                            sb.append("</a>");
+                            if (nodeId == null) {
+                                sb.append("<a href=\"?from=secondaryKeys&to=nodes&secondaryId=");
+                                sb.append(secondaryId);
+                                sb.append("\">");
+                                sb.append(line);
+                                sb.append("</a>");
+                            } else {
+                                sb.append(line);
+//                                sb.append("<br />");
+                                sb.append("&nbsp;");
+                                sb.append("<a href=\"?from=secondaryKeys&to=node&nodeId=");
+                                sb.append(nodeId);
+                                sb.append("\">");
+                                sb.append(nodeId);
+                                sb.append("</a>");
+                            }
                             sb.append("<br />");
                         }
                         break;
