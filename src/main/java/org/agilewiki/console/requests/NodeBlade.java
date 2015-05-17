@@ -3,6 +3,8 @@ package org.agilewiki.console.requests;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.TimestampIds;
 import org.agilewiki.utils.ids.composites.Journal;
+import org.agilewiki.utils.ids.composites.Link1Id;
+import org.agilewiki.utils.ids.composites.Link2Id;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.ListAccessor;
@@ -132,6 +134,20 @@ public class NodeBlade extends RequestBlade {
                                             SecondaryId.secondaryIdIterable(db, nodeId, typeId, longTimestamp)) {
                                         sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;secondaryId - " +
                                                 secondaryId + "<br />");
+                                    }
+                                }
+                                sb.append("Links: <br />");
+                                for (String typeId: Link1Id.link1LabelIdIterable(db, nodeId)) {
+                                    sb.append("&nbsp;&nbsp;&nbsp;&nbsp;typeId: " + typeId + "<br />");
+                                    for (String targetId: Link1Id.link1IdIterable(db, nodeId, typeId, longTimestamp)) {
+                                        sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + targetId + "<br />");
+                                    }
+                                }
+                                sb.append("Inverted Links: <br />");
+                                for (String typeId: Link1Id.link1LabelInvIterable(db, nodeId)) {
+                                    sb.append("&nbsp;&nbsp;&nbsp;&nbsp;typeId: " + typeId + "<br />");
+                                    for (String originId: Link1Id.link1InvIterable(db, nodeId, typeId, longTimestamp)) {
+                                        sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + originId + "<br />");
                                     }
                                 }
                             }
