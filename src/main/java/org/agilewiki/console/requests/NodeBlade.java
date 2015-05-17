@@ -5,7 +5,6 @@ import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.TimestampIds;
 import org.agilewiki.utils.ids.composites.Journal;
 import org.agilewiki.utils.ids.composites.Link1Id;
-import org.agilewiki.utils.ids.composites.Link2Id;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.ListAccessor;
@@ -115,8 +114,7 @@ public class NodeBlade extends RequestBlade {
                                             }
                                         }
                                     }
-                                }
-                                else {
+                                } else {
                                     sb.append("Modified by: <br />");
                                     for (String jeId : db.keysIterable(Journal.journalId(nodeId), longTimestamp)) {
                                         sb.append("&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"?from=node&to=node&nodeId=");
@@ -139,9 +137,9 @@ public class NodeBlade extends RequestBlade {
                                     }
                                 }
                                 sb.append("Links: <br />");
-                                for (String typeId: Link1Id.link1LabelIdIterable(db, nodeId)) {
+                                for (String typeId : Link1Id.link1LabelIdIterable(db, nodeId)) {
                                     sb.append("&nbsp;&nbsp;&nbsp;&nbsp;typeId: " + typeId + "<br />");
-                                    for (String targetId: Link1Id.link1IdIterable(db, nodeId, typeId, longTimestamp)) {
+                                    for (String targetId : Link1Id.link1IdIterable(db, nodeId, typeId, longTimestamp)) {
                                         ListAccessor nla = ma.listAccessor(targetId);
                                         VersionedMapNode nvmn = (VersionedMapNode) nla.get(0);
                                         sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
@@ -183,9 +181,11 @@ public class NodeBlade extends RequestBlade {
                                     }
                                 }
                                 sb.append("Inverted Links: <br />");
-                                for (String typeId: Link1Id.link1LabelInvIterable(db, nodeId)) {
-                                    sb.append("&nbsp;&nbsp;&nbsp;&nbsp;typeId: " + typeId + "<br />");
-                                    for (String originId: Link1Id.link1InvIterable(db, nodeId, typeId, longTimestamp)) {
+                                for (String typeId : Link1Id.link1LabelInvIterable(db, nodeId)) {
+                                    sb.append("&nbsp;&nbsp;&nbsp;&nbsp;typeId: ");
+                                    sb.append("<a href=\"?from=node&to=invLinks&nodeId=");
+                                    sb.append(nodeId + "&linkType=" + typeId + "\">" + typeId + "</a><br />");
+                                    for (String originId : Link1Id.link1InvIterable(db, nodeId, typeId, longTimestamp)) {
                                         ListAccessor nla = ma.listAccessor(originId);
                                         VersionedMapNode nvmn = (VersionedMapNode) nla.get(0);
                                         sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");

@@ -5,7 +5,6 @@ import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
-import org.agilewiki.utils.virtualcow.Transaction;
 
 /**
  * Changes the user's password.

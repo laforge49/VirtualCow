@@ -2,7 +2,6 @@ package org.agilewiki.console.transactions;
 
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
-import org.agilewiki.utils.virtualcow.Transaction;
 
 /**
  * Run when the servlet has started.
