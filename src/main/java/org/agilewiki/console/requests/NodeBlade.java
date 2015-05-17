@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * Request for a journal entry.
@@ -141,36 +142,88 @@ public class NodeBlade extends RequestBlade {
                                 for (String typeId: Link1Id.link1LabelIdIterable(db, nodeId)) {
                                     sb.append("&nbsp;&nbsp;&nbsp;&nbsp;typeId: " + typeId + "<br />");
                                     for (String targetId: Link1Id.link1IdIterable(db, nodeId, typeId, longTimestamp)) {
+                                        ListAccessor nla = ma.listAccessor(targetId);
+                                        VersionedMapNode nvmn = (VersionedMapNode) nla.get(0);
                                         sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
                                         sb.append("<a href=\"?from=node&to=node&nodeId=");
                                         sb.append(targetId);
                                         sb.append("\">");
                                         sb.append(targetId);
                                         sb.append("</a>");
-                                        sb.append("<br />");
                                         if (targetId.startsWith("$t")) {
                                             sb.append(" (");
                                             sb.append(SimpleSimon.niceTime(targetId));
                                             sb.append(") ");
+                                            String transactionName = nvmn.getList(NameIds.TRANSACTION_NAME).flatList(longTimestamp).get(0).toString();
+                                            sb.append(transactionName);
                                         }
+                                        StringBuilder lb = new StringBuilder();
+                                        List subjectList = nvmn.getList(NameIds.SUBJECT).flatList(longTimestamp);
+                                        if (subjectList.size() > 0) {
+                                            lb.append(' ');
+                                            String subject = subjectList.get(0).toString();
+                                            lb.append(subject);
+                                            lb.append(" | ");
+                                        }
+                                        List bodyList = nvmn.getList(NameIds.BODY).flatList(longTimestamp);
+                                        if (bodyList.size() > 0) {
+                                            if (subjectList.size() == 0) {
+                                                lb.append(" | ");
+                                            }
+                                            String body = bodyList.get(0).toString();
+                                            lb.append(body);
+                                        }
+                                        String line = lb.toString();
+                                        line = line.replace("\r", "");
+                                        if (line.length() > 60)
+                                            line = line.substring(0, 60);
+                                        line = SimpleSimon.encode(line, 0, SimpleSimon.ENCODE_SINGLE_LINE); //line text
+                                        sb.append(line);
+                                        sb.append("<br />");
                                     }
                                 }
                                 sb.append("Inverted Links: <br />");
                                 for (String typeId: Link1Id.link1LabelInvIterable(db, nodeId)) {
                                     sb.append("&nbsp;&nbsp;&nbsp;&nbsp;typeId: " + typeId + "<br />");
                                     for (String originId: Link1Id.link1InvIterable(db, nodeId, typeId, longTimestamp)) {
+                                        ListAccessor nla = ma.listAccessor(originId);
+                                        VersionedMapNode nvmn = (VersionedMapNode) nla.get(0);
                                         sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
                                         sb.append("<a href=\"?from=node&to=node&nodeId=");
                                         sb.append(originId);
                                         sb.append("\">");
                                         sb.append(originId);
                                         sb.append("</a>");
-                                        sb.append("<br />");
                                         if (originId.startsWith("$t")) {
                                             sb.append(" (");
                                             sb.append(SimpleSimon.niceTime(originId));
                                             sb.append(") ");
+                                            String transactionName = nvmn.getList(NameIds.TRANSACTION_NAME).flatList(longTimestamp).get(0).toString();
+                                            sb.append(transactionName);
                                         }
+                                        StringBuilder lb = new StringBuilder();
+                                        List subjectList = nvmn.getList(NameIds.SUBJECT).flatList(longTimestamp);
+                                        if (subjectList.size() > 0) {
+                                            lb.append(' ');
+                                            String subject = subjectList.get(0).toString();
+                                            lb.append(subject);
+                                            lb.append(" | ");
+                                        }
+                                        List bodyList = nvmn.getList(NameIds.BODY).flatList(longTimestamp);
+                                        if (bodyList.size() > 0) {
+                                            if (subjectList.size() == 0) {
+                                                lb.append(" | ");
+                                            }
+                                            String body = bodyList.get(0).toString();
+                                            lb.append(body);
+                                        }
+                                        String line = lb.toString();
+                                        line = line.replace("\r", "");
+                                        if (line.length() > 60)
+                                            line = line.substring(0, 60);
+                                        line = SimpleSimon.encode(line, 0, SimpleSimon.ENCODE_SINGLE_LINE); //line text
+                                        sb.append(line);
+                                        sb.append("<br />");
                                     }
                                 }
                             }
