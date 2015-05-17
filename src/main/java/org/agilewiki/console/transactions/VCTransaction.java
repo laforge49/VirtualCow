@@ -2,7 +2,6 @@ package org.agilewiki.console.transactions;
 
 import org.agilewiki.console.User;
 import org.agilewiki.utils.ids.composites.Link1Id;
-import org.agilewiki.utils.ids.composites.Link2Id;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 import org.agilewiki.utils.virtualcow.Transaction;

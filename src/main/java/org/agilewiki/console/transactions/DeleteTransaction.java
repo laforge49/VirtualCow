@@ -4,7 +4,6 @@ import org.agilewiki.console.Delete;
 import org.agilewiki.console.NameIds;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
-import org.agilewiki.utils.virtualcow.Transaction;
 
 /**
  * Delete a user.

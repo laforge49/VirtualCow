@@ -3,10 +3,12 @@ package org.agilewiki.console.requests;
 import org.agilewiki.console.NameIds;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.TimestampIds;
+import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.ListAccessor;
 import org.agilewiki.utils.immutable.collections.MapAccessor;
 import org.agilewiki.utils.immutable.collections.VersionedMapNode;
+import org.agilewiki.utils.immutable.collections.VersionedMapNodeImpl;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
 import javax.servlet.AsyncContext;
@@ -19,10 +21,10 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
- * Request for secondary keys.
+ * Inverted bi-directional links.
  */
-public class NodesBlade extends RequestBlade {
-    public NodesBlade(SimpleSimon simpleSimon) throws Exception {
+public class InvLinksBlade extends RequestBlade {
+    public InvLinksBlade(SimpleSimon simpleSimon) throws Exception {
         super(simpleSimon);
     }
 
@@ -49,9 +51,11 @@ public class NodesBlade extends RequestBlade {
                     timestamp = TimestampIds.value(TimestampIds.timestampId((time << 10) + 1023));
                 }
                 long longTimestamp;
-                String secondaryId = request.getParameter("secondaryId");
+                String targetId = request.getParameter("nodeId");
+                String labelId = request.getParameter("linkType");
                 if (timestamp != null) {
-                    map.put("clearTime", "<a href=\"?from=nodes&to=nodes&secondaryId=" + secondaryId +
+                    map.put("clearTime", "<a href=\"?from=invLinks&to=invLinks&nodeId=" + targetId +
+                            "&linkType=" + labelId +
                             "\">Clear selected time</a>");
                     map.put("formTimestamp", "<input type=\"hidden\" name=\"timestamp\" value=\"" + timestamp + "\"/>");
                     map.put("setTimestamp", "&timestamp=" + timestamp);
@@ -61,6 +65,7 @@ public class NodesBlade extends RequestBlade {
                     longTimestamp = FactoryRegistry.MAX_TIMESTAMP;
                     map.put("post", "post");
                 }
+                String link1Inv = Link1Id.link1Inv(targetId, labelId);
                 String startingAt = request.getParameter("startingAt");
                 if (startingAt == null)
                     startingAt = "";
@@ -72,11 +77,7 @@ public class NodesBlade extends RequestBlade {
                         int limit = 25;
                         sb = new StringBuilder();
                         MapAccessor ma = db.mapAccessor();
-                        ListAccessor la = ma.listAccessor(secondaryId);
-                        if (la == null) {
-                            break;
-                        }
-                        VersionedMapNode vmn = (VersionedMapNode) la.get(0);
+                        VersionedMapNodeImpl vmn = (VersionedMapNodeImpl) ma.get(link1Inv);
                         if (vmn == null)
                             break;
                         String nodeId = (String) vmn.ceilingKey(startingAt, longTimestamp);
@@ -132,10 +133,11 @@ public class NodesBlade extends RequestBlade {
                     } catch (UnexpectedChecksumException uce) {
                     }
                 }
-                map.put("nodes", sb.toString());
+                map.put("invLinks", sb.toString());
                 map.put("setStartingAt", hasMore ? "&startingAt=" + startingAt : "");
                 map.put("more", hasMore ? "more" : "");
-                map.put("secondaryId", secondaryId);
+                map.put("nodeId", targetId);
+                map.put("linkType", labelId);
                 finish();
             }
         }.signal();

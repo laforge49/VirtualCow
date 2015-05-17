@@ -37,9 +37,10 @@
             </td>
             <td>
                 <form method="GET">
-                    <input type="hidden" name="from" value="nodes"/>
-                    <input type="hidden" name="to" value="nodes"/>
-                    <input type="hidden" name="secondaryId" value="{{secondaryId}}"/>
+                    <input type="hidden" name="from" value="invLinks"/>
+                    <input type="hidden" name="to" value="invLinks"/>
+                    <input type="hidden" name="nodeId" value="{{nodeId}}"/>
+                    <input type="hidden" name="linkType" value="{{linkType}}"/>
                     Select Date: <input type="text" name="date" id="datepicker"/>
                     <input type="submit" value="Go"/>
                 </form>
@@ -54,51 +55,51 @@
     <table cellpadding="10">
         <tr>
             <td valign="baseline">
-                <a href="?from=nodes&to=profile">My Profile</a><br/>
+                <a href="?from=invLinks&to=profile">My Profile</a><br/>
             </td>
             <td valign="baseline">
-                <a href="?from=nodes{{setTimestamp}}">home</a>
+                <a href="?from=invLinks{{setTimestamp}}">home</a>
             </td>
             <td valign="baseline">
-                <form action="?from=nodes&to=logout" method="POST">
+                <form action="?from=invLinks&to=logout" method="POST">
                     <input type="submit" value="Logout"/>
                 </form>
             </td>
         </tr>
         <tr>
             <td valign="baseline">
-                <a href="?from=nodes&to=journal{{setTimestamp}}">journal</a>
+                <a href="?from=invLinks&to=journal{{setTimestamp}}">journal</a>
             </td>
             <td valign="baseline">
                 Secondary Keys
                 <lu>
                     <li>
-                        <a href="?from=nodes&to=secondaryKeys&secondaryType=subject&keyPrefix=$v{{setTimestamp}}">subjects</a>
+                        <a href="?from=invLinks&to=secondaryKeys&secondaryType=subject&keyPrefix=$v{{setTimestamp}}">subjects</a>
                     </li>
                     <li>
-                        <a href="?from=nodes&to=secondaryKeys&secondaryType=email&keyPrefix=$v{{setTimestamp}}">email
+                        <a href="?from=invLinks&to=secondaryKeys&secondaryType=email&keyPrefix=$v{{setTimestamp}}">email
                             addresses</a>
                     </li>
                     <li>
-                        <a href="?from=nodes&to=secondaryKeys&secondaryType=userType&keyPrefix=$n{{setTimestamp}}">user
+                        <a href="?from=invLinks&to=secondaryKeys&secondaryType=userType&keyPrefix=$n{{setTimestamp}}">user
                             types</a><br/>
                     </li>
                 </lu>
             </td>
             <td valign="baseline">
-                <a href="?from=nodes&to=post">{{post}}</a>
+                <a href="?from=invLinks&to=post">{{post}}</a>
             </td>
         </tr>
     </table>
 </div>
 
-<h2 align="center">Nodes, SecondaryId = {{secondaryId}}</h2>
+<h2 align="center">Links to <a href="?from=invLinks&to=node&nodeId={{nodeId}}">{{nodeId}}</a> Labeled {{linkType}}</h2>
 
 <div>
     <div style="float:right">
-        <a href="?from=nodes&to=nodes&secondaryId={{secondaryId}}{{setStartingAt}}{{setTimestamp}}">{{more}}</a>
+        <a href="?from=invLinks&to=invLinks&linkType={{linkType}}&nodeId={{nodeId}}{{setStartingAt}}{{setTimestamp}}">{{more}}</a>
     </div>
-    <div style="font-family:courier">{{nodes}}</div>
+    <div style="font-family:courier">{{invLinks}}</div>
 </div>
 <p align="center">
     <a href="#top">top</a>
