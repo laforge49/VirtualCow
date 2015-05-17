@@ -1,8 +1,8 @@
+<!DOCTYPE html>
 <html>
-<head>
+<head lang="en">
+    <meta charset="UTF-8">
     <title>Virtual Cow</title>
-    <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
-    <meta http-equiv="content-language" content="en-us"/>
     <meta http-equiv="cache-control" content="no-cache"/>
     <meta http-equiv="pragma" content="no-cache"/>
     <meta name="keywords" content=""/>
@@ -10,9 +10,42 @@
     <meta name="author" content=""/>
     <meta name="copyright" content="&copy; 2015"/>
     <meta name="robot" content="noindex, nofollow"/>
+	<link href="css/style.css" rel="stylesheet" type="text/css" media="screen" />
+        <style>
+        login {
+       position: relative;
+       }
+      form {
+    position: absolute;
+    padding-top: -80px;
+    margin-top: -300px;
+    margin-left:50px;
+    }
+    </style>
 </head>
 <body>
-<h1>Virtual COW</h1>
+<div id="main">
+        <div id="header"><div id="logo"></div>
+<div class="menu-wrap">
+    <nav class="menu">
+        <ul class="clearfix">
+            <li><a href"?">Welcome</a></li>
+           <li><a href="?to=about">About</a></li>
+            <li>
+                <a>Begin<!--span class="arrow"></span--> &#9660;</a>
+                <ul class="sub-menu">
+                    <li><a href="?to=login">Login</a></li>
+                    <li><a href="?to=newAccount">New Account</a></li>
+                    <li><a href="?to=forgot">Forgot Password</a></li>
+                </ul>
+            </li>
+           <li><a href="?to=contact">Contact</a></li>
+          </ul>
+         </nav>
+        </div>
+<div style="clear:both"></div>
+        </div><!--end header -->
+<div id="content">
 
 <h2>Address Validated</h2>
 
@@ -23,7 +56,9 @@
 <p>--Virtual Cow</p>
 
 <p style="color:red"><strong>{{error}}&nbsp;</strong></p>
-
+<div id="login">
+<div style="padding-left: 150px;">
+<img src="images/log.jpg" alt="images/log.jpg" />
 <form method="POST">
     <input type="hidden" name="from" value="validated"/>
     <input type="hidden" name="to" value="validated"/>
@@ -38,5 +73,11 @@
     <input type="submit" value="Submit"/>
 </form>
 <p>{{success}}&nbsp;</p>
+</div>
+</div>
+</div><!--end content-->
+<div id="footer"><img src="images/footer.jpg" alt="footer.jpg" /><p>Copyright 2015 by William La Forge, all rights reserved.</p>
+</div><!--end footer-->
+</div><!--end main-->
 </body>
 </html>
