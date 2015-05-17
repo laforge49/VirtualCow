@@ -1,5 +1,6 @@
 package org.agilewiki.console.requests;
 
+import org.agilewiki.console.NameIds;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.TimestampIds;
 import org.agilewiki.utils.ids.composites.Journal;
@@ -140,14 +141,36 @@ public class NodeBlade extends RequestBlade {
                                 for (String typeId: Link1Id.link1LabelIdIterable(db, nodeId)) {
                                     sb.append("&nbsp;&nbsp;&nbsp;&nbsp;typeId: " + typeId + "<br />");
                                     for (String targetId: Link1Id.link1IdIterable(db, nodeId, typeId, longTimestamp)) {
-                                        sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + targetId + "<br />");
+                                        sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                                        sb.append("<a href=\"?from=node&to=node&nodeId=");
+                                        sb.append(targetId);
+                                        sb.append("\">");
+                                        sb.append(targetId);
+                                        sb.append("</a>");
+                                        sb.append("<br />");
+                                        if (targetId.startsWith("$t")) {
+                                            sb.append(" (");
+                                            sb.append(SimpleSimon.niceTime(targetId));
+                                            sb.append(") ");
+                                        }
                                     }
                                 }
                                 sb.append("Inverted Links: <br />");
                                 for (String typeId: Link1Id.link1LabelInvIterable(db, nodeId)) {
                                     sb.append("&nbsp;&nbsp;&nbsp;&nbsp;typeId: " + typeId + "<br />");
                                     for (String originId: Link1Id.link1InvIterable(db, nodeId, typeId, longTimestamp)) {
-                                        sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + originId + "<br />");
+                                        sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                                        sb.append("<a href=\"?from=node&to=node&nodeId=");
+                                        sb.append(originId);
+                                        sb.append("\">");
+                                        sb.append(originId);
+                                        sb.append("</a>");
+                                        sb.append("<br />");
+                                        if (originId.startsWith("$t")) {
+                                            sb.append(" (");
+                                            sb.append(SimpleSimon.niceTime(originId));
+                                            sb.append(") ");
+                                        }
                                     }
                                 }
                             }
