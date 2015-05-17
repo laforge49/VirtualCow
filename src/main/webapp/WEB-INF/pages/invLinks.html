@@ -54,13 +54,14 @@
     <div style="font-family:courier; float:left">&nbsp;&nbsp;&nbsp;&nbsp;</div>
     <table cellpadding="10">
         <tr>
-            <td valign="baseline">
+            <td width="25%" valign="baseline">
                 <a href="?from=invLinks&to=profile">My Profile</a><br/>
             </td>
-            <td valign="baseline">
+            <td width="25%" valign="baseline">
                 <a href="?from=invLinks{{setTimestamp}}">home</a>
             </td>
-            <td valign="baseline">
+            <td width="25%">&nbsp;</td>
+            <td width="25%" valign="baseline">
                 <form action="?from=invLinks&to=logout" method="POST">
                     <input type="submit" value="Logout"/>
                 </form>
@@ -83,6 +84,17 @@
                     <li>
                         <a href="?from=invLinks&to=secondaryKeys&secondaryType=userType&keyPrefix=$n{{setTimestamp}}">user
                             types</a><br/>
+                    </li>
+                </lu>
+            </td>
+            <td valign="baseline">
+                user links
+                <lu>
+                    <li>
+                        <a href="?from=invLinks&to=targets&linkType=users">users</a>
+                    </li>
+                    <li>
+                        <a href="?from=invLinks&to=sources&linkType=users">owned</a>
                     </li>
                 </lu>
             </td>

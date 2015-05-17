@@ -55,13 +55,14 @@
     <div style="font-family:courier; float:left">&nbsp;&nbsp;&nbsp;&nbsp;</div>
     <table cellpadding="10">
         <tr>
-            <td valign="baseline">
+            <td width="25%" valign="baseline">
                 <a href="?from=journal&to=profile">My Profile</a><br/>
             </td>
-            <td valign="baseline">
+            <td width="25%" valign="baseline">
                 <a href="?from=journal{{setTimestamp}}">home</a>
             </td>
-            <td valign="baseline">
+            <td width="25%">&nbsp;</td>
+            <td width="25%" valign="baseline">
                 <form action="?from=node&to=logout" method="POST">
                     <input type="submit" value="Logout"/>
                 </form>
@@ -84,6 +85,17 @@
                     <li>
                         <a href="?from=journal&to=secondaryKeys&secondaryType=userType&keyPrefix=$n{{setTimestamp}}">user
                             types</a><br/>
+                    </li>
+                </lu>
+            </td>
+            <td valign="baseline">
+                user links
+                <lu>
+                    <li>
+                        <a href="?from=journal&to=targets&linkType=users">users</a>
+                    </li>
+                    <li>
+                        <a href="?from=journal&to=sources&linkType=users">owned</a>
                     </li>
                 </lu>
             </td>

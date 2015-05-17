@@ -16,13 +16,14 @@
 
 <table cellpadding="10">
     <tr>
-        <td valign="baseline">
+        <td width="25%" valign="baseline">
             <a href="?from=post&to=profile">My Profile</a><br/>
         </td>
-        <td valign="baseline">
+        <td width="25%" valign="baseline">
             <a href="?from=post{{setTimestamp}}">home</a>
         </td>
-        <td valign="baseline">
+        <td width="25%">&nbsp;</td>
+        <td width="25%" valign="baseline">
             <form action="?from=home&to=logout" method="POST">
                 <input type="submit" value="Logout"/>
             </form>
@@ -45,6 +46,17 @@
                 <li>
                     <a href="?from=post&to=secondaryKeys&secondaryType=userType&keyPrefix=$n{{setTimestamp}}">user
                         types</a><br/>
+                </li>
+            </lu>
+        </td>
+        <td valign="baseline">
+            user links
+            <lu>
+                <li>
+                    <a href="?from=post&to=targets&linkType=users">users</a>
+                </li>
+                <li>
+                    <a href="?from=post&to=sources&linkType=users">owned</a>
                 </li>
             </lu>
         </td>
