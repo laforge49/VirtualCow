@@ -14,15 +14,41 @@
 <body>
 <h1>Virtual COW</h1>
 
-<h2>Delete Account</h2>
+<table cellpadding="10">
+    <tr>
+        <td width="25%" valign="baseline">
+            <a href="?from=deleteAccount&to=profile">My Profile</a>
+        </td>
+        <td width="25%" valign="baseline">
+            <a href="?from=deleteAccount">home</a>
+        </td>
+        <td width="25%" valign="baseline">guest</td>
+        <td width="25%" valign="baseline">
+            <form action="?from=deleteAccount&to=logout" method="POST">
+                <input type="submit" value="Logout"/>
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td valign="baseline">
+            <a href="?from=deleteAccount&to=changePassword">Change Password</a>
+        </td>
+        <td valign="baseline">
+            <a href="?from=deleteAccount&to=changeEmailAddress">Change Email Address</a>
+        </td>
+        <td valign="baseline">
+            Delete Account
+        </td>
+        <td valign="baseline">
+            &nbsp;
+        </td>
+    </tr>
+</table>
 
-<p>
-    <a href="?from=deleteAccount">home</a>
-</p>
-<p>guest</p>
-<p style="color:red"><strong>{{error}}&nbsp;</strong></p>
+<h2 align="center">Delete Account</h2>
 
 <form method="POST">
+    <p style="color:red"><strong>{{error}}&nbsp;</strong></p>
     <input type="hidden" name="from" value="deleteAccount"/>
     <input type="hidden" name="to" value="deleteAccount"/>
 
@@ -30,11 +56,7 @@
         Password: <input type="password" name="password" size="60">
     </p>
     <input type="submit" value="Submit"/>
+    <h3>{{success}}&nbsp;</h3>
 </form>
-<h3>{{success}}&nbsp;</h3>
-
-<p>
-    <a href="?from=deleteAccount">home</a>
-</p>
 </body>
 </html>

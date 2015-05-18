@@ -14,11 +14,38 @@
 <body>
 <h1>Virtual COW</h1>
 
-<h2>Change Email Address</h2>
+<table cellpadding="10">
+    <tr>
+        <td width="25%" valign="baseline">
+            <a href="?from=changeEmailAddress&to=profile">My Profile</a>
+        </td>
+        <td width="25%" valign="baseline">
+            <a href="?from=changeEmailAddress">home</a>
+        </td>
+        <td width="25%" valign="baseline">guest</td>
+        <td width="25%" valign="baseline">
+            <form action="?from=changeEmailAddress&to=logout" method="POST">
+                <input type="submit" value="Logout"/>
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td valign="baseline">
+            <a href="?from=changeEmailAddress&to=changePassword">Change Password</a>
+        </td>
+        <td valign="baseline">
+            <a href="?from=changeEmailAddress&to=changeEmailAddress">Change Email Address</a>
+        </td>
+        <td valign="baseline">
+            <a href="?from=changeEmailAddress&to=deleteAccount">Delete Account</a>
+        </td>
+        <td valign="baseline">
+            &nbsp;
+        </td>
+    </tr>
+</table>
 
-<p>
-    <a href="?from=changeEmailAddress">home</a>
-</p>
+<h2 align="center">Change Email Address</h2>
 
 <form method="POST">
     <p style="color:red"><strong>{{error}}&nbsp;</strong></p>
@@ -32,8 +59,5 @@
 
     <p>{{success}}&nbsp;</p>
 </form>
-<p>
-    <a href="?from=changeEmailAddress">home</a>
-</p>
 </body>
 </html>
