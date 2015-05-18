@@ -55,7 +55,6 @@
 
 <p>--Virtual Cow</p>
 
-<p style="color:red"><strong>{{error}}&nbsp;</strong></p>
 <div id="login">
 <div style="padding-left: 150px;">
 <img src="images/verf.jpg" alt="images/verf.jpg" />
@@ -64,16 +63,36 @@
     <input type="hidden" name="to" value="validated"/>
     <input type="hidden" name="email" value="{{email}}"/>
     <input type="hidden" name="key" value="{{key}}"/>
+<table>
+        <tr>
+<td colspan="2" style="color:red" width="490px">
+<strong>{{error}}&nbsp;</strong>
+</td>
+</tr>
+    <tr>
+        <td>
+        New Password: </td><td><input type="password" name="new" size="35">
+       </td>
+       </tr>
+<tr>
+       <td>
+        Confirm New Password: </td><td><input type="password" name="confirm" size="35">
+       </td>
+       </tr>
+        <tr>
+<td colspan="2">
+<p>{{success}}</p>
 
-    <p>
-        New Password: <input type="password" name="new" size="47">
-        <br/>
-        Confirm New Password: <input type="password" name="confirm" size="40">
-    </p>
- 
-<input type="image" src="images/sum.jpg" name="submit" value="submit"/>
+
+</td>
+</tr>
+        <tr>
+<td colspan="2" align="center">
+<input type="image" src="images/loo.jpg" name="submit" value="submit"/>
+</td>
+</tr>
+</table>
 </form>
-<p>{{success}}&nbsp;</p>
 </div>
 </div>
 </div><!--end content-->
