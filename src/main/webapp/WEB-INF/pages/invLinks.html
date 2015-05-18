@@ -60,7 +60,7 @@
             <td width="25%" valign="baseline">
                 <a href="?from=invLinks{{setTimestamp}}">home</a>
             </td>
-            <td width="25%">&nbsp;</td>
+            <td width="25%" valign="baseline">guest</td>
             <td width="25%" valign="baseline">
                 <form action="?from=invLinks&to=logout" method="POST">
                     <input type="submit" value="Logout"/>
@@ -91,10 +91,10 @@
                 user links
                 <lu>
                     <li>
-                        <a href="?from=invLinks&to=targets&linkType=users">users</a>
+                        <a href="?from=invLinks&to=targets&linkType=users{{setTimestamp}}">users</a>
                     </li>
                     <li>
-                        <a href="?from=invLinks&to=sources&linkType=users">owned</a>
+                        <a href="?from=invLinks&to=sources&linkType=users{{setTimestamp}}">owned</a>
                     </li>
                 </lu>
             </td>

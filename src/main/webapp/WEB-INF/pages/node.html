@@ -59,7 +59,7 @@
             <td width="25%" valign="baseline">
                 <a href="?from=node{{setTimestamp}}">home</a>
             </td>
-            <td width="25%">&nbsp;</td>
+            <td width="25%" valign="baseline">guest</td>
             <td width="25%" valign="baseline">
                 <form action="?from=node&to=logout" method="POST">
                     <input type="submit" value="Logout"/>
@@ -90,10 +90,10 @@
                 user links
                 <lu>
                     <li>
-                        <a href="?from=node&to=targets&linkType=users">users</a>
+                        <a href="?from=node&to=targets&linkType=users{{setTimestamp}}">users</a>
                     </li>
                     <li>
-                        <a href="?from=node&to=sources&linkType=users">owned</a>
+                        <a href="?from=node&to=sources&linkType=users{{setTimestamp}}">owned</a>
                     </li>
                 </lu>
             </td>
