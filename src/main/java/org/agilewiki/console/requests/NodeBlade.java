@@ -145,6 +145,8 @@ public class NodeBlade extends RequestBlade {
                                         sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
                                         sb.append("<a href=\"?from=node&to=node&nodeId=");
                                         sb.append(targetId);
+                                        sb.append("&timestamp=");
+                                        sb.append(timestamp);
                                         sb.append("\">");
                                         sb.append(targetId);
                                         sb.append("</a>");
@@ -200,7 +202,7 @@ public class NodeBlade extends RequestBlade {
                     map.put("time", "go to " + time);
                 }
                 if (timestamp != null) {
-                    map.put("clearTime", "<a href=\"?from=node&to=node&nodeId=" + nodeId + "\">Clear selected time</a>");
+                    map.put("clearTime", "<a href=\"?from=node&to=node&nodeId=" + nodeId + "\">Return to Present Time</a>");
                 }
                 finish();
             }

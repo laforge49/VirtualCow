@@ -56,7 +56,7 @@ public class InvLinksBlade extends RequestBlade {
                 if (timestamp != null) {
                     map.put("clearTime", "<a href=\"?from=invLinks&to=invLinks&nodeId=" + targetId +
                             "&linkType=" + labelId +
-                            "\">Clear selected time</a>");
+                            "\">Return to Present Time</a>");
                     map.put("formTimestamp", "<input type=\"hidden\" name=\"timestamp\" value=\"" + timestamp + "\"/>");
                     map.put("setTimestamp", "&timestamp=" + timestamp);
                     map.put("atTime", "at " + SimpleSimon.niceTime(TimestampIds.generate(timestamp)));

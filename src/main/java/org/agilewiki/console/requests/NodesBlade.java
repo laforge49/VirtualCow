@@ -52,7 +52,7 @@ public class NodesBlade extends RequestBlade {
                 String secondaryId = request.getParameter("secondaryId");
                 if (timestamp != null) {
                     map.put("clearTime", "<a href=\"?from=nodes&to=nodes&secondaryId=" + secondaryId +
-                            "\">Clear selected time</a>");
+                            "\">Return to Present Time</a>");
                     map.put("formTimestamp", "<input type=\"hidden\" name=\"timestamp\" value=\"" + timestamp + "\"/>");
                     map.put("setTimestamp", "&timestamp=" + timestamp);
                     map.put("atTime", "at " + SimpleSimon.niceTime(TimestampIds.generate(timestamp)));

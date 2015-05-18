@@ -57,7 +57,7 @@ public class SecondaryKeysBlade extends RequestBlade {
                 if (timestamp != null) {
                     map.put("clearTime", "<a href=\"?from=secondaryKeys&to=secondaryKeys&secondaryType=" + secondaryType +
                             "&keyPrefix=" + keyPrefix +
-                            "\">Clear selected time</a>");
+                            "\">Return to Present Time</a>");
                     map.put("formTimestamp", "<input type=\"hidden\" name=\"timestamp\" value=\"" + timestamp + "\"/>");
                     map.put("setTimestamp", "&timestamp=" + timestamp);
                     map.put("atTime", "at " + SimpleSimon.niceTime(TimestampIds.generate(timestamp)));
