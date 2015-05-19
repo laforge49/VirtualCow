@@ -145,8 +145,10 @@ public class NodeBlade extends RequestBlade {
                                         sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
                                         sb.append("<a href=\"?from=node&to=node&nodeId=");
                                         sb.append(targetId);
-                                        sb.append("&timestamp=");
-                                        sb.append(timestamp);
+                                        if (timestamp != null) {
+                                            sb.append("&timestamp=");
+                                            sb.append(timestamp);
+                                        }
                                         sb.append("\">");
                                         sb.append(targetId);
                                         sb.append("</a>");
@@ -186,7 +188,16 @@ public class NodeBlade extends RequestBlade {
                                 for (String typeId : Link1Id.link1LabelInvIterable(db, nodeId)) {
                                     sb.append("&nbsp;&nbsp;&nbsp;&nbsp;typeId: ");
                                     sb.append("<a href=\"?from=node&to=invLinks&nodeId=");
-                                    sb.append(nodeId + "&linkType=" + typeId + "\">" + typeId + "</a><br />");
+                                    sb.append(nodeId);
+                                    sb.append("&linkType=");
+                                    sb.append(typeId);
+                                    if (timestamp != null) {
+                                        sb.append("&timestamp=");
+                                        sb.append(timestamp);
+                                    }
+                                    sb.append("\">");
+                                    sb.append(typeId);
+                                    sb.append("</a><br />");
                                 }
                             }
                         }
