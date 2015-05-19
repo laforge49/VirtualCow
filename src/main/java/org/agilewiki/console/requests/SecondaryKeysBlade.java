@@ -106,6 +106,10 @@ public class SecondaryKeysBlade extends RequestBlade {
                             if (nodeId == null) {
                                 sb.append("<a href=\"?from=secondaryKeys&to=nodes&secondaryId=");
                                 sb.append(secondaryId);
+                                if (timestamp != null) {
+                                    sb.append("&timestamp=");
+                                    sb.append(timestamp);
+                                }
                                 sb.append("\">");
                                 sb.append(line);
                                 sb.append("</a>");
@@ -114,6 +118,10 @@ public class SecondaryKeysBlade extends RequestBlade {
                                 sb.append(" -> ");
                                 sb.append("<a href=\"?from=secondaryKeys&to=node&nodeId=");
                                 sb.append(nodeId);
+                                if (timestamp != null) {
+                                    sb.append("&timestamp=");
+                                    sb.append(timestamp);
+                                }
                                 sb.append("\">");
                                 sb.append(nodeId);
                                 sb.append("</a>");

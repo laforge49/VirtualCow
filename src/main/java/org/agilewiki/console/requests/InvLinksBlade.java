@@ -94,6 +94,10 @@ public class InvLinksBlade extends RequestBlade {
                             VersionedMapNode nvmn = (VersionedMapNode) nla.get(0);
                             sb.append("<a href=\"?from=nodes&to=node&nodeId=");
                             sb.append(nodeId);
+                            if (timestamp != null) {
+                                sb.append("&timestamp=");
+                                sb.append(timestamp);
+                            }
                             sb.append("\">");
                             sb.append(nodeId);
                             sb.append("</a>");
