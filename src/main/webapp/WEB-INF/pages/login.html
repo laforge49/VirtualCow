@@ -53,9 +53,9 @@
                 <img src="images/loginForm.jpg" alt="loginForm"/>
 
                 <form method="POST" action="rupa">
-                 <table>
+                  <table width="460">
                     <tr>
-                    <td>
+                    <td colspan="2">
                     <p style="color:red"><strong>{{error}}&nbsp;</strong></p>
                     <input type="hidden" name="from" value="login"/>
                     <input type="hidden" name="to" value="login"/>
@@ -64,19 +64,19 @@
                      <tr>
                     <td>
                     <p>
-                        Email Address: <input type="text" name="emailAddress" size="46" value="{{emailAddress}}">
-                    </p>
+                        Email Address:</p></td><td> <input type="text" name="emailAddress" size="44" value="{{emailAddress}}">
+                    
                      </tr>
                     </td>
                      <tr>
                     <td>
                     <p>
-                        Password: <input type="password" name="password" size="50">
-                    </p>
+                        Password: </p> </td> <td><input type="password" name="password" size="44">
+                    
                     </tr>
                     </td>
                     <tr>
-                    <td>
+                    <td colspan="2" align="right">
                     <input type="image" src="images/loginButton.jpg" name="loginButton" value="Login"/>
                     </tr>
                     </td>
