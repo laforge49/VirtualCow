@@ -47,20 +47,35 @@ form {
         </div><!--end header -->
 <div id="content">
 <h2>New Account</h2>
-<div id="login">
+<div id="login"> <a id="rupa" />
 <div style="padding-left: 150px;">
-<img src="images/new.jpg" alt="images/new.jpg" />
-<form method="POST">
-        <p style="color:red"><strong>{{error2}}&nbsp;</strong></p>
+<img src="images/newaccount.jpg" alt="newaccount" />
+<form method="POST" action="#rupa">
+        
         <input type="hidden" name="from" value="login"/>
         <input type="hidden" name="to" value="login"/>
-
+        <table width="480">
+		<tr> <td colspan="2">
+		<p style="color:red"><strong>{{error2}}&nbsp;</strong></p>
+		</td>
+		</tr>
+		<tr>
+        <td>
         <p>
-            Email Address: <input type="text" name="emailAddress2" size="49" value="{{emailAddress2}}">
-        </p>
-        <input type="image"src="images/vali.jpg" name="newAccount" value="Validate Address"/>
-
-        <p>{{success2}}&nbsp;</p>
+            Email Address: </p> </td>
+			<td><input type="text" name="emailAddress2" size="48" value="{{emailAddress2}}">
+			</td></tr>
+			<tr>
+			<td colspan="2">
+		<p>{{success2}}&nbsp;</p>
+		</td> </tr>
+		<tr>
+		<td colspan="2" align="right">
+        <input type="image"src="images/validatebutton.jpg" name="newAccount" value="Validate Address"/>
+         </td>
+         </tr>
+        </table>
+        
 </form>
 </div>
 </div>
