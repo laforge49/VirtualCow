@@ -42,7 +42,9 @@ public class ValidatedBlade extends PostRequestBlade {
             protected void process()
                     throws Exception {
                 String key = request.getParameter("key");
+                map.put("key", key);
                 String email = request.getParameter("email");
+                map.put("email", email);
                 String password = request.getParameter("new");
                 String confirm = request.getParameter("confirm");
                 String error = null;
