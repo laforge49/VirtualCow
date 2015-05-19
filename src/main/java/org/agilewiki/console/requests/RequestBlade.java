@@ -30,7 +30,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
         this.mailOut = simpleSimon.mailOut;
     }
 
-    public abstract void get(String page, AsyncContext asyncContext);
+    public abstract void get(String page, AsyncContext asyncContext, String userId);
 
     protected abstract class SR extends ASig {
         protected final AsyncContext asyncContext;

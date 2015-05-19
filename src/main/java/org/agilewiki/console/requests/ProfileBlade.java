@@ -1,6 +1,8 @@
 package org.agilewiki.console.requests;
 
 import org.agilewiki.console.SimpleSimon;
+import org.agilewiki.console.User;
+import org.agilewiki.utils.immutable.FactoryRegistry;
 
 import javax.servlet.AsyncContext;
 
@@ -12,11 +14,13 @@ public class ProfileBlade extends RequestBlade {
         super(simpleSimon);
     }
 
-    public void get(String page, AsyncContext asyncContext) {
+    public void get(String page, AsyncContext asyncContext, String userId) {
         new SR(page, asyncContext) {
             @Override
             protected void process()
                     throws Exception {
+                String myEmail = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
+                map.put("myEmail", myEmail);
                 finish();
             }
         }.signal();

@@ -21,11 +21,13 @@ public class DeleteAccountBlade extends PostRequestBlade {
     }
 
     @Override
-    public void get(String page, AsyncContext asyncContext) {
+    public void get(String page, AsyncContext asyncContext, String userId) {
         new SR(page, asyncContext) {
             @Override
             protected void process()
                     throws Exception {
+                String myEmail = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
+                map.put("myEmail", myEmail);
                 finish();
             }
         }.signal();
@@ -37,6 +39,8 @@ public class DeleteAccountBlade extends PostRequestBlade {
             @Override
             protected void process()
                     throws Exception {
+                String myEmail = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
+                map.put("myEmail", myEmail);
                 String oldPassword = request.getParameter("password");
                 if (oldPassword == null || oldPassword.length() == 0) {
                     map.put("error", "Enter your password in the old password field");

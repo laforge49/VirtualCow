@@ -232,7 +232,7 @@ public class SimpleSimon extends HttpServlet {
                 rb = welcomeBlade;
             }
             AsyncContext asyncContext = request.startAsync();
-            rb.get(page, asyncContext);
+            rb.get(page, asyncContext, userId);
             return;
         }
 
@@ -242,7 +242,7 @@ public class SimpleSimon extends HttpServlet {
             rb = homeBlade;
         }
         AsyncContext asyncContext = request.startAsync();
-        rb.get(page, asyncContext);
+        rb.get(page, asyncContext, userId);
     }
 
     public void doPost(HttpServletRequest request,

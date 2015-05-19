@@ -19,7 +19,7 @@ public class PostBlade extends PostRequestBlade {
     }
 
     @Override
-    public void get(String page, AsyncContext asyncContext) {
+    public void get(String page, AsyncContext asyncContext, String userId) {
         new SR(page, asyncContext) {
             @Override
             protected void process()

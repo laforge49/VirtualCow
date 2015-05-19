@@ -22,7 +22,7 @@ public class ForgotPasswordBlade extends PostRequestBlade {
     }
 
     @Override
-    public void get(String page, AsyncContext asyncContext) {
+    public void get(String page, AsyncContext asyncContext, String userId) {
         new SR(page, asyncContext) {
             @Override
             protected void process()
@@ -72,6 +72,12 @@ public class ForgotPasswordBlade extends PostRequestBlade {
                     return;
                 }
                 String userId = User.userId(db, email, FactoryRegistry.MAX_TIMESTAMP);
+                if (userId == null) {
+                    String error = "Unable to change your password at this time. Please try again later.";
+                    map.put("error", SimpleSimon.encode(error, 0, SimpleSimon.ENCODE_FIELD)); //field
+                    finish();
+                    return;
+                }
                 MapNode mn = db.dbFactoryRegistry.nilMap;
                 mn = mn.add(User.USER_KEY, userId);
                 mn = mn.add(User.PASSWORD_KEY, User.encodePassword(servletContext, userId, newPassword));

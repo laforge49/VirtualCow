@@ -12,7 +12,8 @@ public class WelcomeBlade extends RequestBlade {
         super(simpleSimon);
     }
 
-    public void get(String page, AsyncContext asyncContext) {
+    @Override
+    public void get(String page, AsyncContext asyncContext, String userId) {
         new SR(page, asyncContext) {
             @Override
             protected void process()
