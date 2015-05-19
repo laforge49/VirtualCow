@@ -65,7 +65,7 @@ public class DeleteAccountBlade extends PostRequestBlade {
                                         new AsyncResponseProcessor<Boolean>() {
                                             @Override
                                             public void processAsyncResponse(Boolean _response) throws Exception {
-                                                redirect("?to=login&from=deleteAccount");
+                                                redirect("?from=deleteAccount");
                                             }
                                         });
                             }
