@@ -211,6 +211,7 @@ public class NodeBlade extends RequestBlade {
                         (timestamp == null || !timestamp.equals(jeTimestamp))) {
                     map.put("jeTimestamp", jeTimestamp);
                     map.put("time", "go to " + time);
+                    map.put("nice", "(" + time + ")");
                 }
                 if (timestamp != null) {
                     map.put("clearTime", "<a href=\"?from=node&to=node&nodeId=" + nodeId + "\">Return to Present Time</a>");
