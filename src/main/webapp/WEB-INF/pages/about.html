@@ -64,6 +64,7 @@
             <li>
                 Many simultaneous users are supported through the use of Jetty and Servlet API 3.1.
                 Open connections do not tie up threads.
+                And queries are processed in parallel using a common cache.
             </li>
             <li>
                 The database will scale up to a million blocks of a million bytes each (a terabyte).
@@ -79,7 +80,14 @@
         </p>
 
         <p>
-            Robustness is achieved through the use of JActor2, 
+            Robustness is achieved through the use of JActor2, which monitors message processing,
+            prevents race conditions and implicitly orders data locks.
+        </p>
+
+        <p>
+            Virtual COW is based on two open source projects,
+            <a href="http://www.agilewiki.org/projects/JActor2/index.html" target="_blank">JActor2</a> and
+            <a href="http://www.agilewiki.org/projects/utils/index.html" target="_blank">utils</a>.
         </p>
 
     </div>

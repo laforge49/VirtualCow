@@ -44,6 +44,8 @@ public class ForgotPasswordBlade extends PostRequestBlade {
                     throws Exception {
                 String key = request.getParameter("key");
                 String email = request.getParameter("email");
+                map.put("key", key);
+                map.put("email", email);
                 String newPassword = request.getParameter("new");
                 String confirmNewPassword = request.getParameter("confirm");
                 if (newPassword == null || newPassword.length() == 0) {
