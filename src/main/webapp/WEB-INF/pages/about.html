@@ -38,11 +38,49 @@
     <!--end header -->
     <div id="content">
 
-        <h2 align="center">About</h2>
+        <h2 align="center">About Virtual COW</h2>
 
-        <p>header <a href="?">Welcome</a> about begin contact</p>
+        <p>
+            Virtual COW is a high-performance, robust, scalable, versioning, transactional graphical database.
+            Nodes in the graph are mapped onto immutable AA trees which
+            support versioning and may be larger than available RAM.
+        </p>
 
-        <p>all about this and that and some other things too.</p>
+        <p>
+            Virtual COW takes its name from the virtualized AA trees,
+            parts of which are rolled into RAM as needed.
+            And from the use of a Copy-On-Write (COW) technique to implement
+            the database.
+        </p>
+
+        <p>
+            Virtual COW is scalable in four ways:
+        <ol>
+            <li>
+                Vertical scalability is achieved through the use of JActor2
+                in place of traditional threads/locks.
+                Virtual COW will make full use of all the processor cores it has access to.
+            </li>
+            <li>
+                Many simultaneous users are supported through the use of Jetty and Servlet API 3.1.
+                Open connections do not tie up threads.
+            </li>
+            <li>
+                The database will scale up to a million blocks of a million bytes each (a terabyte).
+            </li>
+            <li>
+                Other than the size of the database,
+                there are no constraints on the number of nodes in the graph nor on the number of links
+                that connect to a node.
+                There is a practical limit on the number of links that originate with a node,
+                but this is a limit in the design of the displays, not a limit of the underlying database.
+            </li>
+        </ol>
+        </p>
+
+        <p>
+            Robustness is achieved through the use of JActor2, 
+        </p>
 
     </div>
     <!--end content-->
