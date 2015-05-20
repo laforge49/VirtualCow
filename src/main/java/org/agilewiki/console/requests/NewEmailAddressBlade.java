@@ -23,7 +23,7 @@ public class NewEmailAddressBlade extends PostRequestBlade {
 
     @Override
     public void get(String page, AsyncContext asyncContext, String userId) {
-        new SR(page, asyncContext) {
+        new SR(page, asyncContext, userId) {
             @Override
             protected void process()
                     throws Exception {
@@ -40,7 +40,7 @@ public class NewEmailAddressBlade extends PostRequestBlade {
 
     @Override
     public void post(String page, AsyncContext asyncContext, String userId) {
-        new SR(page, asyncContext) {
+        new SR(page, asyncContext, userId) {
             @Override
             protected void process()
                     throws Exception {

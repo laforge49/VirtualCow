@@ -37,16 +37,18 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
         protected final HttpServletRequest request;
         protected final HttpServletResponse response;
         protected final String opName;
+        protected final String userId;
         protected AsyncRequestImpl asyncRequestImpl;
         protected AsyncResponseProcessor<Void> asyncResponseProcessor;
         protected Map<String, String> map;
 
-        public SR(String _opName, AsyncContext asyncContext) {
+        public SR(String _opName, AsyncContext asyncContext, String userId) {
             super(_opName);
             this.asyncContext = asyncContext;
             request = (HttpServletRequest) asyncContext.getRequest();
             response = (HttpServletResponse) asyncContext.getResponse();
             opName = _opName;
+            this.userId = userId;
         }
 
         abstract protected void process()
