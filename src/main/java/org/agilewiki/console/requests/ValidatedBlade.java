@@ -90,7 +90,7 @@ public class ValidatedBlade extends PostRequestBlade {
                             @Override
                             public void processAsyncResponse(String _response) throws Exception {
                                 map.put("success", "Your account has been created and you can now " +
-                                        "<a href=\"?from=validated&to=login\">login</a>.");
+                                        "<a href=\"?from=validated&to=login#rupa\">login</a>.");
                                 finish();
                             }
                         });
