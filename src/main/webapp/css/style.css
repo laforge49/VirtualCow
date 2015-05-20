@@ -293,13 +293,19 @@ body, div, h1, h2, h3, h4, h5, h6, p, ul, img {margin:0px; padding:0px; }
     width: 1015px;
     margin-left:0px;
 }
-#footer p {
-    position: absolute;
+#footer div{position: absolute;
     padding-top: -10px;
-    margin-top: -100px;
-    margin-left:300px;
+    margin-top: -150px;
+    margin-left:300px;}
+#copy p {
     color: #4b100b;
 }
-
+#footer a {
+    color: #3d0803;
+    font-weight: bold;
+    text-decoration: none; 
+}
+#footer a:hover { color:#c63f33;
+}
 
  
