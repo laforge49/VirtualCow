@@ -68,6 +68,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
             map = new HashMap<>();
             if (userId != null) {
                 map.put("myEmail", myEmail);
+                map.put("guest", "<a>-guest-</a>");
             }
             _asyncRequestImpl.setExceptionHandler(new ExceptionHandler() {
                 @Override
