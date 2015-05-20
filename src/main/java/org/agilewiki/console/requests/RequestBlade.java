@@ -2,10 +2,12 @@ package org.agilewiki.console.requests;
 
 import org.agilewiki.console.MailOut;
 import org.agilewiki.console.SimpleSimon;
+import org.agilewiki.console.User;
 import org.agilewiki.jactor2.core.blades.NonBlockingBladeBase;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.jactor2.core.messages.ExceptionHandler;
 import org.agilewiki.jactor2.core.messages.impl.AsyncRequestImpl;
+import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.virtualcow.Db;
 
 import javax.servlet.AsyncContext;
@@ -38,6 +40,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
         protected final HttpServletResponse response;
         protected final String opName;
         protected final String userId;
+        protected String myEmail = null;
         protected AsyncRequestImpl asyncRequestImpl;
         protected AsyncResponseProcessor<Void> asyncResponseProcessor;
         protected Map<String, String> map;
@@ -49,6 +52,9 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
             response = (HttpServletResponse) asyncContext.getResponse();
             opName = _opName;
             this.userId = userId;
+            if (userId != null) {
+                myEmail = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
+            }
         }
 
         abstract protected void process()
@@ -60,6 +66,9 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
             asyncRequestImpl = _asyncRequestImpl;
             asyncResponseProcessor = _asyncResponseProcessor;
             map = new HashMap<>();
+            if (userId != null) {
+                map.put("myEmail", myEmail);
+            }
             _asyncRequestImpl.setExceptionHandler(new ExceptionHandler() {
                 @Override
                 public Object processException(Exception e) throws Exception {

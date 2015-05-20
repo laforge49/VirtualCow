@@ -27,8 +27,6 @@ public class NewEmailAddressBlade extends PostRequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                String myEmail = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
-                map.put("myEmail", myEmail);
                 String key = request.getParameter("key");
                 String email = request.getParameter("emailAddress");
                 map.put("key", key);
@@ -44,8 +42,6 @@ public class NewEmailAddressBlade extends PostRequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                String myEmail = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
-                map.put("myEmail", myEmail);
                 String emailAddress = request.getParameter("emailAddress");
                 String token = request.getParameter("key");
                 String password = request.getParameter("password");
@@ -80,7 +76,7 @@ public class NewEmailAddressBlade extends PostRequestBlade {
                         new AsyncResponseProcessor<String>() {
                             @Override
                             public void processAsyncResponse(String _response) throws Exception {
-                                String myEmail = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
+                                myEmail = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
                                 map.put("myEmail", myEmail);
                                 map.put("success", "The email address for your account has been updated.");
                                 response.getWriter().println(SimpleSimon.replace(servletContext, opName, map));

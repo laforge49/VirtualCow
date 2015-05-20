@@ -21,8 +21,6 @@ public class HomeBlade extends RequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                String myEmail = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
-                map.put("myEmail", myEmail);
                 String timestamp = request.getParameter("timestamp");
                 if (timestamp == null) {
                     map.put("post", "post");

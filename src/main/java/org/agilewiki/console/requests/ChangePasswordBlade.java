@@ -28,8 +28,6 @@ public class ChangePasswordBlade extends PostRequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                String myEmail = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
-                map.put("myEmail", myEmail);
                 finish();
             }
         }.signal();
@@ -41,8 +39,6 @@ public class ChangePasswordBlade extends PostRequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                String myEmail = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
-                map.put("myEmail", myEmail);
                 String oldPassword = request.getParameter("old");
                 String newPassword = request.getParameter("new");
                 String confirmNewPassword = request.getParameter("confirm");

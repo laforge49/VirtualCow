@@ -19,8 +19,6 @@ public class ProfileBlade extends RequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                String myEmail = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
-                map.put("myEmail", myEmail);
                 finish();
             }
         }.signal();
