@@ -23,6 +23,8 @@ public class ChangeEmailAddressBlade extends PostRequestBlade {
             @Override
             protected void process()
                     throws Exception {
+                String myEmail = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
+                map.put("myEmail", myEmail);
                 finish();
             }
         }.signal();
@@ -34,6 +36,8 @@ public class ChangeEmailAddressBlade extends PostRequestBlade {
             @Override
             protected void process()
                     throws Exception {
+                String myEmail = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
+                map.put("myEmail", myEmail);
                 String emailAddress = request.getParameter("emailAddress");
                 if (emailAddress != null)
                     map.put("emailAddress", SimpleSimon.encode(emailAddress, 0, SimpleSimon.ENCODE_FIELD)); //field
