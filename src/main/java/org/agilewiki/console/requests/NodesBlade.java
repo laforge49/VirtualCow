@@ -2,20 +2,12 @@ package org.agilewiki.console.requests;
 
 import org.agilewiki.console.NameIds;
 import org.agilewiki.console.SimpleSimon;
-import org.agilewiki.console.TimestampIds;
-import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.ListAccessor;
 import org.agilewiki.utils.immutable.collections.MapAccessor;
 import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
 import javax.servlet.AsyncContext;
-import javax.servlet.ServletException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -29,36 +21,19 @@ public class NodesBlade extends RequestBlade {
     @Override
     public void get(String page, AsyncContext asyncContext, String userId) {
         new SR(page, asyncContext, userId) {
+            String secondaryId;
+
+            @Override
+            protected String setContext() {
+                secondaryId = request.getParameter("secondaryId");
+                map.put("secondaryId", secondaryId);
+                return "&secondaryId=" + secondaryId;
+            }
+
             @Override
             protected void process()
                     throws Exception {
-                String timestamp = request.getParameter("timestamp");
-                String dateInString = request.getParameter("date");
-                if (dateInString != null && dateInString.length() > 0) {
-                    Date date;
-                    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
-                    try {
-                        date = formatter.parse(dateInString);
-                    } catch (ParseException e) {
-                        throw new ServletException(e);
-                    }
-                    GregorianCalendar calendar = new GregorianCalendar();
-                    calendar.setTime(date);
-                    calendar.set(Calendar.SECOND, 59);
-                    long time = calendar.getTimeInMillis() + 999;
-                    timestamp = TimestampIds.value(TimestampIds.timestampId((time << 10) + 1023));
-                }
-                long longTimestamp;
-                String secondaryId = request.getParameter("secondaryId");
-                if (timestamp != null) {
-                    map.put("clearTime", "<a href=\"?from=nodes&to=nodes&secondaryId=" + secondaryId +
-                            "\">Return to Present Time</a>");
-                    map.put("formTimestamp", "<input type=\"hidden\" name=\"timestamp\" value=\"" + timestamp + "\"/>");
-                    map.put("setTimestamp", "&timestamp=" + timestamp);
-                    map.put("atTime", "at " + SimpleSimon.niceTime(TimestampIds.generate(timestamp)));
-                    longTimestamp = TimestampIds.timestamp(TimestampIds.generate(timestamp));
-                } else {
-                    longTimestamp = FactoryRegistry.MAX_TIMESTAMP;
+                if (timestamp == null) {
                     map.put("post", "post");
                 }
                 String startingAt = request.getParameter("startingAt");
@@ -139,7 +114,6 @@ public class NodesBlade extends RequestBlade {
                 map.put("nodes", sb.toString());
                 map.put("setStartingAt", hasMore ? "&startingAt=" + startingAt : "");
                 map.put("more", hasMore ? "more" : "");
-                map.put("secondaryId", secondaryId);
                 finish();
             }
         }.signal();

@@ -10,92 +10,105 @@
     <meta name="author" content=""/>
     <meta name="copyright" content="&copy; 2015"/>
     <meta name="robot" content="noindex, nofollow"/>
-	<link href="css/style.css" rel="stylesheet" type="text/css" media="screen" />
-        <style>
+    <link href="css/style.css" rel="stylesheet" type="text/css" media="screen"/>
+    <style>
         login {
-       position: relative;
-       }
-      form {
-    position: absolute;
-    padding-top: -80px;
-    margin-top: -300px;
-    margin-left:50px;
-    }
+        position: relative;
+        }
+        form {
+        position: absolute;
+        padding-top: -80px;
+        margin-top: -300px;
+        margin-left:50px;
+        }
     </style>
 </head>
 <body>
 <div id="main">
-        <div id="header"><div id="logo"></div>
-<div class="menu-wrap">
-    <nav class="menu">
-        <ul class="clearfix">
-            <li><a href="?#rupa">Welcome</a></li>
-           <li><a href="?to=about#rupa">About</a></li>
-            <li>
-                <a>Begin<!--span class="arrow"></span--> &#9660;</a>
-                <ul class="sub-menu">
-                    <li><a href="?to=login#rupa">Login</a></li>
-                    <li><a href="?to=newAccount#rupa">New Account</a></li>
-                    <li><a href="?to=forgot#rupa">Forgot Password</a></li>
+    <div id="header">
+        <div id="logo"></div>
+        <div class="menu-wrap">
+            <nav class="menu">
+                <ul class="clearfix">
+                    <li><a href="?#rupa">Welcome</a></li>
+                    <li><a href="?to=about#rupa">About</a></li>
+                    <li>
+                        <a>Begin<!--span class="arrow"></span--> &#9660;</a>
+                        <ul class="sub-menu">
+                            <li><a href="?to=login#rupa">Login</a></li>
+                            <li><a href="?to=newAccount#rupa">New Account</a></li>
+                            <li><a href="?to=forgot#rupa">Forgot Password</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="?to=contact#rupa">Contact</a></li>
                 </ul>
-            </li>
-           <li><a href="?to=contact#rupa">Contact</a></li>
-          </ul>
-         </nav>
+            </nav>
         </div>
-<div style="clear:both"></div>
-        </div><!--end header -->
-<div id="content">
+        <div style="clear:both"></div>
+    </div>
+    <!--end header -->
+    <div id="content">
 
-<h2>Address Validated: {{email}}</h2>
+        <h2>Address Validated: {{email}}</h2>
 
-<p>Thank you for validating your email address.</p>
+        <p>Thank you for validating your email address.</p>
 
-<p>Use the form below to create your account.</p>
+        <p>Use the form below to create your account.</p>
 
-<p>--Virtual Cow</p>
+        <p>--Virtual Cow</p>
 
-<div id="login"><a id="rupa" />
-<div style="padding-left: 150px;">
-<img src="images/createnewaccount.jpg" alt="createnewaccount.jpg" />
-<form method="POST" action="#rupa">
-    <input type="hidden" name="from" value="validated"/>
-    <input type="hidden" name="to" value="validated"/>
-    <input type="hidden" name="email" value="{{email}}"/>
-    <input type="hidden" name="key" value="{{key}}"/>
-<table>
-        <tr>
-<td colspan="2" style="color:red" width="460px">
-<strong>{{error}}&nbsp;</strong>
-</td>
-</tr>
-    <tr>
-        <td>
-        New Password: </td><td align="right"><input type="password" name="new" size="30">
-       </td>
-       </tr>
-<tr>
-       <td>
-        Confirm New Password: </td><td align="right"><input type="password" name="confirm" size="30">
-       </td>
-       </tr>
-        <tr>
-<td colspan="2">
-<p>{{success}}</p>
-</td>
-</tr>
-        <tr>
-<td colspan="2" align="right">
-<input type="image" src="images/submitbutton.jpg" name="submit" value="submit"/>
-</td>
-</tr>
-</table>
-</form>
+        <div id="login"><a id="rupa"/>
+
+            <div style="padding-left: 150px;">
+                <img src="images/createnewaccount.jpg" alt="createnewaccount.jpg"/>
+
+                <form method="POST" action="#rupa">
+                    <input type="hidden" name="from" value="validated"/>
+                    <input type="hidden" name="to" value="validated"/>
+                    <input type="hidden" name="email" value="{{email}}"/>
+                    <input type="hidden" name="key" value="{{key}}"/>
+                    <table>
+                        <tr>
+                            <td colspan="2" style="color:red" width="460px">
+                                <strong>{{error}}&nbsp;</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                New Password:
+                            </td>
+                            <td align="right"><input type="password" name="new" size="30">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Confirm New Password:
+                            </td>
+                            <td align="right"><input type="password" name="confirm" size="30">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <p>{{success}}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="right">
+                                <input type="image" src="images/submitbutton.jpg" name="submit" value="submit"/>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--end content-->
+    <div id="footer"><img src="images/footer.jpg" alt="footer.jpg"/>
+
+        <p>Copyright 2015 by William La Forge, all rights reserved.</p>
+    </div>
+    <!--end footer-->
 </div>
-</div>
-</div><!--end content-->
-<div id="footer"><img src="images/footer.jpg" alt="footer.jpg" /><p>Copyright 2015 by William La Forge, all rights reserved.</p>
-</div><!--end footer-->
-</div><!--end main-->
+<!--end main-->
 </body>
 </html>

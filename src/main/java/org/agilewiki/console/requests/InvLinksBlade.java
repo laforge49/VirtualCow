@@ -2,9 +2,7 @@ package org.agilewiki.console.requests;
 
 import org.agilewiki.console.NameIds;
 import org.agilewiki.console.SimpleSimon;
-import org.agilewiki.console.TimestampIds;
 import org.agilewiki.utils.ids.composites.Link1Id;
-import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.ListAccessor;
 import org.agilewiki.utils.immutable.collections.MapAccessor;
 import org.agilewiki.utils.immutable.collections.VersionedMapNode;
@@ -12,12 +10,6 @@ import org.agilewiki.utils.immutable.collections.VersionedMapNodeImpl;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
 import javax.servlet.AsyncContext;
-import javax.servlet.ServletException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -31,38 +23,23 @@ public class InvLinksBlade extends RequestBlade {
     @Override
     public void get(String page, AsyncContext asyncContext, String userId) {
         new SR(page, asyncContext, userId) {
+            String targetId;
+            String labelId;
+
+            @Override
+            protected String setContext() {
+                targetId = request.getParameter("nodeId");
+                labelId = request.getParameter("linkType");
+                map.put("nodeId", targetId);
+                map.put("linkType", labelId);
+                return "&nodeId=" + targetId +
+                        "&linkType=" + labelId;
+            }
+
             @Override
             protected void process()
                     throws Exception {
-                String timestamp = request.getParameter("timestamp");
-                String dateInString = request.getParameter("date");
-                if (dateInString != null && dateInString.length() > 0) {
-                    Date date;
-                    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
-                    try {
-                        date = formatter.parse(dateInString);
-                    } catch (ParseException e) {
-                        throw new ServletException(e);
-                    }
-                    GregorianCalendar calendar = new GregorianCalendar();
-                    calendar.setTime(date);
-                    calendar.set(Calendar.SECOND, 59);
-                    long time = calendar.getTimeInMillis() + 999;
-                    timestamp = TimestampIds.value(TimestampIds.timestampId((time << 10) + 1023));
-                }
-                long longTimestamp;
-                String targetId = request.getParameter("nodeId");
-                String labelId = request.getParameter("linkType");
-                if (timestamp != null) {
-                    map.put("clearTime", "<a href=\"?from=invLinks&to=invLinks&nodeId=" + targetId +
-                            "&linkType=" + labelId +
-                            "\">Return to Present Time</a>");
-                    map.put("formTimestamp", "<input type=\"hidden\" name=\"timestamp\" value=\"" + timestamp + "\"/>");
-                    map.put("setTimestamp", "&timestamp=" + timestamp);
-                    map.put("atTime", "at " + SimpleSimon.niceTime(TimestampIds.generate(timestamp)));
-                    longTimestamp = TimestampIds.timestamp(TimestampIds.generate(timestamp));
-                } else {
-                    longTimestamp = FactoryRegistry.MAX_TIMESTAMP;
+                if (timestamp == null) {
                     map.put("post", "post");
                 }
                 String link1Inv = Link1Id.link1Inv(targetId, labelId);
@@ -140,8 +117,6 @@ public class InvLinksBlade extends RequestBlade {
                 map.put("invLinks", sb.toString());
                 map.put("setStartingAt", hasMore ? "&startingAt=" + startingAt : "");
                 map.put("more", hasMore ? "more" : "");
-                map.put("nodeId", targetId);
-                map.put("linkType", labelId);
                 finish();
             }
         }.signal();

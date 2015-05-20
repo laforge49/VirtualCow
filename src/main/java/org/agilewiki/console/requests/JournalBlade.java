@@ -5,19 +5,12 @@ import org.agilewiki.console.NameIds;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.TimestampIds;
 import org.agilewiki.utils.ids.Timestamp;
-import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.ListAccessor;
 import org.agilewiki.utils.immutable.collections.MapAccessor;
 import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
 import javax.servlet.AsyncContext;
-import javax.servlet.ServletException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -34,31 +27,9 @@ public class JournalBlade extends RequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                String timestamp = request.getParameter("timestamp");
-                String dateInString = request.getParameter("date");
-                if (dateInString != null && dateInString.length() > 0) {
-                    Date date;
-                    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
-                    try {
-                        date = formatter.parse(dateInString);
-                    } catch (ParseException e) {
-                        throw new ServletException(e);
-                    }
-                    GregorianCalendar calendar = new GregorianCalendar();
-                    calendar.setTime(date);
-                    calendar.set(Calendar.SECOND, 59);
-                    long time = calendar.getTimeInMillis() + 999;
-                    timestamp = TimestampIds.value(TimestampIds.timestampId((time << 10) + 1023));
-                }
-                long longTimestamp;
-                if (timestamp != null) {
-                    map.put("clearTime", "<a href=\"?from=journal&to=journal\">Clear selected time</a>");
-                    map.put("setTimestamp", "&timestamp=" + timestamp);
-                    String timestampId = TimestampIds.generate(timestamp);
-                    map.put("atTime", "at " + SimpleSimon.niceTime(timestampId));
-                } else
+                if (timestamp == null) {
                     map.put("post", "post");
-                longTimestamp = FactoryRegistry.MAX_TIMESTAMP;
+                }
                 String prefix = Timestamp.PREFIX;
                 String startingAt = request.getParameter("startingAt");
                 if (startingAt == null)

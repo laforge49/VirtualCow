@@ -1,9 +1,6 @@
 package org.agilewiki.console.requests;
 
 import org.agilewiki.console.SimpleSimon;
-import org.agilewiki.console.TimestampIds;
-import org.agilewiki.console.User;
-import org.agilewiki.utils.immutable.FactoryRegistry;
 
 import javax.servlet.AsyncContext;
 
@@ -21,12 +18,8 @@ public class HomeBlade extends RequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                String timestamp = request.getParameter("timestamp");
                 if (timestamp == null) {
                     map.put("post", "post");
-                } else {
-                    map.put("setTimestamp", "&timestamp=" + timestamp);
-                    map.put("atTime", "at " + SimpleSimon.niceTime(TimestampIds.generate(timestamp)));
                 }
                 finish();
             }
