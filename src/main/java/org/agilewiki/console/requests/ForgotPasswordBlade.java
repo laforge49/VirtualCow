@@ -87,7 +87,7 @@ public class ForgotPasswordBlade extends PostRequestBlade {
                             public void processAsyncResponse(String _response) throws Exception {
                                 map.put("success", "The password has been changed and you can now " +
                                         "<a href=\"?from=validated&to=login\">login</a>.");
-                                response.getWriter().println(SimpleSimon.replace(servletContext, opName, map));
+                                response.getWriter().println(SimpleSimon.replace(servletContext, page, map));
                                 response.setStatus(HttpServletResponse.SC_OK);
                                 asyncContext.complete();
                                 String subject = "Password Change Notification";

@@ -79,7 +79,7 @@ public class NewEmailAddressBlade extends PostRequestBlade {
                                 myEmail = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
                                 map.put("myEmail", myEmail);
                                 map.put("success", "The email address for your account has been updated.");
-                                response.getWriter().println(SimpleSimon.replace(servletContext, opName, map));
+                                response.getWriter().println(SimpleSimon.replace(servletContext, page, map));
                                 response.setStatus(HttpServletResponse.SC_OK);
                                 asyncContext.complete();
                                 String subject = "Address change notification";

@@ -38,19 +38,19 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
         protected final AsyncContext asyncContext;
         protected final HttpServletRequest request;
         protected final HttpServletResponse response;
-        protected final String opName;
+        protected final String page;
         protected final String userId;
         protected String myEmail = null;
         protected AsyncRequestImpl asyncRequestImpl;
         protected AsyncResponseProcessor<Void> asyncResponseProcessor;
         protected Map<String, String> map;
 
-        public SR(String _opName, AsyncContext asyncContext, String userId) {
-            super(_opName);
+        public SR(String page, AsyncContext asyncContext, String userId) {
+            super(page);
             this.asyncContext = asyncContext;
             request = (HttpServletRequest) asyncContext.getRequest();
             response = (HttpServletResponse) asyncContext.getResponse();
-            opName = _opName;
+            this.page = page;
             this.userId = userId;
             if (userId != null) {
                 myEmail = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
@@ -66,6 +66,11 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
             asyncRequestImpl = _asyncRequestImpl;
             asyncResponseProcessor = _asyncResponseProcessor;
             map = new HashMap<>();
+            if ("home".equals(page)) {
+                map.put("home", "<a>home</a>");
+            } else {
+                map.put("home", "<a href=\"?from=" + page + "&to=home#rupa\">-home-</a>");
+            }
             if (userId != null) {
                 map.put("myEmail", myEmail);
                 map.put("guest", "<a>-guest-</a>");
@@ -73,7 +78,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
             _asyncRequestImpl.setExceptionHandler(new ExceptionHandler() {
                 @Override
                 public Object processException(Exception e) throws Exception {
-                    servletContext.log(opName, e);
+                    servletContext.log(page, e);
                     response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     asyncContext.complete();
                     _asyncResponseProcessor.processAsyncResponse(null);
@@ -84,7 +89,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
         }
 
         protected void finish() throws Exception {
-            response.getWriter().println(SimpleSimon.replace(servletContext, opName, map));
+            response.getWriter().println(SimpleSimon.replace(servletContext, page, map));
             response.setStatus(HttpServletResponse.SC_OK);
             asyncContext.complete();
             asyncResponseProcessor.processAsyncResponse(null);
