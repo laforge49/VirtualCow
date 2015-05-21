@@ -1,8 +1,6 @@
 package org.agilewiki.console.requests;
 
 import org.agilewiki.console.SimpleSimon;
-import org.agilewiki.console.User;
-import org.agilewiki.utils.immutable.FactoryRegistry;
 
 import javax.servlet.AsyncContext;
 
