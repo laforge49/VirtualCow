@@ -78,11 +78,6 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
             asyncResponseProcessor = _asyncResponseProcessor;
             map = new HashMap<>();
             setContext = setContext();
-            if ("home".equals(page)) {
-                map.put("home", "<a>home</a>");
-            } else {
-                map.put("home", "<a href=\"?from=" + page + "&to=home#rupa\">-home-</a>");
-            }
             if (userId != null) {
                 map.put("myEmail", myEmail);
                 map.put("guest", "<a>-guest-</a>");
@@ -109,6 +104,13 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
                 String timestampId = TimestampIds.generate(timestamp);
                 map.put("atTime", "at " + SimpleSimon.niceTime(timestampId));
                 longTimestamp = TimestampIds.timestamp(TimestampIds.generate(timestamp));
+            }
+            if ("home".equals(page)) {
+                map.put("home", "<a>home</a>");
+            } else if (timestamp == null) {
+                map.put("home", "<a href=\"?from=" + page + "&to=home#rupa\">-home-</a>");
+            } else {
+                map.put("home", "<a href=\"?from=" + page + "&to=home&timestamp=" + timestamp + "#rupa\">-home-</a>");
             }
             _asyncRequestImpl.setExceptionHandler(new ExceptionHandler() {
                 @Override
