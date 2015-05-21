@@ -1,6 +1,8 @@
 package org.agilewiki.console;
 
-import org.agilewiki.console.requests.*;
+import org.agilewiki.console.requests.PostRequestBlade;
+import org.agilewiki.console.requests.RequestBlade;
+import org.agilewiki.console.requests.UnRole;
 import org.agilewiki.console.requests.maintenance.*;
 import org.agilewiki.console.requests.profile.*;
 import org.agilewiki.console.transactions.ServletStartTransaction;
@@ -51,13 +53,9 @@ public class SimpleSimon extends HttpServlet {
     ChangeEmailAddressBlade changeEmailAddressBlade;
     ChangePasswordBlade changePasswordBlade;
     DeleteAccountBlade deleteAccountBlade;
-    ForgotPasswordBlade forgotPasswordBlade;
     HomeBlade homeBlade;
     JournalBlade journalBlade;
     NodeBlade nodeBlade;
-    LoginBlade loginBlade;
-    NewAccountBlade newAccountBlade;
-    ForgotBlade forgotBlade;
     LogoutBlade logoutBlade;
     NewEmailAddressBlade newEmailAddressBlade;
     PostBlade postBlade;
@@ -65,10 +63,6 @@ public class SimpleSimon extends HttpServlet {
     SecondaryKeysBlade secondaryKeysBlade;
     NodesBlade nodesBlade;
     InvLinksBlade invLinksBlade;
-    ValidatedBlade validatedBlade;
-    WelcomeBlade welcomeBlade;
-    AboutBlade aboutBlade;
-    ContactBlade contactBlade;
 
     Map<String, RequestBlade> guestRequests;
     Map<String, PostRequestBlade> guestPosts;
@@ -153,16 +147,8 @@ public class SimpleSimon extends HttpServlet {
             deleteAccountBlade = new DeleteAccountBlade(this);
             changePasswordBlade = new ChangePasswordBlade(this);
             changeEmailAddressBlade = new ChangeEmailAddressBlade(this);
-            validatedBlade = new ValidatedBlade(this);
-            forgotPasswordBlade = new ForgotPasswordBlade(this);
             newEmailAddressBlade = new NewEmailAddressBlade(this);
-            loginBlade = new LoginBlade(this);
-            forgotBlade = new ForgotBlade(this);
-            newAccountBlade = new NewAccountBlade(this);
             profileBlade = new ProfileBlade(this);
-            welcomeBlade = new WelcomeBlade(this);
-            aboutBlade = new AboutBlade(this);
-            contactBlade = new ContactBlade(this);
 
             guestRequests = new HashMap<String, RequestBlade>();
             guestRequests.put("home", homeBlade);
