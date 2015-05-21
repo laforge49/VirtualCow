@@ -101,6 +101,8 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
             if (timestamp != null) {
                 map.put("clearTime", "<a href=\"?from=" + page + "&to=" + page + setContext + "\">Clear selected time</a>");
                 map.put("setTimestamp", "&timestamp=" + timestamp + setContext);
+                map.put("hiddenTimestamp",
+                        "<input type=\"hidden\" name=\"timestamp\" value=\"" + timestamp + "\" />");
                 String timestampId = TimestampIds.generate(timestamp);
                 map.put("atTime", "at " + SimpleSimon.niceTime(timestampId));
                 longTimestamp = TimestampIds.timestamp(TimestampIds.generate(timestamp));
