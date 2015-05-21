@@ -6,11 +6,6 @@ import org.agilewiki.console.requests.PostRequestBlade;
 import org.agilewiki.console.requests.RequestBlade;
 import org.agilewiki.console.requests.WelcomeBlade;
 
-import javax.servlet.AsyncContext;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,10 +14,10 @@ import java.util.Map;
  */
 public class UnRole implements Role {
 
-    Map<String, RequestBlade> requests = new HashMap<String, RequestBlade>();
-    Map<String, PostRequestBlade> posts = new HashMap<String, PostRequestBlade>();
+    private Map<String, RequestBlade> requests = new HashMap<String, RequestBlade>();
+    private Map<String, PostRequestBlade> posts = new HashMap<String, PostRequestBlade>();
 
-    WelcomeBlade welcomeBlade;
+    private WelcomeBlade welcomeBlade;
 
     public UnRole(SimpleSimon simpleSimon)
             throws Exception {
@@ -52,36 +47,23 @@ public class UnRole implements Role {
         posts.put("forgotPassword", forgotPasswordBlade);
     }
 
+    @Override
     public RequestBlade requestBlade(String page) {
         return requests.get(page);
     }
 
+    @Override
     public PostRequestBlade postRequestBlade(String page) {
         return posts.get(page);
     }
 
-    public void dispatchGetRequest(HttpServletRequest request, String userId) {
-        String page = request.getParameter("to");
-        RequestBlade rb = requests.get(page);
-        if (rb == null) {
-            page = "welcome";
-            rb = welcomeBlade;
-        }
-        AsyncContext asyncContext = request.startAsync();
-        rb.get(page, asyncContext, userId);
+    @Override
+    public RequestBlade getDefaultRequestBlade() {
+        return welcomeBlade;
     }
 
-    public void dispatchPostRequest(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    String userId)
-            throws ServletException, IOException {
-        String page = request.getParameter("to");
-        PostRequestBlade rb = posts.get(page);
-        if (rb == null) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
-            return;
-        }
-        AsyncContext asyncContext = request.startAsync();
-        rb.post(page, asyncContext, userId);
+    @Override
+    public String getDefaultRequestPage() {
+        return "welcome";
     }
 }

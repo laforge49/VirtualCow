@@ -1,9 +1,7 @@
 package org.agilewiki.console;
 
-import org.agilewiki.console.maintenance.*;
-import org.agilewiki.console.profile.*;
-import org.agilewiki.console.requests.PostRequestBlade;
-import org.agilewiki.console.requests.RequestBlade;
+import org.agilewiki.console.maintenance.MaintenanceRole;
+import org.agilewiki.console.profile.ProfileRole;
 import org.agilewiki.console.transactions.ServletStartTransaction;
 import org.agilewiki.console.transactions.ServletStopTransaction;
 import org.agilewiki.console.unRole.UnRole;
@@ -12,7 +10,6 @@ import org.agilewiki.utils.ids.Timestamp;
 import org.agilewiki.utils.immutable.BaseRegistry;
 import org.agilewiki.utils.virtualcow.Db;
 
-import javax.servlet.AsyncContext;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -30,7 +27,6 @@ import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 public class SimpleSimon extends HttpServlet {
@@ -48,24 +44,9 @@ public class SimpleSimon extends HttpServlet {
 
     public MailOut mailOut;
 
-    UnRole unRole;
-
-    ChangeEmailAddressBlade changeEmailAddressBlade;
-    ChangePasswordBlade changePasswordBlade;
-    DeleteAccountBlade deleteAccountBlade;
-    HomeBlade homeBlade;
-    JournalBlade journalBlade;
-    NodeBlade nodeBlade;
-    LogoutBlade logoutBlade;
-    NewEmailAddressBlade newEmailAddressBlade;
-    PostBlade postBlade;
-    ProfileBlade profileBlade;
-    SecondaryKeysBlade secondaryKeysBlade;
-    NodesBlade nodesBlade;
-    InvLinksBlade invLinksBlade;
-
-    Map<String, RequestBlade> guestRequests;
-    Map<String, PostRequestBlade> guestPosts;
+    public UnRole unRole;
+    public ProfileRole profileRole;
+    public MaintenanceRole maintenanceRole;
 
     public static String readResource(ServletContext servletContext, String groupName, String pageName) throws IOException {
         if (groupName != null && groupName.length() > 0) {
@@ -132,45 +113,11 @@ public class SimpleSimon extends HttpServlet {
 
             try {
                 unRole = new UnRole(this);
+                profileRole = new ProfileRole(this);
+                maintenanceRole = new MaintenanceRole(this);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-
-            homeBlade = new HomeBlade(this);
-            postBlade = new PostBlade(this);
-            nodeBlade = new NodeBlade(this);
-            journalBlade = new JournalBlade(this);
-            secondaryKeysBlade = new SecondaryKeysBlade(this);
-            nodesBlade = new NodesBlade(this);
-            invLinksBlade = new InvLinksBlade(this);
-            logoutBlade = new LogoutBlade(this);
-            deleteAccountBlade = new DeleteAccountBlade(this);
-            changePasswordBlade = new ChangePasswordBlade(this);
-            changeEmailAddressBlade = new ChangeEmailAddressBlade(this);
-            newEmailAddressBlade = new NewEmailAddressBlade(this);
-            profileBlade = new ProfileBlade(this);
-
-            guestRequests = new HashMap<String, RequestBlade>();
-            guestRequests.put("home", homeBlade);
-            guestRequests.put("post", postBlade);
-            guestRequests.put("node", nodeBlade);
-            guestRequests.put("journal", journalBlade);
-            guestRequests.put("secondaryKeys", secondaryKeysBlade);
-            guestRequests.put("nodes", nodesBlade);
-            guestRequests.put("invLinks", invLinksBlade);
-            guestRequests.put("deleteAccount", deleteAccountBlade);
-            guestRequests.put("changePassword", changePasswordBlade);
-            guestRequests.put("changeEmailAddress", changeEmailAddressBlade);
-            guestRequests.put("newEmailAddress", newEmailAddressBlade);
-            guestRequests.put("profile", profileBlade);
-
-            guestPosts = new HashMap<String, PostRequestBlade>();
-            guestPosts.put("post", postBlade);
-            guestPosts.put("logout", logoutBlade);
-            guestPosts.put("deleteAccount", deleteAccountBlade);
-            guestPosts.put("changePassword", changePasswordBlade);
-            guestPosts.put("newEmailAddress", newEmailAddressBlade);
-            guestPosts.put("changeEmailAddress", changeEmailAddressBlade);
 
             ServletStartTransaction.update(db);
         } catch (Exception ex) {
@@ -190,7 +137,6 @@ public class SimpleSimon extends HttpServlet {
                       HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html");
-        String page = request.getParameter("to");
         String userIdToken = null;
         Cookie[] cookies = request.getCookies();
         if (cookies != null)
@@ -204,20 +150,11 @@ public class SimpleSimon extends HttpServlet {
         String userId = null;
         if (userIdToken != null)
             userId = Tokens.parse(db, userIdToken);
-        if (page == null)
-            page = "home";
         if (userId == null) {
             unRole.dispatchGetRequest(request, null);
-            return;
+        } else {
+            maintenanceRole.dispatchGetRequest(request, userId);
         }
-
-        RequestBlade rb = guestRequests.get(page);
-        if (rb == null) {
-            page = "home";
-            rb = homeBlade;
-        }
-        AsyncContext asyncContext = request.startAsync();
-        rb.get(page, asyncContext, userId);
     }
 
     public void doPost(HttpServletRequest request,
@@ -236,22 +173,12 @@ public class SimpleSimon extends HttpServlet {
         String userId = null;
         if (userIdToken != null)
             userId = Tokens.parse(db, userIdToken);
-        String page = request.getParameter("to");
 
-        PostRequestBlade pb = null;
         if (userId == null) {
             unRole.dispatchPostRequest(request, response, null);
-            return;
         } else {
-            pb = guestPosts.get(page);
+            maintenanceRole.dispatchPostRequest(request, response, userId);
         }
-        if (pb != null) {
-            AsyncContext asyncContext = request.startAsync();
-            pb.post(page, asyncContext, userId);
-            return;
-        }
-
-        response.sendError(HttpServletResponse.SC_NOT_FOUND);
     }
 
     public static String encode(String s, int indent, int mode) {

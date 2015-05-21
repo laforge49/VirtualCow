@@ -3,6 +3,7 @@ package org.agilewiki.console;
 import org.agilewiki.console.requests.PostRequestBlade;
 import org.agilewiki.console.requests.RequestBlade;
 
+import javax.servlet.AsyncContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,15 +17,40 @@ public interface Role {
 
     PostRequestBlade postRequestBlade(String page);
 
-    default void dispatchGetRequest(HttpServletRequest request, String userId) {
+    default RequestBlade getDefaultRequestBlade() {
         throw new UnsupportedOperationException();
+    }
+
+    default String getDefaultRequestPage() {
+        throw new UnsupportedOperationException();
+    }
+
+    default void dispatchGetRequest(HttpServletRequest request, String userId) {
+        String page = request.getParameter("to");
+        if (page == null) {
+            page = getDefaultRequestPage();
+        }
+        RequestBlade rb = requestBlade(page);
+        if (rb == null) {
+            page = getDefaultRequestPage();
+            rb = getDefaultRequestBlade();
+        }
+        AsyncContext asyncContext = request.startAsync();
+        rb.get(page, asyncContext, userId);
     }
 
     default void dispatchPostRequest(HttpServletRequest request,
                                      HttpServletResponse response,
                                      String userId)
             throws ServletException, IOException {
-        throw new UnsupportedOperationException();
+        String page = request.getParameter("to");
+        PostRequestBlade rb = postRequestBlade(page);
+        if (rb == null) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
+        AsyncContext asyncContext = request.startAsync();
+        rb.post(page, asyncContext, userId);
     }
 
     default String menu(HttpServletRequest request, String page, String setTimestamp) {
