@@ -1,7 +1,7 @@
 package org.agilewiki.console.profile;
 
+import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.SimpleSimon;
-import org.agilewiki.console.requests.RequestBlade;
 
 import javax.servlet.AsyncContext;
 

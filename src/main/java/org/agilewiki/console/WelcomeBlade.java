@@ -1,6 +1,4 @@
-package org.agilewiki.console.requests;
-
-import org.agilewiki.console.SimpleSimon;
+package org.agilewiki.console;
 
 import javax.servlet.AsyncContext;
 

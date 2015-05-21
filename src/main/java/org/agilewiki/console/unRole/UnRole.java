@@ -1,10 +1,6 @@
 package org.agilewiki.console.unRole;
 
-import org.agilewiki.console.Role;
-import org.agilewiki.console.SimpleSimon;
-import org.agilewiki.console.requests.PostRequestBlade;
-import org.agilewiki.console.requests.RequestBlade;
-import org.agilewiki.console.requests.WelcomeBlade;
+import org.agilewiki.console.*;
 
 import java.util.HashMap;
 import java.util.Map;

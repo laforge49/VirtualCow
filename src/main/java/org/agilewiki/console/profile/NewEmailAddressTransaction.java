@@ -1,7 +1,7 @@
 package org.agilewiki.console.profile;
 
 import org.agilewiki.console.User;
-import org.agilewiki.console.transactions.VCTransaction;
+import org.agilewiki.console.VCTransaction;
 import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.collections.MapNode;

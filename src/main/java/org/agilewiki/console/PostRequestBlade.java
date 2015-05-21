@@ -1,6 +1,5 @@
-package org.agilewiki.console.requests;
+package org.agilewiki.console;
 
-import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.profile.LogoutTransaction;
 
 import javax.servlet.AsyncContext;

@@ -1,6 +1,5 @@
-package org.agilewiki.console.transactions;
+package org.agilewiki.console;
 
-import org.agilewiki.console.User;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 

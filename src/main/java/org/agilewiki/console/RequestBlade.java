@@ -1,9 +1,5 @@
-package org.agilewiki.console.requests;
+package org.agilewiki.console;
 
-import org.agilewiki.console.MailOut;
-import org.agilewiki.console.SimpleSimon;
-import org.agilewiki.console.TimestampIds;
-import org.agilewiki.console.User;
 import org.agilewiki.jactor2.core.blades.NonBlockingBladeBase;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.jactor2.core.messages.ExceptionHandler;

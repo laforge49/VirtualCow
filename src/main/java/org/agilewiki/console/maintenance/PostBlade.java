@@ -1,9 +1,9 @@
 package org.agilewiki.console.maintenance;
 
 import org.agilewiki.console.NameIds;
+import org.agilewiki.console.PostRequestBlade;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.User;
-import org.agilewiki.console.requests.PostRequestBlade;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.utils.immutable.collections.MapNode;
 

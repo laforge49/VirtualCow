@@ -2,7 +2,7 @@ package org.agilewiki.console.profile;
 
 import org.agilewiki.console.Delete;
 import org.agilewiki.console.NameIds;
-import org.agilewiki.console.transactions.VCTransaction;
+import org.agilewiki.console.VCTransaction;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
