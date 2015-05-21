@@ -46,6 +46,8 @@ public class SimpleSimon extends HttpServlet {
 
     public MailOut mailOut;
 
+    UnRole unRole;
+
     ChangeEmailAddressBlade changeEmailAddressBlade;
     ChangePasswordBlade changePasswordBlade;
     DeleteAccountBlade deleteAccountBlade;
@@ -68,9 +70,7 @@ public class SimpleSimon extends HttpServlet {
     AboutBlade aboutBlade;
     ContactBlade contactBlade;
 
-    Map<String, RequestBlade> unknownRequests;
     Map<String, RequestBlade> guestRequests;
-    Map<String, PostRequestBlade> unknownPosts;
     Map<String, PostRequestBlade> guestPosts;
 
     public static String readResource(ServletContext servletContext, String groupName, String pageName) throws IOException {
@@ -136,6 +136,12 @@ public class SimpleSimon extends HttpServlet {
 
             mailOut = new MailOut();
 
+            try {
+                unRole = new UnRole(this);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
             homeBlade = new HomeBlade(this);
             postBlade = new PostBlade(this);
             nodeBlade = new NodeBlade(this);
@@ -157,23 +163,6 @@ public class SimpleSimon extends HttpServlet {
             welcomeBlade = new WelcomeBlade(this);
             aboutBlade = new AboutBlade(this);
             contactBlade = new ContactBlade(this);
-
-            unknownRequests = new HashMap<String, RequestBlade>();
-            unknownRequests.put("welcome", welcomeBlade);
-            unknownRequests.put("about", aboutBlade);
-            unknownRequests.put("contact", contactBlade);
-            unknownRequests.put("login", loginBlade);
-            unknownRequests.put("newAccount", newAccountBlade);
-            unknownRequests.put("validated", validatedBlade);
-            unknownRequests.put("forgot", forgotBlade);
-            unknownRequests.put("forgotPassword", forgotPasswordBlade);
-
-            unknownPosts = new HashMap<String, PostRequestBlade>();
-            unknownPosts.put("login", loginBlade);
-            unknownPosts.put("newAccount", newAccountBlade);
-            unknownPosts.put("validated", validatedBlade);
-            unknownPosts.put("forgot", forgotBlade);
-            unknownPosts.put("forgotPassword", forgotPasswordBlade);
 
             guestRequests = new HashMap<String, RequestBlade>();
             guestRequests.put("home", homeBlade);
@@ -232,13 +221,7 @@ public class SimpleSimon extends HttpServlet {
         if (page == null)
             page = "home";
         if (userId == null) {
-            RequestBlade rb = unknownRequests.get(page);
-            if (rb == null) {
-                page = "welcome";
-                rb = welcomeBlade;
-            }
-            AsyncContext asyncContext = request.startAsync();
-            rb.get(page, asyncContext, userId);
+            unRole.dispatchGetRequest(request, null);
             return;
         }
 
@@ -271,7 +254,8 @@ public class SimpleSimon extends HttpServlet {
 
         PostRequestBlade pb = null;
         if (userId == null) {
-            pb = unknownPosts.get(page);
+            unRole.dispatchPostRequest(request, response, null);
+            return;
         } else {
             pb = guestPosts.get(page);
         }
