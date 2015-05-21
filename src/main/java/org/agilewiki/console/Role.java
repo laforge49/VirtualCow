@@ -50,7 +50,7 @@ public interface Role {
         rb.post(page, asyncContext, userId, this);
     }
 
-    default String menu(HttpServletRequest request, String page, String setTimestamp) {
-        throw new UnsupportedOperationException();
+    default String menu(HttpServletRequest request, String page, String setTimestamp, String timestamp) {
+        return "";
     }
 }
