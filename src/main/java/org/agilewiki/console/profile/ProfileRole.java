@@ -47,6 +47,11 @@ public class ProfileRole implements Role {
     }
 
     @Override
+    public String roleName() {
+        return "profile";
+    }
+
+    @Override
     public RequestBlade requestBlade(String page) {
         return requests.get(page);
     }

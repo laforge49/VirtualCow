@@ -52,6 +52,11 @@ public class MaintenanceRole implements Role {
     }
 
     @Override
+    public String roleName() {
+        return "maintenance";
+    }
+
+    @Override
     public RequestBlade requestBlade(String page) {
         RequestBlade rb = requests.get(page);
         if (rb == null)
@@ -78,7 +83,11 @@ public class MaintenanceRole implements Role {
     }
 
     @Override
-    public String menu(HttpServletRequest request, String page, String setTimestamp, String timestamp) {
+    public String menu(HttpServletRequest request,
+                       String page,
+                       String setTimestamp,
+                       String timestamp,
+                       String setRole) {
         StringBuffer home = new StringBuffer();
         home.append("<a>Maintenance &#9660;</a>\n");
         home.append("<ul class=\"sub-menu\">\n");
@@ -91,6 +100,7 @@ public class MaintenanceRole implements Role {
             home.append(page);
             home.append("&to=home");
             home.append(setTimestamp);
+            home.append(setRole);
             home.append("#rupa\">\n");
         }
         home.append("Home\n");
@@ -105,6 +115,7 @@ public class MaintenanceRole implements Role {
             home.append(page);
             home.append("&to=journal");
             home.append(setTimestamp);
+            home.append(setRole);
             home.append("#rupa\">\n");
         }
         home.append("Journal\n");
@@ -120,6 +131,7 @@ public class MaintenanceRole implements Role {
         home.append(page);
         home.append("&to=secondaryKeys&secondaryType=subject&keyPrefix=$v");
         home.append(setTimestamp);
+        home.append(setRole);
         home.append("#rupa\">\n");
         home.append("Subjects\n");
         home.append("</a>\n");
@@ -130,6 +142,7 @@ public class MaintenanceRole implements Role {
         home.append(page);
         home.append("&to=secondaryKeys&secondaryType=email&keyPrefix=$v");
         home.append(setTimestamp);
+        home.append(setRole);
         home.append("#rupa\">\n");
         home.append("Email Addresses\n");
         home.append("</a>\n");
@@ -140,6 +153,7 @@ public class MaintenanceRole implements Role {
         home.append(page);
         home.append("&to=secondaryKeys&secondaryType=userType&keyPrefix=$n");
         home.append(setTimestamp);
+        home.append(setRole);
         home.append("#rupa\">\n");
         home.append("Roles\n");
         home.append("</a>\n");
@@ -157,6 +171,7 @@ public class MaintenanceRole implements Role {
         home.append(page);
         home.append("&to=targets&linkType=users");
         home.append(setTimestamp);
+        home.append(setRole);
         home.append("#rupa\">\n");
         home.append("Users\n");
         home.append("</a>\n");
@@ -167,6 +182,7 @@ public class MaintenanceRole implements Role {
         home.append(page);
         home.append("&to=sources&linkType=users");
         home.append(setTimestamp);
+        home.append(setRole);
         home.append("#rupa\">\n");
         home.append("Owned\n");
         home.append("</a>\n");
@@ -183,6 +199,7 @@ public class MaintenanceRole implements Role {
                 home.append("<a href=\"?from=");
                 home.append(page);
                 home.append("&to=post");
+                home.append(setRole);
                 home.append("#rupa\">\n");
             }
             home.append("Post\n");

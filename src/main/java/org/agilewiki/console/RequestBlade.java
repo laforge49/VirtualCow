@@ -112,7 +112,13 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
                 longTimestamp = TimestampIds.timestamp(TimestampIds.generate(timestamp));
             }
 
-            map.put("home", role.menu(request, page, setTimestamp, timestamp));
+            String roleName = role.roleName();
+            String setRole = "&role=" + roleName;
+            map.put("setRole", setRole);
+            map.put("hiddenRole",
+                    "<input type=\"hidden\" name=\"role\" value=\"" + roleName + "\" />");
+
+            map.put("home", role.menu(request, page, setTimestamp, timestamp, setRole));
 
             _asyncRequestImpl.setExceptionHandler(new ExceptionHandler() {
                 @Override

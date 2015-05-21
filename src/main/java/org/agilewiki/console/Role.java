@@ -10,17 +10,15 @@ import java.io.IOException;
  * A command set and menus.
  */
 public interface Role {
+    String roleName();
+
     RequestBlade requestBlade(String page);
 
     PostRequestBlade postRequestBlade(String page);
 
-    default RequestBlade getDefaultRequestBlade() {
-        throw new UnsupportedOperationException();
-    }
+    RequestBlade getDefaultRequestBlade();
 
-    default String getDefaultRequestPage() {
-        throw new UnsupportedOperationException();
-    }
+    String getDefaultRequestPage();
 
     default void dispatchGetRequest(HttpServletRequest request, String userId) {
         String page = request.getParameter("to");
@@ -50,7 +48,13 @@ public interface Role {
         rb.post(page, asyncContext, userId, this);
     }
 
-    default String menu(HttpServletRequest request, String page, String setTimestamp, String timestamp) {
+    default String menu(HttpServletRequest request,
+                        String page,
+                        String setTimestamp,
+                        String timestamp,
+                        String setRole) {
         return "";
     }
+
+
 }

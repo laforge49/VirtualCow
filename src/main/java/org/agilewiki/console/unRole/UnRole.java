@@ -44,6 +44,11 @@ public class UnRole implements Role {
     }
 
     @Override
+    public String roleName() {
+        return "unRole";
+    }
+
+    @Override
     public RequestBlade requestBlade(String page) {
         return requests.get(page);
     }
