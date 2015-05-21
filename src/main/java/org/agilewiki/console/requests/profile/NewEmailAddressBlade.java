@@ -1,8 +1,9 @@
-package org.agilewiki.console.requests;
+package org.agilewiki.console.requests.profile;
 
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.Tokens;
 import org.agilewiki.console.User;
+import org.agilewiki.console.requests.PostRequestBlade;
 import org.agilewiki.console.transactions.NewEmailAddressTransaction;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.utils.immutable.FactoryRegistry;
@@ -19,6 +20,11 @@ public class NewEmailAddressBlade extends PostRequestBlade {
     public NewEmailAddressBlade(SimpleSimon simpleSimon) throws Exception {
         super(simpleSimon);
         db.registerTransaction(NewEmailAddressTransaction.NAME, NewEmailAddressTransaction.class);
+    }
+
+    @Override
+    protected String groupName() {
+        return "profile";
     }
 
     @Override
@@ -79,7 +85,7 @@ public class NewEmailAddressBlade extends PostRequestBlade {
                                 myEmail = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
                                 map.put("myEmail", myEmail);
                                 map.put("success", "The email address for your account has been updated.");
-                                response.getWriter().println(SimpleSimon.replace(servletContext, page, map));
+                                println();
                                 response.setStatus(HttpServletResponse.SC_OK);
                                 asyncContext.complete();
                                 String subject = "Address change notification";

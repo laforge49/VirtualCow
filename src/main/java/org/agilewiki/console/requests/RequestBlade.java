@@ -35,6 +35,10 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
         this.mailOut = simpleSimon.mailOut;
     }
 
+    protected String groupName() {
+        return null;
+    }
+
     public abstract void get(String page, AsyncContext asyncContext, String userId);
 
     protected abstract class SR extends ASig {
@@ -236,8 +240,12 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
             process();
         }
 
+        protected void println() throws Exception {
+            response.getWriter().println(SimpleSimon.replace(servletContext, groupName(), page, map));
+        }
+
         protected void finish() throws Exception {
-            response.getWriter().println(SimpleSimon.replace(servletContext, page, map));
+            println();
             response.setStatus(HttpServletResponse.SC_OK);
             asyncContext.complete();
             asyncResponseProcessor.processAsyncResponse(null);

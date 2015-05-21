@@ -1,6 +1,8 @@
 package org.agilewiki.console;
 
 import org.agilewiki.console.requests.*;
+import org.agilewiki.console.requests.maintenance.*;
+import org.agilewiki.console.requests.profile.*;
 import org.agilewiki.console.transactions.ServletStartTransaction;
 import org.agilewiki.console.transactions.ServletStopTransaction;
 import org.agilewiki.jactor2.core.impl.Plant;
@@ -71,7 +73,10 @@ public class SimpleSimon extends HttpServlet {
     Map<String, PostRequestBlade> unknownPosts;
     Map<String, PostRequestBlade> guestPosts;
 
-    public static String readResource(ServletContext servletContext, String pageName) throws IOException {
+    public static String readResource(ServletContext servletContext, String groupName, String pageName) throws IOException {
+        if (groupName != null && groupName.length() > 0) {
+            pageName = groupName + "/" + pageName;
+        }
         InputStream is = servletContext.getResourceAsStream("/WEB-INF/pages/" + pageName + ".html");
         InputStreamReader isr = new InputStreamReader(is, utf8);
         StringBuilder sb = new StringBuilder();
@@ -86,9 +91,10 @@ public class SimpleSimon extends HttpServlet {
     }
 
     public static String replace(ServletContext servletContext,
+                                 String groupName,
                                  String pageName,
                                  Map<String, String> sub) throws IOException {
-        String t = readResource(servletContext, pageName);
+        String t = readResource(servletContext, groupName, pageName);
         int i = 0;
         StringBuilder sb = new StringBuilder();
         while (i < t.length()) {

@@ -1,22 +1,27 @@
-package org.agilewiki.console.requests;
+package org.agilewiki.console.requests.maintenance;
 
 import org.agilewiki.console.SimpleSimon;
+import org.agilewiki.console.requests.RequestBlade;
 
 import javax.servlet.AsyncContext;
 
 /**
- * Change the email address of the user.
+ * Request for home page.
  */
-public class ProfileBlade extends RequestBlade {
-    public ProfileBlade(SimpleSimon simpleSimon) throws Exception {
+public class HomeBlade extends RequestBlade {
+    public HomeBlade(SimpleSimon simpleSimon) throws Exception {
         super(simpleSimon);
     }
 
+    @Override
     public void get(String page, AsyncContext asyncContext, String userId) {
         new SR(page, asyncContext, userId) {
             @Override
             protected void process()
                     throws Exception {
+                if (timestamp == null) {
+                    map.put("post", "post");
+                }
                 finish();
             }
         }.signal();

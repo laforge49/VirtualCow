@@ -1,8 +1,9 @@
-package org.agilewiki.console.requests;
+package org.agilewiki.console.requests.profile;
 
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.Tokens;
 import org.agilewiki.console.User;
+import org.agilewiki.console.requests.PostRequestBlade;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
@@ -15,6 +16,11 @@ import java.security.NoSuchAlgorithmException;
 public class ChangeEmailAddressBlade extends PostRequestBlade {
     public ChangeEmailAddressBlade(SimpleSimon simpleSimon) throws Exception {
         super(simpleSimon);
+    }
+
+    @Override
+    protected String groupName() {
+        return "profile";
     }
 
     @Override

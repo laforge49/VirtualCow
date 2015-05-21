@@ -1,8 +1,9 @@
-package org.agilewiki.console.requests;
+package org.agilewiki.console.requests.profile;
 
 import org.agilewiki.console.NameIds;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.User;
+import org.agilewiki.console.requests.PostRequestBlade;
 import org.agilewiki.console.transactions.DeleteTransaction;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.utils.immutable.FactoryRegistry;
@@ -18,6 +19,11 @@ public class DeleteAccountBlade extends PostRequestBlade {
     public DeleteAccountBlade(SimpleSimon simpleSimon) throws Exception {
         super(simpleSimon);
         db.registerTransaction(DeleteTransaction.NAME, DeleteTransaction.class);
+    }
+
+    @Override
+    protected String groupName() {
+        return "profile";
     }
 
     @Override
