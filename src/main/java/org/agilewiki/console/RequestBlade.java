@@ -81,6 +81,13 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
             asyncResponseProcessor = _asyncResponseProcessor;
             map = new HashMap<>();
             setContext = setContext();
+
+            String roleName = role.roleName();
+            String setRole = "&role=" + roleName;
+            map.put("setRole", setRole);
+            map.put("hiddenRole",
+                    "<input type=\"hidden\" name=\"role\" value=\"" + roleName + "\" />");
+
             if (userId != null) {
                 map.put("myEmail", myEmail);
                 map.put("guest", "<a>-guest-</a>");
@@ -102,7 +109,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
                 timestamp = TimestampIds.value(TimestampIds.timestampId((time << 10) + 1023));
             }
             if (timestamp != null) {
-                map.put("clearTime", "<a href=\"?from=" + page + "&to=" + page + setContext + "\">Clear selected time</a>");
+                map.put("clearTime", "<a href=\"?from=" + page + "&to=" + page + setContext + setRole + "\">Return to Present Time</a>");
                 setTimestamp = "&timestamp=" + timestamp;
                 map.put("setTimestamp", setTimestamp + setContext);
                 map.put("hiddenTimestamp",
@@ -111,12 +118,6 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
                 map.put("atTime", "at " + SimpleSimon.niceTime(timestampId));
                 longTimestamp = TimestampIds.timestamp(TimestampIds.generate(timestamp));
             }
-
-            String roleName = role.roleName();
-            String setRole = "&role=" + roleName;
-            map.put("setRole", setRole);
-            map.put("hiddenRole",
-                    "<input type=\"hidden\" name=\"role\" value=\"" + roleName + "\" />");
 
             map.put("home", role.menu(request, page, setTimestamp, timestamp, setRole));
 

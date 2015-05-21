@@ -25,6 +25,7 @@ import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 public class SimpleSimon extends HttpServlet {
@@ -42,6 +43,7 @@ public class SimpleSimon extends HttpServlet {
 
     public MailOut mailOut;
 
+    public Map<String, Role> roles = new HashMap<String, Role>();
     public UnRole unRole;
     public ProfileRole profileRole;
     public MaintenanceRole maintenanceRole;
@@ -111,8 +113,11 @@ public class SimpleSimon extends HttpServlet {
 
             try {
                 unRole = new UnRole(this);
+                roles.put(unRole.roleName(), unRole);
                 profileRole = new ProfileRole(this);
+                roles.put(profileRole.roleName(), profileRole);
                 maintenanceRole = new MaintenanceRole(this);
+                roles.put(maintenanceRole.roleName(), maintenanceRole);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

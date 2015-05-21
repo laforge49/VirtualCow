@@ -44,6 +44,7 @@
                 <form method="GET">
                     <input type="hidden" name="from" value="journal"/>
                     <input type="hidden" name="to" value="journal"/>
+                    {{hiddenRole}}
                     Select Date: <input type="text" name="date" id="datepicker"/>
                     <input type="submit" value="Go"/>
                 </form>
@@ -112,7 +113,7 @@
 
 <div>
     <div style="float:right">
-        <a href="?from=journal&to=journal{{setStartingAt}}{{setTimestamp}}">{{more}}</a>
+        <a href="?from=journal&to=journal{{setStartingAt}}{{setTimestamp}}{{setRole}}">{{more}}</a>
     </div>
     <div>
         {{journal}}
