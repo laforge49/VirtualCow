@@ -48,6 +48,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
         protected AsyncResponseProcessor<Void> asyncResponseProcessor;
         protected Map<String, String> map;
         protected String timestamp;
+        protected String setTimestamp = "";
         protected String dateInString;
         protected long longTimestamp = FactoryRegistry.MAX_TIMESTAMP;
         protected String setContext;
@@ -100,20 +101,34 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
             }
             if (timestamp != null) {
                 map.put("clearTime", "<a href=\"?from=" + page + "&to=" + page + setContext + "\">Clear selected time</a>");
-                map.put("setTimestamp", "&timestamp=" + timestamp + setContext);
+                setTimestamp = "&timestamp=" + timestamp;
+                map.put("setTimestamp", setTimestamp + setContext);
                 map.put("hiddenTimestamp",
                         "<input type=\"hidden\" name=\"timestamp\" value=\"" + timestamp + "\" />");
                 String timestampId = TimestampIds.generate(timestamp);
                 map.put("atTime", "at " + SimpleSimon.niceTime(timestampId));
                 longTimestamp = TimestampIds.timestamp(TimestampIds.generate(timestamp));
             }
+
+            StringBuffer home = new StringBuffer();
+            home.append("<a>Maintenance &#9660;</a>\n");
+            home.append("<ul class=\"sub-menu\">");
+            home.append("<li>");
             if ("home".equals(page)) {
-                map.put("home", "<a>home</a>");
-            } else if (timestamp == null) {
-                map.put("home", "<a href=\"?from=" + page + "&to=home#rupa\">-home-</a>");
+                home.append("<a>");
             } else {
-                map.put("home", "<a href=\"?from=" + page + "&to=home&timestamp=" + timestamp + "#rupa\">-home-</a>");
+                home.append("<a href=\"?from=");
+                home.append(page);
+                home.append("&to=home");
+                home.append(setTimestamp);
+                home.append("#rupa\">");
             }
+            home.append("Home");
+            home.append("</a>");
+            home.append("</li>");
+            home.append("</ul>");
+            map.put("home", home.toString());
+
             _asyncRequestImpl.setExceptionHandler(new ExceptionHandler() {
                 @Override
                 public Object processException(Exception e) throws Exception {
