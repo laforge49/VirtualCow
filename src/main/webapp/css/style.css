@@ -57,7 +57,7 @@ body, div, h1, h2, h3, h4, h5, h6, p, ul, img {margin:0px; padding:0px; }
     transition:all linear 0.15s;
     color: #f8f0d5;
 }
- 
+
 .menu li:hover > a, .menu .current-item > a {
     text-decoration:none;
     color:#8e342c;

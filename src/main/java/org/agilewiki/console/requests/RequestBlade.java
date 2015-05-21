@@ -112,21 +112,115 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
 
             StringBuffer home = new StringBuffer();
             home.append("<a>Maintenance &#9660;</a>\n");
-            home.append("<ul class=\"sub-menu\">");
-            home.append("<li>");
+            home.append("<ul class=\"sub-menu\">\n");
+
+            home.append("<li>\n");
             if ("home".equals(page)) {
-                home.append("<a>");
+                home.append("<a>\n");
             } else {
                 home.append("<a href=\"?from=");
                 home.append(page);
                 home.append("&to=home");
                 home.append(setTimestamp);
-                home.append("#rupa\">");
+                home.append("#rupa\">\n");
             }
-            home.append("Home");
-            home.append("</a>");
-            home.append("</li>");
-            home.append("</ul>");
+            home.append("Home\n");
+            home.append("</a>\n");
+            home.append("</li>\n");
+
+            home.append("<li>\n");
+            if ("journal".equals(page)) {
+                home.append("<a>\n");
+            } else {
+                home.append("<a href=\"?from=");
+                home.append(page);
+                home.append("&to=journal");
+                home.append(setTimestamp);
+                home.append("#rupa\">\n");
+            }
+            home.append("Journal\n");
+            home.append("</a>\n");
+            home.append("</li>\n");
+
+            home.append("<li>\n");
+            home.append("<a>Secondary Keys:</a>\n");
+            home.append("<ul>\n");
+
+            home.append("<li>\n");
+            home.append("<a href=\"?from=");
+            home.append(page);
+            home.append("&to=secondaryKeys&secondaryType=subject&keyPrefix=$v");
+            home.append(setTimestamp);
+            home.append("#rupa\">\n");
+            home.append("Subjects\n");
+            home.append("</a>\n");
+            home.append("</li>\n");
+
+            home.append("<li>\n");
+            home.append("<a href=\"?from=");
+            home.append(page);
+            home.append("&to=secondaryKeys&secondaryType=email&keyPrefix=$v");
+            home.append(setTimestamp);
+            home.append("#rupa\">\n");
+            home.append("Email Addresses\n");
+            home.append("</a>\n");
+            home.append("</li>\n");
+
+            home.append("<li>\n");
+            home.append("<a href=\"?from=");
+            home.append(page);
+            home.append("&to=secondaryKeys&secondaryType=userType&keyPrefix=$n");
+            home.append(setTimestamp);
+            home.append("#rupa\">\n");
+            home.append("Roles\n");
+            home.append("</a>\n");
+            home.append("</li>\n");
+
+            home.append("</ul>\n");
+            home.append("</li>\n");
+
+            home.append("<li>\n");
+            home.append("<a>User Links:</a>\n");
+            home.append("<ul>\n");
+
+            home.append("<li>\n");
+            home.append("<a href=\"?from=");
+            home.append(page);
+            home.append("&to=targets&linkType=users");
+            home.append(setTimestamp);
+            home.append("#rupa\">\n");
+            home.append("Users\n");
+            home.append("</a>\n");
+            home.append("</li>\n");
+
+            home.append("<li>\n");
+            home.append("<a href=\"?from=");
+            home.append(page);
+            home.append("&to=sources&linkType=users");
+            home.append(setTimestamp);
+            home.append("#rupa\">\n");
+            home.append("Owned\n");
+            home.append("</a>\n");
+            home.append("</li>\n");
+
+            home.append("</ul>\n");
+            home.append("</li>\n");
+
+            if (timestamp == null) {
+                home.append("<li>\n");
+                if ("post".equals(page)) {
+                    home.append("<a>\n");
+                } else {
+                    home.append("<a href=\"?from=");
+                    home.append(page);
+                    home.append("&to=post");
+                    home.append("#rupa\">\n");
+                }
+                home.append("Post\n");
+                home.append("</a>\n");
+                home.append("</li>\n");
+            }
+            home.append("</ul>\n");
             map.put("home", home.toString());
 
             _asyncRequestImpl.setExceptionHandler(new ExceptionHandler() {
