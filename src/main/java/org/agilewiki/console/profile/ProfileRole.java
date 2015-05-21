@@ -15,6 +15,7 @@ public class ProfileRole implements Role {
 
     private Map<String, RequestBlade> requests = new HashMap<String, RequestBlade>();
     private Map<String, PostRequestBlade> posts = new HashMap<String, PostRequestBlade>();
+    private ProfileBlade profileBlade;
 
     public ProfileRole(SimpleSimon simpleSimon)
             throws Exception {
@@ -23,7 +24,6 @@ public class ProfileRole implements Role {
         DeleteAccountBlade deleteAccountBlade;
         LogoutBlade logoutBlade;
         NewEmailAddressBlade newEmailAddressBlade;
-        ProfileBlade profileBlade;
 
         logoutBlade = new LogoutBlade(simpleSimon);
         deleteAccountBlade = new DeleteAccountBlade(simpleSimon);
@@ -54,5 +54,15 @@ public class ProfileRole implements Role {
     @Override
     public PostRequestBlade postRequestBlade(String page) {
         return posts.get(page);
+    }
+
+    @Override
+    public RequestBlade getDefaultRequestBlade() {
+        return profileBlade;
+    }
+
+    @Override
+    public String getDefaultRequestPage() {
+        return "profile";
     }
 }
