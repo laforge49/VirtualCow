@@ -26,6 +26,11 @@ public class LogoutBlade extends PostRequestBlade {
     }
 
     @Override
+    public void get(String page, AsyncContext asyncContext, String userId) {
+        post(page, asyncContext, userId);
+    }
+
+    @Override
     public void post(String page, AsyncContext asyncContext, String userId) {
         new SR(page, asyncContext, userId) {
             @Override

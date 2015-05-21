@@ -32,6 +32,7 @@ public class ProfileRole implements Role {
         newEmailAddressBlade = new NewEmailAddressBlade(simpleSimon);
         profileBlade = new ProfileBlade(simpleSimon);
 
+        requests.put("logout", logoutBlade);
         requests.put("deleteAccount", deleteAccountBlade);
         requests.put("changePassword", changePasswordBlade);
         requests.put("changeEmailAddress", changeEmailAddressBlade);
