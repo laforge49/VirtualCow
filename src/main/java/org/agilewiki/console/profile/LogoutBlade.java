@@ -1,9 +1,6 @@
 package org.agilewiki.console.profile;
 
-import org.agilewiki.console.NameIds;
-import org.agilewiki.console.PostRequestBlade;
-import org.agilewiki.console.SimpleSimon;
-import org.agilewiki.console.User;
+import org.agilewiki.console.*;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.MapNode;
@@ -26,13 +23,13 @@ public class LogoutBlade extends PostRequestBlade {
     }
 
     @Override
-    public void get(String page, AsyncContext asyncContext, String userId) {
-        post(page, asyncContext, userId);
+    public void get(String page, AsyncContext asyncContext, String userId, Role role) {
+        post(page, asyncContext, userId, role);
     }
 
     @Override
-    public void post(String page, AsyncContext asyncContext, String userId) {
-        new SR(page, asyncContext, userId) {
+    public void post(String page, AsyncContext asyncContext, String userId, Role role) {
+        new SR(page, asyncContext, userId, role) {
             @Override
             protected void process()
                     throws Exception {

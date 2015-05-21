@@ -1,6 +1,7 @@
 package org.agilewiki.console.profile;
 
 import org.agilewiki.console.RequestBlade;
+import org.agilewiki.console.Role;
 import org.agilewiki.console.SimpleSimon;
 
 import javax.servlet.AsyncContext;
@@ -18,8 +19,9 @@ public class ProfileBlade extends RequestBlade {
         return "profile";
     }
 
-    public void get(String page, AsyncContext asyncContext, String userId) {
-        new SR(page, asyncContext, userId) {
+    @Override
+    public void get(String page, AsyncContext asyncContext, String userId, Role role) {
+        new SR(page, asyncContext, userId, role) {
             @Override
             protected void process()
                     throws Exception {

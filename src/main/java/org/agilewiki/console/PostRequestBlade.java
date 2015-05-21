@@ -16,7 +16,7 @@ public abstract class PostRequestBlade extends RequestBlade {
     }
 
     @Override
-    public void get(String page, AsyncContext asyncContext, String userId) {
+    public void get(String page, AsyncContext asyncContext, String userId, Role role) {
         try {
             ((HttpServletResponse) asyncContext.getResponse()).
                     sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -25,5 +25,5 @@ public abstract class PostRequestBlade extends RequestBlade {
         asyncContext.complete();
     }
 
-    public abstract void post(String page, AsyncContext asyncContext, String userId);
+    public abstract void post(String page, AsyncContext asyncContext, String userId, Role role);
 }

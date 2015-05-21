@@ -33,7 +33,7 @@ public interface Role {
             rb = getDefaultRequestBlade();
         }
         AsyncContext asyncContext = request.startAsync();
-        rb.get(page, asyncContext, userId);
+        rb.get(page, asyncContext, userId, this);
     }
 
     default void dispatchPostRequest(HttpServletRequest request,
@@ -47,7 +47,7 @@ public interface Role {
             return;
         }
         AsyncContext asyncContext = request.startAsync();
-        rb.post(page, asyncContext, userId);
+        rb.post(page, asyncContext, userId, this);
     }
 
     default String menu(HttpServletRequest request, String page, String setTimestamp) {

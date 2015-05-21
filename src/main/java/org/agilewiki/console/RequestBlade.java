@@ -35,7 +35,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
         return null;
     }
 
-    public abstract void get(String page, AsyncContext asyncContext, String userId);
+    public abstract void get(String page, AsyncContext asyncContext, String userId, Role role);
 
     protected abstract class SR extends ASig {
         protected final AsyncContext asyncContext;
@@ -53,7 +53,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
         protected long longTimestamp = FactoryRegistry.MAX_TIMESTAMP;
         protected String setContext;
 
-        public SR(String page, AsyncContext asyncContext, String userId) {
+        public SR(String page, AsyncContext asyncContext, String userId, Role role) {
             super(page);
             this.asyncContext = asyncContext;
             request = (HttpServletRequest) asyncContext.getRequest();

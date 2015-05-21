@@ -1,9 +1,6 @@
 package org.agilewiki.console.unRole;
 
-import org.agilewiki.console.PostRequestBlade;
-import org.agilewiki.console.SimpleSimon;
-import org.agilewiki.console.Tokens;
-import org.agilewiki.console.User;
+import org.agilewiki.console.*;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.MapNode;
@@ -22,8 +19,8 @@ public class ForgotPasswordBlade extends PostRequestBlade {
     }
 
     @Override
-    public void get(String page, AsyncContext asyncContext, String userId) {
-        new SR(page, asyncContext, userId) {
+    public void get(String page, AsyncContext asyncContext, String userId, Role role) {
+        new SR(page, asyncContext, userId, role) {
             @Override
             protected void process()
                     throws Exception {
@@ -37,8 +34,8 @@ public class ForgotPasswordBlade extends PostRequestBlade {
     }
 
     @Override
-    public void post(String page, AsyncContext asyncContext, String userId) {
-        new SR(page, asyncContext, userId) {
+    public void post(String page, AsyncContext asyncContext, String userId, Role role) {
+        new SR(page, asyncContext, userId, role) {
             @Override
             protected void process()
                     throws Exception {

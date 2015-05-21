@@ -1,9 +1,6 @@
 package org.agilewiki.console.maintenance;
 
-import org.agilewiki.console.NameIds;
-import org.agilewiki.console.RequestBlade;
-import org.agilewiki.console.SimpleSimon;
-import org.agilewiki.console.TimestampIds;
+import org.agilewiki.console.*;
 import org.agilewiki.utils.ids.composites.Journal;
 import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.ids.composites.SecondaryId;
@@ -29,8 +26,8 @@ public class NodeBlade extends RequestBlade {
     }
 
     @Override
-    public void get(String page, AsyncContext asyncContext, String userId) {
-        new SR(page, asyncContext, userId) {
+    public void get(String page, AsyncContext asyncContext, String userId, Role role) {
+        new SR(page, asyncContext, userId, role) {
             String nodeId;
 
             @Override

@@ -18,8 +18,8 @@ public class ValidatedBlade extends PostRequestBlade {
     }
 
     @Override
-    public void get(String page, AsyncContext asyncContext, String userId) {
-        new SR(page, asyncContext, userId) {
+    public void get(String page, AsyncContext asyncContext, String userId, Role role) {
+        new SR(page, asyncContext, userId, role) {
             @Override
             protected void process()
                     throws Exception {
@@ -33,8 +33,8 @@ public class ValidatedBlade extends PostRequestBlade {
     }
 
     @Override
-    public void post(String page, AsyncContext asyncContext, String userId) {
-        new SR(page, asyncContext, userId) {
+    public void post(String page, AsyncContext asyncContext, String userId, Role role) {
+        new SR(page, asyncContext, userId, role) {
             @Override
             protected void process()
                     throws Exception {
