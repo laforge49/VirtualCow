@@ -29,10 +29,30 @@
     </script>
 </head>
 <body>
-<h1><a id="top">Virtual COW {{atTime}}</a></h1>
-
 <div>
-    <table cellpadding="10" style="float:left">
+    <table cellpadding="10">
+        <tr>
+            <td width="25%" valign="baseline">{{guest}}</td>
+            <td width="25%" valign="baseline">
+                {{home}}
+            </td>
+            <td width="25%" valign="baseline">
+                <a>{{myEmail}} &#9660;</a>
+                <ul class="sub-menu">
+                    <li><a href="?from=invLinks&to=logout#rupa">Logout</a></li>
+                    <li><a href="?from=invLinks&to=profile{{setTimestamp}}{{setRole}}#rupa">My Profile</a></li>
+                    <li><a href="?from=invLinks&to=changePassword{{setTimestamp}}{{setRole}}#rupa">Change
+                        Password</a></li>
+                    <li><a href="?from=invLinks&to=changeEmailAddress{{setTimestamp}}{{setRole}}#rupa">Change Email
+                        Address</a></li>
+                    <li><a href="?from=invLinks&to=deleteAccount{{setTimestamp}}{{setRole}}#rupa">Delete Account</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+    <h2 style="float: right;"><a id="rupa" />Virtual COW {{atTime}}</a></h2>
+    <table cellpadding="10">
         <tr>
             <td>
                 <img src="/images/timeMachineSmall.jpg"/>
@@ -43,75 +63,24 @@
                     <input type="hidden" name="to" value="invLinks"/>
                     <input type="hidden" name="nodeId" value="{{nodeId}}"/>
                     <input type="hidden" name="linkType" value="{{linkType}}"/>
+                    {{hiddenRole}}
                     Select Date: <input type="text" name="date" id="datepicker"/>
                     <input type="submit" value="Go"/>
                 </form>
                 {{clearTime}}
             </td>
         </tr>
-        <tr>
-            <td>&nbsp;</td>
-        </tr>
-    </table>
-    <div style="font-family:courier; float:left">&nbsp;&nbsp;&nbsp;&nbsp;</div>
-    <table cellpadding="10">
-        <tr>
-            <td width="25%" valign="baseline">
-                <a href="?from=invLinks&to=profile{{setTimestamp}}#rupa">My Profile</a><br/>
-            </td>
-            <td width="25%" valign="baseline">
-                <a href="?from=invLinks{{setTimestamp}}#rupa">home</a>
-            </td>
-            <td width="25%" valign="baseline">guest</td>
-            <td width="25%" valign="baseline">
-                <form action="?from=invLinks&to=logout" method="POST">
-                    <input type="submit" value="Logout"/>
-                </form>
-            </td>
-        </tr>
-        <tr>
-            <td valign="baseline">
-                <a href="?from=invLinks&to=journal{{setTimestamp}}#rupa">journal</a>
-            </td>
-            <td valign="baseline">
-                Secondary Keys
-                <lu>
-                    <li>
-                        <a href="?from=invLinks&to=secondaryKeys&secondaryType=subject&keyPrefix=$v{{setTimestamp}}#rupa">subjects</a>
-                    </li>
-                    <li>
-                        <a href="?from=invLinks&to=secondaryKeys&secondaryType=email&keyPrefix=$v{{setTimestamp}}#rupa">email
-                            addresses</a>
-                    </li>
-                    <li>
-                        <a href="?from=invLinks&to=secondaryKeys&secondaryType=userType&keyPrefix=$n{{setTimestamp}}">user
-                            types</a><br/>
-                    </li>
-                </lu>
-            </td>
-            <td valign="baseline">
-                user links
-                <lu>
-                    <li>
-                        <a href="?from=invLinks&to=targets&linkType=users{{setTimestamp}}#rupa">users</a>
-                    </li>
-                    <li>
-                        <a href="?from=invLinks&to=sources&linkType=users{{setTimestamp}}#rupa">owned</a>
-                    </li>
-                </lu>
-            </td>
-            <td valign="baseline">
-                <a href="?from=invLinks&to=post">{{post}}</a>
-            </td>
-        </tr>
     </table>
 </div>
 
-<h2 align="center">Links to <a href="?from=invLinks&to=node&nodeId={{nodeId}}">{{nodeId}}</a> Labeled {{linkType}}</h2>
+<h2 align="center">Links to <a href="?from=invLinks&to=node&nodeId={{nodeId}}{{setTimestamp}}{{setRole}}">{{nodeId}}</a> Labeled {{linkType}}</h2>
 
 <div>
     <div style="float:right">
-        <a href="?from=invLinks&to=invLinks&linkType={{linkType}}&nodeId={{nodeId}}{{setStartingAt}}{{setTimestamp}}">{{more}}</a>
+        <a id="top" />
+        <a href="?from=invLinks&to=invLinks&linkType={{linkType}}&nodeId={{nodeId}}{{setStartingAt}}{{setTimestamp}}{{setRole}}#top">
+            {{more}}
+        </a>
     </div>
     <div style="font-family:courier">{{invLinks}}</div>
 </div>
