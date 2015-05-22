@@ -14,31 +14,22 @@
 <body>
 <table cellpadding="10">
     <tr>
-        <td width="25%" valign="baseline">
-            <a href="?from=newEmailAddress&to=profile{{setTimestamp}}#rupa">{{myEmail}}</a>
-        </td>
         <td width="25%" valign="baseline">{{guest}}</td>
         <td width="25%" valign="baseline">
             {{home}}
         </td>
         <td width="25%" valign="baseline">
-            <form action="?from=newEmailAddress&to=logout" method="POST">
-                <input type="submit" value="Logout"/>
-            </form>
-        </td>
-    </tr>
-    <tr>
-        <td valign="baseline">
-            <a href="?from=newEmailAddress&to=changePassword{{setTimestamp}}#rupa">Change Password</a>
-        </td>
-        <td valign="baseline">
-            <a href="?from=newEmailAddress&to=changeEmailAddress{{setTimestamp}}#rupa">Change Email Address</a>
-        </td>
-        <td valign="baseline">
-            <a href="?from=newEmailAddress&to=deleteAccount{{setTimestamp}}#rupa">Delete Account</a>
-        </td>
-        <td valign="baseline">
-            &nbsp;
+            <a>{{myEmail}} &#9660;</a>
+            <ul class="sub-menu">
+                <li><a href="?from=newEmailAddress&to=logout#rupa">Logout</a></li>
+                <li><a href="?from=newEmailAddress&to=profile{{setTimestamp}}{{setRole}}#rupa">My Profile</a></li>
+                <li><a href="?from=newEmailAddress&to=changePassword{{setTimestamp}}{{setRole}}#rupa">Change
+                    Password</a></li>
+                <li><a href="?from=newEmailAddress&to=changeEmailAddress{{setTimestamp}}{{setRole}}#rupa">Change Email
+                    Address</a></li>
+                <li><a href="?from=newEmailAddress&to=deleteAccount{{setTimestamp}}{{setRole}}#rupa">Delete Account</a>
+                </li>
+            </ul>
         </td>
     </tr>
 </table>
@@ -63,6 +54,8 @@
     <input type="hidden" name="to" value="changePassword"/>
     <input type="hidden" name="emailAddress" value="{{emailAddress}}"/>
     <input type="hidden" name="key" value="{{key}}"/>
+    {{hiddenTimestamp}}
+    {{hiddenRole}}
 
     <p>
         Password: <input type="password" name="password" size="60">
