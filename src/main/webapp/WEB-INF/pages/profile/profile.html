@@ -15,31 +15,22 @@
 <p>
 <table cellpadding="10">
     <tr>
-        <td width="25%" valign="baseline">
-            {{myEmail}}
-        </td>
         <td width="25%" valign="baseline">{{guest}}</td>
         <td width="25%" valign="baseline">
             {{home}}
         </td>
         <td width="25%" valign="baseline">
-            <form action="?from=profile&to=logout" method="POST">
-                <input type="submit" value="Logout"/>
-            </form>
-        </td>
-    </tr>
-    <tr>
-        <td valign="baseline">
-            <a href="?from=profile&to=changePassword{{setTimestamp}}#rupa">Change Password</a>
-        </td>
-        <td valign="baseline">
-            <a href="?from=profile&to=changeEmailAddress{{setTimestamp}}#rupa">Change Email Address</a>
-        </td>
-        <td valign="baseline">
-            <a href="?from=profile&to=deleteAccount{{setTimestamp}}#rupa">Delete Account</a>
-        </td>
-        <td valign="baseline">
-            &nbsp;
+            <a>{{myEmail}} &#9660;</a>
+            <ul class="sub-menu">
+                <li><a href="?from=profile&to=logout#rupa">Logout</a></li>
+                <li><a>My Profile</a></li>
+                <li><a href="?from=profile&to=changePassword{{setTimestamp}}{{setRole}}#rupa">Change
+                    Password</a></li>
+                <li><a href="?from=profile&to=changeEmailAddress{{setTimestamp}}{{setRole}}#rupa">Change Email
+                    Address</a></li>
+                <li><a href="?from=profile&to=deleteAccount{{setTimestamp}}{{setRole}}#rupa">Delete Account</a>
+                </li>
+            </ul>
         </td>
     </tr>
 </table>
