@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
     <title>Virtual Cow</title>
@@ -10,44 +11,98 @@
     <meta name="author" content=""/>
     <meta name="copyright" content="&copy; 2015"/>
     <meta name="robot" content="noindex, nofollow"/>
+    <link href="css/style.css" rel="stylesheet" type="text/css" media="screen"/>
+<style>
+        login {
+        position: relative;
+        }
+        form.big {
+        position: absolute;
+        padding-top: -80px;
+        margin-top: -300px;
+        margin-left:50px;
+        }
+    </style>
 </head>
 <body>
-<table cellpadding="10">
-    <tr>
-        <td width="25%" valign="baseline">{{guest}}</td>
-        <td width="25%" valign="baseline">
-            {{home}}
-        </td>
-        <td width="25%" valign="baseline">
-            <a>{{myEmail}} &#9660;</a>
-            <ul class="sub-menu">
-                <li><a href="?from=changeEmailAddress&to=logout#rupa">Logout</a></li>
-                <li><a href="?from=changeEmailAddress&to=profile{{setTimestamp}}{{setRole}}#rupa">My Profile</a></li>
-                <li><a href="?from=changeEmailAddress&to=changePassword{{setTimestamp}}{{setRole}}#rupa">Change
+<div id="main">
+    <div id="header">
+        <div id="logo"></div>
+        <div class="menu-wrap">
+            <nav class="menu">
+                <ul class="clearfix">
+                    <li>{{guest}}</li>
+                    <li>
+                        {{home}}
+                    </li>
+                    <li>
+                        <a id="rupa">{{myEmail}} &#9660;</a>
+                        <ul class="sub-menu">
+                            <li><a href="?from=profile&to=logout#rupa">Logout</a></li>
+                            <li><a href="?from=changeEmailAddress&to=profile{{setTimestamp}}{{setRole}}#rupa">My Profile</a></li>
+                            <li><a href="?from=profile&to=changePassword{{setTimestamp}}{{setRole}}#rupa">Change
                     Password</a></li>
-                <li><a>Change Email Address</a></li>
-                <li><a href="?from=changeEmailAddress&to=deleteAccount{{setTimestamp}}{{setRole}}#rupa">Delete Account</a>
-                </li>
-            </ul>
-        </td>
-    </tr>
-</table>
+                             <li><a>Change Email Address</a></li>
+                            <li><a href="?from=profile&to=deleteAccount{{setTimestamp}}{{setRole}}#rupa">Delete Account</a>
+                           </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+    <!--end header -->
+    <div id="content">
 <h2>Virtual COW {{atTime}}</h2>
 
-<h2 align="center"><a id="rupa"/>Change Email Address</h2>
+<div id="login"><a id="form"/>
 
-<form method="POST">
+            <div style="padding-left: 150px;">
+                <img src="images/change email.jpg" alt="images/change email.jpg"/>
+                     <form class="big" method="POST" action="#form">
+
     <p style="color:red"><strong>{{error}}&nbsp;</strong></p>
     <input type="hidden" name="from" value="changeEmailAddress"/>
     <input type="hidden" name="to" value="changeEmailAddress"/>
     {{hiddenTimestamp}}
     {{hiddenRole}}
-    <p>
-        Email Address: <input type="text" name="emailAddress" size="60" value="{{emailAddress}}">
-    </p>
-    <input type="submit" value="Validate New Address"/>
-
+    <table>
+                        <tr>
+                            <td>
+                            <p>Email Address:</p> </td>
+                            <td><input type="text" name="emailAddress" size="35" value="{{emailAddress}}">
+                           </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td align="right">
+    
+    <input type="image" src="images/validateemailbutton.jpg"name="submit" value="Validate New Address"/>
+    </td>
+      </tr>
+        </table>
     <p>{{success}}&nbsp;</p>
 </form>
+</div>
+        </div>
+    </div>
+    <!--end content-->
+    <div id="footer">
+        <img src="images/footer.jpg" alt="footer.jpg"/>
+
+        <div id="copy">
+            <p>Copyright 2015 by William La Forge, all rights reserved.</p>
+
+            <p align="center"><a
+                    href="https://www.linkedin.com/profile/view?id=65018574&trk=nav_responsive_tab_profile_pic">Web
+                Designed by Rupali La Forge</a></p>
+        </div>
+    </div>
+    <!--end footer-->
+</div>
+<!--end main-->
 </body>
 </html>
