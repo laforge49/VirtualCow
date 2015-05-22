@@ -191,21 +191,19 @@ public class MaintenanceRole implements Role {
         home.append("</ul>\n");
         home.append("</li>\n");
 
-        if (timestamp == null) {
-            home.append("<li>\n");
-            if ("post".equals(page)) {
-                home.append("<a>\n");
-            } else {
-                home.append("<a href=\"?from=");
-                home.append(page);
-                home.append("&to=post");
-                home.append(setRole);
-                home.append("#rupa\">\n");
-            }
-            home.append("Post\n");
-            home.append("</a>\n");
-            home.append("</li>\n");
+        home.append("<li>\n");
+        if ("post".equals(page) || timestamp != null) {
+            home.append("<a>\n");
+        } else {
+            home.append("<a href=\"?from=");
+            home.append(page);
+            home.append("&to=post");
+            home.append(setRole);
+            home.append("#rupa\">\n");
         }
+        home.append("Post\n");
+        home.append("</a>\n");
+        home.append("</li>\n");
         home.append("</ul>\n");
         return home.toString();
     }
