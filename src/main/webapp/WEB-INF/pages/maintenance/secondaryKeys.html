@@ -32,10 +32,31 @@
     </script>
 </head>
 <body>
-<h1><a id="top">Virtual COW {{atTime}}</a></h1>
-
 <div>
-    <table cellpadding="10" style="float:left">
+    <table cellpadding="10">
+        <tr>
+            <td width="25%" valign="baseline">{{guest}}</td>
+            <td width="25%" valign="baseline">
+                {{home}}
+            </td>
+            <td width="25%" valign="baseline">
+                <a>{{myEmail}} &#9660;</a>
+                <ul class="sub-menu">
+                    <li><a href="?from=secondaryKeys&to=logout#rupa">Logout</a></li>
+                    <li><a href="?from=secondaryKeys&to=profile{{setTimestamp}}{{setRole}}#rupa">My Profile</a></li>
+                    <li><a href="?from=secondaryKeys&to=changePassword{{setTimestamp}}{{setRole}}#rupa">Change
+                        Password</a></li>
+                    <li><a href="?from=secondaryKeys&to=changeEmailAddress{{setTimestamp}}{{setRole}}#rupa">Change Email
+                        Address</a></li>
+                    <li><a href="?from=secondaryKeys&to=deleteAccount{{setTimestamp}}{{setRole}}#rupa">Delete Account</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+    <h2 style="float: right;">Virtual COW {{atTime}}</a></h2><a id="rupa" />
+    <table cellpadding="10">
         <tr>
             <td>
                 <img src="/images/timeMachineSmall.jpg"/>
@@ -52,61 +73,6 @@
                 {{clearTime}}
             </td>
         </tr>
-        <tr>
-            <td>&nbsp;</td>
-        </tr>
-    </table>
-    <div style="font-family:courier; float:left">&nbsp;&nbsp;&nbsp;&nbsp;</div>
-    <table cellpadding="10">
-        <tr>
-            <td width="25%" valign="baseline">
-                <a href="?from=secondaryKeys&to=profile{{setTimestamp}}#rupa">My Profile</a><br/>
-            </td>
-            <td width="25%" valign="baseline">
-                <a href="?from=secondaryKeys{{setTimestamp}}#rupa">home</a>
-            </td>
-            <td width="25%" valign="baseline">guest</td>
-            <td width="25%" valign="baseline">
-                <form action="?from=secondaryKeys&to=logout" method="POST">
-                    <input type="submit" value="Logout"/>
-                </form>
-            </td>
-        </tr>
-        <tr>
-            <td valign="baseline">
-                <a href="?from=secondaryKeys&to=journal{{setTimestamp}}#rupa">journal</a>
-            </td>
-            <td valign="baseline">
-                Secondary Keys
-                <ul>
-                    <li>
-                        <a href="?from=secondaryKeys&to=secondaryKeys&secondaryType=subject&keyPrefix=$v{{setTimestamp}}#rupa">subjects</a>
-                    </li>
-                    <li>
-                        <a href="?from=secondaryKeys&to=secondaryKeys&secondaryType=email&keyPrefix=$v{{setTimestamp}}#rupa">email
-                            addresses</a>
-                    </li>
-                    <li>
-                        <a href="?from=secondaryKeys&to=secondaryKeys&secondaryType=userType&keyPrefix=$n{{setTimestamp}}#rupa">user
-                            types</a><br/>
-                    </li>
-                </ul>
-            </td>
-            <td valign="baseline">
-                user links
-                <lu>
-                    <li>
-                        <a href="?from=post&to=targets&linkType=users{{setTimestamp}}#rupa">users</a>
-                    </li>
-                    <li>
-                        <a href="?from=post&to=sources&linkType=users{{setTimestamp}}#20">owned</a>
-                    </li>
-                </lu>
-            </td>
-            <td valign="baseline">
-                <a href="?from=secondaryKeys&to=post#rupa">{{post}}</a>
-            </td>
-        </tr>
     </table>
 </div>
 
@@ -114,12 +80,14 @@
 
 <div>
     <div style="float:right">
+        <a id="top" />
         <form method="GET">
             <input type="hidden" name="from" value="secondaryKeys"/>
             <input type="hidden" name="to" value="secondaryKeys"/>
             <input type="hidden" name="secondaryType" value="{{secondaryType}}"/>
             <input type="hidden" name="keyPrefix" value="{{keyPrefix}}"/>
-            {{formTimestamp}}
+            {{hiddenTimestamp}}
+            {{hiddenRole}}
             More secondary keys, starting at <input type="text" name="startingAt" size="60" value="{{startingAt}}">
             <input type="submit" value="OK"/>
         </form>
