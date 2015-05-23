@@ -55,30 +55,35 @@
             <div style="padding-left: 150px;">
                 <img src="images/change email.jpg" alt="images/change email.jpg"/>
                      <form class="big" method="POST" action="#form">
-
-    <p style="color:red"><strong>{{error}}&nbsp;</strong></p>
     <input type="hidden" name="from" value="changeEmailAddress"/>
     <input type="hidden" name="to" value="changeEmailAddress"/>
     {{hiddenTimestamp}}
     {{hiddenRole}}
-    <table>
+    <table width="395px">
+                        <tr>
+                        <td colspan="2">
+                        <p style="color:red"><strong>{{error}}&nbsp;</strong></p>
+                         </td>
+                         </tr>                        
                         <tr>
                             <td>
                             <p>Email Address:</p> </td>
                             <td><input type="text" name="emailAddress" size="35" value="{{emailAddress}}">
                            </td>
                         </tr>
+                         <tr>
+                        <td colspan="2">
+                          <p>{{success}}&nbsp;</p>
+                          </td>
+                         </tr>
+
                         <tr>
-                            <td>
-                                &nbsp;
-                            </td>
-                            <td align="right">
+                            <td colspan="2" align="right">
     
     <input type="image" src="images/validateemailbutton.jpg"name="submit" value="Validate New Address"/>
     </td>
       </tr>
-        </table>
-    <p>{{success}}&nbsp;</p>
+        </table>   
 </form>
 </div>
         </div>
