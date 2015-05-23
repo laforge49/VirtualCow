@@ -1,9 +1,6 @@
 package org.agilewiki.console.maintenance;
 
-import org.agilewiki.console.PostRequestBlade;
-import org.agilewiki.console.RequestBlade;
-import org.agilewiki.console.Role;
-import org.agilewiki.console.SimpleSimon;
+import org.agilewiki.console.*;
 import org.agilewiki.console.profile.ProfileRole;
 
 import javax.servlet.http.HttpServletRequest;
@@ -151,7 +148,7 @@ public class MaintenanceRole implements Role {
         home.append("<li>\n");
         home.append("<a href=\"?from=");
         home.append(page);
-        home.append("&to=secondaryKeys&secondaryType=userType&keyPrefix=$n");
+        home.append("&to=secondaryKeys&secondaryType=role&keyPrefix=$n");
         home.append(setTimestamp);
         home.append(setRole);
         home.append("#rupa\">\n");

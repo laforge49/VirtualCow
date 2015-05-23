@@ -80,9 +80,9 @@ public class ValidatedBlade extends PostRequestBlade {
                 String emailId = ValueId.generate(email);
                 mn = mn.add(User.EMAIL_ID, emailId);
                 mn = mn.add(User.PASSWORD_KEY, passwordHash);
-                mn = mn.add(User.USER_TYPE_ID,
+                mn = mn.add(User.ROLE_ID,
                         simpleSimon.profileRole.roleName());
-                mn = mn.add(User.USER_TYPE_ID,
+                mn = mn.add(User.ROLE_ID,
                         simpleSimon.maintenanceRole.roleName());
                 asyncRequestImpl.send(db.update(NewUserTransaction.NAME, mn),
                         new AsyncResponseProcessor<String>() {

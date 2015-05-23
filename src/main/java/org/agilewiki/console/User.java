@@ -17,7 +17,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public class User {
     public static final String EMAIL_ID = NameId.generate("email");
-    public static final String USER_TYPE_ID = NameId.generate("userType");
+    public static final String ROLE_ID = NameId.generate("role");
     public static final String PASSWORD_KEY = NameId.generate("password");
     public static final String USER_KEY = NameId.generate("user");
 
@@ -146,7 +146,7 @@ public class User {
         SecondaryIds.createSecondaryId(db, userId, emailSecondaryId);
         for (String userRole: userRoles) {
             String userTypeSecondaryId =
-                    SecondaryIds.secondaryId(USER_TYPE_ID, NameIds.generate(userRole));
+                    SecondaryIds.secondaryId(ROLE_ID, NameIds.generate(userRole));
             SecondaryIds.createSecondaryId(db, userId, userTypeSecondaryId);
         }
         return null;
