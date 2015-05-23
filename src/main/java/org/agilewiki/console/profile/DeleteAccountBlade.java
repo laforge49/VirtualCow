@@ -58,6 +58,8 @@ public class DeleteAccountBlade extends PostRequestBlade {
                         new AsyncResponseProcessor<String>() {
                             @Override
                             public void processAsyncResponse(String _response) throws Exception {
+                                response.sendRedirect("?from=deleteAccount");
+                                asyncContext.complete();
                                 asyncRequestImpl.send(mailOut.sendEmail(servletContext,
                                                 email,
                                                 "Delete Account Notification",
@@ -67,7 +69,7 @@ public class DeleteAccountBlade extends PostRequestBlade {
                                         new AsyncResponseProcessor<Boolean>() {
                                             @Override
                                             public void processAsyncResponse(Boolean _response) throws Exception {
-                                                redirect("?from=deleteAccount");
+                                                asyncResponseProcessor.processAsyncResponse(null);
                                             }
                                         });
                             }
