@@ -10,7 +10,7 @@
     <meta name="author" content=""/>
     <meta name="copyright" content="&copy; 2015"/>
     <meta name="robot" content="noindex, nofollow"/>
-<link href="css/style.css" rel="stylesheet" type="text/css" media="screen"/>
+    <link href="css/style.css" rel="stylesheet" type="text/css" media="screen"/>
     <style>
         login {
         position: relative;
@@ -38,12 +38,14 @@
                         <a id="rupa">{{myEmail}} &#9660;</a>
                         <ul class="sub-menu">
                             <li><a href="?from=deleteAccount&to=logout#rupa">Logout</a></li>
-                <li><a href="?from=deleteAccount&to=profile{{setTimestamp}}{{setRole}}#rupa">My Profile</a></li>
-                <li><a href="?from=deleteAccount&to=changePassword{{setTimestamp}}{{setRole}}#rupa">Change
-                    Password</a></li>
-                <li><a href="?from=deleteAccount&to=changeEmailAddress{{setTimestamp}}{{setRole}}#rupa">Change Email
-                    Address</a></li>
-                <li><a>Delete Account</a>
+                            <li><a href="?from=deleteAccount&to=profile{{setTimestamp}}{{setRole}}#rupa">My Profile</a>
+                            </li>
+                            <li><a href="?from=deleteAccount&to=changePassword{{setTimestamp}}{{setRole}}#rupa">Change
+                                Password</a></li>
+                            <li><a href="?from=deleteAccount&to=changeEmailAddress{{setTimestamp}}{{setRole}}#rupa">Change
+                                Email
+                                Address</a></li>
+                            <li><a>Delete Account</a>
                         </ul>
                     </li>
                 </ul>
@@ -54,25 +56,29 @@
     <!--end header -->
     <div id="content">
 
-<h2>Virtual COW {{atTime}}</h2>
-    <div id="login"><a id="form"/>
+        <h2>Virtual COW {{atTime}}</h2>
+
+        <div id="login"><a id="form"/>
 
             <div style="padding-left: 150px;">
                 <img src="images/deleteaccount.jpg" alt="images/deleteaccount.jpg"/>
 
                 <form class="big" method="POST" action="#form">
-
-<form class="big" method="POST" action="#form">
-    <p style="color:red"><strong>{{error}}&nbsp;</strong></p>
-    <input type="hidden" name="from" value="deleteAccount"/>
-    <input type="hidden" name="to" value="deleteAccount"/>
-    {{hiddenTimestamp}}
-    {{hiddenRole}}
-    
-  <p> Password:</p> </td><input type="password" name="password" size="35">
+                    <p style="color:red"><strong>{{error}}&nbsp;</strong></p>
+                    <input type="hidden" name="from" value="deleteAccount"/>
+                    <input type="hidden" name="to" value="deleteAccount"/>
+                    {{hiddenTimestamp}}
+                    {{hiddenRole}}
+                    <table>
+                        <tr>
+                            <td>
+                                <p> Password:</p>
                             </td>
-                               </tr>
-   <tr>
+                            <td>
+                                <input type="password" name="password" size="35">
+                            </td>
+                        </tr>
+                        <tr>
                             <td>
                                 &nbsp;
                             </td>
@@ -80,13 +86,12 @@
                                 <input type="image" src="images/deletebutton.jpg" name="submit" value="Submit"/>
                             </td>
                         </tr>
-            
-             </table>
+                    </table>
 
-    <h3>{{success}}&nbsp;</h3>
-</form>
-</div>
-  </div>
+                    <h3>{{success}}&nbsp;</h3>
+                </form>
+            </div>
+        </div>
     </div>
     <!--end content-->
     <div id="footer">
