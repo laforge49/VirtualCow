@@ -5,6 +5,7 @@ import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.Role;
 import org.agilewiki.console.SimpleSimon;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,5 +70,79 @@ public class ProfileRole implements Role {
     @Override
     public String getDefaultRequestPage() {
         return "profile";
+    }
+
+    @Override
+    public String menu(HttpServletRequest request,
+                       String page,
+                       String setTimestamp,
+                       String timestamp,
+                       String setRole) {
+        StringBuilder home = new StringBuilder();
+        home.append("<a>Profile &#9660;</a>\n");
+        home.append("<ul class=\"sub-menu\">\n");
+
+        home.append("<li>");
+        if ("profile".equals(page)) {
+            home.append("<a>");
+        } else {
+            home.append("<a href=\"?from=");
+            home.append(page);
+            home.append("&to=profile");
+            home.append(setTimestamp);
+            home.append(setRole);
+            home.append("#rupa\">");
+        }
+        home.append("My Profile");
+        home.append("</a>");
+        home.append("</li>\n");
+
+        home.append("<li>");
+        if ("changePassword".equals(page)) {
+            home.append("<a>");
+        } else {
+            home.append("<a href=\"?from=");
+            home.append(page);
+            home.append("&to=changePassword");
+            home.append(setTimestamp);
+            home.append(setRole);
+            home.append("#rupa\">");
+        }
+        home.append("Change Password");
+        home.append("</a>");
+        home.append("</li>\n");
+
+        home.append("<li>");
+        if ("changeEmailAddress".equals(page)) {
+            home.append("<a>");
+        } else {
+            home.append("<a href=\"?from=");
+            home.append(page);
+            home.append("&to=changeEmailAddress");
+            home.append(setTimestamp);
+            home.append(setRole);
+            home.append("#rupa\">");
+        }
+        home.append("Change Email Address");
+        home.append("</a>");
+        home.append("</li>\n");
+
+        home.append("<li>");
+        if ("deleteAccount".equals(page)) {
+            home.append("<a>");
+        } else {
+            home.append("<a href=\"?from=");
+            home.append(page);
+            home.append("&to=deleteAccount");
+            home.append(setTimestamp);
+            home.append(setRole);
+            home.append("#rupa\">");
+        }
+        home.append("Delete Account");
+        home.append("</a>");
+        home.append("</li>\n");
+
+        home.append("</ul>\n");
+        return home.toString();
     }
 }

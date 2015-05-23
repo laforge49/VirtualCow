@@ -156,7 +156,14 @@ public class SimpleSimon extends HttpServlet {
         if (userId == null) {
             unRole.dispatchGetRequest(request, null);
         } else {
-            maintenanceRole.dispatchGetRequest(request, userId);
+            String roleName = request.getParameter("role");
+            if (roleName == null)
+                roleName = "profile";
+            Role role = roles.get(roleName);
+            if (role == null) {
+                role = profileRole;
+            }
+            role.dispatchGetRequest(request, userId);
         }
     }
 
@@ -180,7 +187,14 @@ public class SimpleSimon extends HttpServlet {
         if (userId == null) {
             unRole.dispatchPostRequest(request, response, null);
         } else {
-            maintenanceRole.dispatchPostRequest(request, response, userId);
+            String roleName = request.getParameter("role");
+            if (roleName == null)
+                roleName = "profile";
+            Role role = roles.get(roleName);
+            if (role == null) {
+                role = profileRole;
+            }
+            role.dispatchPostRequest(request, response, userId);
         }
     }
 
