@@ -10,45 +10,98 @@
     <meta name="author" content=""/>
     <meta name="copyright" content="&copy; 2015"/>
     <meta name="robot" content="noindex, nofollow"/>
+<link href="css/style.css" rel="stylesheet" type="text/css" media="screen"/>
+    <style>
+        login {
+        position: relative;
+        }
+        form.big {
+        position: absolute;
+        padding-top: -80px;
+        margin-top: -300px;
+        margin-left:50px;
+        }
+    </style>
 </head>
 <body>
-<table cellpadding="10">
-    <tr>
-        <td width="25%" valign="baseline">{{guest}}</td>
-        <td width="25%" valign="baseline">
-            {{home}}
-        </td>
-        <td width="25%" valign="baseline">
-            <a>{{myEmail}} &#9660;</a>
-            <ul class="sub-menu">
-                <li><a href="?from=deleteAccount&to=logout#rupa">Logout</a></li>
+<div id="main">
+    <div id="header">
+        <div id="logo"></div>
+        <div class="menu-wrap">
+            <nav class="menu">
+                <ul class="clearfix">
+                    <li>{{guest}}</li>
+                    <li>
+                        {{home}}
+                    </li>
+                    <li>
+                        <a id="rupa">{{myEmail}} &#9660;</a>
+                        <ul class="sub-menu">
+                            <li><a href="?from=deleteAccount&to=logout#rupa">Logout</a></li>
                 <li><a href="?from=deleteAccount&to=profile{{setTimestamp}}{{setRole}}#rupa">My Profile</a></li>
                 <li><a href="?from=deleteAccount&to=changePassword{{setTimestamp}}{{setRole}}#rupa">Change
                     Password</a></li>
                 <li><a href="?from=deleteAccount&to=changeEmailAddress{{setTimestamp}}{{setRole}}#rupa">Change Email
                     Address</a></li>
                 <li><a>Delete Account</a>
-                </li>
-            </ul>
-        </td>
-    </tr>
-</table>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+    <!--end header -->
+    <div id="content">
+
 <h2>Virtual COW {{atTime}}</h2>
+    <div id="login"><a id="form"/>
 
-<h2 align="center"><a id="rupa"/>Delete Account</h2>
+            <div style="padding-left: 150px;">
+                <img src="images/deleteaccount.jpg" alt="images/deleteaccount.jpg"/>
 
-<form method="POST">
+                <form class="big" method="POST" action="#form">
+
+<form class="big" method="POST" action="#form">
     <p style="color:red"><strong>{{error}}&nbsp;</strong></p>
     <input type="hidden" name="from" value="deleteAccount"/>
     <input type="hidden" name="to" value="deleteAccount"/>
     {{hiddenTimestamp}}
     {{hiddenRole}}
-    <p>
-        Password: <input type="password" name="password" size="60">
-    </p>
-    <input type="submit" value="Submit"/>
+    
+  <p> Password:</p> </td><input type="password" name="password" size="35">
+                            </td>
+                               </tr>
+   <tr>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td align="right">
+                                <input type="image" src="images/deletebutton.jpg" name="submit" value="Submit"/>
+                            </td>
+                        </tr>
+            
+             </table>
 
     <h3>{{success}}&nbsp;</h3>
 </form>
+</div>
+  </div>
+    </div>
+    <!--end content-->
+    <div id="footer">
+        <img src="images/footer.jpg" alt="footer.jpg"/>
+
+        <div id="copy">
+            <p>Copyright 2015 by William La Forge, all rights reserved.</p>
+
+            <p align="center"><a
+                    href="https://www.linkedin.com/profile/view?id=65018574&trk=nav_responsive_tab_profile_pic">Web
+                Designed by Rupali La Forge</a></p>
+        </div>
+    </div>
+    <!--end footer-->
+</div>
+<!--end main-->
 </body>
 </html>
