@@ -25,9 +25,6 @@ public class HomeBlade extends RequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                if (timestamp == null) {
-                    map.put("post", "post");
-                }
                 finish();
             }
         }.signal();

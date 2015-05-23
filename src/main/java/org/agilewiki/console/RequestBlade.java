@@ -53,6 +53,8 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
         protected String dateInString;
         protected long longTimestamp = FactoryRegistry.MAX_TIMESTAMP;
         protected String setContext;
+        protected String roleName;
+        protected String setRole;
 
         public SR(String page, AsyncContext asyncContext, String userId, Role role) {
             super(page);
@@ -82,8 +84,8 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
             map = new HashMap<>();
             setContext = setContext();
 
-            String roleName = role.roleName();
-            String setRole = "&role=" + roleName;
+            roleName = role.roleName();
+            setRole = "&role=" + roleName;
             map.put("setRole", setRole);
             map.put("hiddenRole",
                     "<input type=\"hidden\" name=\"role\" value=\"" + roleName + "\" />");

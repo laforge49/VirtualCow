@@ -40,9 +40,6 @@ public class NodesBlade extends RequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                if (timestamp == null) {
-                    map.put("post", "post");
-                }
                 String startingAt = request.getParameter("startingAt");
                 if (startingAt == null)
                     startingAt = "";
@@ -79,7 +76,7 @@ public class NodesBlade extends RequestBlade {
                                 sb.append("&timestamp=");
                                 sb.append(timestamp);
                             }
-                            sb.append("\">");
+                            sb.append(setRole + "\">");
                             sb.append(nodeId);
                             sb.append("</a>");
                             if (nodeId.startsWith("$t")) {

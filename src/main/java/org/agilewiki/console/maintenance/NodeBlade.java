@@ -40,9 +40,6 @@ public class NodeBlade extends RequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                if (timestamp == null) {
-                    map.put("post", "post");
-                }
                 String time = null;
                 String jeTimestamp = "";
                 if (nodeId.startsWith("$t")) {
@@ -104,7 +101,7 @@ public class NodeBlade extends RequestBlade {
                                         if (timestamp != null) {
                                             sb.append("&timestamp=" + timestamp);
                                         }
-                                        sb.append("\">");
+                                        sb.append(setRole + "\">");
                                         sb.append(jeId);
                                         sb.append("</a> (" + SimpleSimon.niceTime(jeId) + ")<br />");
                                     }
@@ -131,7 +128,7 @@ public class NodeBlade extends RequestBlade {
                                             sb.append("&timestamp=");
                                             sb.append(timestamp);
                                         }
-                                        sb.append("\">");
+                                        sb.append(setRole + "\">");
                                         sb.append(targetId);
                                         sb.append("</a>");
                                         if (targetId.startsWith("$t")) {
@@ -177,7 +174,7 @@ public class NodeBlade extends RequestBlade {
                                         sb.append("&timestamp=");
                                         sb.append(timestamp);
                                     }
-                                    sb.append("\">");
+                                    sb.append(setRole + "\">");
                                     sb.append(typeId);
                                     sb.append("</a><br />");
                                 }

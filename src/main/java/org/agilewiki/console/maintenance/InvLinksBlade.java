@@ -46,9 +46,6 @@ public class InvLinksBlade extends RequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                if (timestamp == null) {
-                    map.put("post", "post");
-                }
                 String link1Inv = Link1Id.link1Inv(targetId, labelId);
                 String startingAt = request.getParameter("startingAt");
                 if (startingAt == null)
@@ -82,7 +79,7 @@ public class InvLinksBlade extends RequestBlade {
                                 sb.append("&timestamp=");
                                 sb.append(timestamp);
                             }
-                            sb.append("\">");
+                            sb.append(setRole + "\">");
                             sb.append(nodeId);
                             sb.append("</a>");
                             if (nodeId.startsWith("$t")) {

@@ -29,9 +29,6 @@ public class JournalBlade extends RequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                if (timestamp == null) {
-                    map.put("post", "post");
-                }
                 String prefix = Timestamp.PREFIX;
                 String startingAt = request.getParameter("startingAt");
                 if (startingAt == null)
@@ -61,7 +58,7 @@ public class JournalBlade extends RequestBlade {
                             if (timestamp != null) {
                                 sb.append("&timestamp=" + timestamp);
                             }
-                            sb.append("\">" + SimpleSimon.niceTime(tsId) + "</a>");
+                            sb.append(setRole + "\">" + SimpleSimon.niceTime(tsId) + "</a>");
                             sb.append(' ');
                             StringBuilder lb = new StringBuilder();
                             String transactionName = vmn.getList(NameIds.TRANSACTION_NAME).flatList(longTimestamp).get(0).toString();
