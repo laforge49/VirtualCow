@@ -19,8 +19,6 @@ public class User {
     public static final String EMAIL_ID = NameId.generate("email");
     public static final String USER_TYPE_ID = NameId.generate("userType");
     public static final String PASSWORD_KEY = NameId.generate("password");
-    public static final String ADMIN_USER_ID = NameId.generate("adminUser");
-    public static final String GUEST_USER_ID = NameId.generate("guestUser");
     public static final String USER_KEY = NameId.generate("user");
 
     public static String email(Db db, String userId, long timestamp) {
@@ -105,7 +103,9 @@ public class User {
         return new String(hexChars);
     }
 
-    public static boolean init(Db db, ServletConfig servletConfig) {
+    public static boolean init(SimpleSimon simpleSimon) {
+        Db db = simpleSimon.db;
+        ServletConfig servletConfig = simpleSimon.getServletConfig();
         String adminEmail = servletConfig.getInitParameter("adminEmail");
         String adminPassword = servletConfig.getInitParameter("adminPassword");
         if (adminEmail == null || adminPassword == null) {
@@ -124,7 +124,8 @@ public class User {
                 userId,
                 emailId,
                 passwordHash,
-                ADMIN_USER_ID);
+                simpleSimon.profileRole.roleName(),
+                simpleSimon.maintenanceRole.roleName());
         if (error == null)
             return true;
         servletConfig.getServletContext().log(error);
@@ -135,7 +136,7 @@ public class User {
                                     String userId,
                                     String emailId,
                                     String passwordHash,
-                                    String userTypeId) {
+                                    String ... userRoles) {
         String emailSecondaryId = SecondaryIds.secondaryId(EMAIL_ID, emailId);
         for (String uId : SecondaryIds.vmnIdIterable(db, emailSecondaryId, db.getTimestamp())) {
             return "duplicate email: " + ValueId.value(emailId);
@@ -143,8 +144,11 @@ public class User {
 
         db.set(userId, PASSWORD_KEY, passwordHash);
         SecondaryIds.createSecondaryId(db, userId, emailSecondaryId);
-        String userTypeSecondaryId = SecondaryIds.secondaryId(USER_TYPE_ID, userTypeId);
-        SecondaryIds.createSecondaryId(db, userId, userTypeSecondaryId);
+        for (String userRole: userRoles) {
+            String userTypeSecondaryId =
+                    SecondaryIds.secondaryId(USER_TYPE_ID, NameIds.generate(userRole));
+            SecondaryIds.createSecondaryId(db, userId, userTypeSecondaryId);
+        }
         return null;
     }
 }

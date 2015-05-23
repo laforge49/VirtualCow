@@ -20,12 +20,14 @@ import java.util.*;
  * Base page for requests.
  */
 public abstract class RequestBlade extends NonBlockingBladeBase {
+    protected final SimpleSimon simpleSimon;
     protected final ServletContext servletContext;
     protected final Db db;
     protected final MailOut mailOut;
 
     public RequestBlade(SimpleSimon simpleSimon)
             throws Exception {
+        this.simpleSimon = simpleSimon;
         this.servletContext = simpleSimon.servletContext;
         this.db = simpleSimon.db;
         this.mailOut = simpleSimon.mailOut;
@@ -131,10 +133,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
                     } else {
                         appMenu.append("<a href=\"?from=");
                         appMenu.append(page);
-                        appMenu.append("&to=");
-                        appMenu.append(page);
                         appMenu.append(setTimestamp);
-                        appMenu.append(setContext);
                         appMenu.append("&role=");
                         appMenu.append(rn);
                         appMenu.append("\">");

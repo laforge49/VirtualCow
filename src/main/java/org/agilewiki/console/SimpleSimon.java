@@ -33,7 +33,7 @@ public class SimpleSimon extends HttpServlet {
     public final static String self = System.getProperties().getProperty("self", "http://localhost/");
 
     public Db db;
-    ServletConfig servletConfig;
+    protected ServletConfig servletConfig;
     public ServletContext servletContext;
     final static Charset utf8 = Charset.forName("UTF-8");
     final static String SPECIAL = "&<>'\"";
@@ -99,11 +99,6 @@ public class SimpleSimon extends HttpServlet {
             int maxRootBlockSize = 100000;
             db = new Db(new BaseRegistry(), dbPath, maxRootBlockSize);
 
-            db.registerTransaction(ServletStartTransaction.NAME, ServletStartTransaction.class);
-            ServletStartTransaction.servletConfig = servletConfig;
-
-            db.registerTransaction(ServletStopTransaction.NAME, ServletStopTransaction.class);
-
             if (Files.exists(dbPath))
                 db.open();
             else
@@ -121,6 +116,11 @@ public class SimpleSimon extends HttpServlet {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+
+            db.registerTransaction(ServletStartTransaction.NAME, ServletStartTransaction.class);
+            ServletStartTransaction.simpleSimon = this;
+
+            db.registerTransaction(ServletStopTransaction.NAME, ServletStopTransaction.class);
 
             ServletStartTransaction.update(db);
         } catch (Exception ex) {

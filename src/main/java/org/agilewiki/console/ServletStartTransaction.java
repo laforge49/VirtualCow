@@ -12,7 +12,7 @@ import javax.servlet.ServletContext;
 public class ServletStartTransaction extends VCTransaction {
     public final static String NAME = "servletStart";
 
-    public static ServletConfig servletConfig;
+    public static SimpleSimon simpleSimon;
 
     public static String update(Db db)
             throws Exception {
@@ -22,7 +22,6 @@ public class ServletStartTransaction extends VCTransaction {
 
     @Override
     public void process(Db db, MapNode tMapNode) {
-        ServletContext servletContext = servletConfig.getServletContext();
-        User.init(db, servletConfig);
+        User.init(simpleSimon);
     }
 }
