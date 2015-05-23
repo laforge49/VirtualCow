@@ -89,11 +89,6 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
             map.put("setRole", setRole);
             map.put("hiddenRole",
                     "<input type=\"hidden\" name=\"role\" value=\"" + roleName + "\" />");
-
-            if (userId != null) {
-                map.put("myEmail", myEmail);
-                map.put("guest", "<a>-guest-</a>");
-            }
             timestamp = request.getParameter("timestamp");
             dateInString = request.getParameter("date");
             if (dateInString != null && dateInString.length() > 0) {
@@ -119,6 +114,37 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
                 String timestampId = TimestampIds.generate(timestamp);
                 map.put("atTime", "at " + SimpleSimon.niceTime(timestampId));
                 longTimestamp = TimestampIds.timestamp(TimestampIds.generate(timestamp));
+            }
+
+            if (userId != null) {
+                map.put("myEmail", myEmail);
+                List<String> roles = new ArrayList<String>();
+                roles.add("profile");
+                roles.add("maintenance");
+                StringBuilder appMenu = new StringBuilder();
+                appMenu.append("<a>role &#9660;</a>\n");
+                appMenu.append("<ul class=\"sub-menu\">\n");
+                for (String rn: roles) {
+                    appMenu.append("<li>\n");
+                    if (rn.equals(roleName)) {
+                        appMenu.append("<a>");
+                    } else {
+                        appMenu.append("<a href=\"?from=");
+                        appMenu.append(page);
+                        appMenu.append("&to=");
+                        appMenu.append(page);
+                        appMenu.append(setTimestamp);
+                        appMenu.append(setContext);
+                        appMenu.append("&role=");
+                        appMenu.append(rn);
+                        appMenu.append("\">");
+                    }
+                    appMenu.append(rn);
+                    appMenu.append("</a>");
+                    appMenu.append("</li>\n");
+                }
+                appMenu.append("</ul>\n");
+                map.put("guest", appMenu.toString());
             }
 
             map.put("home", role.menu(request, page, setTimestamp, timestamp, setRole));

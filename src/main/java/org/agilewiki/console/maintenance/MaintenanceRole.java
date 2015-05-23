@@ -88,7 +88,7 @@ public class MaintenanceRole implements Role {
                        String setTimestamp,
                        String timestamp,
                        String setRole) {
-        StringBuffer home = new StringBuffer();
+        StringBuilder home = new StringBuilder();
         home.append("<a>Maintenance &#9660;</a>\n");
         home.append("<ul class=\"sub-menu\">\n");
 
