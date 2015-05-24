@@ -58,24 +58,6 @@ public class AdminRole implements Role {
         return "Admin";
     }
 
-    @Override
-    public String menu(HttpServletRequest request,
-                       String page,
-                       String setTimestamp,
-                       String timestamp,
-                       String setRole) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<a>");
-        sb.append(niceRoleName());
-        sb.append(" &#9660;</a>\n");
-        sb.append("<ul class=\"sub-menu\">\n");
-
-        menuItems(sb, page, setTimestamp, setRole);
-
-        sb.append("</ul>\n");
-        return sb.toString();
-    }
-
     public void menuItems(StringBuilder sb,
                           String currentPage,
                           String setTimestamp,
