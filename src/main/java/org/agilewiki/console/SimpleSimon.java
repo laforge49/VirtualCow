@@ -54,10 +54,6 @@ public class SimpleSimon extends HttpServlet {
         if (groupName != null && groupName.length() > 0) {
             pageName = groupName + "/" + pageName;
         }
-        System.out.println(pageName);
-        System.out.println(pageName);
-        System.out.println(pageName);
-        System.out.println(pageName);
         InputStream is = servletContext.getResourceAsStream("/WEB-INF/pages/" + pageName + ".html");
         InputStreamReader isr = new InputStreamReader(is, utf8);
         StringBuilder sb = new StringBuilder();
