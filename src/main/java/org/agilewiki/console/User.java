@@ -34,6 +34,12 @@ public class User {
         return roles;
     }
 
+    public static boolean hasRole(Db db, String userId, String role) {
+        String inv = SecondaryIds.secondaryInv(userId, ROLE_ID);
+        String roleId = NameId.generate(role);
+        return db.get(inv, roleId, FactoryRegistry.MAX_TIMESTAMP) != null;
+    }
+
     public static String email(Db db, String userId, long timestamp) {
         while (true) {
             try {

@@ -157,7 +157,7 @@ public class SimpleSimon extends HttpServlet {
             unRole.dispatchGetRequest(request, null);
         } else {
             String roleName = request.getParameter("role");
-            if (roleName == null)
+            if (roleName == null || !User.hasRole(db, userId, roleName))
                 roleName = "profile";
             Role role = roles.get(roleName);
             if (role == null) {
@@ -188,7 +188,7 @@ public class SimpleSimon extends HttpServlet {
             unRole.dispatchPostRequest(request, response, null);
         } else {
             String roleName = request.getParameter("role");
-            if (roleName == null)
+            if (roleName == null || !User.hasRole(db, userId, roleName))
                 roleName = "profile";
             Role role = roles.get(roleName);
             if (role == null) {
