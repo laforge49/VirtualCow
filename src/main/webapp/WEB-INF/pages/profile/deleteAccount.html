@@ -55,32 +55,39 @@
             <div style="padding-left: 150px;">
                 <img src="images/deleteaccount.jpg" alt="images/deleteaccount.jpg"/>
 
-                <form class="big" method="POST" action="#form">
-                    <p style="color:red"><strong>{{error}}&nbsp;</strong></p>
+                <form class="big" method="POST" action="#form"/>
                     <input type="hidden" name="from" value="deleteAccount"/>
                     <input type="hidden" name="to" value="deleteAccount"/>
                     {{hiddenTimestamp}}
                     {{hiddenRole}}
-                    <table>
-                        <tr>
-                            <td>
-                                <p> Password:</p>
+                    <table width="350">
+                      <tr>
+                      <td colspan="2">
+
+                        <p style="color:red"><strong>{{error}}&nbsp;</strong></p>
+                             </td>
+                              </tr>
+                               <tr>
+                            <td> <p> Password:</p>
                             </td>
+                            
                             <td>
                                 <input type="password" name="password" size="35">
                             </td>
                         </tr>
                         <tr>
-                            <td>
-                                &nbsp;
+                            <td colspan="2">
+                                <h3>{{success}}&nbsp;</h3>
                             </td>
-                            <td align="right">
+                            </tr>
+                            <tr>
+                            <td colspan="2" align="right">
                                 <input type="image" src="images/deletebutton.jpg" name="submit" value="Submit"/>
                             </td>
                         </tr>
                     </table>
 
-                    <h3>{{success}}&nbsp;</h3>
+                    
                 </form>
             </div>
         </div>
