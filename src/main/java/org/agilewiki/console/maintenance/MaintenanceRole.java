@@ -122,6 +122,7 @@ public class MaintenanceRole implements Role {
 
         home.append("</ul>\n");
         home.append("</li>\n");
+        /*
 
         home.append("<li>\n");
         home.append("<a>User Links:</a>\n");
@@ -151,6 +152,7 @@ public class MaintenanceRole implements Role {
 
         home.append("</ul>\n");
         home.append("</li>\n");
+        */
 
         home.append("<li>\n");
         if ("post".equals(currentPage) || timestamp != null) {
