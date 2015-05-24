@@ -26,18 +26,28 @@ public class User {
     public static final String USER_KEY = NameId.generate("user");
 
     public static List<String> roles(Db db, String userId) {
-        List<String> roles = new ArrayList<String>();
-        String inv = SecondaryIds.secondaryInv(userId, ROLE_ID);
-        for (String role: db.keysIterable(inv, FactoryRegistry.MAX_TIMESTAMP)) {
-            roles.add(NameId.name(role));
+        while (true) {
+            try {
+                List<String> roles = new ArrayList<String>();
+                String inv = SecondaryIds.secondaryInv(userId, ROLE_ID);
+                for (String role : db.keysIterable(inv, FactoryRegistry.MAX_TIMESTAMP)) {
+                    roles.add(NameId.name(role));
+                }
+                return roles;
+            } catch (UnexpectedChecksumException uce) {
+            }
         }
-        return roles;
     }
 
     public static boolean hasRole(Db db, String userId, String role) {
+        while (true) {
+            try {
         String inv = SecondaryIds.secondaryInv(userId, ROLE_ID);
         String roleId = NameId.generate(role);
         return db.get(inv, roleId, FactoryRegistry.MAX_TIMESTAMP) != null;
+            } catch (UnexpectedChecksumException uce) {
+            }
+        }
     }
 
     public static String email(Db db, String userId, long timestamp) {
