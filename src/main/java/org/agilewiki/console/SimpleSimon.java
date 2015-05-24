@@ -1,5 +1,6 @@
 package org.agilewiki.console;
 
+import org.agilewiki.console.admin.AdminRole;
 import org.agilewiki.console.maintenance.MaintenanceRole;
 import org.agilewiki.console.profile.ProfileRole;
 import org.agilewiki.console.unRole.UnRole;
@@ -47,11 +48,16 @@ public class SimpleSimon extends HttpServlet {
     public UnRole unRole;
     public ProfileRole profileRole;
     public MaintenanceRole maintenanceRole;
+    public AdminRole adminRole;
 
     public static String readResource(ServletContext servletContext, String groupName, String pageName) throws IOException {
         if (groupName != null && groupName.length() > 0) {
             pageName = groupName + "/" + pageName;
         }
+        System.out.println(pageName);
+        System.out.println(pageName);
+        System.out.println(pageName);
+        System.out.println(pageName);
         InputStream is = servletContext.getResourceAsStream("/WEB-INF/pages/" + pageName + ".html");
         InputStreamReader isr = new InputStreamReader(is, utf8);
         StringBuilder sb = new StringBuilder();
@@ -113,6 +119,8 @@ public class SimpleSimon extends HttpServlet {
                 roles.put(profileRole.roleName(), profileRole);
                 maintenanceRole = new MaintenanceRole(this);
                 roles.put(maintenanceRole.roleName(), maintenanceRole);
+                adminRole = new AdminRole(this);
+                roles.put(adminRole.roleName(), adminRole);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

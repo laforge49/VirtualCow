@@ -154,7 +154,8 @@ public class User {
                 emailId,
                 passwordHash,
                 simpleSimon.profileRole.roleName(),
-                simpleSimon.maintenanceRole.roleName());
+                simpleSimon.maintenanceRole.roleName(),
+                simpleSimon.adminRole.roleName());
         if (error == null)
             return true;
         servletConfig.getServletContext().log(error);

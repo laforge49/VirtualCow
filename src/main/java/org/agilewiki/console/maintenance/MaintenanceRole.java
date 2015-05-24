@@ -11,16 +11,12 @@ import java.util.Map;
  * The maintenance role.
  */
 public class MaintenanceRole implements Role {
-
-    private final ProfileRole profileRole;
     private Map<String, RequestBlade> requests = new HashMap<String, RequestBlade>();
     private Map<String, PostRequestBlade> posts = new HashMap<String, PostRequestBlade>();
     private HomeBlade homeBlade;
 
     public MaintenanceRole(SimpleSimon simpleSimon)
             throws Exception {
-        profileRole = simpleSimon.profileRole;
-
         HomeBlade homeBlade;
         JournalBlade journalBlade;
         NodeBlade nodeBlade;
@@ -55,18 +51,12 @@ public class MaintenanceRole implements Role {
 
     @Override
     public RequestBlade requestBlade(String page) {
-        RequestBlade rb = requests.get(page);
-        if (rb == null)
-            rb = profileRole.requestBlade(page);
-        return rb;
+        return requests.get(page);
     }
 
     @Override
     public PostRequestBlade postRequestBlade(String page) {
-        PostRequestBlade rb = posts.get(page);
-        if (rb == null)
-            rb = profileRole.postRequestBlade(page);
-        return rb;
+        return posts.get(page);
     }
 
     @Override
