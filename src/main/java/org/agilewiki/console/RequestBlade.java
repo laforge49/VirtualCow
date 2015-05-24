@@ -120,11 +120,12 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
 
             if (userId != null) {
                 map.put("myEmail", myEmail);
-                List<String> roles = User.roles(db, userId);
+                List<Role> roles = User.roles(simpleSimon, userId);
                 StringBuilder appMenu = new StringBuilder();
                 appMenu.append("<a>role &#9660;</a>\n");
                 appMenu.append("<ul class=\"sub-menu\">\n");
-                for (String rn: roles) {
+                for (Role role: roles) {
+                    String rn = role.roleName();
                     appMenu.append("<li>\n");
                     if (rn.equals(roleName)) {
                         appMenu.append("<a>");
@@ -136,7 +137,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
                         appMenu.append(rn);
                         appMenu.append("\">");
                     }
-                    appMenu.append(rn);
+                    appMenu.append(role.niceRoleName());
                     appMenu.append("</a>");
                     appMenu.append("</li>\n");
                 }

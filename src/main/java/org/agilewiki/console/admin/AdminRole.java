@@ -54,46 +54,33 @@ public class AdminRole implements Role {
     }
 
     @Override
+    public String niceRoleName() {
+        return "Admin";
+    }
+
+    @Override
     public String menu(HttpServletRequest request,
                        String page,
                        String setTimestamp,
                        String timestamp,
                        String setRole) {
-        StringBuilder home = new StringBuilder();
-        home.append("<a>Admin &#9660;</a>\n");
-        home.append("<ul class=\"sub-menu\">\n");
+        StringBuilder sb = new StringBuilder();
+        sb.append("<a>");
+        sb.append(niceRoleName());
+        sb.append(" &#9660;</a>\n");
+        sb.append("<ul class=\"sub-menu\">\n");
 
-        home.append("<li>");
-        if ("admin".equals(page)) {
-            home.append("<a>");
-        } else {
-            home.append("<a href=\"?from=");
-            home.append(page);
-            home.append("&to=admin");
-            home.append(setTimestamp);
-            home.append(setRole);
-            home.append("#rupa\">");
-        }
-        home.append("Admin");
-        home.append("</a>");
-        home.append("</li>\n");
+        menuItems(sb, page, setTimestamp, setRole);
 
-        home.append("<li>");
-        if ("emailAddresses".equals(page)) {
-            home.append("<a>");
-        } else {
-            home.append("<a href=\"?from=");
-            home.append(page);
-            home.append("&to=emailAddresses");
-            home.append(setTimestamp);
-            home.append(setRole);
-            home.append("#rupa\">");
-        }
-        home.append("EmailAddresses");
-        home.append("</a>");
-        home.append("</li>\n");
+        sb.append("</ul>\n");
+        return sb.toString();
+    }
 
-        home.append("</ul>\n");
-        return home.toString();
+    public void menuItems(StringBuilder sb,
+                          String currentPage,
+                          String setTimestamp,
+                          String setRole) {
+        menuItem(sb, currentPage, setTimestamp, setRole, "admin", "Admin");
+        menuItem(sb, currentPage, setTimestamp, setRole, "emailAddresses", "Email Addresses");
     }
 }

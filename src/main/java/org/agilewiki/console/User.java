@@ -25,13 +25,15 @@ public class User {
     public static final String PASSWORD_KEY = NameId.generate("password");
     public static final String USER_KEY = NameId.generate("user");
 
-    public static List<String> roles(Db db, String userId) {
+    public static List<Role> roles(SimpleSimon simpleSimon, String userId) {
         while (true) {
             try {
-                List<String> roles = new ArrayList<String>();
+                List<Role> roles = new ArrayList<Role>();
                 String inv = SecondaryIds.secondaryInv(userId, ROLE_ID);
-                for (String role : db.keysIterable(inv, FactoryRegistry.MAX_TIMESTAMP)) {
-                    roles.add(NameId.name(role));
+                for (String roleId : simpleSimon.db.keysIterable(inv, FactoryRegistry.MAX_TIMESTAMP)) {
+                    Role role = simpleSimon.roles.get(NameId.name(roleId));
+                    if (role != null)
+                        roles.add(role);
                 }
                 return roles;
             } catch (UnexpectedChecksumException uce) {
