@@ -70,6 +70,11 @@ public class MaintenanceRole implements Role {
     }
 
     @Override
+    public String niceRoleName() {
+        return "Maintenance";
+    }
+
+    @Override
     public String menu(HttpServletRequest request,
                        String page,
                        String setTimestamp,
