@@ -34,11 +34,23 @@ public class SecondaryKeysBlade extends RequestBlade {
     @Override
     public void get(String page, AsyncContext asyncContext, String userId, Role role) {
         new SR(page, asyncContext, userId, role) {
+
+            String secondaryType;
+            String keyPrefix;
+
+            @Override
+            protected String setContext() {
+                secondaryType = request.getParameter("secondaryType");
+                keyPrefix = request.getParameter("keyPrefix");
+                map.put("secondaryType", secondaryType);
+                map.put("keyPrefix", keyPrefix);
+                return "&secondaryType=" + secondaryType +
+                        "&keyPrefix=" + keyPrefix;
+            }
+
             @Override
             protected void process()
                     throws Exception {
-                String secondaryType = request.getParameter("secondaryType");
-                String keyPrefix = request.getParameter("keyPrefix");
                 String prefix = SecondaryId.SECONDARY_ID + NameIds.generate(secondaryType);
                 String startingAt = request.getParameter("startingAt");
                 if (startingAt == null)

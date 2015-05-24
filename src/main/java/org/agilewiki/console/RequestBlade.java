@@ -122,7 +122,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
                 map.put("myEmail", myEmail);
                 List<Role> roles = User.roles(simpleSimon, userId);
                 StringBuilder appMenu = new StringBuilder();
-                appMenu.append("<a>role &#9660;</a>\n");
+                appMenu.append("<a>Role &#9660;</a>\n");
                 appMenu.append("<ul class=\"sub-menu\">\n");
                 for (Role role: roles) {
                     String rn = role.roleName();

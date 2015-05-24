@@ -77,9 +77,11 @@ public class ProfileRole implements Role {
         return "Profile";
     }
 
+    @Override
     public void menuItems(StringBuilder home,
                           String currentPage,
                           String setTimestamp,
+                          String timestamp,
                           String setRole) {
         menuItem(home, currentPage, setTimestamp, setRole, "profile", "My Profile");
         menuItem(home, currentPage, setTimestamp, setRole, "changePassword", "Change Password");

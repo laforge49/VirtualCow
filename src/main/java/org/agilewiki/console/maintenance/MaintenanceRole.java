@@ -75,44 +75,13 @@ public class MaintenanceRole implements Role {
     }
 
     @Override
-    public String menu(HttpServletRequest request,
-                       String page,
-                       String setTimestamp,
-                       String timestamp,
-                       String setRole) {
-        StringBuilder home = new StringBuilder();
-        home.append("<a>Maintenance &#9660;</a>\n");
-        home.append("<ul class=\"sub-menu\">\n");
-
-        home.append("<li>\n");
-        if ("home".equals(page)) {
-            home.append("<a>\n");
-        } else {
-            home.append("<a href=\"?from=");
-            home.append(page);
-            home.append("&to=home");
-            home.append(setTimestamp);
-            home.append(setRole);
-            home.append("#rupa\">\n");
-        }
-        home.append("Home\n");
-        home.append("</a>\n");
-        home.append("</li>\n");
-
-        home.append("<li>\n");
-        if ("journal".equals(page)) {
-            home.append("<a>\n");
-        } else {
-            home.append("<a href=\"?from=");
-            home.append(page);
-            home.append("&to=journal");
-            home.append(setTimestamp);
-            home.append(setRole);
-            home.append("#rupa\">\n");
-        }
-        home.append("Journal\n");
-        home.append("</a>\n");
-        home.append("</li>\n");
+    public void menuItems(StringBuilder home,
+                          String currentPage,
+                          String setTimestamp,
+                          String timestamp,
+                          String setRole) {
+        menuItem(home, currentPage, setTimestamp, setRole, "home", "Home");
+        menuItem(home, currentPage, setTimestamp, setRole, "journal", "Journal");
 
         home.append("<li>\n");
         home.append("<a>Secondary Keys:</a>\n");
@@ -120,7 +89,7 @@ public class MaintenanceRole implements Role {
 
         home.append("<li>\n");
         home.append("<a href=\"?from=");
-        home.append(page);
+        home.append(currentPage);
         home.append("&to=secondaryKeys&secondaryType=subject&keyPrefix=$v");
         home.append(setTimestamp);
         home.append(setRole);
@@ -131,7 +100,7 @@ public class MaintenanceRole implements Role {
 
         home.append("<li>\n");
         home.append("<a href=\"?from=");
-        home.append(page);
+        home.append(currentPage);
         home.append("&to=secondaryKeys&secondaryType=email&keyPrefix=$v");
         home.append(setTimestamp);
         home.append(setRole);
@@ -142,7 +111,7 @@ public class MaintenanceRole implements Role {
 
         home.append("<li>\n");
         home.append("<a href=\"?from=");
-        home.append(page);
+        home.append(currentPage);
         home.append("&to=secondaryKeys&secondaryType=role&keyPrefix=$n");
         home.append(setTimestamp);
         home.append(setRole);
@@ -160,7 +129,7 @@ public class MaintenanceRole implements Role {
 
         home.append("<li>\n");
         home.append("<a href=\"?from=");
-        home.append(page);
+        home.append(currentPage);
         home.append("&to=targets&linkType=users");
         home.append(setTimestamp);
         home.append(setRole);
@@ -171,7 +140,7 @@ public class MaintenanceRole implements Role {
 
         home.append("<li>\n");
         home.append("<a href=\"?from=");
-        home.append(page);
+        home.append(currentPage);
         home.append("&to=sources&linkType=users");
         home.append(setTimestamp);
         home.append(setRole);
@@ -184,11 +153,11 @@ public class MaintenanceRole implements Role {
         home.append("</li>\n");
 
         home.append("<li>\n");
-        if ("post".equals(page) || timestamp != null) {
+        if ("post".equals(currentPage) || timestamp != null) {
             home.append("<a>\n");
         } else {
             home.append("<a href=\"?from=");
-            home.append(page);
+            home.append(currentPage);
             home.append("&to=post");
             home.append(setRole);
             home.append("#rupa\">\n");
@@ -196,7 +165,5 @@ public class MaintenanceRole implements Role {
         home.append("Post\n");
         home.append("</a>\n");
         home.append("</li>\n");
-        home.append("</ul>\n");
-        return home.toString();
     }
 }

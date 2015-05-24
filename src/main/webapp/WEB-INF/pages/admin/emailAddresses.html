@@ -69,7 +69,24 @@
                 </td>
             </tr>
         </table>
-        <h2 align="center">Email Addresses</h2>
+        <h2 align="center"><a id="top" />Email Addresses</h2>
+        <div>
+            <div style="font-family:courier">{{emailAddresses}}</div>
+        </div>
+        <br />
+        <div align="center">
+            <form method="GET">
+                <input type="hidden" name="from" value="emailAddresses"/>
+                <input type="hidden" name="to" value="emailAddresses"/>
+                {{hiddenTimestamp}}
+                {{hiddenRole}}
+                More email addresses, starting at <input type="text" name="startingAt" size="60" value="{{startingAt}}">
+                <input type="submit" value="OK"/>
+            </form>
+        </div>
+        <p align="center">
+            <a href="#top">top</a>
+        </p>
     </div>
     <!--end content-->
     <div id="footer">

@@ -63,7 +63,7 @@ public interface Role {
         sb.append(" &#9660;</a>\n");
         sb.append("<ul class=\"sub-menu\">\n");
 
-        menuItems(sb, page, setTimestamp, setRole);
+        menuItems(sb, page, setTimestamp, timestamp, setRole);
 
         sb.append("</ul>\n");
         return sb.toString();
@@ -72,6 +72,7 @@ public interface Role {
     default void menuItems(StringBuilder sb,
                           String currentPage,
                           String setTimestamp,
+                           String timestamp,
                           String setRole) {
     }
 

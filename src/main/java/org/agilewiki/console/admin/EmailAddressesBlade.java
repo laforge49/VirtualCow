@@ -1,8 +1,14 @@
 package org.agilewiki.console.admin;
 
-import org.agilewiki.console.RequestBlade;
-import org.agilewiki.console.Role;
-import org.agilewiki.console.SimpleSimon;
+import org.agilewiki.console.*;
+import org.agilewiki.utils.ids.NameId;
+import org.agilewiki.utils.ids.RandomId;
+import org.agilewiki.utils.ids.ValueId;
+import org.agilewiki.utils.ids.composites.SecondaryId;
+import org.agilewiki.utils.immutable.collections.ListAccessor;
+import org.agilewiki.utils.immutable.collections.MapAccessor;
+import org.agilewiki.utils.immutable.collections.VersionedMapNode;
+import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
 import javax.servlet.AsyncContext;
 
@@ -25,6 +31,55 @@ public class EmailAddressesBlade extends RequestBlade {
             @Override
             protected void process()
                     throws Exception {
+                String secondaryType = "email";
+                String keyPrefix = "$v";
+                String prefix = SecondaryId.SECONDARY_ID + NameIds.generate(secondaryType);
+                String startingAt = request.getParameter("startingAt");
+                if (startingAt == null)
+                    startingAt = "";
+                boolean hasMore = false;
+                StringBuilder sb;
+                while (true) {
+                    try {
+                        hasMore = false;
+                        int limit = 25;
+                        sb = new StringBuilder();
+                        for (String id : new IdIterable(servletContext, db, prefix, keyPrefix + startingAt, longTimestamp)) {
+                            if (limit == 0) {
+                                hasMore = true;
+                                startingAt = ValueId.value(id);
+                                break;
+                            }
+                            --limit;
+                            String secondaryId = SecondaryId.secondaryId(NameId.generate(secondaryType), id);
+                            MapAccessor ma = db.mapAccessor();
+                            ListAccessor la = ma.listAccessor(secondaryId);
+                            String nodeId = null;
+                            if (la != null) {
+                                VersionedMapNode vmn = (VersionedMapNode) la.get(0);
+                                if (vmn != null) {
+                                    nodeId = (String) vmn.firstKey(longTimestamp);
+                                }
+                            }
+                            if (nodeId != null) {
+                                sb.append("<a href=\"?from=secondaryKeys&to=node&role=maintenance&nodeId=");
+                                sb.append(nodeId);
+                                if (timestamp != null) {
+                                    sb.append("&timestamp=");
+                                    sb.append(timestamp);
+                                }
+                                sb.append(setRole + "\">");
+                                sb.append(ValueId.value(id));
+                                sb.append("</a>");
+                                sb.append("<br />");
+                            }
+                        }
+                        break;
+                    } catch (UnexpectedChecksumException uce) {
+                    }
+                }
+                map.put("emailAddresses", sb.toString());
+                map.put("startingAt", hasMore ? SimpleSimon.encode(startingAt, 0, SimpleSimon.ENCODE_FIELD) : ""); //field
                 finish();
             }
         }.signal();
