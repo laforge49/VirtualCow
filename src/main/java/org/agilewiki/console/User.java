@@ -2,7 +2,9 @@ package org.agilewiki.console;
 
 import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.ValueId;
+import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.FactoryRegistry;
+import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.Db;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
@@ -11,6 +13,8 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Define a user.
@@ -20,6 +24,15 @@ public class User {
     public static final String ROLE_ID = NameId.generate("role");
     public static final String PASSWORD_KEY = NameId.generate("password");
     public static final String USER_KEY = NameId.generate("user");
+
+    public static List<String> roles(Db db, String userId) {
+        List<String> roles = new ArrayList<String>();
+        String inv = SecondaryIds.secondaryInv(userId, ROLE_ID);
+        for (String role: db.keysIterable(inv, FactoryRegistry.MAX_TIMESTAMP)) {
+            roles.add(NameId.name(role));
+        }
+        return roles;
+    }
 
     public static String email(Db db, String userId, long timestamp) {
         while (true) {
