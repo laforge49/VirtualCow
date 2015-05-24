@@ -18,11 +18,14 @@ public class AdminRole implements Role {
     private Map<String, RequestBlade> requests = new HashMap<String, RequestBlade>();
     private Map<String, PostRequestBlade> posts = new HashMap<String, PostRequestBlade>();
     private AdminBlade adminBlade;
+    private EmailAddressesBlade emailAddressesBlade;
 
     public AdminRole(SimpleSimon simpleSimon)
             throws Exception {
         adminBlade = new AdminBlade(simpleSimon);
         requests.put("admin", adminBlade);
+        emailAddressesBlade = new EmailAddressesBlade(simpleSimon);
+        requests.put("emailAddresses", emailAddressesBlade);
     }
 
     @Override
@@ -72,6 +75,21 @@ public class AdminRole implements Role {
             home.append("#rupa\">");
         }
         home.append("Admin");
+        home.append("</a>");
+        home.append("</li>\n");
+
+        home.append("<li>");
+        if ("emailAddresses".equals(page)) {
+            home.append("<a>");
+        } else {
+            home.append("<a href=\"?from=");
+            home.append(page);
+            home.append("&to=emailAddresses");
+            home.append(setTimestamp);
+            home.append(setRole);
+            home.append("#rupa\">");
+        }
+        home.append("EmailAddresses");
         home.append("</a>");
         home.append("</li>\n");
 
