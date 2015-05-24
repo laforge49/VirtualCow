@@ -10,11 +10,13 @@
     <meta name="author" content=""/>
     <meta name="copyright" content="&copy; 2015"/>
     <meta name="robot" content="noindex, nofollow"/>
+ <link href="css/style.css" rel="stylesheet" type="text/css" media="screen"/>
     <link rel="stylesheet" href="css/jquery-1.11.4-smoothness.css">
     <script src="js/jquery-1.11.2.min.js"></script>
     <script src="js/jquery-1.11.4.ui.js"></script>
     <script src="js/jquery-ui-timepicker-addon.js"></script>
     <link rel="stylesheet" href="css/jquery-ui-timepicker-addon.css">
+   
     <script>
   $(function() {
     $('#datepicker').datetimepicker({
@@ -29,22 +31,31 @@
     </script>
 </head>
 <body>
-<div>
-    <table cellpadding="10">
-        <tr>
-            <td width="25%" valign="baseline">{{guest}}</td>
-            <td width="25%" valign="baseline">
-                {{home}}
-            </td>
-            <td width="25%" valign="baseline">
-                <a>{{myEmail}} &#9660;</a>
-                <ul class="sub-menu">
-                    <li><a href="?from=node&to=logout#rupa">Logout</a></li>
+<div id="main">
+    <div id="header">
+        <div id="logo"></div>
+        <div class="menu-wrap">
+            <nav class="menu">
+                <ul class="clearfix">
+                    <li>{{guest}}</li>
+                    <li>
+                        {{home}}
+                    </li>
+                    <li>
+                        <a id="rupa">{{myEmail}} &#9660;</a>
+                        <ul class="sub-menu">
+                            <li><a href="?from=profile&to=logout#rupa">Logout</a></li>
+                        </ul>
+                    </li>
                 </ul>
-            </td>
-        </tr>
-    </table>
-    <h2 style="float: right;"><a id="rupa"/>Virtual COW {{atTime}}</a></h2>
+            </nav>
+        </div> 
+        <div style="clear:both"></div>
+    </div>
+    <!--end header -->
+    <div id="content">
+
+    <h2 style="float: right;">Virtual COW {{atTime}}</a></h2>
     <table cellpadding="10">
         <tr>
             <td>
@@ -64,7 +75,6 @@
             </td>
         </tr>
     </table>
-</div>
 
 <h2 align="center">Node {{nodeId}} {{nice}}</h2>
 
@@ -75,5 +85,23 @@
 <p align="center">
     <a href="#top">top</a>
 </p>
+</div>
+
+ <!--end content-->
+    <div id="footer">
+        <img src="images/footer.jpg" alt="footer.jpg"/>
+
+        <div id="copy">
+            <p>Copyright 2015 by William La Forge, all rights reserved.</p>
+
+            <p align="center"><a
+                    href="https://www.linkedin.com/profile/view?id=65018574&trk=nav_responsive_tab_profile_pic">Web
+                Designed by Rupali La Forge</a></p>
+        </div>
+    </div>
+    <!--end footer-->
+   
+</div>
+<!--end main-->
 </body>
 </html>
