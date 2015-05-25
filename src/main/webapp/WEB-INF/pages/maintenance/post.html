@@ -10,41 +10,96 @@
     <meta name="author" content=""/>
     <meta name="copyright" content="&copy; 2015"/>
     <meta name="robot" content="noindex, nofollow"/>
+   <link href="css/style.css" rel="stylesheet" type="text/css" media="screen"/>
+<style>
+        login {
+        position: relative;
+        }
+        form.big {
+        position: absolute;
+        padding-top: -90px;
+        margin-top: -400px;
+        margin-left:50px;
+        }
+</style>
 </head>
 <body>
+<div id="main">
+    <div id="header">
+        <div id="logo"></div>
+        <div class="menu-wrap">
+            <nav class="menu">
+                <ul class="clearfix">
+                    <li>{{guest}}</li>
+                    <li>
+                        {{home}}
+                    </li>
+                    <li>
+                       <a id="rupa" />{{myEmail}} &#9660;</a>
+                        <ul class="sub-menu">
+                            <li><a href="?from=changePassword&to=logout#rupa">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+    <!--end header -->
+    <div id="content">
+<div id="login"><a id="form"/>
 
-<table cellpadding="10">
-    <tr>
-        <td width="25%" valign="baseline">{{guest}}</td>
-        <td width="25%" valign="baseline">
-            {{home}}
-        </td>
-        <td width="25%" valign="baseline">
-            <a>{{myEmail}} &#9660;</a>
-            <ul class="sub-menu">
-                <li><a href="?from=post&to=logout#rupa">Logout</a></li>
-            </ul>
-        </td>
-    </tr>
-</table>
+            <div style="padding-left: 150px;">
+            <img src="images/createjurnalentry.jpg" alt="images/createjurnalentry.jpg"/>
 
-<h2>Virtual COW</h2>
 <h2 align="center">Post</h2>
-
-<form method="POST">
-    <a id="rupa" />
+<form class="big" method="POST" action="#form">
+ <table width="250">
+ 
     {{hiddenRole}}
     <p style="color:red"><strong>{{error}}&nbsp;</strong></p>
 
+  <tr>
+  <td>
     <p>
-        Subject: <input type="text" name="subject" size="60" value="{{subject}}">
-    </p>
-
+        Subject:</p></td> <td> <input type="text" name="subject" size="40" value="{{subject}}">
+         </td>
+         </tr>
+        <tr>
+        <td>
     <p>
         <textarea name="body" rows="10" cols="60">{{body}}</textarea>
-    </p>
+    </p></td>
+    </tr>
+ <tr>
+  <td colspan="2">
     <h3>{{success}}&nbsp;</h3>
-    <input type="submit" value="Submit"/>
-</form>
+   </td> </tr>
+    <tr> <td colspan="2" align="right">
+
+    <input type="image" src="images/post.jpg" name="submit" value="Submit"/>
+</td>
+  </tr>
+                    </table>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--end content-->
+    <div id="footer">
+        <img src="images/footer.jpg" alt="footer.jpg"/>
+
+        <div id="copy">
+            <p>Copyright 2015 by William La Forge, all rights reserved.</p>
+
+            <p align="center"><a
+                    href="https://www.linkedin.com/profile/view?id=65018574&trk=nav_responsive_tab_profile_pic">Web
+                Designed by Rupali La Forge</a></p>
+        </div>
+    </div>
+    <!--end footer-->
+</div>
+<!--end main-->
 </body>
 </html>
