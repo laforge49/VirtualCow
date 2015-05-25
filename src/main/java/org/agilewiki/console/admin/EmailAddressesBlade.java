@@ -62,7 +62,7 @@ public class EmailAddressesBlade extends RequestBlade {
                                 }
                             }
                             if (nodeId != null) {
-                                sb.append("<a href=\"?from=secondaryKeys&to=node&role=maintenance&nodeId=");
+                                sb.append("<a href=\"?from=secondaryKeys&to=user&nodeId=");
                                 sb.append(nodeId);
                                 if (timestamp != null) {
                                     sb.append("&timestamp=");

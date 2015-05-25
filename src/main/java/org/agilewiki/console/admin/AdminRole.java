@@ -19,13 +19,19 @@ public class AdminRole implements Role {
     private Map<String, PostRequestBlade> posts = new HashMap<String, PostRequestBlade>();
     private AdminBlade adminBlade;
     private EmailAddressesBlade emailAddressesBlade;
+    private UserBlade userBlade;
 
     public AdminRole(SimpleSimon simpleSimon)
             throws Exception {
+        
         adminBlade = new AdminBlade(simpleSimon);
         requests.put("admin", adminBlade);
+
         emailAddressesBlade = new EmailAddressesBlade(simpleSimon);
         requests.put("emailAddresses", emailAddressesBlade);
+
+        userBlade = new UserBlade(simpleSimon);
+        requests.put("user", userBlade);
     }
 
     @Override
