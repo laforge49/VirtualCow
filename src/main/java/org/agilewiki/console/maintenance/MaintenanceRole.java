@@ -1,9 +1,7 @@
 package org.agilewiki.console.maintenance;
 
 import org.agilewiki.console.*;
-import org.agilewiki.console.profile.ProfileRole;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,11 +11,11 @@ import java.util.Map;
 public class MaintenanceRole implements Role {
     private Map<String, RequestBlade> requests = new HashMap<String, RequestBlade>();
     private Map<String, PostRequestBlade> posts = new HashMap<String, PostRequestBlade>();
-    private HomeBlade homeBlade;
+    private MaintenanceBlade maintenanceBlade;
 
     public MaintenanceRole(SimpleSimon simpleSimon)
             throws Exception {
-        HomeBlade homeBlade;
+        MaintenanceBlade homeBlade;
         JournalBlade journalBlade;
         NodeBlade nodeBlade;
         PostBlade postBlade;
@@ -25,7 +23,7 @@ public class MaintenanceRole implements Role {
         NodesBlade nodesBlade;
         InvLinksBlade invLinksBlade;
 
-        homeBlade = new HomeBlade(simpleSimon);
+        homeBlade = new MaintenanceBlade(simpleSimon);
         postBlade = new PostBlade(simpleSimon);
         nodeBlade = new NodeBlade(simpleSimon);
         journalBlade = new JournalBlade(simpleSimon);
@@ -33,7 +31,7 @@ public class MaintenanceRole implements Role {
         nodesBlade = new NodesBlade(simpleSimon);
         invLinksBlade = new InvLinksBlade(simpleSimon);
 
-        requests.put("home", homeBlade);
+        requests.put("maintenance", homeBlade);
         requests.put("post", postBlade);
         requests.put("node", nodeBlade);
         requests.put("journal", journalBlade);
@@ -61,12 +59,12 @@ public class MaintenanceRole implements Role {
 
     @Override
     public RequestBlade getDefaultRequestBlade() {
-        return homeBlade;
+        return maintenanceBlade;
     }
 
     @Override
     public String getDefaultRequestPage() {
-        return "home";
+        return "maintenance";
     }
 
     @Override
@@ -80,7 +78,7 @@ public class MaintenanceRole implements Role {
                           String setTimestamp,
                           String timestamp,
                           String setRole) {
-        menuItem(home, currentPage, setTimestamp, setRole, "home", "Home");
+        menuItem(home, currentPage, setTimestamp, setRole, "maintenance", "Maintenance");
         menuItem(home, currentPage, setTimestamp, setRole, "journal", "Journal");
 
         home.append("<li>\n");

@@ -93,7 +93,7 @@ public class JournalBlade extends RequestBlade {
                     }
                 }
                 map.put("journal", sb.toString());
-                map.put("more", hasMore ? "more" : "");
+                map.put("more", hasMore ? "<img src=\"images/morebutton.jpg\"/>" : "");
                 if (hasMore)
                     map.put("setStartingAt", "&startingAt=" +
                             SimpleSimon.encode(startingAt, 0, SimpleSimon.ENCODE_FIELD)); //field

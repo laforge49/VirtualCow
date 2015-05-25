@@ -120,7 +120,7 @@ public class InvLinksBlade extends RequestBlade {
                 }
                 map.put("invLinks", sb.toString());
                 map.put("setStartingAt", hasMore ? "&startingAt=" + startingAt : "");
-                map.put("more", hasMore ? "more" : "");
+                map.put("more", hasMore ? "<img src=\"images/morebutton.jpg\"/>" : "");
                 finish();
             }
         }.signal();
