@@ -74,7 +74,7 @@ public class ProfileRole implements Role {
 
     @Override
     public String niceRoleName() {
-        return "Profile";
+        return "My Profile";
     }
 
     @Override
