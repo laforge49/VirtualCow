@@ -23,7 +23,7 @@ public class AdminRole implements Role {
 
     public AdminRole(SimpleSimon simpleSimon)
             throws Exception {
-        
+
         adminBlade = new AdminBlade(simpleSimon);
         requests.put("admin", adminBlade);
 
