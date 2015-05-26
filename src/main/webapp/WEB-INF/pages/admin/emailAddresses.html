@@ -74,18 +74,21 @@
 
         <div class="small">
             {{emailAddresses}}
-        <div align="center">
-            <form method="GET">
+        <div>
+            <form method="GET" style="width=700">
                 <input type="hidden" name="from" value="emailAddresses"/>
                 <input type="hidden" name="to" value="emailAddresses"/>
                 {{hiddenTimestamp}}
                 {{hiddenRole}}
-                <p>More email addresses, starting at <input type="text" name="startingAt" size="38" value="{{startingAt}}">
-                <input type="submit" value="OK"/></p>
+                <table align="right"><tr>
+                     <td><p>More email addresses, starting at</p></td>
+                     <td><input type="text" name="startingAt" size="38" value="{{startingAt}}"></td>
+                     <td valign="center"><input type="image" src="images/viewbutton.jpg" name="submit" value="OK"/></td>
+                </tr></table>
             </form>
           </div><!--end form-->
         <p align="center">
-            <a href="#top">top</a>
+            <a href="#top"><img src="images/top.jpg"></a>
         </p>
         </div><!--end small-->
 
@@ -101,8 +104,8 @@
                         <input type="hidden" name="from" value="emailAddresses"/>
                         <input type="hidden" name="to" value="emailAddresses"/>
                         {{hiddenRole}}
-                        <p>Select Date:<input type="text" name="date" id="datepicker"/>
-                        <input type="submit" value="Go"/> </p>
+                        <p>Select Date:<input type="text" name="date" id="datepicker"/></p>
+                        <input type="submit" value="Go"/> 
                     </form>
                     {{clearTime}}
                 </td>
