@@ -25,7 +25,8 @@
     });
   });
  
-   </script>
+
+    </script>
 </head>
 <body>
 <div id="main">
@@ -52,63 +53,62 @@
     <!--end header -->
     <div id="content">
 
-    <h2 style="float: right;">Virtual COW {{atTime}}</a></h2>
-    
+        <h2 style="float: right;">Virtual COW {{atTime}}</a></h2>
 
-<h2 align="center">SecondaryKeys, type = {{secondaryType}}</h2>
 
-<div>
-    <div style="float:right">
-        <a id="top" />
-        <form method="GET">
-            <input type="hidden" name="from" value="secondaryKeys"/>
-            <input type="hidden" name="to" value="secondaryKeys"/>
-            <input type="hidden" name="secondaryType" value="{{secondaryType}}"/>
-            <input type="hidden" name="keyPrefix" value="{{keyPrefix}}"/>
-            {{hiddenTimestamp}}
-            {{hiddenRole}}
-            <table>
-            <tr> <td>
-            <p>More secondary keys, starting at</p></td>
-           <td> <input type="text" name="startingAt" size="60" value="{{startingAt}}"><td>
-            <td><input type="image" src="images/viewbutton.jpg" name="submit" value="OK"/></td>
-            </tr>
-           </table>
-        </form>
-    </div>
-    <div style="font-family:courier">{{secondaryKeys}}</div>
-</div>
-<p align="center">
-     <a href="#top"><img src="images/top.jpg"></a>
-        </p>
-        <br/>
-        <hr color="872609"/>
-<table cellpadding="10">
-        <tr>
-            <td>
-                <img src="/images/timeMachineSmall2.jpg"/>
-            </td>
-            <td>
+        <h2 align="center">SecondaryKeys, type = {{secondaryType}}</h2>
+
+        <div>
+            <div style="float:right">
+                <a id="top"/>
+
                 <form method="GET">
                     <input type="hidden" name="from" value="secondaryKeys"/>
                     <input type="hidden" name="to" value="secondaryKeys"/>
                     <input type="hidden" name="secondaryType" value="{{secondaryType}}"/>
                     <input type="hidden" name="keyPrefix" value="{{keyPrefix}}"/>
+                    {{hiddenTimestamp}}
                     {{hiddenRole}}
                     <table>
-                   <tr> <td>
-                   <p>Select Date:</p></td>
-                   </td> <input type="text" name="date" id="datepicker"/></td>
-                    <td><input type="image" src="images/go.jpg" name="submit" value="Go"/></td>
-                     </tr>
-                  </table>
+                        <tr>
+                            <td><p>More secondary keys, starting at</p></td>
+                            <td><input type="text" name="startingAt" size="60" value="{{startingAt}}"></td>
+                            <td><input type="image" src="images/viewbutton.jpg" name="submit" value="OK"/></td>
+                        </tr>
+                    </table>
                 </form>
-                {{clearTime}}
-            </td>
-        </tr>
-    </table>
+            </div>
+            <div style="font-family:courier">{{secondaryKeys}}</div>
+        </div>
+        <p align="center">
+            <a href="#top"><img src="images/top.jpg"></a>
+        </p>
+        <br/>
+        <hr color="872609"/>
+        <table cellpadding="10">
+            <tr>
+                <td><img src="/images/timeMachineSmall2.jpg"/></td>
+                <td>
+                    <form method="GET">
+                        <input type="hidden" name="from" value="secondaryKeys"/>
+                        <input type="hidden" name="to" value="secondaryKeys"/>
+                        <input type="hidden" name="secondaryType" value="{{secondaryType}}"/>
+                        <input type="hidden" name="keyPrefix" value="{{keyPrefix}}"/>
+                        {{hiddenRole}}
+                        <table>
+                            <tr>
+                                <td><p>Select Date:</p></td>
+                                <td><input type="text" name="date" id="datepicker"/></td>
+                                <td><input type="image" src="images/go.jpg" name="submit" value="Go"/></td>
+                            </tr>
+                        </table>
+                    </form>
+                    {{clearTime}}
+                </td>
+            </tr>
+        </table>
 
-</div>
+    </div>
     <!--end content-->
     <div id="footer">
         <img src="images/footer.jpg" alt="footer.jpg"/>
