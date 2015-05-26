@@ -41,14 +41,24 @@ public class UserBlade extends RequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                map.put("email", User.email(db, nodeId, longTimestamp));
+                String email = User.email(db, nodeId, longTimestamp);
+                map.put("email", email);
                 StringBuilder sb;
                 while (true) {
                     try {
                         sb = new StringBuilder();
                         sb.append("<table>\n");
                         sb.append("<caption>Roles ");
-                        sb.append("(edit)</caption>\n");
+                        if (timestamp == null) {
+                            sb.append("<a href=\"?from=");
+                            sb.append(page);
+                            sb.append("&to=editRoles&nodeId=");
+                            sb.append(nodeId);
+                            sb.append("&role=");
+                            sb.append(roleName);
+                            sb.append("\">(edit)</a>");
+                        }
+                        sb.append("</caption>\n");
                         for (String role: simpleSimon.roles.keySet()) {
                             if (role.equals("unRole"))
                                 break;
