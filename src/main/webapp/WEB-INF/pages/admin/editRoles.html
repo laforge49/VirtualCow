@@ -55,31 +55,26 @@
     <!--end header -->
     <div id="content">
 
-    <h2 style="float: right;">Virtual COW {{atTime}}</a></h2>
-    <table cellpadding="10">
-        <tr>
-            <td>
-                <img src="/images/timeMachineSmall.jpg"/>
-            </td>
-            <td>
-                <form method="GET">
-                    <input type="hidden" name="from" value="user"/>
-                    <input type="hidden" name="to" value="user"/>
-                    <input type="hidden" name="nodeId" value="{{nodeId}}"/>
-                    {{hiddenRole}}
-                    Select Date: <input type="text" name="date" id="datepicker"/>
-                    <input type="submit" value="Go"/>
-                </form>
-                <a href="?from=node&to=node&nodeId={{nodeId}}&timestamp={{jeTimestamp}}{{setRole}}#rupa">{{time}}</a><br/>
-                {{clearTime}}
-            </td>
-        </tr>
-    </table>
+    <h2 style="float: right;">Virtual COW</a></h2>
 
 <h2 align="center">Edit Roles for User {{email}}</h2>
 
 <div>
+    <form action="?#rupa">
+        <table>
+            <caption>Roles</caption>
+            <input type="hidden" name="from" value="editRoles"/>
+            <input type="hidden" name="to" value="editRoles"/>
+            <input type="hidden" name="nodeId" value="{{nodeId}}"/>
+            {{hiddenRole}}
     {{user}}
+            <tr>
+                <td align = "right" colspan="2">
+                    <input type="submit" value="Update">
+                </td>
+            </tr>
+        </table>
+    </form>
 </div>
 
 <p align="center">

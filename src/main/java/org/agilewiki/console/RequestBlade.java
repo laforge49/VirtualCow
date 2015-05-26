@@ -108,7 +108,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
                 timestamp = TimestampIds.value(TimestampIds.timestampId((time << 10) + 1023));
             }
             if (timestamp != null) {
-                map.put("clearTime", "<a href=\"?from=" + page + "&to=" + page + setContext + setRole + "\">Return to Present Time</a>");
+                map.put("clearTime", "<a href=\"?from=" + page + "&to=" + page + setContext + setRole + "#rupa\">Return to Present Time</a>");
                 setTimestamp = "&timestamp=" + timestamp;
                 map.put("setTimestamp", setTimestamp + setContext);
                 map.put("hiddenTimestamp",

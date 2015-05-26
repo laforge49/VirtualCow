@@ -68,7 +68,7 @@ public class EmailAddressesBlade extends RequestBlade {
                                     sb.append("&timestamp=");
                                     sb.append(timestamp);
                                 }
-                                sb.append(setRole + "\">");
+                                sb.append(setRole + "#rupa\">");
                                 sb.append(ValueId.value(id));
                                 sb.append("</a>");
                                 sb.append("<br />");

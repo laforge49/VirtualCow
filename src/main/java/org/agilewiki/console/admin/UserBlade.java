@@ -56,7 +56,7 @@ public class UserBlade extends RequestBlade {
                             sb.append(nodeId);
                             sb.append("&role=");
                             sb.append(roleName);
-                            sb.append("\">(edit)</a>");
+                            sb.append("#rupa\">(edit)</a>");
                         }
                         sb.append("</caption>\n");
                         for (String role: simpleSimon.roles.keySet()) {

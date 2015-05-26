@@ -49,38 +49,27 @@ public class EditRolesBlade extends RequestBlade {
                 while (true) {
                     try {
                         sb = new StringBuilder();
-                        sb.append("<table>\n");
-                        sb.append("<caption>Roles ");
-                        if (timestamp == null) {
-                            sb.append("<a href=\"?from=");
-                            sb.append(page);
-                            sb.append("&to=editRoles&nodeId=");
-                            sb.append(nodeId);
-                            sb.append("&role=");
-                            sb.append(roleName);
-                            sb.append("\">(edit)</a>");
-                        }
-                        sb.append("</caption>\n");
                         for (String role: simpleSimon.roles.keySet()) {
                             if (role.equals("unRole"))
                                 break;
                             sb.append("<tr>");
                             sb.append("<td>");
+                            sb.append("<input type=\"checkbox\" name=\"roles\" value=\"");
+                            sb.append(roleName);
+                            sb.append("\"");
                             if (SecondaryId.hasSecondaryId(
                                     db,
                                     nodeId,
                                     SecondaryId.secondaryId(User.ROLE_ID, NameId.generate(role)),
                                     longTimestamp))
-                                sb.append("x");
-                            else
-                                sb.append("&nbsp;");
+                                sb.append(" checked");
+                            sb.append(">");
                             sb.append("</td>");
                             sb.append("<td>");
                             sb.append(role);
                             sb.append("</td>");
                             sb.append("</tr>\n");
                         }
-                        sb.append("</table>\n");
                         break;
                     } catch (UnexpectedChecksumException uce) {
                     }
