@@ -72,11 +72,11 @@
     <a href="#top"><img src="images/top.jpg"></a>
 </p>
 <br/>
-<hr color="872609"/ >
+<hr color="872609"/>
 <table cellpadding="10">
         <tr>
             <td>
-                <img src="/images/timeMachineSmall.jpg"/>
+                <img src="/images/timeMachineSmall2.jpg"/>
             </td>
             <td>
                 <form method="GET">
@@ -85,8 +85,13 @@
                     <input type="hidden" name="nodeId" value="{{nodeId}}"/>
                     <input type="hidden" name="linkType" value="{{linkType}}"/>
                     {{hiddenRole}}
-                    Select Date: <input type="text" name="date" id="datepicker"/>
-                    <input type="submit" value="Go"/>
+                   <table>
+                   <tr>
+                    <td> <p>Select Date and Time:</p> </td>
+                     <td> <input type="text" name="date" id="datepicker"/></td>
+                    <td><input type="submit" value="Go"/></td>
+                    </tr>
+                     </table>
                 </form>
                 {{clearTime}}
             </td>
