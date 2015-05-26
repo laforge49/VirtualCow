@@ -26,6 +26,20 @@
   });
 
     </script>
+<style>
+        login {
+        position: static;
+        }
+        
+        div.small {
+        position: absolute;
+        padding-top: -80px;
+        margin-top: -300px;
+        margin-left:50px;
+        }
+
+    
+    </style>
 </head>
 <body>
 <div id="main">
@@ -53,45 +67,50 @@
     <div id="content">
 
         <h2 style="float: right;">Virtual COW {{atTime}}</a></h2>
-        <table cellpadding="10">
-            <tr>
-                <td>
-                    <img src="/images/timeMachineSmall.jpg"/>
-                </td>
-                <td>
-                    <form method="GET">
-                        <input type="hidden" name="from" value="emailAddresses"/>
-                        <input type="hidden" name="to" value="emailAddresses"/>
-                        {{hiddenRole}}
-                        Select Date: <input type="text" name="date" id="datepicker"/>
-                        <input type="submit" value="Go"/>
-                    </form>
-                    {{clearTime}}
-                </td>
-            </tr>
-        </table>
-        <h2 align="center"><a id="top"/>Email Addresses</h2>
 
-        <div>
-            <div style="font-family:courier">{{emailAddresses}}</div>
-        </div>
-        <br/>
+        <div id="login" style="padding-left: 150px;"><a id="form"/>
 
+                <img src="images/emailaddresses.jpg" alt="images/emailaddresses.jpg"/>   
+
+        <div class="small">
+            {{emailAddresses}}
         <div align="center">
             <form method="GET">
                 <input type="hidden" name="from" value="emailAddresses"/>
                 <input type="hidden" name="to" value="emailAddresses"/>
                 {{hiddenTimestamp}}
                 {{hiddenRole}}
-                More email addresses, starting at <input type="text" name="startingAt" size="60" value="{{startingAt}}">
-                <input type="submit" value="OK"/>
+                <p>More email addresses, starting at <input type="text" name="startingAt" size="38" value="{{startingAt}}">
+                <input type="submit" value="OK"/></p>
             </form>
-        </div>
+          </div><!--end form-->
         <p align="center">
             <a href="#top">top</a>
         </p>
-    </div>
-    <!--end content-->
+        </div><!--end small-->
+
+    </div><!--end login-->
+
+      <table cellpadding="10">
+            <tr>
+                <td>
+                    <img src="/images/timeMachineSmall2.jpg"/>
+                </td>
+                <td>
+                    <form method="GET">
+                        <input type="hidden" name="from" value="emailAddresses"/>
+                        <input type="hidden" name="to" value="emailAddresses"/>
+                        {{hiddenRole}}
+                        <p>Select Date:<input type="text" name="date" id="datepicker"/>
+                        <input type="submit" value="Go"/> </p>
+                    </form>
+                    {{clearTime}}
+                </td>
+            </tr>
+        </table>
+   
+   </div><!--end content-->
+
     <div id="footer">
         <img src="images/footer.jpg" alt="footer.jpg"/>
 
@@ -101,10 +120,8 @@
             <p align="center"><a
                     href="https://www.linkedin.com/profile/view?id=65018574&trk=nav_responsive_tab_profile_pic">Web
                 Design by Rupali La Forge</a></p>
-        </div>
-    </div>
-    <!--end footer-->
-</div>
-<!--end main-->
+        </div><!--end COPY-->
+    </div><!--end footer-->
+</div><!--end main-->
 </body>
 </html>
