@@ -28,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class SimpleSimon extends HttpServlet {
 
@@ -44,7 +45,7 @@ public class SimpleSimon extends HttpServlet {
 
     public MailOut mailOut;
 
-    public Map<String, Role> roles = new HashMap<String, Role>();
+    public Map<String, Role> roles = new TreeMap<String, Role>();
     public UnRole unRole;
     public ProfileRole profileRole;
     public MaintenanceRole maintenanceRole;

@@ -1,6 +1,7 @@
 package org.agilewiki.console.admin;
 
 import org.agilewiki.console.*;
+import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.composites.Journal;
 import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.ids.composites.SecondaryId;
@@ -45,6 +46,29 @@ public class UserBlade extends RequestBlade {
                 while (true) {
                     try {
                         sb = new StringBuilder();
+                        sb.append("<table>\n");
+                        sb.append("<caption>Roles ");
+                        sb.append("(edit)</caption>\n");
+                        for (String role: simpleSimon.roles.keySet()) {
+                            if (role.equals("unRole"))
+                                break;
+                            sb.append("<tr>");
+                            sb.append("<td>");
+                            if (SecondaryId.hasSecondaryId(
+                                    db,
+                                    nodeId,
+                                    SecondaryId.secondaryId(User.ROLE_ID, NameId.generate(role)),
+                                    longTimestamp))
+                                sb.append("x");
+                            else
+                                sb.append("&nbsp;");
+                            sb.append("</td>");
+                            sb.append("<td>");
+                            sb.append(role);
+                            sb.append("</td>");
+                            sb.append("</tr>\n");
+                        }
+                        sb.append("</table>\n");
                         break;
                     } catch (UnexpectedChecksumException uce) {
                     }

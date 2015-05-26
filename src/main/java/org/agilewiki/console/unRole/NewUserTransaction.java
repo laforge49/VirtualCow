@@ -2,8 +2,11 @@ package org.agilewiki.console.unRole;
 
 import org.agilewiki.console.User;
 import org.agilewiki.console.VCTransaction;
+import org.agilewiki.utils.immutable.collections.ListNode;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
+
+import java.util.List;
 
 /**
  * Create a new user.
@@ -16,7 +19,9 @@ public class NewUserTransaction extends VCTransaction {
         String userId = (String) mapNode.get(User.USER_KEY);
         String emailId = (String) mapNode.get(User.EMAIL_ID);
         String passwordHash = (String) mapNode.get(User.PASSWORD_KEY);
-        String userTypeId = (String) mapNode.get(User.ROLE_ID);
-        User.createUser(db, userId, emailId, passwordHash, userTypeId);
+        ListNode list = mapNode.getList(User.ROLE_ID);
+        List<String> flatList = list.flatList();
+        String[] roles = new String[]{};
+        User.createUser(db, userId, emailId, passwordHash, flatList.toArray(roles));
     }
 }
