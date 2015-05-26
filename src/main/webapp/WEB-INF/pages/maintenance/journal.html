@@ -53,24 +53,7 @@
     <div id="content">
 
     <h2 style="float: right;">Virtual COW {{atTime}}</a></h2>
-    <table cellpadding="10">
-        <tr>
-            <td>
-                <img src="/images/timeMachineSmall.jpg"/>
-            </td>
-            <td>
-                <form method="GET">
-                    <input type="hidden" name="from" value="journal"/>
-                    <input type="hidden" name="to" value="journal"/>
-                    {{hiddenRole}}
-                    Select Date: <input type="text" name="date" id="datepicker"/>
-                    <input type="submit" value="Go"/>
-                </form>
-                {{clearTime}}
-            </td>
-        </tr>
-    </table>
-
+   
 <h2 align="center">Journal</h2>
 
 <div>
@@ -85,6 +68,28 @@
 <p align="center">
     <a href="#top">top</a>
 </p>
+<br/>
+<hr color="872609"/ >
+ <table cellpadding="10">
+        <tr>
+            <td>
+                <img src="/images/timeMachineSmall2.jpg"/>
+            </td>
+            <td>
+                <form method="GET">
+				<table>
+               <tr> <td>
+                    <input type="hidden" name="from" value="journal"/>
+                    <input type="hidden" name="to" value="journal"/>
+                    {{hiddenRole}}
+                    Select Date: <input type="text" name="date" id="datepicker"/>
+                    <input type="submit" value="Go"/>
+                </form>
+                {{clearTime}}
+            </td>
+        </tr>
+    </table>
+
  </div>
     <!--end content-->
     <div id="footer">
