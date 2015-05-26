@@ -55,7 +55,22 @@
     <div id="content">
 
     <h2 style="float: right;">Virtual COW {{atTime}}</a></h2>
-    <table cellpadding="10">
+    
+
+<h2 align="center">Links to <a href="?from=invLinks&to=node&nodeId={{nodeId}}{{setTimestamp}}{{setRole}}">{{nodeId}}</a> Labeled {{linkType}}</h2>
+
+<div>
+    <div style="float:right">
+        <a id="top" />
+        <a href="?from=invLinks&to=invLinks&linkType={{linkType}}&nodeId={{nodeId}}{{setStartingAt}}{{setTimestamp}}{{setRole}}#top">
+            {{more}}
+        </a>
+    </div>
+    <div style="font-family:courier">{{invLinks}}</div>
+</div>
+<p align="center">
+    <a href="#top">top</a></p>
+<table cellpadding="10">
         <tr>
             <td>
                 <img src="/images/timeMachineSmall.jpg"/>
@@ -75,19 +90,6 @@
         </tr>
     </table>
 
-<h2 align="center">Links to <a href="?from=invLinks&to=node&nodeId={{nodeId}}{{setTimestamp}}{{setRole}}">{{nodeId}}</a> Labeled {{linkType}}</h2>
-
-<div>
-    <div style="float:right">
-        <a id="top" />
-        <a href="?from=invLinks&to=invLinks&linkType={{linkType}}&nodeId={{nodeId}}{{setStartingAt}}{{setTimestamp}}{{setRole}}#top">
-            {{more}}
-        </a>
-    </div>
-    <div style="font-family:courier">{{invLinks}}</div>
-</div>
-<p align="center">
-    <a href="#top">top</a></p>
  </div>
 
  <!--end content-->
