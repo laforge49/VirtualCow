@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -25,6 +24,7 @@
       showButtonPanel: false
     });
   });
+
 
     </script>
 </head>
@@ -55,6 +55,7 @@
 
         <h2 style="float: right;">Virtual COW {{atTime}}</a></h2>
         <br/>
+
         <h2 align="center"><a id="top"/>Email Addresses</h2>
 
         <div>
@@ -69,32 +70,38 @@
                 {{hiddenTimestamp}}
                 {{hiddenRole}}
                 <table>
-               <tr> <td> <p>More email addresses, starting at <p/> </td>
-                <td><input type="text" name="startingAt" size="60" value="{{startingAt}}"></td>
-                <td valign="center"><input type="image" src="images/viewbutton.jpg" name="submit" value="OK"/></td>
-                </tr></table>
+                    <tr>
+                        <td><p>More email addresses, starting at
+
+                            <p/></td>
+                        <td><input type="text" name="startingAt" size="60" value="{{startingAt}}"></td>
+                        <td valign="center"><input type="image" src="images/viewbutton.jpg" name="submit" value="OK"/>
+                        </td>
+                    </tr>
+                </table>
             </form>
         </div>
         <p align="center">
-        <a href="#top"><img src="images/top.jpg"></a>
+            <a href="#top"><img src="images/top.jpg"></a>
         </p>
-      <hr color="872609"/ >
-     <table cellpadding="10">
+        <hr color="872609"/>
+        <table cellpadding="10">
             <tr>
                 <td>
                     <img src="/images/timeMachineSmall2.jpg"/>
                 </td>
                 <td>
                     <form method="GET">
-                    <table>
-               <tr> <td>
-                        <input type="hidden" name="from" value="emailAddresses"/></td>
-                       <input type="hidden" name="to" value="emailAddresses"/>
+                        <input type="hidden" name="from" value="emailAddresses"/>
+                        <input type="hidden" name="to" value="emailAddresses"/>
                         {{hiddenRole}}
-                     <td><p> Select Date and Time:</p></td> <td><input type="text" name="date" id="datepicker"/></td>
-                        <td><input type="image" src="images/go.jpg" name="submit" value="Go"/></td>
-                      </tr>
-                      </table>
+                        <table>
+                            <tr>
+                                <td><p> Select Date and Time:</p></td>
+                                <td><input type="text" name="date" id="datepicker"/></td>
+                                <td><input type="image" src="images/go.jpg" name="submit" value="Go"/></td>
+                            </tr>
+                        </table>
                     </form>
                     {{clearTime}}
                 </td>
