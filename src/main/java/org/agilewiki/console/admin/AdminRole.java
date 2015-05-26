@@ -36,6 +36,7 @@ public class AdminRole implements Role {
 
         editRolesBlade = new EditRolesBlade(simpleSimon);
         requests.put("editRoles", editRolesBlade);
+        posts.put("editRoles", editRolesBlade);
     }
 
     @Override
