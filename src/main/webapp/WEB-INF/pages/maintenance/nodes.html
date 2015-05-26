@@ -27,6 +27,7 @@
 
 
 
+
     </script>
 </head>
 <body>
@@ -48,56 +49,58 @@
                     </li>
                 </ul>
             </nav>
-        </div> 
+        </div>
         <div style="clear:both"></div>
     </div>
     <!--end header -->
     <div id="content">
 
-<div>
-    <h2 style="float: right;">Virtual COW {{atTime}}</a></h2>
-</div>
+        <div>
+            <h2 style="float: right;">Virtual COW {{atTime}}</a></h2>
+        </div>
 
-<h2 align="center">Nodes, SecondaryId = {{secondaryId}}</h2>
+        <h2 align="center">Nodes, SecondaryId = {{secondaryId}}</h2>
 
-<div>
-    <div style="float:right">
-        <a href="?from=nodes&to=nodes&secondaryId={{secondaryId}}{{setStartingAt}}{{setTimestamp}}{{setRole}}">{{more}}</a>
+        <div>
+            <div style="float:right">
+                <a href="?from=nodes&to=nodes&secondaryId={{secondaryId}}{{setStartingAt}}{{setTimestamp}}{{setRole}}">{{more}}</a>
+            </div>
+            <div style="font-family:courier">{{nodes}}</div>
+        </div>
+        <p align="center">
+            <a href="#top"><img src="images/top.jpg"></a>
+        </p>
+        <br/>
+        <hr color="872609"
+        / >
+
+        <table cellpadding="10">
+            <tr>
+                <td>
+                    <img src="/images/timeMachineSmall2.jpg"/>
+                </td>
+                <td>
+                    <form method="GET">
+                        <input type="hidden" name="from" value="nodes"/>
+                        <input type="hidden" name="to" value="nodes"/>
+                        <input type="hidden" name="secondaryId" value="{{secondaryId}}"/>
+                        {{hiddenRole}}
+                        <table>
+                            <tr>
+                                <td><p>Select Date and Time:</p></td>
+                                <td><input type="text" name="date" id="datepicker"/></td>
+                                <td><input type="image" src="images/go.jpg" name="submit" value="Go"/></td>
+                            </tr>
+                        </table>
+                    </form>
+                    {{clearTime}}
+                </td>
+            </tr>
+        </table>
+
     </div>
-    <div style="font-family:courier">{{nodes}}</div>
-</div>
-<p align="center">
-    <a href="#top"><img src="images/top.jpg"></a>
-</p>
-<br/>
-<hr color="872609"/ >
 
-    <table cellpadding="10">
-        <tr>
-            <td>
-                <img src="/images/timeMachineSmall2.jpg"/>
-            </td>
-            <td>
-                <form method="GET">
-                <input type="hidden" name="from" value="nodes"/>
-                    <input type="hidden" name="to" value="nodes"/>
-                    <input type="hidden" name="secondaryId" value="{{secondaryId}}"/>
-                    {{hiddenRole}}
-                  <table>
-               <tr> 
-                    <td><p>Select Date and Time</p></td>: <td><input type="text" name="date" id="datepicker"/></td>
-                    <td><input type="image" src="images/go.jpg" name="submit" value="Go"/></td>
-               </tr>
-                </table>
-                </form>
-                {{clearTime}}
-            </td>
-        </tr>
-    </table>
-
- </div>
-
- <!--end content-->
+    <!--end content-->
     <div id="footer">
         <img src="images/footer.jpg" alt="footer.jpg"/>
 
@@ -110,7 +113,7 @@
         </div>
     </div>
     <!--end footer-->
-   
+
 </div>
 <!--end main-->
 </body>

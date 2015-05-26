@@ -10,13 +10,13 @@
     <meta name="author" content=""/>
     <meta name="copyright" content="&copy; 2015"/>
     <meta name="robot" content="noindex, nofollow"/>
- <link href="css/style.css" rel="stylesheet" type="text/css" media="screen"/>
+    <link href="css/style.css" rel="stylesheet" type="text/css" media="screen"/>
     <link rel="stylesheet" href="css/jquery-1.11.4-smoothness.css">
     <script src="js/jquery-1.11.2.min.js"></script>
     <script src="js/jquery-1.11.4.ui.js"></script>
     <script src="js/jquery-ui-timepicker-addon.js"></script>
     <link rel="stylesheet" href="css/jquery-ui-timepicker-addon.css">
-   
+
     <script>
   $(function() {
     $('#datepicker').datetimepicker({
@@ -25,6 +25,7 @@
       showButtonPanel: false
     });
   });
+
 
 
 
@@ -49,53 +50,55 @@
                     </li>
                 </ul>
             </nav>
-        </div> 
+        </div>
         <div style="clear:both"></div>
     </div>
     <!--end header -->
- <div id="content">
+    <div id="content">
 
- <h2 style="float: right;">Virtual COW {{atTime}}</a></h2>
-    
-<h2 align="center">Node {{nodeId}} {{nice}}</h2>
+        <h2 style="float: right;">Virtual COW {{atTime}}</a></h2>
 
-<div>
-    {{node}}
-</div>
+        <h2 align="center">Node {{nodeId}} {{nice}}</h2>
 
-<p align="center">
-   <a href="#top"><img src="images/top.jpg"></a>
-</p>
-<br/>
-<hr color="872609"/ >
+        <div>
+            {{node}}
+        </div>
 
-<table cellpadding="10">
-        <tr>
-            <td>
-                <img src="/images/timeMachineSmall2.jpg"/>
-            </td>
-            <td>
-                <form method="GET">
-				<input type="hidden" name="from" value="node"/>
-                    <input type="hidden" name="to" value="node"/>
-                    <input type="hidden" name="nodeId" value="{{nodeId}}"/>
-                     {{hiddenRole}}
-                <table>
-                <tr>  
-                   <td><p> Select Date and Time:</p></td> <td><input type="text" name="date" id="datepicker"/></td>
-                    <td><input type="image" src="images/go.jpg" name="submit" value="Go"/></td>
-                  </tr>
-                 </table>
-                </form>
-                <a href="?from=node&to=node&nodeId={{nodeId}}&timestamp={{jeTimestamp}}{{setRole}}#rupa">{{time}}</a><br/>
-                {{clearTime}}
-            </td>
-        </tr>
-    </table>
+        <p align="center">
+            <a href="#top"><img src="images/top.jpg"></a>
+        </p>
+        <br/>
+        <hr color="872609"
+        / >
 
-</div>
+        <table cellpadding="10">
+            <tr>
+                <td>
+                    <img src="/images/timeMachineSmall2.jpg"/>
+                </td>
+                <td>
+                    <form method="GET">
+                        <input type="hidden" name="from" value="node"/>
+                        <input type="hidden" name="to" value="node"/>
+                        <input type="hidden" name="nodeId" value="{{nodeId}}"/>
+                        {{hiddenRole}}
+                        <table>
+                            <tr>
+                                <td><p>Select Date and Time:</p></td>
+                                <td><input type="text" name="date" id="datepicker"/></td>
+                                <td><input type="image" src="images/go.jpg" name="submit" value="Go"/></td>
+                            </tr>
+                        </table>
+                    </form>
+                    <a href="?from=node&to=node&nodeId={{nodeId}}&timestamp={{jeTimestamp}}{{setRole}}#rupa">{{time}}</a><br/>
+                    {{clearTime}}
+                </td>
+            </tr>
+        </table>
 
- <!--end content-->
+    </div>
+
+    <!--end content-->
     <div id="footer">
         <img src="images/footer.jpg" alt="footer.jpg"/>
 
@@ -108,7 +111,7 @@
         </div>
     </div>
     <!--end footer-->
-   
+
 </div>
 <!--end main-->
 </body>

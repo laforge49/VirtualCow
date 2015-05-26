@@ -27,6 +27,7 @@
 
 
 
+
     </script>
 </head>
 <body>
@@ -48,59 +49,60 @@
                     </li>
                 </ul>
             </nav>
-        </div> 
+        </div>
         <div style="clear:both"></div>
     </div>
     <!--end header -->
     <div id="content">
 
-    <h2 style="float: right;">Virtual COW {{atTime}}</a></h2>
-    
+        <h2 style="float: right;">Virtual COW {{atTime}}</a></h2>
 
-<h2 align="center">Links to <a href="?from=invLinks&to=node&nodeId={{nodeId}}{{setTimestamp}}{{setRole}}">{{nodeId}}</a> Labeled {{linkType}}</h2>
 
-<div>
-    <div style="float:right">
-        <a id="top" />
-        <a href="?from=invLinks&to=invLinks&linkType={{linkType}}&nodeId={{nodeId}}{{setStartingAt}}{{setTimestamp}}{{setRole}}#top">
-            {{more}}
-        </a>
+        <h2 align="center">Links to <a href="?from=invLinks&to=node&nodeId={{nodeId}}{{setTimestamp}}{{setRole}}">{{nodeId}}</a>
+            Labeled {{linkType}}</h2>
+
+        <div>
+            <div style="float:right">
+                <a id="top"/>
+                <a href="?from=invLinks&to=invLinks&linkType={{linkType}}&nodeId={{nodeId}}{{setStartingAt}}{{setTimestamp}}{{setRole}}#top">
+                    {{more}}
+                </a>
+            </div>
+            <div style="font-family:courier">{{invLinks}}</div>
+        </div>
+        <p align="center">
+            <a href="#top"><img src="images/top.jpg"></a>
+        </p>
+        <br/>
+        <hr color="872609"/>
+        <table cellpadding="10">
+            <tr>
+                <td>
+                    <img src="/images/timeMachineSmall2.jpg"/>
+                </td>
+                <td>
+                    <form method="GET">
+                        <input type="hidden" name="from" value="invLinks"/>
+                        <input type="hidden" name="to" value="invLinks"/>
+                        <input type="hidden" name="nodeId" value="{{nodeId}}"/>
+                        <input type="hidden" name="linkType" value="{{linkType}}"/>
+                        {{hiddenRole}}
+                        <table>
+                            <tr>
+                                <td><p>Select Date and Time:</p></td>
+                                <td><input type="text" name="date" id="datepicker"/></td>
+                                <td><input type="submit" value="Go"/></td>
+                            </tr>
+                        </table>
+                    </form>
+                    {{clearTime}}
+                </td>
+            </tr>
+        </table>
+
     </div>
-    <div style="font-family:courier">{{invLinks}}</div>
-</div>
-<p align="center">
-    <a href="#top"><img src="images/top.jpg"></a>
-</p>
-<br/>
-<hr color="872609"/>
-<table cellpadding="10">
-        <tr>
-            <td>
-                <img src="/images/timeMachineSmall2.jpg"/>
-            </td>
-            <td>
-                <form method="GET">
-                    <input type="hidden" name="from" value="invLinks"/>
-                    <input type="hidden" name="to" value="invLinks"/>
-                    <input type="hidden" name="nodeId" value="{{nodeId}}"/>
-                    <input type="hidden" name="linkType" value="{{linkType}}"/>
-                    {{hiddenRole}}
-                   <table>
-                   <tr>
-                    <td> <p>Select Date and Time:</p> </td>
-                     <td> <input type="text" name="date" id="datepicker"/></td>
-                    <td><input type="submit" value="Go"/></td>
-                    </tr>
-                     </table>
-                </form>
-                {{clearTime}}
-            </td>
-        </tr>
-    </table>
 
- </div>
-
- <!--end content-->
+    <!--end content-->
     <div id="footer">
         <img src="images/footer.jpg" alt="footer.jpg"/>
 
@@ -113,7 +115,7 @@
         </div>
     </div>
     <!--end footer-->
-   
+
 </div>
 <!--end main-->
 </body>
