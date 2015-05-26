@@ -20,6 +20,7 @@ public class AdminRole implements Role {
     private AdminBlade adminBlade;
     private EmailAddressesBlade emailAddressesBlade;
     private UserBlade userBlade;
+    private EditRolesBlade editRolesBlade;
 
     public AdminRole(SimpleSimon simpleSimon)
             throws Exception {
@@ -32,6 +33,9 @@ public class AdminRole implements Role {
 
         userBlade = new UserBlade(simpleSimon);
         requests.put("user", userBlade);
+
+        editRolesBlade = new EditRolesBlade(simpleSimon);
+        requests.put("editRoles", editRolesBlade);
     }
 
     @Override
