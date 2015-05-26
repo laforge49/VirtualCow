@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -25,6 +24,7 @@
       showButtonPanel: false
     });
   });
+
 
     </script>
 </head>
@@ -62,28 +62,30 @@
             Not a pretty sight, more like a necessary evil.
         </p>
         <br/>
-  <hr color="872609"/ >
-     <table cellpadding="10">
+        <hr color="872609"
+        / >
+        <table cellpadding="10">
             <tr>
                 <td>
                     <img src="/images/timeMachineSmall2.jpg"/>
                 </td>
                 <td>
                     <form method="GET">
-					 <input type="hidden" name="from" value="maintenance"/></td>
-                       <input type="hidden" name="to" value="maintenance"/>
-                    <table>
-               <tr> 
+                        <input type="hidden" name="from" value="maintenance"/>
+                        <input type="hidden" name="to" value="maintenance"/>
                         {{hiddenRole}}
-                     <td><p> Select Date and Time:</p></td> <td><input type="text" name="date" id="datepicker"/></td>
-                        <td><input type="image" src="images/go.jpg" name="submit" value="Go"/></td>
-                      </tr>
-                      </table>
+                        <table>
+                            <tr>
+                                <td><p> Select Date and Time:</p></td>
+                                <td><input type="text" name="date" id="datepicker"/></td>
+                                <td><input type="image" src="images/go.jpg" name="submit" value="Go"/></td>
+                            </tr>
+                        </table>
                     </form>
                     {{clearTime}}
                 </td>
             </tr>
-        </table>     
+        </table>
     </div>
     <!--end content-->
     <div id="footer">
