@@ -45,6 +45,29 @@
             Maintenance provides a low-level view of Virtual COW's innards.
             Not a pretty sight, more like a necessary evil.
         </p>
+        <br/>
+  <hr color="872609"/ >
+     <table cellpadding="10">
+            <tr>
+                <td>
+                    <img src="/images/timeMachineSmall2.jpg"/>
+                </td>
+                <td>
+                    <form method="GET">
+                    <table>
+               <tr> <td>
+                        <input type="hidden" name="from" value="emailAddresses"/></td>
+                       <input type="hidden" name="to" value="emailAddresses"/>
+                        {{hiddenRole}}
+                     <td><p> Select Date and Time:</p></td> <td><input type="text" name="date" id="datepicker"/></td>
+                        <td><input type="image" src="images/go.jpg" name="submit" value="Go"/></td>
+                      </tr>
+                      </table>
+                    </form>
+                    {{clearTime}}
+                </td>
+            </tr>
+        </table>     
     </div>
     <!--end content-->
     <div id="footer">
