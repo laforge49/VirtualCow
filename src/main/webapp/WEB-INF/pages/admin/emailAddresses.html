@@ -8,6 +8,17 @@
     <meta name="keywords" content=""/>
     <meta name="description" content=""/>
     <meta name="author" content=""/>
+   
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Virtual Cow</title>
+    <meta http-equiv="cache-control" content="no-cache"/>
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
     <meta name="copyright" content="&copy; 2015"/>
     <meta name="robot" content="noindex, nofollow"/>
     <link href="css/style.css" rel="stylesheet" type="text/css" media="screen"/>
@@ -26,20 +37,6 @@
   });
 
     </script>
-<style>
-        login {
-        position: static;
-        }
-        
-        div.small {
-        position: absolute;
-        padding-top: -80px;
-        margin-top: -300px;
-        margin-left:50px;
-        }
-
-    
-    </style>
 </head>
 <body>
 <div id="main">
@@ -67,53 +64,53 @@
     <div id="content">
 
         <h2 style="float: right;">Virtual COW {{atTime}}</a></h2>
+        <br/>
+        <h2 align="center"><a id="top"/>Email Addresses</h2>
 
-        <div id="login" style="padding-left: 150px;"><a id="form"/>
-
-                <img src="images/emailaddresses.jpg" alt="images/emailaddresses.jpg"/>   
-
-        <div class="small">
-            {{emailAddresses}}
         <div>
-            <form method="GET" style="width=700">
+            <div style="font-family:courier">{{emailAddresses}}</div>
+        </div>
+        <br/>
+
+        <div align="center">
+            <form method="GET">
                 <input type="hidden" name="from" value="emailAddresses"/>
                 <input type="hidden" name="to" value="emailAddresses"/>
                 {{hiddenTimestamp}}
                 {{hiddenRole}}
-                <table align="right"><tr>
-                     <td><p>More email addresses, starting at</p></td>
-                     <td><input type="text" name="startingAt" size="38" value="{{startingAt}}"></td>
-                     <td valign="center"><input type="image" src="images/viewbutton.jpg" name="submit" value="OK"/></td>
+                <table>
+               <tr> <td> <p>More email addresses, starting at <p/> </td>
+                <td><input type="text" name="startingAt" size="60" value="{{startingAt}}"></td>
+                <td valign="center"><input type="image" src="images/viewbutton.jpg" name="submit" value="OK"/></td>
                 </tr></table>
             </form>
-          </div><!--end form-->
+        </div>
         <p align="center">
-            <a href="#top"><img src="images/top.jpg"></a>
+        <a href="#top"><img src="images/top.jpg"></a>
         </p>
-        </div><!--end small-->
-
-    </div><!--end login-->
-
-      <table cellpadding="10">
+     <table cellpadding="10">
             <tr>
                 <td>
                     <img src="/images/timeMachineSmall2.jpg"/>
                 </td>
                 <td>
-                    <form method="GET" action="?#rupa">
-                        <input type="hidden" name="from" value="emailAddresses"/>
-                        <input type="hidden" name="to" value="emailAddresses"/>
+                    <form method="GET">
+                    <table>
+               <tr> <td>
+                        <input type="hidden" name="from" value="emailAddresses"/></td>
+                       <input type="hidden" name="to" value="emailAddresses"/>
                         {{hiddenRole}}
-                        <p>Select Date:<input type="text" name="date" id="datepicker"/>
-                        <input type="submit" value="Go"/> </p>
+                     <td><p> Select Date:</p></td> <td><input type="text" name="date" id="datepicker"/></td>
+                        <td><input type="image" src="images/go.jpg" name="submit" value="Go"/></td>
+                      </tr>
+                      </table>
                     </form>
                     {{clearTime}}
                 </td>
             </tr>
         </table>
-   
-   </div><!--end content-->
-
+    </div>
+    <!--end content-->
     <div id="footer">
         <img src="images/footer.jpg" alt="footer.jpg"/>
 
@@ -123,8 +120,10 @@
             <p align="center"><a
                     href="https://www.linkedin.com/profile/view?id=65018574&trk=nav_responsive_tab_profile_pic">Web
                 Design by Rupali La Forge</a></p>
-        </div><!--end COPY-->
-    </div><!--end footer-->
-</div><!--end main-->
+        </div>
+    </div>
+    <!--end footer-->
+</div>
+<!--end main-->
 </body>
 </html>
