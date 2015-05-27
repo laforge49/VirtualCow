@@ -90,8 +90,9 @@ body, div, h1, h2, h3, h4, h5, h6, p, ul, img {margin:0px; padding:0px; }
     opacity:1;
 }
  
+ 
 .sub-menu {
-    width:110%;
+    width:160%;
     padding:5px 0px;
     position:absolute;
     top:100%;
