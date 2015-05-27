@@ -57,26 +57,7 @@
     <div id="content">
 
         <h2 style="float: right;">Virtual COW {{atTime}}</a></h2>
-        <table cellpadding="10">
-            <tr>
-                <td>
-                    <img src="/images/timeMachineSmall.jpg"/>
-                </td>
-                <td>
-                    <form method="GET">
-                        <input type="hidden" name="from" value="user"/>
-                        <input type="hidden" name="to" value="user"/>
-                        <input type="hidden" name="nodeId" value="{{nodeId}}"/>
-                        {{hiddenRole}}
-                        Select Date: <input type="text" name="date" id="datepicker"/>
-                        <input type="submit" value="Go"/>
-                    </form>
-                    <a href="?from=node&to=node&nodeId={{nodeId}}&timestamp={{jeTimestamp}}{{setRole}}#rupa">{{time}}</a><br/>
-                    {{clearTime}}
-                </td>
-            </tr>
-        </table>
-
+        
         <h2 align="center">User {{email}}</h2>
 
         <div>
@@ -84,8 +65,35 @@
         </div>
 
         <p align="center">
-            <a href="#top">top</a>
+            <a href="#top"><img src="images/top.jpg"></a>
         </p>
+        <br/>
+        <hr color="872609"/>
+		<table cellpadding="10">
+            <tr>
+                <td>
+                    <img src="/images/timeMachineSmall2.jpg"/>
+                </td>
+                <td>
+                    <form method="GET">
+                        <input type="hidden" name="from" value="user"/>
+                        <input type="hidden" name="to" value="user"/>
+                        <input type="hidden" name="nodeId" value="{{nodeId}}"/>
+                        {{hiddenRole}}
+						<table>
+						<tr> <td>
+                        <p>Select Date:</p> </td>
+   						<td><input type="text" name="date" id="datepicker"/></td>
+                        <td><input type="image" src="images/go.jpg" name="submit" value="Go"/></td>
+						</tr>
+						</table>
+                    </form>
+                    <a href="?from=node&to=node&nodeId={{nodeId}}&timestamp={{jeTimestamp}}{{setRole}}#rupa">{{time}}</a><br/>
+                    {{clearTime}}
+                </td>
+            </tr>
+        </table>
+
     </div>
 
     <!--end content-->
