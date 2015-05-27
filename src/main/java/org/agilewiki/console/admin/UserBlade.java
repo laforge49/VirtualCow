@@ -70,7 +70,7 @@ public class UserBlade extends RequestBlade {
                                     nodeId,
                                     SecondaryId.secondaryId(User.ROLE_ID, NameId.generate(roleName)),
                                     longTimestamp))
-                                sb.append("x");
+                                sb.append("&#10004;");
                             else
                                 sb.append("&nbsp;");
                             sb.append("</td>");
