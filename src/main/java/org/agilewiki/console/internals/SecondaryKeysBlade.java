@@ -1,22 +1,15 @@
-package org.agilewiki.console.maintenance;
+package org.agilewiki.console.internals;
 
 import org.agilewiki.console.*;
 import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.ids.composites.SecondaryId;
-import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.ListAccessor;
 import org.agilewiki.utils.immutable.collections.MapAccessor;
 import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
 import javax.servlet.AsyncContext;
-import javax.servlet.ServletException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 /**
  * Request for secondary keys.
@@ -28,7 +21,7 @@ public class SecondaryKeysBlade extends RequestBlade {
 
     @Override
     protected String groupName() {
-        return "maintenance";
+        return "internals";
     }
 
     @Override

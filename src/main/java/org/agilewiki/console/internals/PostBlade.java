@@ -1,4 +1,4 @@
-package org.agilewiki.console.maintenance;
+package org.agilewiki.console.internals;
 
 import org.agilewiki.console.*;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
@@ -17,7 +17,7 @@ public class PostBlade extends PostRequestBlade {
 
     @Override
     protected String groupName() {
-        return "maintenance";
+        return "internals";
     }
 
     @Override

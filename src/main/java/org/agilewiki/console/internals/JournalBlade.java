@@ -1,4 +1,4 @@
-package org.agilewiki.console.maintenance;
+package org.agilewiki.console.internals;
 
 import org.agilewiki.console.*;
 import org.agilewiki.utils.ids.Timestamp;
@@ -20,7 +20,7 @@ public class JournalBlade extends RequestBlade {
 
     @Override
     protected String groupName() {
-        return "maintenance";
+        return "internals";
     }
 
     @Override

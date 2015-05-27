@@ -1,4 +1,4 @@
-package org.agilewiki.console.maintenance;
+package org.agilewiki.console.internals;
 
 import org.agilewiki.console.*;
 
@@ -6,16 +6,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The maintenance role.
+ * The internals role.
  */
-public class MaintenanceRole implements Role {
+public class InternalsRole implements Role {
     private Map<String, RequestBlade> requests = new HashMap<String, RequestBlade>();
     private Map<String, PostRequestBlade> posts = new HashMap<String, PostRequestBlade>();
-    private MaintenanceBlade maintenanceBlade;
+    private InternalsBlade internalsBlade;
 
-    public MaintenanceRole(SimpleSimon simpleSimon)
+    public InternalsRole(SimpleSimon simpleSimon)
             throws Exception {
-        MaintenanceBlade homeBlade;
+        InternalsBlade internalsBlade;
         JournalBlade journalBlade;
         NodeBlade nodeBlade;
         PostBlade postBlade;
@@ -23,7 +23,7 @@ public class MaintenanceRole implements Role {
         NodesBlade nodesBlade;
         InvLinksBlade invLinksBlade;
 
-        homeBlade = new MaintenanceBlade(simpleSimon);
+        internalsBlade = new InternalsBlade(simpleSimon);
         postBlade = new PostBlade(simpleSimon);
         nodeBlade = new NodeBlade(simpleSimon);
         journalBlade = new JournalBlade(simpleSimon);
@@ -31,7 +31,7 @@ public class MaintenanceRole implements Role {
         nodesBlade = new NodesBlade(simpleSimon);
         invLinksBlade = new InvLinksBlade(simpleSimon);
 
-        requests.put("maintenance", homeBlade);
+        requests.put("internals", internalsBlade);
         requests.put("post", postBlade);
         requests.put("node", nodeBlade);
         requests.put("journal", journalBlade);
@@ -44,7 +44,7 @@ public class MaintenanceRole implements Role {
 
     @Override
     public String roleName() {
-        return "maintenance";
+        return "internals";
     }
 
     @Override
@@ -59,17 +59,17 @@ public class MaintenanceRole implements Role {
 
     @Override
     public RequestBlade getDefaultRequestBlade() {
-        return maintenanceBlade;
+        return internalsBlade;
     }
 
     @Override
     public String getDefaultRequestPage() {
-        return "maintenance";
+        return "internals";
     }
 
     @Override
     public String niceRoleName() {
-        return "Maintenance";
+        return "Internals";
     }
 
     @Override
@@ -78,7 +78,7 @@ public class MaintenanceRole implements Role {
                           String setTimestamp,
                           String timestamp,
                           String setRole) {
-        menuItem(home, currentPage, setTimestamp, setRole, "maintenance", "Maintenance");
+        menuItem(home, currentPage, setTimestamp, setRole, "internals", "Internals");
         menuItem(home, currentPage, setTimestamp, setRole, "journal", "Journal");
 
         home.append("<li>\n");

@@ -1,7 +1,7 @@
 package org.agilewiki.console;
 
 import org.agilewiki.console.admin.AdminRole;
-import org.agilewiki.console.maintenance.MaintenanceRole;
+import org.agilewiki.console.internals.InternalsRole;
 import org.agilewiki.console.profile.ProfileRole;
 import org.agilewiki.console.unRole.UnRole;
 import org.agilewiki.jactor2.core.impl.Plant;
@@ -26,7 +26,6 @@ import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -48,7 +47,7 @@ public class SimpleSimon extends HttpServlet {
     public Map<String, Role> roles = new TreeMap<String, Role>();
     public UnRole unRole;
     public ProfileRole profileRole;
-    public MaintenanceRole maintenanceRole;
+    public InternalsRole internalsRole;
     public AdminRole adminRole;
 
     public static String readResource(ServletContext servletContext, String groupName, String pageName) throws IOException {
@@ -114,8 +113,8 @@ public class SimpleSimon extends HttpServlet {
                 roles.put(unRole.roleName(), unRole);
                 profileRole = new ProfileRole(this);
                 roles.put(profileRole.roleName(), profileRole);
-                maintenanceRole = new MaintenanceRole(this);
-                roles.put(maintenanceRole.roleName(), maintenanceRole);
+                internalsRole = new InternalsRole(this);
+                roles.put(internalsRole.roleName(), internalsRole);
                 adminRole = new AdminRole(this);
                 roles.put(adminRole.roleName(), adminRole);
             } catch (Exception ex) {

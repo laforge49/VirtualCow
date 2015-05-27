@@ -1,4 +1,4 @@
-package org.agilewiki.console.maintenance;
+package org.agilewiki.console.internals;
 
 import org.agilewiki.console.NameIds;
 import org.agilewiki.console.RequestBlade;
@@ -22,7 +22,7 @@ public class NodesBlade extends RequestBlade {
 
     @Override
     protected String groupName() {
-        return "maintenance";
+        return "internals";
     }
 
     @Override
