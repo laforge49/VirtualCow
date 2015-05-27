@@ -3,6 +3,8 @@ package org.agilewiki.console.admin;
 import org.agilewiki.console.*;
 import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.composites.SecondaryId;
+import org.agilewiki.utils.immutable.collections.ListNode;
+import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
 import javax.servlet.AsyncContext;
@@ -49,24 +51,25 @@ public class EditRolesBlade extends PostRequestBlade {
                 while (true) {
                     try {
                         sb = new StringBuilder();
-                        for (String role: simpleSimon.roles.keySet()) {
-                            if (role.equals("unRole"))
+                        for (String roleName: simpleSimon.roles.keySet()) {
+                            if (roleName.equals("unRole"))
                                 break;
+                            String niceRoleName = simpleSimon.roles.get(roleName).niceRoleName();
                             sb.append("<tr>");
                             sb.append("<td>");
                             sb.append("<input type=\"checkbox\" name=\"roles\" value=\"");
-                            sb.append(roleName);
+                            sb.append(this.roleName);
                             sb.append("\"");
                             if (SecondaryId.hasSecondaryId(
                                     db,
                                     nodeId,
-                                    SecondaryId.secondaryId(User.ROLE_ID, NameId.generate(role)),
+                                    SecondaryId.secondaryId(User.ROLE_ID, NameId.generate(roleName)),
                                     longTimestamp))
                                 sb.append(" checked");
                             sb.append(">");
                             sb.append("</td>");
                             sb.append("<td>");
-                            sb.append(role);
+                            sb.append(niceRoleName);
                             sb.append("</td>");
                             sb.append("</tr>\n");
                         }
@@ -95,8 +98,8 @@ public class EditRolesBlade extends PostRequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                List<String> addRoles = new ArrayList<String>();
-                List<String> removeRoles = new ArrayList<String>();
+                ListNode addRoles = db.dbFactoryRegistry.nilList;
+                ListNode removeRoles = db.dbFactoryRegistry.nilList;
                 for (String role: simpleSimon.roles.keySet()) {
                     boolean o = false;
                     boolean n = false;
@@ -112,12 +115,19 @@ public class EditRolesBlade extends PostRequestBlade {
                         o = true;
                     }
                     if (o && !n) {
-                        removeRoles.add(role);
+                        removeRoles = removeRoles.add(role);
                     }
                     if (!o && n) {
-                        addRoles.add(role);
+                        addRoles = addRoles.add(role);
                     }
                 }
+                MapNode mn = db.dbFactoryRegistry.nilMap;
+                mn = mn.add(User.USER_KEY, nodeId);
+                mn = mn.add("addRoles", addRoles);
+                mn = mn.add("removeRoles", removeRoles);
+
+
+
                 String email = User.email(db, nodeId, longTimestamp);
                 String userLink = "<a href=\"?from=" + page +
                         "&to=user" +
@@ -129,26 +139,27 @@ public class EditRolesBlade extends PostRequestBlade {
                 while (true) {
                     try {
                         sb = new StringBuilder();
-                        for (String role: simpleSimon.roles.keySet()) {
-                            if (role.equals("unRole"))
+                        for (String roleName: simpleSimon.roles.keySet()) {
+                            if (roleName.equals("unRole"))
                                 break;
+                            String niceRoleName = simpleSimon.roles.get(roleName).niceRoleName();
                             sb.append("<tr>");
                             sb.append("<td>");
                             sb.append("<input type=\"checkbox\" name=\"role-");
-                            sb.append(role);
+                            sb.append(roleName);
                             sb.append("\" value=\"");
-                            sb.append(role);
+                            sb.append(roleName);
                             sb.append("\"");
                             if (SecondaryId.hasSecondaryId(
                                     db,
                                     nodeId,
-                                    SecondaryId.secondaryId(User.ROLE_ID, NameId.generate(role)),
+                                    SecondaryId.secondaryId(User.ROLE_ID, NameId.generate(roleName)),
                                     longTimestamp))
                                 sb.append(" checked");
                             sb.append(">");
                             sb.append("</td>");
                             sb.append("<td>");
-                            sb.append(role);
+                            sb.append(niceRoleName);
                             sb.append("</td>");
                             sb.append("</tr>\n");
                         }

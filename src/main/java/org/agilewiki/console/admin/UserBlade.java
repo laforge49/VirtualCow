@@ -59,22 +59,23 @@ public class UserBlade extends RequestBlade {
                             sb.append("#rupa\">(edit)</a>");
                         }
                         sb.append("</caption>\n");
-                        for (String role: simpleSimon.roles.keySet()) {
-                            if (role.equals("unRole"))
+                        for (String roleName: simpleSimon.roles.keySet()) {
+                            if (roleName.equals("unRole"))
                                 break;
+                            String niceRoleName = simpleSimon.roles.get(roleName).niceRoleName();
                             sb.append("<tr>");
                             sb.append("<td>");
                             if (SecondaryId.hasSecondaryId(
                                     db,
                                     nodeId,
-                                    SecondaryId.secondaryId(User.ROLE_ID, NameId.generate(role)),
+                                    SecondaryId.secondaryId(User.ROLE_ID, NameId.generate(roleName)),
                                     longTimestamp))
                                 sb.append("x");
                             else
                                 sb.append("&nbsp;");
                             sb.append("</td>");
                             sb.append("<td>");
-                            sb.append(role);
+                            sb.append(niceRoleName);
                             sb.append("</td>");
                             sb.append("</tr>\n");
                         }
