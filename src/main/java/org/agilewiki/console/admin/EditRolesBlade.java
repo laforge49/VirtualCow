@@ -47,7 +47,7 @@ public class EditRolesBlade extends PostRequestBlade {
                         "&to=user" +
                         "&nodeId=" + nodeId +
                         "&role=" + roleName +
-                        "\">" + email + "</a>";
+                        "#rupa\">" + email + "</a>";
                 map.put("email", userLink);
                 StringBuilder sb;
                 while (true) {
@@ -102,6 +102,9 @@ public class EditRolesBlade extends PostRequestBlade {
                     throws Exception {
                 ListNode addRoles = db.dbFactoryRegistry.nilList;
                 ListNode removeRoles = db.dbFactoryRegistry.nilList;
+                MapNode mn = db.dbFactoryRegistry.nilMap;
+                mn = mn.add(User.USER_KEY, userId);
+                mn = mn.add("nodeId", nodeId);
                 for (String role : simpleSimon.roles.keySet()) {
                     boolean o = false;
                     boolean n = false;
@@ -116,17 +119,12 @@ public class EditRolesBlade extends PostRequestBlade {
                         o = true;
                     }
                     if (o && !n) {
-                        removeRoles = removeRoles.add(role);
+                        mn = mn.add("removeRoles", role);
                     }
                     if (!o && n) {
-                        addRoles = addRoles.add(role);
+                        mn = mn.add("addRoles", role);
                     }
                 }
-                MapNode mn = db.dbFactoryRegistry.nilMap;
-                mn = mn.add(User.USER_KEY, userId);
-                mn = mn.add("nodeId", nodeId);
-                mn = mn.add("addRoles", addRoles);
-                mn = mn.add("removeRoles", removeRoles);
 
                 asyncRequestImpl.send(db.update(UpdateRolesTransaction.NAME, mn), new AsyncResponseProcessor<String>() {
                     @Override
@@ -136,7 +134,7 @@ public class EditRolesBlade extends PostRequestBlade {
                                 "&to=user" +
                                 "&nodeId=" + nodeId +
                                 "&role=" + roleName +
-                                "\">" + email + "#rupa</a>";
+                                "#rupa\">" + email + "</a>";
                         map.put("email", userLink);
                         StringBuilder sb;
                         while (true) {
