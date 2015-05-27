@@ -149,11 +149,11 @@ body, div, h1, h2, h3, h4, h5, h6, p, ul, img {margin:0px; padding:0px; }
 }
  
 #content a {
-    color: #3d0803;
+    color: #c63f33;
     font-weight: bold;
     text-decoration: none; 
 }
-#content a:hover { color:#c63f33;
+#content a:hover { color:#932305;
 }
 
 #wrapper {	
@@ -299,11 +299,11 @@ body, div, h1, h2, h3, h4, h5, h6, p, ul, img {margin:0px; padding:0px; }
     color: #4b100b;
 }
 #footer a {
-    color: #3d0803;
+    color: #c63f33;
     font-weight: bold;
     text-decoration: none; 
 }
-#footer a:hover { color:#c63f33;
+#footer a:hover { color:#932305;
 }
 
  
