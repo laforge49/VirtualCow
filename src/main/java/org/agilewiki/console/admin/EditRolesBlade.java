@@ -1,6 +1,10 @@
 package org.agilewiki.console.admin;
 
-import org.agilewiki.console.*;
+import org.agilewiki.console.PostRequestBlade;
+import org.agilewiki.console.Role;
+import org.agilewiki.console.SimpleSimon;
+import org.agilewiki.console.User;
+import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.collections.ListNode;
@@ -8,9 +12,6 @@ import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
 import javax.servlet.AsyncContext;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Request for a journal entry.
@@ -18,6 +19,7 @@ import java.util.Map;
 public class EditRolesBlade extends PostRequestBlade {
     public EditRolesBlade(SimpleSimon simpleSimon) throws Exception {
         super(simpleSimon);
+        db.registerTransaction(UpdateRolesTransaction.NAME, UpdateRolesTransaction.class);
     }
 
     @Override
@@ -51,7 +53,7 @@ public class EditRolesBlade extends PostRequestBlade {
                 while (true) {
                     try {
                         sb = new StringBuilder();
-                        for (String roleName: simpleSimon.roles.keySet()) {
+                        for (String roleName : simpleSimon.roles.keySet()) {
                             if (roleName.equals("unRole"))
                                 break;
                             String niceRoleName = simpleSimon.roles.get(roleName).niceRoleName();
@@ -100,18 +102,17 @@ public class EditRolesBlade extends PostRequestBlade {
                     throws Exception {
                 ListNode addRoles = db.dbFactoryRegistry.nilList;
                 ListNode removeRoles = db.dbFactoryRegistry.nilList;
-                for (String role: simpleSimon.roles.keySet()) {
+                for (String role : simpleSimon.roles.keySet()) {
                     boolean o = false;
                     boolean n = false;
-                    if (request.getParameter("role-"+role) != null) {
+                    if (request.getParameter("role-" + role) != null) {
                         n = true;
                     }
                     if (SecondaryId.hasSecondaryId(
                             db,
                             nodeId,
                             SecondaryId.secondaryId(User.ROLE_ID, NameId.generate(role)),
-                            longTimestamp))
-                    {
+                            longTimestamp)) {
                         o = true;
                     }
                     if (o && !n) {
@@ -127,49 +128,52 @@ public class EditRolesBlade extends PostRequestBlade {
                 mn = mn.add("addRoles", addRoles);
                 mn = mn.add("removeRoles", removeRoles);
 
-
-
-                String email = User.email(db, nodeId, longTimestamp);
-                String userLink = "<a href=\"?from=" + page +
-                        "&to=user" +
-                        "&nodeId=" + nodeId +
-                        "&role=" + roleName +
-                        "\">" + email + "</a>";
-                map.put("email", userLink);
-                StringBuilder sb;
-                while (true) {
-                    try {
-                        sb = new StringBuilder();
-                        for (String roleName: simpleSimon.roles.keySet()) {
-                            if (roleName.equals("unRole"))
+                asyncRequestImpl.send(db.update(UpdateRolesTransaction.NAME, mn), new AsyncResponseProcessor<String>() {
+                    @Override
+                    public void processAsyncResponse(String _response) throws Exception {
+                        String email = User.email(db, nodeId, longTimestamp);
+                        String userLink = "<a href=\"?from=" + page +
+                                "&to=user" +
+                                "&nodeId=" + nodeId +
+                                "&role=" + roleName +
+                                "\">" + email + "</a>";
+                        map.put("email", userLink);
+                        StringBuilder sb;
+                        while (true) {
+                            try {
+                                sb = new StringBuilder();
+                                for (String roleName : simpleSimon.roles.keySet()) {
+                                    if (roleName.equals("unRole"))
+                                        break;
+                                    String niceRoleName = simpleSimon.roles.get(roleName).niceRoleName();
+                                    sb.append("<tr>");
+                                    sb.append("<td>");
+                                    sb.append("<input type=\"checkbox\" name=\"role-");
+                                    sb.append(roleName);
+                                    sb.append("\" value=\"");
+                                    sb.append(roleName);
+                                    sb.append("\"");
+                                    if (SecondaryId.hasSecondaryId(
+                                            db,
+                                            nodeId,
+                                            SecondaryId.secondaryId(User.ROLE_ID, NameId.generate(roleName)),
+                                            longTimestamp))
+                                        sb.append(" checked");
+                                    sb.append(">");
+                                    sb.append("</td>");
+                                    sb.append("<td>");
+                                    sb.append(niceRoleName);
+                                    sb.append("</td>");
+                                    sb.append("</tr>\n");
+                                }
                                 break;
-                            String niceRoleName = simpleSimon.roles.get(roleName).niceRoleName();
-                            sb.append("<tr>");
-                            sb.append("<td>");
-                            sb.append("<input type=\"checkbox\" name=\"role-");
-                            sb.append(roleName);
-                            sb.append("\" value=\"");
-                            sb.append(roleName);
-                            sb.append("\"");
-                            if (SecondaryId.hasSecondaryId(
-                                    db,
-                                    nodeId,
-                                    SecondaryId.secondaryId(User.ROLE_ID, NameId.generate(roleName)),
-                                    longTimestamp))
-                                sb.append(" checked");
-                            sb.append(">");
-                            sb.append("</td>");
-                            sb.append("<td>");
-                            sb.append(niceRoleName);
-                            sb.append("</td>");
-                            sb.append("</tr>\n");
+                            } catch (UnexpectedChecksumException uce) {
+                            }
                         }
-                        break;
-                    } catch (UnexpectedChecksumException uce) {
+                        map.put("user", sb.toString());
+                        finish();
                     }
-                }
-                map.put("user", sb.toString());
-                finish();
+                });
             }
         }.signal();
     }
