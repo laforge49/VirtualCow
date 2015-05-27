@@ -136,7 +136,7 @@ public class EditRolesBlade extends PostRequestBlade {
                                 "&to=user" +
                                 "&nodeId=" + nodeId +
                                 "&role=" + roleName +
-                                "\">" + email + "</a>";
+                                "\">" + email + "#rupa</a>";
                         map.put("email", userLink);
                         StringBuilder sb;
                         while (true) {

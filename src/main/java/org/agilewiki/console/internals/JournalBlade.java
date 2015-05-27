@@ -58,7 +58,7 @@ public class JournalBlade extends RequestBlade {
                             if (timestamp != null) {
                                 sb.append("&timestamp=" + timestamp);
                             }
-                            sb.append(setRole + "\">" + SimpleSimon.niceTime(tsId) + "</a>");
+                            sb.append(setRole + "#rupa\">" + SimpleSimon.niceTime(tsId) + "</a>");
                             sb.append(' ');
                             StringBuilder lb = new StringBuilder();
                             String transactionName = vmn.getList(NameIds.TRANSACTION_NAME).flatList(longTimestamp).get(0).toString();
