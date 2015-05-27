@@ -47,18 +47,19 @@ public class UserBlade extends RequestBlade {
                 while (true) {
                     try {
                         sb = new StringBuilder();
-                        sb.append("<table>\n");
-                        sb.append("<caption>Roles ");
+                        sb.append("<table><tr>");
+                        sb.append("<td><p>Roles</p></td>");
                         if (timestamp == null) {
-                            sb.append("<a href=\"?from=");
+                            sb.append("<td><a href=\"?from=");
                             sb.append(page);
                             sb.append("&to=editRoles&nodeId=");
                             sb.append(nodeId);
                             sb.append("&role=");
                             sb.append(roleName);
-                            sb.append("#rupa\">(edit)</a>");
+                            sb.append("#rupa\"><img src=\"images/editbutton.jpg\" /></a></td>");
                         }
-                        sb.append("</caption>\n");
+                        sb.append("</tr></table>\n");
+                        sb.append("<table>\n");
                         for (String roleName: simpleSimon.roles.keySet()) {
                             if (roleName.equals("unRole"))
                                 break;
