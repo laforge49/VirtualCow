@@ -122,7 +122,8 @@ public class EditRolesBlade extends PostRequestBlade {
                     }
                 }
                 MapNode mn = db.dbFactoryRegistry.nilMap;
-                mn = mn.add(User.USER_KEY, nodeId);
+                mn = mn.add(User.USER_KEY, userId);
+                mn = mn.add("nodeId", nodeId);
                 mn = mn.add("addRoles", addRoles);
                 mn = mn.add("removeRoles", removeRoles);
 
