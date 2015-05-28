@@ -7,7 +7,6 @@ import org.agilewiki.console.User;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.composites.SecondaryId;
-import org.agilewiki.utils.immutable.collections.ListNode;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
@@ -59,8 +58,10 @@ public class EditRolesBlade extends PostRequestBlade {
                             String niceRoleName = simpleSimon.roles.get(roleName).niceRoleName();
                             sb.append("<tr>");
                             sb.append("<td>");
-                            sb.append("<input type=\"checkbox\" name=\"roles\" value=\"");
-                            sb.append(this.roleName);
+                            sb.append("<input type=\"checkbox\" name=\"role-");
+                            sb.append(roleName);
+                            sb.append("\" value=\"");
+                            sb.append(roleName);
                             sb.append("\"");
                             if (SecondaryId.hasSecondaryId(
                                     db,
@@ -100,32 +101,36 @@ public class EditRolesBlade extends PostRequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                ListNode addRoles = db.dbFactoryRegistry.nilList;
-                ListNode removeRoles = db.dbFactoryRegistry.nilList;
-                MapNode mn = db.dbFactoryRegistry.nilMap;
-                mn = mn.add(User.USER_KEY, userId);
-                mn = mn.add("nodeId", nodeId);
-                for (String role : simpleSimon.roles.keySet()) {
-                    boolean o = false;
-                    boolean n = false;
-                    if (request.getParameter("role-" + role) != null) {
-                        n = true;
-                    }
-                    if (SecondaryId.hasSecondaryId(
-                            db,
-                            nodeId,
-                            SecondaryId.secondaryId(User.ROLE_ID, NameId.generate(role)),
-                            longTimestamp)) {
-                        o = true;
-                    }
-                    if (o && !n) {
-                        mn = mn.add("removeRoles", role);
-                    }
-                    if (!o && n) {
-                        mn = mn.add("addRoles", role);
+                MapNode mn;
+                while (true) {
+                    try {
+                        mn = db.dbFactoryRegistry.nilMap;
+                        mn = mn.add(User.USER_KEY, userId);
+                        mn = mn.add("nodeId", nodeId);
+                        for (String role : simpleSimon.roles.keySet()) {
+                            boolean o = false;
+                            boolean n = false;
+                            if (request.getParameter("role-" + role) != null) {
+                                n = true;
+                            }
+                            if (SecondaryId.hasSecondaryId(
+                                    db,
+                                    nodeId,
+                                    SecondaryId.secondaryId(User.ROLE_ID, NameId.generate(role)),
+                                    longTimestamp)) {
+                                o = true;
+                            }
+                            if (o && !n) {
+                                mn = mn.add("removeRoles", role);
+                            }
+                            if (!o && n) {
+                                mn = mn.add("addRoles", role);
+                            }
+                        }
+                        break;
+                    } catch (UnexpectedChecksumException uce) {
                     }
                 }
-
                 asyncRequestImpl.send(db.update(UpdateRolesTransaction.NAME, mn), new AsyncResponseProcessor<String>() {
                     @Override
                     public void processAsyncResponse(String _response) throws Exception {
