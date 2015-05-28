@@ -135,7 +135,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
                         appMenu.append(setTimestamp);
                         appMenu.append("&role=");
                         appMenu.append(rn);
-                        appMenu.append("\">");
+                        appMenu.append("#rupa\">");
                     }
                     appMenu.append(role.niceRoleName());
                     appMenu.append("</a>");
