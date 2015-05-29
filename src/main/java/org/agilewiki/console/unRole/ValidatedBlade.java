@@ -28,6 +28,7 @@ public class ValidatedBlade extends PostRequestBlade {
             @Override
             protected void process()
                     throws Exception {
+                map.put("submit", "<input type=\"image\" src=\"images/submitbutton.jpg\" name=\"submit\" value=\"submit\"/>");
                 String key = request.getParameter("key");
                 String email = request.getParameter("email");
                 map.put("key", key);
@@ -56,6 +57,7 @@ public class ValidatedBlade extends PostRequestBlade {
                     error = "The new password and confirm new password fields must be the same";
                 if (error != null) {
                     map.put("error", SimpleSimon.encode(error, 0, SimpleSimon.ENCODE_FIELD)); //field
+                    map.put("submit", "<input type=\"image\" src=\"images/submitbutton.jpg\" name=\"submit\" value=\"submit\"/>");
                     finish();
                     return;
                 }
@@ -69,6 +71,7 @@ public class ValidatedBlade extends PostRequestBlade {
                 if (!go) {
                     error = "Unable to create your account at this time. Please try again later.";
                     map.put("error", SimpleSimon.encode(error, 0, SimpleSimon.ENCODE_FIELD)); //field
+                    map.put("submit", "<input type=\"image\" src=\"images/submitbutton.jpg\" name=\"submit\" value=\"submit\"/>");
                     finish();
                     return;
                 }
@@ -77,6 +80,7 @@ public class ValidatedBlade extends PostRequestBlade {
                 if (passwordHash == null) {
                     error = "Unable to create your account at this time. Please try again later.";
                     map.put("error", SimpleSimon.encode(error, 0, SimpleSimon.ENCODE_FIELD)); //field
+                    map.put("submit", "<input type=\"image\" src=\"images/submitbutton.jpg\" name=\"submit\" value=\"submit\"/>");
                     finish();
                     return;
                 }
@@ -93,6 +97,7 @@ public class ValidatedBlade extends PostRequestBlade {
                         new AsyncResponseProcessor<String>() {
                             @Override
                             public void processAsyncResponse(String _response) throws Exception {
+                                map.put("submit", "");
                                 map.put("success", "<table><tr><td><p>Your account has been created and you can now</p></td><td>" +
                                         "<a href=\"?from=validated&to=login#rupa\"><img src=\"images/login2button.jpg\" /></a>." +
                                         "</td></tr></table>");
