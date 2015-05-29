@@ -73,7 +73,7 @@ public class AdminRole implements Role {
                           String setTimestamp,
                           String timestamp,
                           String setRole) {
-        menuItem(sb, currentPage, setTimestamp, setRole, "admin", "Admin");
+        menuItem(sb, currentPage, setTimestamp, setRole, "admin", "Admin Home");
         menuItem(sb, currentPage, setTimestamp, setRole, "emailAddresses", "Email Addresses");
     }
 }

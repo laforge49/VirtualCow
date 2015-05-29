@@ -154,7 +154,7 @@ public class User {
                 emailId,
                 passwordHash,
                 simpleSimon.userRole.roleName(),
-                simpleSimon.internalsRole.roleName(),
+                simpleSimon.developerRole.roleName(),
                 simpleSimon.adminRole.roleName());
         if (error == null)
             return true;

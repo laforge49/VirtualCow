@@ -1,7 +1,7 @@
 package org.agilewiki.console;
 
 import org.agilewiki.console.admin.AdminRole;
-import org.agilewiki.console.internals.InternalsRole;
+import org.agilewiki.console.developer.DeveloperRole;
 import org.agilewiki.console.user.UserRole;
 import org.agilewiki.console.unRole.UnRole;
 import org.agilewiki.jactor2.core.impl.Plant;
@@ -47,7 +47,7 @@ public class SimpleSimon extends HttpServlet {
     public Map<String, Role> roles = new TreeMap<String, Role>();
     public UnRole unRole;
     public UserRole userRole;
-    public InternalsRole internalsRole;
+    public DeveloperRole developerRole;
     public AdminRole adminRole;
 
     public static String readResource(ServletContext servletContext, String groupName, String pageName) throws IOException {
@@ -113,8 +113,8 @@ public class SimpleSimon extends HttpServlet {
                 roles.put(unRole.roleName(), unRole);
                 userRole = new UserRole(this);
                 roles.put(userRole.roleName(), userRole);
-                internalsRole = new InternalsRole(this);
-                roles.put(internalsRole.roleName(), internalsRole);
+                developerRole = new DeveloperRole(this);
+                roles.put(developerRole.roleName(), developerRole);
                 adminRole = new AdminRole(this);
                 roles.put(adminRole.roleName(), adminRole);
             } catch (Exception ex) {

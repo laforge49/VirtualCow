@@ -1,4 +1,4 @@
-package org.agilewiki.console.internals;
+package org.agilewiki.console.developer;
 
 import org.agilewiki.console.*;
 
@@ -6,16 +6,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The internals role.
+ * The developer role.
  */
-public class InternalsRole implements Role {
+public class DeveloperRole implements Role {
     private Map<String, RequestBlade> requests = new HashMap<String, RequestBlade>();
     private Map<String, PostRequestBlade> posts = new HashMap<String, PostRequestBlade>();
-    private InternalsBlade internalsBlade;
+    private DeveloperBlade developerBlade;
 
-    public InternalsRole(SimpleSimon simpleSimon)
+    public DeveloperRole(SimpleSimon simpleSimon)
             throws Exception {
-        InternalsBlade internalsBlade;
+        DeveloperBlade developerBlade;
         JournalBlade journalBlade;
         NodeBlade nodeBlade;
         PostBlade postBlade;
@@ -23,7 +23,7 @@ public class InternalsRole implements Role {
         NodesBlade nodesBlade;
         InvLinksBlade invLinksBlade;
 
-        internalsBlade = new InternalsBlade(simpleSimon);
+        developerBlade = new DeveloperBlade(simpleSimon);
         postBlade = new PostBlade(simpleSimon);
         nodeBlade = new NodeBlade(simpleSimon);
         journalBlade = new JournalBlade(simpleSimon);
@@ -31,7 +31,7 @@ public class InternalsRole implements Role {
         nodesBlade = new NodesBlade(simpleSimon);
         invLinksBlade = new InvLinksBlade(simpleSimon);
 
-        requests.put("internals", internalsBlade);
+        requests.put("developer", developerBlade);
         requests.put("post", postBlade);
         requests.put("node", nodeBlade);
         requests.put("journal", journalBlade);
@@ -44,7 +44,7 @@ public class InternalsRole implements Role {
 
     @Override
     public String roleName() {
-        return "internals";
+        return "developer";
     }
 
     @Override
@@ -59,17 +59,17 @@ public class InternalsRole implements Role {
 
     @Override
     public RequestBlade getDefaultRequestBlade() {
-        return internalsBlade;
+        return developerBlade;
     }
 
     @Override
     public String getDefaultRequestPage() {
-        return "internals";
+        return "developer";
     }
 
     @Override
     public String niceRoleName() {
-        return "Internals";
+        return "Developer";
     }
 
     @Override
@@ -78,7 +78,7 @@ public class InternalsRole implements Role {
                           String setTimestamp,
                           String timestamp,
                           String setRole) {
-        menuItem(home, currentPage, setTimestamp, setRole, "internals", "Internals");
+        menuItem(home, currentPage, setTimestamp, setRole, "developer", "Developer Home");
         menuItem(home, currentPage, setTimestamp, setRole, "journal", "Journal");
 
         home.append("<li>\n");

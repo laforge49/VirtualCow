@@ -1,45 +1,52 @@
-package org.agilewiki.console.internals;
+package org.agilewiki.console.developer;
 
 import org.agilewiki.console.NameIds;
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.Role;
 import org.agilewiki.console.SimpleSimon;
+import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.immutable.collections.ListAccessor;
 import org.agilewiki.utils.immutable.collections.MapAccessor;
 import org.agilewiki.utils.immutable.collections.VersionedMapNode;
+import org.agilewiki.utils.immutable.collections.VersionedMapNodeImpl;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
 import javax.servlet.AsyncContext;
 import java.util.List;
 
 /**
- * Request for secondary keys.
+ * Inverted bi-directional links.
  */
-public class NodesBlade extends RequestBlade {
-    public NodesBlade(SimpleSimon simpleSimon) throws Exception {
+public class InvLinksBlade extends RequestBlade {
+    public InvLinksBlade(SimpleSimon simpleSimon) throws Exception {
         super(simpleSimon);
     }
 
     @Override
     protected String niceName() {
-        return "Nodes";
+        return "Inverted Links";
     }
 
     @Override
     public void get(String page, AsyncContext asyncContext, String userId, Role role) {
         new SR(page, asyncContext, userId, role) {
-            String secondaryId;
+            String targetId;
+            String labelId;
 
             @Override
             protected String setContext() {
-                secondaryId = request.getParameter("secondaryId");
-                map.put("secondaryId", secondaryId);
-                return "&secondaryId=" + secondaryId;
+                targetId = request.getParameter("nodeId");
+                labelId = request.getParameter("linkType");
+                map.put("nodeId", targetId);
+                map.put("linkType", labelId);
+                return "&nodeId=" + targetId +
+                        "&linkType=" + labelId;
             }
 
             @Override
             protected void process()
                     throws Exception {
+                String link1Inv = Link1Id.link1Inv(targetId, labelId);
                 String startingAt = request.getParameter("startingAt");
                 if (startingAt == null)
                     startingAt = "";
@@ -51,11 +58,7 @@ public class NodesBlade extends RequestBlade {
                         int limit = 25;
                         sb = new StringBuilder();
                         MapAccessor ma = db.mapAccessor();
-                        ListAccessor la = ma.listAccessor(secondaryId);
-                        if (la == null) {
-                            break;
-                        }
-                        VersionedMapNode vmn = (VersionedMapNode) la.get(0);
+                        VersionedMapNodeImpl vmn = (VersionedMapNodeImpl) ma.get(link1Inv);
                         if (vmn == null)
                             break;
                         String nodeId = (String) vmn.ceilingKey(startingAt, longTimestamp);
@@ -115,7 +118,7 @@ public class NodesBlade extends RequestBlade {
                     } catch (UnexpectedChecksumException uce) {
                     }
                 }
-                map.put("nodes", sb.toString());
+                map.put("invLinks", sb.toString());
                 map.put("setStartingAt", hasMore ? "&startingAt=" + startingAt : "");
                 map.put("more", hasMore ? "<img src=\"images/morebutton.jpg\"/>" : "");
                 finish();

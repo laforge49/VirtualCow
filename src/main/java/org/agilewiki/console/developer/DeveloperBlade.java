@@ -1,4 +1,4 @@
-package org.agilewiki.console.internals;
+package org.agilewiki.console.developer;
 
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.Role;
@@ -9,8 +9,8 @@ import javax.servlet.AsyncContext;
 /**
  * Request for home page.
  */
-public class InternalsBlade extends RequestBlade {
-    public InternalsBlade(SimpleSimon simpleSimon) throws Exception {
+public class DeveloperBlade extends RequestBlade {
+    public DeveloperBlade(SimpleSimon simpleSimon) throws Exception {
         super(simpleSimon);
     }
 

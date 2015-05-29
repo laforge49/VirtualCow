@@ -1,4 +1,4 @@
-package org.agilewiki.console.internals;
+package org.agilewiki.console.developer;
 
 import org.agilewiki.console.*;
 import org.agilewiki.utils.ids.NameId;

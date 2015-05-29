@@ -1,4 +1,4 @@
-package org.agilewiki.console.internals;
+package org.agilewiki.console.developer;
 
 import org.agilewiki.console.NameIds;
 import org.agilewiki.console.VCTransaction;

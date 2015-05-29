@@ -88,7 +88,7 @@ public class ValidatedBlade extends PostRequestBlade {
                 mn = mn.add(User.ROLE_ID,
                         simpleSimon.userRole.roleName());
                 mn = mn.add(User.ROLE_ID,
-                        simpleSimon.internalsRole.roleName());
+                        simpleSimon.developerRole.roleName());
                 asyncRequestImpl.send(db.update(NewUserTransaction.NAME, mn),
                         new AsyncResponseProcessor<String>() {
                             @Override

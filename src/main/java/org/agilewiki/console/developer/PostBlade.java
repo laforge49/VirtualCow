@@ -1,4 +1,4 @@
-package org.agilewiki.console.internals;
+package org.agilewiki.console.developer;
 
 import org.agilewiki.console.*;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
@@ -56,6 +56,8 @@ public class PostBlade extends PostRequestBlade {
                 asyncRequestImpl.send(db.update(NpjeTransaction.NAME, mn), new AsyncResponseProcessor<String>() {
                     @Override
                     public void processAsyncResponse(String _response) throws Exception {
+                        map.put("subject", "");
+                        map.put("body", "");
                         map.put("success", "posted: " + SimpleSimon.niceTime(_response));
                         finish();
                     }
