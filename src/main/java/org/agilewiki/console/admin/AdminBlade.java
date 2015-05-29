@@ -15,8 +15,8 @@ public class AdminBlade extends RequestBlade {
     }
 
     @Override
-    protected String groupName() {
-        return "admin";
+    protected String niceName() {
+        return "Admin Home";
     }
 
     @Override

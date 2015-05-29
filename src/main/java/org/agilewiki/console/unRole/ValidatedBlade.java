@@ -18,6 +18,11 @@ public class ValidatedBlade extends PostRequestBlade {
     }
 
     @Override
+    protected String niceName() {
+        return "Validated";
+    }
+
+    @Override
     public void get(String page, AsyncContext asyncContext, String userId, Role role) {
         new SR(page, asyncContext, userId, role) {
             @Override
@@ -81,7 +86,7 @@ public class ValidatedBlade extends PostRequestBlade {
                 mn = mn.add(User.EMAIL_ID, emailId);
                 mn = mn.add(User.PASSWORD_KEY, passwordHash);
                 mn = mn.add(User.ROLE_ID,
-                        simpleSimon.profileRole.roleName());
+                        simpleSimon.userRole.roleName());
                 mn = mn.add(User.ROLE_ID,
                         simpleSimon.internalsRole.roleName());
                 asyncRequestImpl.send(db.update(NewUserTransaction.NAME, mn),

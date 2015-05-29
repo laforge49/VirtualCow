@@ -153,7 +153,7 @@ public class User {
                 userId,
                 emailId,
                 passwordHash,
-                simpleSimon.profileRole.roleName(),
+                simpleSimon.userRole.roleName(),
                 simpleSimon.internalsRole.roleName(),
                 simpleSimon.adminRole.roleName());
         if (error == null)

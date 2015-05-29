@@ -21,8 +21,8 @@ public class NodeBlade extends RequestBlade {
     }
 
     @Override
-    protected String groupName() {
-        return "internals";
+    protected String niceName() {
+        return "Node";
     }
 
     @Override

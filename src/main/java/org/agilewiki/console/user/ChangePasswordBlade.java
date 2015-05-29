@@ -1,4 +1,4 @@
-package org.agilewiki.console.profile;
+package org.agilewiki.console.user;
 
 import org.agilewiki.console.*;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
@@ -20,8 +20,8 @@ public class ChangePasswordBlade extends PostRequestBlade {
     }
 
     @Override
-    protected String groupName() {
-        return "profile";
+    protected String niceName() {
+        return "Change Password";
     }
 
     @Override

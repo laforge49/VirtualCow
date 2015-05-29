@@ -15,8 +15,8 @@ public class InternalsBlade extends RequestBlade {
     }
 
     @Override
-    protected String groupName() {
-        return "internals";
+    protected String niceName() {
+        return "Developer Home";
     }
 
     @Override

@@ -1,4 +1,4 @@
-package org.agilewiki.console.profile;
+package org.agilewiki.console.user;
 
 import org.agilewiki.console.Delete;
 import org.agilewiki.console.NameIds;

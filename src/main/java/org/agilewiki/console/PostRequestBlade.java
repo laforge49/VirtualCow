@@ -1,6 +1,6 @@
 package org.agilewiki.console;
 
-import org.agilewiki.console.profile.LogoutTransaction;
+import org.agilewiki.console.user.LogoutTransaction;
 
 import javax.servlet.AsyncContext;
 import javax.servlet.http.HttpServletResponse;

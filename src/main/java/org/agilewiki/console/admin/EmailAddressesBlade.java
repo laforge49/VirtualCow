@@ -21,8 +21,8 @@ public class EmailAddressesBlade extends RequestBlade {
     }
 
     @Override
-    protected String groupName() {
-        return "admin";
+    protected String niceName() {
+        return "Email Addresses";
     }
 
     @Override

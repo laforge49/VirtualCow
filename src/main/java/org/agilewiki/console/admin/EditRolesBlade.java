@@ -22,8 +22,8 @@ public class EditRolesBlade extends PostRequestBlade {
     }
 
     @Override
-    protected String groupName() {
-        return "admin";
+    protected String niceName() {
+        return "Edit Roles";
     }
 
     @Override

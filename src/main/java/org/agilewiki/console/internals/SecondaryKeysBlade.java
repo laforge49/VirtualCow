@@ -20,8 +20,8 @@ public class SecondaryKeysBlade extends RequestBlade {
     }
 
     @Override
-    protected String groupName() {
-        return "internals";
+    protected String niceName() {
+        return "Secondary Keys";
     }
 
     @Override

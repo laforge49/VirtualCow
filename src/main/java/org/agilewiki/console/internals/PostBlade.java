@@ -16,8 +16,8 @@ public class PostBlade extends PostRequestBlade {
     }
 
     @Override
-    protected String groupName() {
-        return "internals";
+    protected String niceName() {
+        return "Post";
     }
 
     @Override

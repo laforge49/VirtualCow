@@ -2,7 +2,7 @@ package org.agilewiki.console;
 
 import org.agilewiki.console.admin.AdminRole;
 import org.agilewiki.console.internals.InternalsRole;
-import org.agilewiki.console.profile.ProfileRole;
+import org.agilewiki.console.user.UserRole;
 import org.agilewiki.console.unRole.UnRole;
 import org.agilewiki.jactor2.core.impl.Plant;
 import org.agilewiki.utils.ids.Timestamp;
@@ -46,7 +46,7 @@ public class SimpleSimon extends HttpServlet {
 
     public Map<String, Role> roles = new TreeMap<String, Role>();
     public UnRole unRole;
-    public ProfileRole profileRole;
+    public UserRole userRole;
     public InternalsRole internalsRole;
     public AdminRole adminRole;
 
@@ -111,8 +111,8 @@ public class SimpleSimon extends HttpServlet {
             try {
                 unRole = new UnRole(this);
                 roles.put(unRole.roleName(), unRole);
-                profileRole = new ProfileRole(this);
-                roles.put(profileRole.roleName(), profileRole);
+                userRole = new UserRole(this);
+                roles.put(userRole.roleName(), userRole);
                 internalsRole = new InternalsRole(this);
                 roles.put(internalsRole.roleName(), internalsRole);
                 adminRole = new AdminRole(this);
@@ -165,7 +165,7 @@ public class SimpleSimon extends HttpServlet {
                 roleName = "profile";
             Role role = roles.get(roleName);
             if (role == null) {
-                role = profileRole;
+                role = userRole;
             }
             role.dispatchGetRequest(request, userId);
         }
@@ -196,7 +196,7 @@ public class SimpleSimon extends HttpServlet {
                 roleName = "profile";
             Role role = roles.get(roleName);
             if (role == null) {
-                role = profileRole;
+                role = userRole;
             }
             role.dispatchPostRequest(request, response, userId);
         }

@@ -60,7 +60,7 @@ public interface Role {
         StringBuilder sb = new StringBuilder();
         sb.append("<a>");
         sb.append(niceRoleName());
-        sb.append(" &#9660;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>\n");
+        sb.append(" Tools &#9660;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>\n");
         sb.append("<ul class=\"sub-menu\">\n");
 
         menuItems(sb, page, setTimestamp, timestamp, setRole);

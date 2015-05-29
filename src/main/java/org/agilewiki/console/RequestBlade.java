@@ -33,9 +33,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
         this.mailOut = simpleSimon.mailOut;
     }
 
-    protected String groupName() {
-        return null;
-    }
+    abstract protected String niceName();
 
     public abstract void get(String page, AsyncContext asyncContext, String userId, Role role);
 
@@ -161,7 +159,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
         }
 
         protected void println() throws Exception {
-            response.getWriter().println(SimpleSimon.replace(servletContext, groupName(), page, map));
+            response.getWriter().println(SimpleSimon.replace(servletContext, roleName, page, map));
         }
 
         protected void finish() throws Exception {

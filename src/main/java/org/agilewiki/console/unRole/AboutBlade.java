@@ -14,6 +14,11 @@ public class AboutBlade extends RequestBlade {
         super(simpleSimon);
     }
 
+    @Override
+    protected String niceName() {
+        return "About";
+    }
+
     public void get(String page, AsyncContext asyncContext, String userId, Role role) {
         new SR(page, asyncContext, userId, role) {
             @Override

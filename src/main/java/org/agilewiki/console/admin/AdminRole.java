@@ -4,9 +4,7 @@ import org.agilewiki.console.PostRequestBlade;
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.Role;
 import org.agilewiki.console.SimpleSimon;
-import org.agilewiki.console.profile.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 

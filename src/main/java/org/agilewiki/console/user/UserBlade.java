@@ -1,4 +1,4 @@
-package org.agilewiki.console.profile;
+package org.agilewiki.console.user;
 
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.Role;
@@ -9,14 +9,14 @@ import javax.servlet.AsyncContext;
 /**
  * Change the email address of the user.
  */
-public class ProfileBlade extends RequestBlade {
-    public ProfileBlade(SimpleSimon simpleSimon) throws Exception {
+public class UserBlade extends RequestBlade {
+    public UserBlade(SimpleSimon simpleSimon) throws Exception {
         super(simpleSimon);
     }
 
     @Override
-    protected String groupName() {
-        return "profile";
+    protected String niceName() {
+        return "User Home";
     }
 
     @Override

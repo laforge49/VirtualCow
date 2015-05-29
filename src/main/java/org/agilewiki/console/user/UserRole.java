@@ -1,24 +1,23 @@
-package org.agilewiki.console.profile;
+package org.agilewiki.console.user;
 
 import org.agilewiki.console.PostRequestBlade;
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.Role;
 import org.agilewiki.console.SimpleSimon;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * A base role.
  */
-public class ProfileRole implements Role {
+public class UserRole implements Role {
 
     private Map<String, RequestBlade> requests = new HashMap<String, RequestBlade>();
     private Map<String, PostRequestBlade> posts = new HashMap<String, PostRequestBlade>();
-    private ProfileBlade profileBlade;
+    private UserBlade userBlade;
 
-    public ProfileRole(SimpleSimon simpleSimon)
+    public UserRole(SimpleSimon simpleSimon)
             throws Exception {
         ChangeEmailAddressBlade changeEmailAddressBlade;
         ChangePasswordBlade changePasswordBlade;
@@ -31,14 +30,14 @@ public class ProfileRole implements Role {
         changePasswordBlade = new ChangePasswordBlade(simpleSimon);
         changeEmailAddressBlade = new ChangeEmailAddressBlade(simpleSimon);
         newEmailAddressBlade = new NewEmailAddressBlade(simpleSimon);
-        profileBlade = new ProfileBlade(simpleSimon);
+        userBlade = new UserBlade(simpleSimon);
 
         requests.put("logout", logoutBlade);
         requests.put("deleteAccount", deleteAccountBlade);
         requests.put("changePassword", changePasswordBlade);
         requests.put("changeEmailAddress", changeEmailAddressBlade);
         requests.put("newEmailAddress", newEmailAddressBlade);
-        requests.put("profile", profileBlade);
+        requests.put("profile", userBlade);
 
         posts.put("logout", logoutBlade);
         posts.put("deleteAccount", deleteAccountBlade);
@@ -49,7 +48,7 @@ public class ProfileRole implements Role {
 
     @Override
     public String roleName() {
-        return "profile";
+        return "user";
     }
 
     @Override
@@ -64,17 +63,17 @@ public class ProfileRole implements Role {
 
     @Override
     public RequestBlade getDefaultRequestBlade() {
-        return profileBlade;
+        return userBlade;
     }
 
     @Override
     public String getDefaultRequestPage() {
-        return "profile";
+        return "user";
     }
 
     @Override
     public String niceRoleName() {
-        return "My Profile";
+        return "User";
     }
 
     @Override
@@ -83,7 +82,7 @@ public class ProfileRole implements Role {
                           String setTimestamp,
                           String timestamp,
                           String setRole) {
-        menuItem(home, currentPage, setTimestamp, setRole, "profile", "My Profile");
+        menuItem(home, currentPage, setTimestamp, setRole, "user", "User Home");
         menuItem(home, currentPage, setTimestamp, setRole, "changePassword", "Change Password");
         menuItem(home, currentPage, setTimestamp, setRole, "changeEmailAddress", "Change Email Address");
         menuItem(home, currentPage, setTimestamp, setRole, "deleteAccount", "Delete Account");

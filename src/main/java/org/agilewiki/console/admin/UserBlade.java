@@ -22,8 +22,8 @@ public class UserBlade extends RequestBlade {
     }
 
     @Override
-    protected String groupName() {
-        return "admin";
+    protected String niceName() {
+        return "User";
     }
 
     @Override

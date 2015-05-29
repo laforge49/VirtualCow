@@ -16,6 +16,11 @@ public class ForgotBlade extends PostRequestBlade {
     }
 
     @Override
+    protected String niceName() {
+        return "Forgot";
+    }
+
+    @Override
     public void get(String page, AsyncContext asyncContext, String userId, Role role) {
         new SR(page, asyncContext, userId, role) {
             @Override

@@ -19,8 +19,8 @@ public class JournalBlade extends RequestBlade {
     }
 
     @Override
-    protected String groupName() {
-        return "internals";
+    protected String niceName() {
+        return "Journal";
     }
 
     @Override
