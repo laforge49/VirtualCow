@@ -61,24 +61,24 @@ public class UserBlade extends RequestBlade {
                         sb.append("</tr></table>\n");
                         sb.append("<table>\n");
                         for (String roleName: simpleSimon.roles.keySet()) {
-                            if (roleName.equals("unRole"))
-                                break;
-                            String niceRoleName = simpleSimon.roles.get(roleName).niceRoleName();
-                            sb.append("<tr>");
-                            sb.append("<td>");
-                            if (SecondaryId.hasSecondaryId(
-                                    db,
-                                    nodeId,
-                                    SecondaryId.secondaryId(User.ROLE_ID, NameId.generate(roleName)),
-                                    longTimestamp))
-                                sb.append("&#10004;");
-                            else
-                                sb.append("&nbsp;");
-                            sb.append("</td>");
-                            sb.append("<td>");
-                            sb.append(niceRoleName);
-                            sb.append("</td>");
-                            sb.append("</tr>\n");
+                            if (!roleName.equals("unRole")) {
+                                String niceRoleName = simpleSimon.roles.get(roleName).niceRoleName();
+                                sb.append("<tr>");
+                                sb.append("<td>");
+                                if (SecondaryId.hasSecondaryId(
+                                        db,
+                                        nodeId,
+                                        SecondaryId.secondaryId(User.ROLE_ID, NameId.generate(roleName)),
+                                        longTimestamp))
+                                    sb.append("&#10004;");
+                                else
+                                    sb.append("&nbsp;");
+                                sb.append("</td>");
+                                sb.append("<td>");
+                                sb.append(niceRoleName);
+                                sb.append("</td>");
+                                sb.append("</tr>\n");
+                            }
                         }
                         sb.append("</table>\n");
                         break;

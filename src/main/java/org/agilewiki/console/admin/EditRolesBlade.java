@@ -53,28 +53,28 @@ public class EditRolesBlade extends PostRequestBlade {
                     try {
                         sb = new StringBuilder();
                         for (String roleName : simpleSimon.roles.keySet()) {
-                            if (roleName.equals("unRole"))
-                                break;
-                            String niceRoleName = simpleSimon.roles.get(roleName).niceRoleName();
-                            sb.append("<tr>");
-                            sb.append("<td>");
-                            sb.append("<input type=\"checkbox\" name=\"role-");
-                            sb.append(roleName);
-                            sb.append("\" value=\"");
-                            sb.append(roleName);
-                            sb.append("\"");
-                            if (SecondaryId.hasSecondaryId(
-                                    db,
-                                    nodeId,
-                                    SecondaryId.secondaryId(User.ROLE_ID, NameId.generate(roleName)),
-                                    longTimestamp))
-                                sb.append(" checked");
-                            sb.append(">");
-                            sb.append("</td>");
-                            sb.append("<td>");
-                            sb.append(niceRoleName);
-                            sb.append("</td>");
-                            sb.append("</tr>\n");
+                            if (!roleName.equals("unRole")) {
+                                String niceRoleName = simpleSimon.roles.get(roleName).niceRoleName();
+                                sb.append("<tr>");
+                                sb.append("<td>");
+                                sb.append("<input type=\"checkbox\" name=\"role-");
+                                sb.append(roleName);
+                                sb.append("\" value=\"");
+                                sb.append(roleName);
+                                sb.append("\"");
+                                if (SecondaryId.hasSecondaryId(
+                                        db,
+                                        nodeId,
+                                        SecondaryId.secondaryId(User.ROLE_ID, NameId.generate(roleName)),
+                                        longTimestamp))
+                                    sb.append(" checked");
+                                sb.append(">");
+                                sb.append("</td>");
+                                sb.append("<td>");
+                                sb.append(niceRoleName);
+                                sb.append("</td>");
+                                sb.append("</tr>\n");
+                            }
                         }
                         break;
                     } catch (UnexpectedChecksumException uce) {
@@ -146,28 +146,28 @@ public class EditRolesBlade extends PostRequestBlade {
                             try {
                                 sb = new StringBuilder();
                                 for (String roleName : simpleSimon.roles.keySet()) {
-                                    if (roleName.equals("unRole"))
-                                        break;
-                                    String niceRoleName = simpleSimon.roles.get(roleName).niceRoleName();
-                                    sb.append("<tr>");
-                                    sb.append("<td>");
-                                    sb.append("<input type=\"checkbox\" name=\"role-");
-                                    sb.append(roleName);
-                                    sb.append("\" value=\"");
-                                    sb.append(roleName);
-                                    sb.append("\"");
-                                    if (SecondaryId.hasSecondaryId(
-                                            db,
-                                            nodeId,
-                                            SecondaryId.secondaryId(User.ROLE_ID, NameId.generate(roleName)),
-                                            longTimestamp))
-                                        sb.append(" checked");
-                                    sb.append(">");
-                                    sb.append("</td>");
-                                    sb.append("<td>");
-                                    sb.append(niceRoleName);
-                                    sb.append("</td>");
-                                    sb.append("</tr>\n");
+                                    if (!roleName.equals("unRole")) {
+                                        String niceRoleName = simpleSimon.roles.get(roleName).niceRoleName();
+                                        sb.append("<tr>");
+                                        sb.append("<td>");
+                                        sb.append("<input type=\"checkbox\" name=\"role-");
+                                        sb.append(roleName);
+                                        sb.append("\" value=\"");
+                                        sb.append(roleName);
+                                        sb.append("\"");
+                                        if (SecondaryId.hasSecondaryId(
+                                                db,
+                                                nodeId,
+                                                SecondaryId.secondaryId(User.ROLE_ID, NameId.generate(roleName)),
+                                                longTimestamp))
+                                            sb.append(" checked");
+                                        sb.append(">");
+                                        sb.append("</td>");
+                                        sb.append("<td>");
+                                        sb.append(niceRoleName);
+                                        sb.append("</td>");
+                                        sb.append("</tr>\n");
+                                    }
                                 }
                                 break;
                             } catch (UnexpectedChecksumException uce) {
