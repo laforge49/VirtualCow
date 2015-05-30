@@ -1,6 +1,7 @@
 package org.agilewiki.console;
 
 import org.agilewiki.utils.ids.composites.Link1Id;
+import org.agilewiki.utils.ids.composites.Link2Id;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.virtualcow.Db;
 
@@ -23,6 +24,11 @@ public class Delete {
         for (String lnkTyp: Link1Id.link1LabelInvIterable(db, id)) {
             for (String oId: Link1Id.link1InvIterable(db, id, lnkTyp, db.getTimestamp())) {
                 Link1Id.removeLink1(db, oId, lnkTyp, id);
+            }
+        }
+        for (String lnkTyp: Link2Id.link2LabelIdIterable(db, id)) {
+            for (String tId: Link2Id.link2IdIterable(db, id, lnkTyp, db.getTimestamp())) {
+                Link2Id.removeLink2(db, id, lnkTyp, tId);
             }
         }
     }
