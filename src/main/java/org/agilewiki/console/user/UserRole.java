@@ -16,15 +16,14 @@ public class UserRole implements Role {
     private Map<String, RequestBlade> requests = new HashMap<String, RequestBlade>();
     private Map<String, PostRequestBlade> posts = new HashMap<String, PostRequestBlade>();
     private UserBlade userBlade;
+    private ChangeEmailAddressBlade changeEmailAddressBlade;
+    private ChangePasswordBlade changePasswordBlade;
+    private DeleteAccountBlade deleteAccountBlade;
+    private LogoutBlade logoutBlade;
+    private NewEmailAddressBlade newEmailAddressBlade;
 
     public UserRole(SimpleSimon simpleSimon)
             throws Exception {
-        ChangeEmailAddressBlade changeEmailAddressBlade;
-        ChangePasswordBlade changePasswordBlade;
-        DeleteAccountBlade deleteAccountBlade;
-        LogoutBlade logoutBlade;
-        NewEmailAddressBlade newEmailAddressBlade;
-
         logoutBlade = new LogoutBlade(simpleSimon);
         deleteAccountBlade = new DeleteAccountBlade(simpleSimon);
         changePasswordBlade = new ChangePasswordBlade(simpleSimon);
@@ -82,9 +81,9 @@ public class UserRole implements Role {
                           String setTimestamp,
                           String timestamp,
                           String setRole) {
-        menuItem(home, currentPage, setTimestamp, setRole, "user", "User Home");
-        menuItem(home, currentPage, setTimestamp, setRole, "changePassword", "Change Password");
-        menuItem(home, currentPage, setTimestamp, setRole, "changeEmailAddress", "Change Email Address");
-        menuItem(home, currentPage, setTimestamp, setRole, "deleteAccount", "Delete Account");
+        menuItem(home, currentPage, setTimestamp, setRole, "user", userBlade.niceName());
+        menuItem(home, currentPage, setTimestamp, setRole, "changePassword", changePasswordBlade.niceName());
+        menuItem(home, currentPage, setTimestamp, setRole, "changeEmailAddress", changeEmailAddressBlade.niceName());
+        menuItem(home, currentPage, setTimestamp, setRole, "deleteAccount", deleteAccountBlade.niceName());
     }
 }

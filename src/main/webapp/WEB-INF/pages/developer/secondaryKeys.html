@@ -56,7 +56,7 @@
         <h2 style="float: right;">Virtual COW {{atTime}}</a></h2>
 
 
-        <h2 align="center">SecondaryKeys, type = {{secondaryType}}</h2>
+        <h2 align="center">{{nicePageName}}</h2>
 
         <div>
             <div style="font-family:courier">{{secondaryKeys}}</div>
@@ -67,8 +67,6 @@
                 <form method="GET">
                     <input type="hidden" name="from" value="secondaryKeys"/>
                     <input type="hidden" name="to" value="secondaryKeys"/>
-                    <input type="hidden" name="secondaryType" value="{{secondaryType}}"/>
-                    <input type="hidden" name="keyPrefix" value="{{keyPrefix}}"/>
                     {{hiddenTimestamp}}
                     {{hiddenRole}}
                     <table>
@@ -93,8 +91,6 @@
                     <form method="GET">
                         <input type="hidden" name="from" value="secondaryKeys"/>
                         <input type="hidden" name="to" value="secondaryKeys"/>
-                        <input type="hidden" name="secondaryType" value="{{secondaryType}}"/>
-                        <input type="hidden" name="keyPrefix" value="{{keyPrefix}}"/>
                         {{hiddenRole}}
                         <table>
                             <tr>

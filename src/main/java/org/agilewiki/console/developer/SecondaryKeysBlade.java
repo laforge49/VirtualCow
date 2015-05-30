@@ -15,31 +15,32 @@ import javax.servlet.AsyncContext;
  * Request for secondary keys.
  */
 public class SecondaryKeysBlade extends RequestBlade {
-    public SecondaryKeysBlade(SimpleSimon simpleSimon) throws Exception {
+
+    String secondaryType;
+    String keyPrefix;
+    String niceName;
+
+    public SecondaryKeysBlade(SimpleSimon simpleSimon, String niceName, String secondaryType, String keyPrefix)
+            throws Exception {
         super(simpleSimon);
+        this.niceName = niceName;
+        this.secondaryType = secondaryType;
+        this.keyPrefix = keyPrefix;
     }
 
     @Override
     protected String niceName() {
-        return "Secondary Keys";
+        return niceName;
+    }
+
+    @Override
+    protected String fileName(String roleName, String page) {
+        return "developer/secondaryKeys";
     }
 
     @Override
     public void get(String page, AsyncContext asyncContext, String userId, Role role) {
         new SR(page, asyncContext, userId, role) {
-
-            String secondaryType;
-            String keyPrefix;
-
-            @Override
-            protected String setContext() {
-                secondaryType = request.getParameter("secondaryType");
-                keyPrefix = request.getParameter("keyPrefix");
-                map.put("secondaryType", secondaryType);
-                map.put("keyPrefix", keyPrefix);
-                return "&secondaryType=" + secondaryType +
-                        "&keyPrefix=" + keyPrefix;
-            }
 
             @Override
             protected void process()
