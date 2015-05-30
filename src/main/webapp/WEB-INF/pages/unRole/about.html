@@ -11,6 +11,7 @@
     <meta name="copyright" content="&copy; 2015"/>
     <meta name="robot" content="noindex, nofollow"/>
     <link href="css/style1.css" rel="stylesheet" type="text/css" media="screen"/>
+
 </head>
 <body>
 <div id="main">
@@ -37,8 +38,10 @@
     </div>
     <!--end header -->
     <div id="content">
+          <br/><br/>
 
         <h2 align="center">About Virtual COW</h2>
+        <br/>
 
         <p>
             Virtual COW is a high-performance, robust, scalable, versioning, transactional graphical database.
@@ -54,30 +57,30 @@
         </p><br />
 
         <p>
-            Virtual COW is scalable in four ways:
-        <ol>
-            <li>
-                Vertical scalability is achieved through the use of JActor2
+            Virtual COW is scalable in four ways: </p>
+        <ol style="list-style-type: decimal">
+           
+                 <li style="color: #932305"><p>Vertical scalability is achieved through the use of JActor2
                 in place of traditional threads/locks.
-                Virtual COW will make full use of all the processor cores it has access to.
+                Virtual COW will make full use of <br/>all the processor cores it has access to.</p>
             </li>
-            <li>
-                Many simultaneous users are supported through the use of Jetty and Servlet API 3.1.
+            
+               <li style="color: #932305"><p>Many simultaneous users are supported through the use of Jetty and Servlet API 3.1.
                 Open connections do not tie up threads.
-                And queries are processed in parallel using a common cache.
+                And queries are processed in parallel using a common cache.</p>
             </li>
-            <li>
-                The database will scale up to a million blocks of a million bytes each (a terabyte).
+            
+              <li style="color: #932305"><p> The database will scale up to a million blocks of a million bytes each (a terabyte).</p>
             </li>
-            <li>
-                Other than the size of the database,
+            
+              <li style="color: #932305"><p> Other than the size of the database,
                 there are no constraints on the number of nodes in the graph nor on the number of links
                 that connect to a node.
                 There is a practical limit on the number of links that originate with a node,
-                but this is a limit in the design of the displays, not a limit of the underlying database.
+                but this is a limit in the design of the displays, not a limit of the underlying database.</p>
             </li>
         </ol>
-        </p><br >
+       <br >
 
         <p>
             Robustness is achieved through the use of JActor2, which monitors message processing,
