@@ -50,10 +50,7 @@ public class SimpleSimon extends HttpServlet {
     public DeveloperRole developerRole;
     public AdminRole adminRole;
 
-    public static String readResource(ServletContext servletContext, String groupName, String pageName) throws IOException {
-        if (groupName != null && groupName.length() > 0) {
-            pageName = groupName + "/" + pageName;
-        }
+    public static String readResource(ServletContext servletContext, String pageName) throws IOException {
         InputStream is = servletContext.getResourceAsStream("/WEB-INF/pages/" + pageName + ".html");
         InputStreamReader isr = new InputStreamReader(is, utf8);
         StringBuilder sb = new StringBuilder();
@@ -68,10 +65,9 @@ public class SimpleSimon extends HttpServlet {
     }
 
     public static String replace(ServletContext servletContext,
-                                 String groupName,
                                  String pageName,
                                  Map<String, String> sub) throws IOException {
-        String t = readResource(servletContext, groupName, pageName);
+        String t = readResource(servletContext, pageName);
         int i = 0;
         StringBuilder sb = new StringBuilder();
         while (i < t.length()) {

@@ -35,6 +35,10 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
 
     abstract protected String niceName();
 
+    protected String fileName(String roleName, String page) {
+        return roleName + "/" + page;
+    }
+
     public abstract void get(String page, AsyncContext asyncContext, String userId, Role role);
 
     protected abstract class SR extends ASig {
@@ -67,6 +71,10 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
                 myEmail = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
             }
             this.role = role;
+        }
+
+        private String fileName() {
+            return RequestBlade.this.fileName(roleName, page);
         }
 
         abstract protected void process()
@@ -160,7 +168,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
         }
 
         protected void println() throws Exception {
-            response.getWriter().println(SimpleSimon.replace(servletContext, roleName, page, map));
+            response.getWriter().println(SimpleSimon.replace(servletContext, fileName(), map));
         }
 
         protected void finish() throws Exception {
