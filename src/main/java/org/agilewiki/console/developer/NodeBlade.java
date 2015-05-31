@@ -94,8 +94,8 @@ public class NodeBlade extends RequestBlade {
                                         }
                                     }
                                 } else {
-                                    sb.append("<a href=\"?from=node&to=nodeJournal&nodeId=");
-                                    sb.append(nodeId);
+                                    sb.append("<a href=\"?from=node&to=subJournal&subJournal=");
+                                    sb.append(Journal.journalId(nodeId));
                                     if (timestamp != null) {
                                         sb.append("&timestamp=" + timestamp);
                                     }

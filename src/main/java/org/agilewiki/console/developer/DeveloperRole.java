@@ -2,7 +2,6 @@ package org.agilewiki.console.developer;
 
 import org.agilewiki.console.*;
 import org.agilewiki.utils.ids.NameId;
-import org.agilewiki.utils.ids.Timestamp;
 import org.agilewiki.utils.ids.composites.Journal;
 
 import java.util.HashMap;
@@ -16,7 +15,7 @@ public class DeveloperRole implements Role {
     private Map<String, PostRequestBlade> posts = new HashMap<String, PostRequestBlade>();
     private DeveloperBlade developerBlade;
     private FullJournalBlade fullJournalBlade;
-    private NodeJournalBlade nodeJournalBlade;
+    private SubJournalBlade subJournalBlade;
     private JournalBlade subjectJournalBlade;
     private JournalBlade emailJournalBlade;
     private JournalBlade roleJournalBlade;
@@ -35,7 +34,7 @@ public class DeveloperRole implements Role {
         postBlade = new PostBlade(simpleSimon);
         nodeBlade = new NodeBlade(simpleSimon);
         fullJournalBlade = new FullJournalBlade(simpleSimon, "Full Journal");
-        nodeJournalBlade = new NodeJournalBlade(simpleSimon, "Node Journal");
+        subJournalBlade = new SubJournalBlade(simpleSimon, "Journal");
         subjectJournalBlade = new JournalBlade(simpleSimon,
                 "Subject Key Journal",
                 Journal.journalId(NameId.generate("subject")));
@@ -58,7 +57,7 @@ public class DeveloperRole implements Role {
         requests.put("post", postBlade);
         requests.put("node", nodeBlade);
         requests.put("journal", fullJournalBlade);
-        requests.put("nodeJournal", nodeJournalBlade);
+        requests.put("subJournal", subJournalBlade);
         requests.put("subjectJournal", subjectJournalBlade);
         requests.put("emailJournal", emailJournalBlade);
         requests.put("roleJournal", roleJournalBlade);

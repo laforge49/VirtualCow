@@ -14,10 +14,10 @@ import java.util.List;
 /**
  * Request the journal.
  */
-public class NodeJournalBlade extends RequestBlade {
+public class SubJournalBlade extends RequestBlade {
     String niceName;
 
-    public NodeJournalBlade(SimpleSimon simpleSimon, String niceName) throws Exception {
+    public SubJournalBlade(SimpleSimon simpleSimon, String niceName) throws Exception {
         super(simpleSimon);
         this.niceName = niceName;
     }
@@ -31,18 +31,18 @@ public class NodeJournalBlade extends RequestBlade {
     public void get(String page, AsyncContext asyncContext, String userId, Role role) {
         new SR(page, asyncContext, userId, role) {
 
-            String nodeId;
+            String subJournal;
 
             @Override
             protected String setContext() {
-                nodeId = request.getParameter("nodeId");
-                map.put("nodeId", nodeId);
-                return "&nodeId=" + nodeId;
+                subJournal = request.getParameter("subJournal");
+                map.put("nodeId", subJournal);
+                return "&nodeId=" + subJournal;
             }
 
             @Override
             protected String niceName() {
-                return niceName + " for node " + nodeId;
+                return niceName + " for " + subJournal.substring(2);
             }
 
             @Override
@@ -59,7 +59,7 @@ public class NodeJournalBlade extends RequestBlade {
                     try {
                         hasMore = false;
                         sb = new StringBuilder();
-                        VersionedMapNode jvmn = db.get(Journal.journalId(nodeId));
+                        VersionedMapNode jvmn = db.get(subJournal);
                         if (jvmn == null)
                             break;
                         int limit = 25;
