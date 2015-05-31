@@ -37,16 +37,16 @@ public class DeveloperRole implements Role {
         subJournalBlade = new SubJournalBlade(simpleSimon, "Journal");
         subjectJournalBlade = new JournalBlade(simpleSimon,
                 "Subject Key Journal",
-                Journal.journalId(NameId.generate("subject")));
+                NameId.generate("subject"));
         emailJournalBlade = new JournalBlade(simpleSimon,
                 "Email Address Key Journal",
-                Journal.journalId(NameId.generate("email")));
+                NameId.generate("email"));
         roleJournalBlade = new JournalBlade(simpleSimon,
                 "Role Key Journal",
-                Journal.journalId(NameId.generate("role")));
+                NameId.generate("role"));
         userJournalBlade = new JournalBlade(simpleSimon,
                 "User Link Journal",
-                Journal.journalId(NameId.generate("user")));
+                NameId.generate("user"));
         subjectsBlade = new SecondaryKeysBlade(simpleSimon, "Subjects", "subject", "$v");
         emailAddressesBlade = new SecondaryKeysBlade(simpleSimon, "Email Addresses", "email", "$v");
         rolesBlade = new SecondaryKeysBlade(simpleSimon, "Roles", "role", "$n");

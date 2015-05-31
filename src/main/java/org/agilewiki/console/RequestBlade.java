@@ -97,6 +97,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
             asyncResponseProcessor = _asyncResponseProcessor;
             map = new HashMap<>();
             setContext = setContext();
+            map.put("setContext", setContext);
 
             roleName = role.roleName();
             setRole = "&role=" + roleName;

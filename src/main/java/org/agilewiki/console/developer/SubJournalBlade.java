@@ -36,8 +36,9 @@ public class SubJournalBlade extends RequestBlade {
             @Override
             protected String setContext() {
                 subJournal = request.getParameter("subJournal");
-                map.put("nodeId", subJournal);
-                return "&nodeId=" + subJournal;
+                map.put("hiddenContext", "<input type=\"hidden\" name=\"subJournal\" value=\"" + subJournal + "\"/>");
+                map.put("subJournal", subJournal);
+                return "&subJournal=" + subJournal;
             }
 
             @Override

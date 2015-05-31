@@ -2,6 +2,7 @@ package org.agilewiki.console.developer;
 
 import org.agilewiki.console.*;
 import org.agilewiki.utils.ids.Timestamp;
+import org.agilewiki.utils.ids.composites.Journal;
 import org.agilewiki.utils.immutable.collections.ListAccessor;
 import org.agilewiki.utils.immutable.collections.MapAccessor;
 import org.agilewiki.utils.immutable.collections.VersionedMapNode;
@@ -20,7 +21,7 @@ public class JournalBlade extends RequestBlade {
     public JournalBlade(SimpleSimon simpleSimon, String niceName, String id) throws Exception {
         super(simpleSimon);
         this.niceName = niceName;
-        this.id = id;
+        this.id = Journal.journalId(id);
     }
 
     @Override
