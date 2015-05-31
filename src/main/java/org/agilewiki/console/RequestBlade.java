@@ -125,6 +125,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
             }
 
             if (userId != null) {
+                map.put("page", page);
                 map.put("nicePageName", niceName());
                 map.put("myEmail", myEmail);
                 List<Role> roles = User.roles(simpleSimon, userId);

@@ -13,14 +13,13 @@ import java.util.List;
 /**
  * Request the journal.
  */
-public class JournalBlade extends RequestBlade {
+public class FullJournalBlade extends RequestBlade {
     String niceName;
-    String id;
+    String prefix = Timestamp.PREFIX;
 
-    public JournalBlade(SimpleSimon simpleSimon, String niceName, String id) throws Exception {
+    public FullJournalBlade(SimpleSimon simpleSimon, String niceName) throws Exception {
         super(simpleSimon);
         this.niceName = niceName;
-        this.id = id;
     }
 
     @Override
@@ -48,33 +47,28 @@ public class JournalBlade extends RequestBlade {
                 boolean hasMore;
                 while (true) {
                     try {
+                        int limit = 25;
                         hasMore = false;
                         sb = new StringBuilder();
-                        VersionedMapNode jvmn = db.get(id);
-                        if (jvmn == null)
-                            break;
-                        int limit = 25;
-                        String jeId = jvmn.ceilingKey(TimestampIds.generate(startingAt), longTimestamp).toString();
-                        while (true) {
-                            if (jeId == null)
-                                break;
-                            String next = TimestampIds.value(jeId);
+                        for (String next : new IdIterable(servletContext, db, prefix, startingAt, longTimestamp)) {
                             if (limit == 0) {
                                 hasMore = true;
                                 startingAt = next;
                                 break;
                             }
                             --limit;
+                            String tsId = TimestampIds.generate(next);
+                            MapAccessor ma = db.mapAccessor();
+                            ListAccessor la = ma.listAccessor(tsId);
+                            VersionedMapNode vmn = (VersionedMapNode) la.get(0);
+                            String jeId = TimestampIds.generate(next);
                             sb.append("<a href=\"?from=journal&to=node&nodeId=" + jeId);
                             if (timestamp != null) {
                                 sb.append("&timestamp=" + timestamp);
                             }
-                            sb.append(setRole + "#rupa\">" + SimpleSimon.niceTime(jeId) + "</a>");
+                            sb.append(setRole + "#rupa\">" + SimpleSimon.niceTime(tsId) + "</a>");
                             sb.append(' ');
                             StringBuilder lb = new StringBuilder();
-                            MapAccessor ma = db.mapAccessor();
-                            ListAccessor la = ma.listAccessor(jeId);
-                            VersionedMapNode vmn = (VersionedMapNode) la.get(0);
                             String transactionName = vmn.getList(NameIds.TRANSACTION_NAME).flatList(longTimestamp).get(0).toString();
                             lb.append(transactionName);
                             List subjectList = vmn.getList(NameIds.SUBJECT).flatList(longTimestamp);
@@ -101,7 +95,6 @@ public class JournalBlade extends RequestBlade {
                             sb.append(line);
                             sb.append("</font>");
                             sb.append("<br />");
-                            jeId = (String) jvmn.higherKey(jeId, longTimestamp);
                         }
                         break;
                     } catch (UnexpectedChecksumException uce) {

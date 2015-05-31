@@ -1,6 +1,9 @@
 package org.agilewiki.console.developer;
 
 import org.agilewiki.console.*;
+import org.agilewiki.utils.ids.NameId;
+import org.agilewiki.utils.ids.Timestamp;
+import org.agilewiki.utils.ids.composites.Journal;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +15,11 @@ public class DeveloperRole implements Role {
     private Map<String, RequestBlade> requests = new HashMap<String, RequestBlade>();
     private Map<String, PostRequestBlade> posts = new HashMap<String, PostRequestBlade>();
     private DeveloperBlade developerBlade;
-    private JournalBlade journalBlade;
+    private FullJournalBlade fullJournalBlade;
+    private JournalBlade subjectJournalBlade;
+    private JournalBlade emailJournalBlade;
+    private JournalBlade roleJournalBlade;
+    private JournalBlade userJournalBlade;
     private NodeBlade nodeBlade;
     private PostBlade postBlade;
     private SecondaryKeysBlade subjectsBlade;
@@ -26,7 +33,19 @@ public class DeveloperRole implements Role {
         developerBlade = new DeveloperBlade(simpleSimon);
         postBlade = new PostBlade(simpleSimon);
         nodeBlade = new NodeBlade(simpleSimon);
-        journalBlade = new JournalBlade(simpleSimon);
+        fullJournalBlade = new FullJournalBlade(simpleSimon, "Full Journal");
+        subjectJournalBlade = new JournalBlade(simpleSimon,
+                "Subject Key Journal",
+                Journal.journalId(NameId.generate("subject")));
+        emailJournalBlade = new JournalBlade(simpleSimon,
+                "Email Address Key Journal",
+                Journal.journalId(NameId.generate("email")));
+        roleJournalBlade = new JournalBlade(simpleSimon,
+                "Role Key Journal",
+                Journal.journalId(NameId.generate("role")));
+        userJournalBlade = new JournalBlade(simpleSimon,
+                "User Link Journal",
+                Journal.journalId(NameId.generate("user")));
         subjectsBlade = new SecondaryKeysBlade(simpleSimon, "Subjects", "subject", "$v");
         emailAddressesBlade = new SecondaryKeysBlade(simpleSimon, "Email Addresses", "email", "$v");
         rolesBlade = new SecondaryKeysBlade(simpleSimon, "Roles", "role", "$n");
@@ -36,7 +55,11 @@ public class DeveloperRole implements Role {
         requests.put("developer", developerBlade);
         requests.put("post", postBlade);
         requests.put("node", nodeBlade);
-        requests.put("journal", journalBlade);
+        requests.put("journal", fullJournalBlade);
+        requests.put("subjectJournal", subjectJournalBlade);
+        requests.put("emailJournal", emailJournalBlade);
+        requests.put("roleJournal", roleJournalBlade);
+        requests.put("userLinkJournal", userJournalBlade);
         requests.put("subjects", subjectsBlade);
         requests.put("emailAddresses", emailAddressesBlade);
         requests.put("roles", rolesBlade);
@@ -83,24 +106,29 @@ public class DeveloperRole implements Role {
                           String timestamp,
                           String setRole) {
         menuItem(home, currentPage, setTimestamp, setRole, "developer", developerBlade.niceName());
-        menuItem(home, currentPage, setTimestamp, setRole, "journal", journalBlade.niceName());
+        menuItem(home, currentPage, setTimestamp, setRole, "journal", fullJournalBlade.niceName());
 
         home.append("<li>\n");
         home.append("<a>Secondary Keys:</a>\n");
         home.append("<ul>\n");
 
         menuItem(home, currentPage, setTimestamp, setRole, "subjects", subjectsBlade.niceName());
+        menuItem(home, currentPage, setTimestamp, setRole, "subjectJournal", subjectJournalBlade.niceName());
         menuItem(home, currentPage, setTimestamp, setRole, "emailAddresses", emailAddressesBlade.niceName());
+        menuItem(home, currentPage, setTimestamp, setRole, "emailJournal", emailJournalBlade.niceName());
         menuItem(home, currentPage, setTimestamp, setRole, "roles", rolesBlade.niceName());
+        menuItem(home, currentPage, setTimestamp, setRole, "roleJournal", roleJournalBlade.niceName());
 
         home.append("</ul>\n");
         home.append("</li>\n");
-        /*
 
         home.append("<li>\n");
         home.append("<a>User Links:</a>\n");
         home.append("<ul>\n");
 
+        menuItem(home, currentPage, setTimestamp, setRole, "userLinkJournal", userJournalBlade.niceName());
+
+        /*
         home.append("<li>\n");
         home.append("<a href=\"?from=");
         home.append(currentPage);
@@ -122,10 +150,10 @@ public class DeveloperRole implements Role {
         home.append("Owned\n");
         home.append("</a>\n");
         home.append("</li>\n");
+        */
 
         home.append("</ul>\n");
         home.append("</li>\n");
-        */
 
         home.append("<li>\n");
         if ("post".equals(currentPage) || timestamp != null) {
