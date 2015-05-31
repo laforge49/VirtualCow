@@ -33,7 +33,9 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
         this.mailOut = simpleSimon.mailOut;
     }
 
-    abstract protected String niceName();
+    protected String niceName() {
+        return "";
+    }
 
     protected String fileName(String roleName, String page) {
         return roleName + "/" + page;
@@ -71,6 +73,10 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
                 myEmail = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
             }
             this.role = role;
+        }
+
+        protected String niceName() {
+            return RequestBlade.this.niceName();
         }
 
         private String fileName() {

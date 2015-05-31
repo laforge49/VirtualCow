@@ -94,17 +94,12 @@ public class NodeBlade extends RequestBlade {
                                         }
                                     }
                                 } else {
-                                    sb.append("Modified by: <br />");
-                                    for (String jeId : db.keysIterable(Journal.journalId(nodeId), longTimestamp)) {
-                                        sb.append("&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"?from=node&to=node&nodeId=");
-                                        sb.append(jeId);
-                                        if (timestamp != null) {
-                                            sb.append("&timestamp=" + timestamp);
-                                        }
-                                        sb.append(setRole + "\">");
-                                        sb.append(jeId);
-                                        sb.append("</a> (" + SimpleSimon.niceTime(jeId) + ")<br />");
+                                    sb.append("<a href=\"?from=node&to=nodeJournal&nodeId=");
+                                    sb.append(nodeId);
+                                    if (timestamp != null) {
+                                        sb.append("&timestamp=" + timestamp);
                                     }
+                                    sb.append(setRole + "\">Node Journal</a><br />");
                                 }
                                 sb.append("Secondary Keys: <br />");
                                 for (String typeId : SecondaryId.typeIdIterable(db, nodeId)) {

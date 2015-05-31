@@ -1,7 +1,8 @@
 package org.agilewiki.console.developer;
 
 import org.agilewiki.console.*;
-import org.agilewiki.utils.ids.Timestamp;
+import org.agilewiki.utils.ids.NameId;
+import org.agilewiki.utils.ids.composites.Journal;
 import org.agilewiki.utils.immutable.collections.ListAccessor;
 import org.agilewiki.utils.immutable.collections.MapAccessor;
 import org.agilewiki.utils.immutable.collections.VersionedMapNode;
@@ -13,19 +14,12 @@ import java.util.List;
 /**
  * Request the journal.
  */
-public class JournalBlade extends RequestBlade {
+public class NodeJournalBlade extends RequestBlade {
     String niceName;
-    String id;
 
-    public JournalBlade(SimpleSimon simpleSimon, String niceName, String id) throws Exception {
+    public NodeJournalBlade(SimpleSimon simpleSimon, String niceName) throws Exception {
         super(simpleSimon);
         this.niceName = niceName;
-        this.id = id;
-    }
-
-    @Override
-    protected String niceName() {
-        return niceName;
     }
 
     @Override
@@ -36,6 +30,21 @@ public class JournalBlade extends RequestBlade {
     @Override
     public void get(String page, AsyncContext asyncContext, String userId, Role role) {
         new SR(page, asyncContext, userId, role) {
+
+            String nodeId;
+
+            @Override
+            protected String setContext() {
+                nodeId = request.getParameter("nodeId");
+                map.put("nodeId", nodeId);
+                return "&nodeId=" + nodeId;
+            }
+
+            @Override
+            protected String niceName() {
+                return niceName + " for node " + nodeId;
+            }
+
             @Override
             protected void process()
                     throws Exception {
@@ -50,7 +59,7 @@ public class JournalBlade extends RequestBlade {
                     try {
                         hasMore = false;
                         sb = new StringBuilder();
-                        VersionedMapNode jvmn = db.get(id);
+                        VersionedMapNode jvmn = db.get(Journal.journalId(nodeId));
                         if (jvmn == null)
                             break;
                         int limit = 25;
