@@ -25,6 +25,7 @@ public class DeveloperRole implements Role {
     private SecondaryKeysBlade subjectsBlade;
     private SecondaryKeysBlade emailAddressesBlade;
     private SecondaryKeysBlade rolesBlade;
+    private SecondaryKeysBlade transactionsBlade;
     private NodesBlade nodesBlade;
     private InvLinksBlade invLinksBlade;
 
@@ -50,6 +51,7 @@ public class DeveloperRole implements Role {
         subjectsBlade = new SecondaryKeysBlade(simpleSimon, "Subjects", "subject", "$v");
         emailAddressesBlade = new SecondaryKeysBlade(simpleSimon, "Email Addresses", "email", "$v");
         rolesBlade = new SecondaryKeysBlade(simpleSimon, "Roles", "role", "$n");
+        transactionsBlade = new SecondaryKeysBlade(simpleSimon, "Transactions", "transactionName", "$n");
         nodesBlade = new NodesBlade(simpleSimon);
         invLinksBlade = new InvLinksBlade(simpleSimon);
 
@@ -65,6 +67,7 @@ public class DeveloperRole implements Role {
         requests.put("subjects", subjectsBlade);
         requests.put("emailAddresses", emailAddressesBlade);
         requests.put("roles", rolesBlade);
+        requests.put("transactions", transactionsBlade);
         requests.put("nodes", nodesBlade);
         requests.put("invLinks", invLinksBlade);
 
@@ -120,6 +123,7 @@ public class DeveloperRole implements Role {
         menuItem(home, currentPage, setTimestamp, setRole, "emailJournal", emailJournalBlade.niceName());
         menuItem(home, currentPage, setTimestamp, setRole, "roles", rolesBlade.niceName());
         menuItem(home, currentPage, setTimestamp, setRole, "roleJournal", roleJournalBlade.niceName());
+        menuItem(home, currentPage, setTimestamp, setRole, "transactions", transactionsBlade.niceName());
 
         home.append("</ul>\n");
         home.append("</li>\n");
