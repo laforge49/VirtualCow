@@ -83,28 +83,37 @@ public class SecondaryKeysBlade extends RequestBlade {
                                 line = line.substring(0, 60);
                             line = SimpleSimon.encode(line, 0, SimpleSimon.ENCODE_SINGLE_LINE); //line text
                             if (nodeId == null) {
-                                sb.append("<a href=\"?from=secondaryKeys&to=nodes&secondaryId=");
+                                sb.append("<a href=\"?from=");
+                                sb.append(page);
+                                sb.append("&to=nodes&secondaryId=");
                                 sb.append(secondaryId);
                                 if (timestamp != null) {
                                     sb.append("&timestamp=");
                                     sb.append(timestamp);
                                 }
-                                sb.append(setRole + "\">");
+                                sb.append(setRole + "#rupa\">");
                                 sb.append(line);
                                 sb.append("</a>");
                             } else {
                                 sb.append(line);
                                 sb.append(" -> ");
-                                sb.append("<a href=\"?from=secondaryKeys&to=node&nodeId=");
+                                sb.append("<a href=\"?from=");
+                                sb.append(page);
+                                sb.append("&to=node&nodeId=");
                                 sb.append(nodeId);
                                 if (timestamp != null) {
                                     sb.append("&timestamp=");
                                     sb.append(timestamp);
                                 }
-                                sb.append(setRole + "\">");
+                                sb.append(setRole + "#rupa\">");
                                 sb.append(nodeId);
                                 sb.append("</a>");
                             }
+                            sb.append(", <a href=\"?from=");
+                            sb.append(page);
+                            sb.append("&to=subJournal&subJournal=");
+                            sb.append(secondaryId + setRole);
+                            sb.append("#rupa\">journal</a>");
                             sb.append("<br />");
                         }
                         break;
