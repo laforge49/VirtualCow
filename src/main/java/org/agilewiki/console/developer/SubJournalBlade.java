@@ -43,7 +43,7 @@ public class SubJournalBlade extends RequestBlade {
 
             @Override
             protected String niceName() {
-                return niceName + " for " + subJournal.substring(2);
+                return niceName + " for " + subJournal;
             }
 
             @Override
@@ -60,7 +60,7 @@ public class SubJournalBlade extends RequestBlade {
                     try {
                         hasMore = false;
                         sb = new StringBuilder();
-                        VersionedMapNode jvmn = db.get(subJournal);
+                        VersionedMapNode jvmn = db.get(Journal.journalId(subJournal));
                         if (jvmn == null)
                             break;
                         int limit = 25;
