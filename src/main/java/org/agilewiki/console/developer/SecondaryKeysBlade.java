@@ -6,6 +6,7 @@ import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.collections.ListAccessor;
 import org.agilewiki.utils.immutable.collections.MapAccessor;
+import org.agilewiki.utils.immutable.collections.PeekABoo;
 import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
@@ -47,6 +48,7 @@ public class SecondaryKeysBlade extends RequestBlade {
                     throws Exception {
                 String prefix = SecondaryId.SECONDARY_ID + NameIds.generate(secondaryType);
                 String startingAt = request.getParameter("startingAt");
+                System.out.println(startingAt);
                 if (startingAt == null)
                     startingAt = "";
                 boolean hasMore = false;
@@ -56,7 +58,9 @@ public class SecondaryKeysBlade extends RequestBlade {
                         hasMore = false;
                         int limit = 25;
                         sb = new StringBuilder();
-                        for (String id : new IdIterable(servletContext, db, prefix, keyPrefix + startingAt, longTimestamp)) {
+                        PeekABoo<String> idPeekABoo = new IdPeekABooable(db, prefix, longTimestamp).iterator();
+                        idPeekABoo.setPosition(keyPrefix + startingAt);
+                        for (String id: idPeekABoo) {
                             if (limit == 0) {
                                 hasMore = true;
                                 startingAt = ValueId.value(id);
