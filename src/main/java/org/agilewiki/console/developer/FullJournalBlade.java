@@ -2,9 +2,7 @@ package org.agilewiki.console.developer;
 
 import org.agilewiki.console.*;
 import org.agilewiki.utils.ids.Timestamp;
-import org.agilewiki.utils.immutable.collections.ListAccessor;
-import org.agilewiki.utils.immutable.collections.MapAccessor;
-import org.agilewiki.utils.immutable.collections.VersionedMapNode;
+import org.agilewiki.utils.immutable.collections.*;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
 import javax.servlet.AsyncContext;
@@ -50,14 +48,16 @@ public class FullJournalBlade extends RequestBlade {
                         int limit = 25;
                         hasMore = false;
                         sb = new StringBuilder();
-                        for (String next : new IdIterable(servletContext, db, prefix, startingAt, longTimestamp)) {
+                        PeekABoo<String> idPeekABoo = new IdPeekABooable(db, prefix, longTimestamp).iterator();
+                        idPeekABoo.setPosition(prefix + startingAt);
+                        for (String tsId: idPeekABoo) {
+                            String next = TimestampIds.value(tsId);
                             if (limit == 0) {
                                 hasMore = true;
                                 startingAt = next;
                                 break;
                             }
                             --limit;
-                            String tsId = TimestampIds.generate(next);
                             MapAccessor ma = db.mapAccessor();
                             ListAccessor la = ma.listAccessor(tsId);
                             VersionedMapNode vmn = (VersionedMapNode) la.get(0);
