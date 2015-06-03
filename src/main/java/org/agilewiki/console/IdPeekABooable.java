@@ -26,7 +26,17 @@ public class IdPeekABooable implements PeekABooable<String> {
         peekABoo = new PeekABooMap<ListAccessor, String>(filter) {
             @Override
             protected String transform(ListAccessor value) {
-                return (String) value.key();
+                return ((String) value.key()).substring(prefix.length());
+            }
+
+            @Override
+            public String getPosition() {
+                return super.getPosition().substring(prefix.length());
+            }
+
+            @Override
+            public void setPosition(String position) {
+                super.setPosition(prefix + position);
             }
         };
     }

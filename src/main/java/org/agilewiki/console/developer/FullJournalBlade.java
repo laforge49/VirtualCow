@@ -49,9 +49,9 @@ public class FullJournalBlade extends RequestBlade {
                         hasMore = false;
                         sb = new StringBuilder();
                         PeekABoo<String> idPeekABoo = new IdPeekABooable(db, prefix, longTimestamp).iterator();
-                        idPeekABoo.setPosition(prefix + startingAt);
-                        for (String tsId: idPeekABoo) {
-                            String next = TimestampIds.value(tsId);
+                        idPeekABoo.setPosition(startingAt);
+                        for (String next: idPeekABoo) {
+                            String tsId = TimestampIds.generate(next);
                             if (limit == 0) {
                                 hasMore = true;
                                 startingAt = next;
