@@ -30,13 +30,13 @@ public class IdPeekABooable implements PeekABooable<String> {
             }
 
             @Override
-            public String getPosition() {
-                return super.getPosition().substring(prefix.length());
+            protected String transformString(String value) {
+                return value.substring(prefix.length());
             }
 
             @Override
-            public void setPosition(String position) {
-                super.setPosition(prefix + position);
+            protected String reverseTransformString(String value) {
+                return prefix + value;
             }
         };
     }
