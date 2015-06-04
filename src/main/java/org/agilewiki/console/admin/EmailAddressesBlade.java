@@ -41,7 +41,7 @@ public class EmailAddressesBlade extends RequestBlade {
                         hasMore = false;
                         int limit = 25;
                         sb = new StringBuilder();
-                        PeekABoo<String> idPeekABoo = new IdPeekABooable(db, prefix, longTimestamp).iterator();
+                        PeekABoo<String> idPeekABoo = db.idsIterable(prefix, longTimestamp).iterator();
                         idPeekABoo.setPosition(startingAt);
                         for (String id: idPeekABoo) {
                             if (limit == 0) {

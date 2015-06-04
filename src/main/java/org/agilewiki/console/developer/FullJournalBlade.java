@@ -48,7 +48,7 @@ public class FullJournalBlade extends RequestBlade {
                         int limit = 25;
                         hasMore = false;
                         sb = new StringBuilder();
-                        PeekABoo<String> idPeekABoo = new IdPeekABooable(db, prefix, longTimestamp).iterator();
+                        PeekABoo<String> idPeekABoo = db.idsIterable(prefix, longTimestamp).iterator();
                         idPeekABoo.setPosition(startingAt);
                         for (String next: idPeekABoo) {
                             String tsId = TimestampIds.generate(next);
