@@ -5,6 +5,7 @@ import org.agilewiki.utils.ids.Timestamp;
 import org.agilewiki.utils.ids.composites.Journal;
 import org.agilewiki.utils.immutable.collections.ListAccessor;
 import org.agilewiki.utils.immutable.collections.MapAccessor;
+import org.agilewiki.utils.immutable.collections.PeekABoo;
 import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
@@ -21,7 +22,7 @@ public class JournalBlade extends RequestBlade {
     public JournalBlade(SimpleSimon simpleSimon, String niceName, String id) throws Exception {
         super(simpleSimon);
         this.niceName = niceName;
-        this.id = Journal.journalId(id);
+        this.id = id;
     }
 
     @Override
@@ -51,12 +52,10 @@ public class JournalBlade extends RequestBlade {
                     try {
                         hasMore = false;
                         sb = new StringBuilder();
-                        VersionedMapNode jvmn = db.get(id);
-                        if (jvmn == null)
-                            break;
                         int limit = 25;
-                        String jeId = (String) jvmn.ceilingKey(TimestampIds.generate(startingAt), longTimestamp);
-                        while (true) {
+                        PeekABoo<String> peekABoo = Journal.journal(db, id, longTimestamp);
+                        peekABoo.setPosition(TimestampIds.generate(startingAt));
+                        for (String jeId: peekABoo) {
                             if (jeId == null)
                                 break;
                             String next = TimestampIds.value(jeId);
@@ -102,7 +101,7 @@ public class JournalBlade extends RequestBlade {
                             sb.append(line);
                             sb.append("</font>");
                             sb.append("<br />");
-                            jeId = (String) jvmn.higherKey(jeId, longTimestamp);
+//                            jeId = (String) jvmn.higherKey(jeId, longTimestamp);
                         }
                         break;
                     } catch (UnexpectedChecksumException uce) {

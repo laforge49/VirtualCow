@@ -48,7 +48,6 @@ public class SecondaryKeysBlade extends RequestBlade {
                     throws Exception {
                 String prefix = SecondaryId.SECONDARY_ID + NameIds.generate(secondaryType);
                 String startingAt = request.getParameter("startingAt");
-                System.out.println(startingAt);
                 if (startingAt == null)
                     startingAt = "";
                 boolean hasMore = false;
