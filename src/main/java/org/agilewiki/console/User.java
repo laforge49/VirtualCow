@@ -2,6 +2,7 @@ package org.agilewiki.console;
 
 import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.ValueId;
+import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.virtualcow.Db;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
@@ -68,7 +69,7 @@ public class User {
             try {
                 String emailId = ValueId.generate(email);
                 String emailSecondaryId = SecondaryIds.secondaryId(EMAIL_ID, emailId);
-                for (String userId : db.keysIterable(emailSecondaryId, timestamp)) {
+                for (String userId : SecondaryId.vmnIdIterable(db, emailSecondaryId, timestamp)) {
                     return userId;
                 }
                 return null;
