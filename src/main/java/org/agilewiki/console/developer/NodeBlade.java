@@ -77,9 +77,7 @@ public class NodeBlade extends RequestBlade {
                                 }
                                 if (time != null) {
                                     sb.append("Modifies: <br />");
-                                    for (String nId : db.keysIterable(Journal.modifiesId(nodeId), longTimestamp)) {
-                                        if (nId.startsWith(SecondaryId.SECONDARY_ID))
-                                            continue;
+                                    for (String nId : Journal.modifies(db, nodeId, longTimestamp)) {
                                         sb.append("&nbsp;&nbsp;&nbsp;&nbsp;" + nId + "<br />");
                                         if (nId.startsWith(SecondaryId.SECONDARY_INV)) {
                                             VersionedMapNode icvmn = db.get(nId);

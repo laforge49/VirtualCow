@@ -101,7 +101,6 @@ public class JournalBlade extends RequestBlade {
                             sb.append(line);
                             sb.append("</font>");
                             sb.append("<br />");
-//                            jeId = (String) jvmn.higherKey(jeId, longTimestamp);
                         }
                         break;
                     } catch (UnexpectedChecksumException uce) {
