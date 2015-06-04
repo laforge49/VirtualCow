@@ -3,9 +3,6 @@ package org.agilewiki.console;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
-
 /**
  * Run when the servlet has started.
  */
