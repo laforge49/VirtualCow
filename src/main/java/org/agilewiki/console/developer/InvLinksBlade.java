@@ -7,8 +7,8 @@ import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.immutable.collections.ListAccessor;
 import org.agilewiki.utils.immutable.collections.MapAccessor;
+import org.agilewiki.utils.immutable.collections.PeekABoo;
 import org.agilewiki.utils.immutable.collections.VersionedMapNode;
-import org.agilewiki.utils.immutable.collections.VersionedMapNodeImpl;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
 import javax.servlet.AsyncContext;
@@ -58,13 +58,9 @@ public class InvLinksBlade extends RequestBlade {
                         int limit = 25;
                         sb = new StringBuilder();
                         MapAccessor ma = db.mapAccessor();
-                        VersionedMapNodeImpl vmn = (VersionedMapNodeImpl) ma.get(link1Inv);
-                        if (vmn == null)
-                            break;
-                        String nodeId = (String) vmn.ceilingKey(startingAt, longTimestamp);
-                        while (limit > 0) {
-                            if (nodeId == null)
-                                break;
+                        PeekABoo<String> peekABoo = Link1Id.link1InvIterable(db, targetId, labelId, longTimestamp);
+                        peekABoo.setPosition(startingAt);
+                        for (String nodeId: peekABoo) {
                             --limit;
                             if (limit == 0) {
                                 hasMore = true;
@@ -112,7 +108,6 @@ public class InvLinksBlade extends RequestBlade {
                             line = SimpleSimon.encode(line, 0, SimpleSimon.ENCODE_SINGLE_LINE); //line text
                             sb.append(line);
                             sb.append("<br />");
-                            nodeId = (String) vmn.higherKey(nodeId, longTimestamp);
                         }
                         break;
                     } catch (UnexpectedChecksumException uce) {
