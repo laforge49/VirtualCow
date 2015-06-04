@@ -5,6 +5,7 @@ import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.composites.Journal;
 import org.agilewiki.utils.immutable.collections.ListAccessor;
 import org.agilewiki.utils.immutable.collections.MapAccessor;
+import org.agilewiki.utils.immutable.collections.PeekABoo;
 import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
@@ -60,12 +61,10 @@ public class SubJournalBlade extends RequestBlade {
                     try {
                         hasMore = false;
                         sb = new StringBuilder();
-                        VersionedMapNode jvmn = db.get(Journal.journalId(subJournal));
-                        if (jvmn == null)
-                            break;
                         int limit = 25;
-                        String jeId = (String) jvmn.ceilingKey(TimestampIds.generate(startingAt), longTimestamp);
-                        while (true) {
+                        PeekABoo<String> peekABoo = Journal.journal(db, subJournal, longTimestamp);
+                        peekABoo.setPosition(TimestampIds.generate(startingAt));
+                        for (String jeId: peekABoo) {
                             if (jeId == null)
                                 break;
                             String next = TimestampIds.value(jeId);
@@ -111,7 +110,6 @@ public class SubJournalBlade extends RequestBlade {
                             sb.append(line);
                             sb.append("</font>");
                             sb.append("<br />");
-                            jeId = (String) jvmn.higherKey(jeId, longTimestamp);
                         }
                         break;
                     } catch (UnexpectedChecksumException uce) {
