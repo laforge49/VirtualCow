@@ -19,6 +19,8 @@ public class AdminRole implements Role {
     private EmailAddressesBlade emailAddressesBlade;
     private UserBlade userBlade;
     private EditRolesBlade editRolesBlade;
+    private RecreateRoleBlade recreateRoleBlade;
+    private final SimpleSimon simpleSimon;
 
     public AdminRole(SimpleSimon simpleSimon)
             throws Exception {
@@ -36,8 +38,18 @@ public class AdminRole implements Role {
         requests.put("editRoles", editRolesBlade);
         posts.put("editRoles", editRolesBlade);
 
+        recreateRoleBlade = new RecreateRoleBlade(simpleSimon);
+        requests.put("recreateRole", recreateRoleBlade);
+        posts.put("recreateRole", recreateRoleBlade);
+
+        this.simpleSimon = simpleSimon;
         simpleSimon.db.registerTransaction(InitializeAdminRoleTransaction.NAME, InitializeAdminRoleTransaction.class);
         InitializeAdminRoleTransaction.adminRole = this;
+    }
+
+    @Override
+    public SimpleSimon simpleSimon() {
+        return simpleSimon;
     }
 
     @Override
@@ -83,5 +95,6 @@ public class AdminRole implements Role {
                           String setRole) {
         menuItem(sb, currentPage, setTimestamp, setRole, "admin", adminBlade.niceName());
         menuItem(sb, currentPage, setTimestamp, setRole, "emailAddresses", emailAddressesBlade.niceName());
+        menuItem(sb, currentPage, setTimestamp, setRole, "recreateRole", recreateRoleBlade.niceName());
     }
 }

@@ -12,6 +12,8 @@ import java.io.IOException;
 public interface Role {
     String initializeTransactionName();
 
+    SimpleSimon simpleSimon();
+
     String roleName();
 
     default String niceRoleName() {

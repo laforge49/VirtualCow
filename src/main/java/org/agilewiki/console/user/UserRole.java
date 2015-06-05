@@ -51,6 +51,11 @@ public class UserRole implements Role {
     }
 
     @Override
+    public SimpleSimon simpleSimon() {
+        return simpleSimon;
+    }
+
+    @Override
     public String initializeTransactionName() {
         return InitializeUserRoleTransaction.NAME;
     }

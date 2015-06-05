@@ -17,6 +17,7 @@ public class UnRole implements Role {
     private Map<String, PostRequestBlade> posts = new HashMap<String, PostRequestBlade>();
 
     private WelcomeBlade welcomeBlade;
+    private final SimpleSimon simpleSimon;
 
     public UnRole(SimpleSimon simpleSimon)
             throws Exception {
@@ -44,6 +45,12 @@ public class UnRole implements Role {
         posts.put("validated", validatedBlade);
         posts.put("forgot", forgotBlade);
         posts.put("forgotPassword", forgotPasswordBlade);
+        this.simpleSimon = simpleSimon;
+    }
+
+    @Override
+    public SimpleSimon simpleSimon() {
+        return simpleSimon;
     }
 
     @Override

@@ -30,6 +30,7 @@ public class DeveloperRole implements Role {
     private SecondaryKeysBlade transactionsBlade;
     private NodesBlade nodesBlade;
     private InvLinksBlade invLinksBlade;
+    private final SimpleSimon simpleSimon;
 
     public DeveloperRole(SimpleSimon simpleSimon)
             throws Exception {
@@ -75,8 +76,14 @@ public class DeveloperRole implements Role {
 
         posts.put("post", postBlade);
 
+        this.simpleSimon = simpleSimon;
         simpleSimon.db.registerTransaction(InitializeDeveloperRoleTransaction.NAME, InitializeDeveloperRoleTransaction.class);
         InitializeDeveloperRoleTransaction.developerRole = this;
+    }
+
+    @Override
+    public SimpleSimon simpleSimon() {
+        return simpleSimon;
     }
 
     @Override
