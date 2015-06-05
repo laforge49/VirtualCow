@@ -74,6 +74,14 @@ public class DeveloperRole implements Role {
         requests.put("invLinks", invLinksBlade);
 
         posts.put("post", postBlade);
+
+        simpleSimon.db.registerTransaction(InitializeDeveloperRoleTransaction.NAME, InitializeDeveloperRoleTransaction.class);
+        InitializeDeveloperRoleTransaction.developerRole = this;
+    }
+
+    @Override
+    public String initializeTransactionName() {
+        return InitializeDeveloperRoleTransaction.NAME;
     }
 
     @Override

@@ -57,7 +57,7 @@ public class UserBlade extends RequestBlade {
                         }
                         sb.append("</tr></table>\n");
                         sb.append("<table>\n");
-                        for (String roleName: simpleSimon.roles.keySet()) {
+                        for (String roleName : simpleSimon.roles.keySet()) {
                             if (!roleName.equals("unRole")) {
                                 String niceRoleName = simpleSimon.roles.get(roleName).niceRoleName();
                                 sb.append("<tr>");

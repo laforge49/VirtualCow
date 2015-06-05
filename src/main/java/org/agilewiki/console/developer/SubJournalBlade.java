@@ -63,7 +63,7 @@ public class SubJournalBlade extends RequestBlade {
                         int limit = 25;
                         PeekABoo<String> peekABoo = Journal.journal(db, subJournal, longTimestamp);
                         peekABoo.setPosition(TimestampIds.generate(startingAt));
-                        for (String jeId: peekABoo) {
+                        for (String jeId : peekABoo) {
                             if (jeId == null)
                                 break;
                             String next = TimestampIds.value(jeId);

@@ -21,6 +21,7 @@ public class UserRole implements Role {
     private DeleteAccountBlade deleteAccountBlade;
     private LogoutBlade logoutBlade;
     private NewEmailAddressBlade newEmailAddressBlade;
+    public final SimpleSimon simpleSimon;
 
     public UserRole(SimpleSimon simpleSimon)
             throws Exception {
@@ -43,6 +44,15 @@ public class UserRole implements Role {
         posts.put("changePassword", changePasswordBlade);
         posts.put("newEmailAddress", newEmailAddressBlade);
         posts.put("changeEmailAddress", changeEmailAddressBlade);
+
+        this.simpleSimon = simpleSimon;
+        simpleSimon.db.registerTransaction(InitializeUserRoleTransaction.NAME, InitializeUserRoleTransaction.class);
+        InitializeUserRoleTransaction.userRole = this;
+    }
+
+    @Override
+    public String initializeTransactionName() {
+        return InitializeUserRoleTransaction.NAME;
     }
 
     @Override

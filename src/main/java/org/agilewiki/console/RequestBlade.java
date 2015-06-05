@@ -139,20 +139,20 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
                 StringBuilder appMenu = new StringBuilder();
                 appMenu.append("<a>Role &#9660;</a>\n");
                 appMenu.append("<ul class=\"sub-menu\">\n");
-                for (Role role: roles) {
+                for (Role role : roles) {
                     String rn = role.roleName();
                     appMenu.append("<li>\n");
-                    if (rn.equals(roleName)) {
-                        appMenu.append("<a>");
-                    } else {
-                        appMenu.append("<a href=\"?from=");
-                        appMenu.append(page);
-                        appMenu.append(setTimestamp);
-                        appMenu.append("&role=");
-                        appMenu.append(rn);
-                        appMenu.append("#rupa\">");
-                    }
+                    appMenu.append("<a href=\"?from=");
+                    appMenu.append(page);
+                    appMenu.append(setTimestamp);
+                    appMenu.append("&role=");
+                    appMenu.append(rn);
+                    appMenu.append("#rupa\">");
+                    if (rn.equals(roleName))
+                        appMenu.append("<strong>");
                     appMenu.append(role.niceRoleName());
+                    if (rn.equals(roleName))
+                        appMenu.append("</strong>");
                     appMenu.append("</a>");
                     appMenu.append("</li>\n");
                 }

@@ -1,10 +1,16 @@
 package org.agilewiki.console.admin;
 
-import org.agilewiki.console.*;
+import org.agilewiki.console.NameIds;
+import org.agilewiki.console.RequestBlade;
+import org.agilewiki.console.Role;
+import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.ids.composites.SecondaryId;
-import org.agilewiki.utils.immutable.collections.*;
+import org.agilewiki.utils.immutable.collections.ListAccessor;
+import org.agilewiki.utils.immutable.collections.MapAccessor;
+import org.agilewiki.utils.immutable.collections.PeekABoo;
+import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
 import javax.servlet.AsyncContext;
@@ -43,7 +49,7 @@ public class EmailAddressesBlade extends RequestBlade {
                         sb = new StringBuilder();
                         PeekABoo<String> idPeekABoo = db.idsIterable(prefix, longTimestamp).iterator();
                         idPeekABoo.setPosition(startingAt);
-                        for (String id: idPeekABoo) {
+                        for (String id : idPeekABoo) {
                             if (limit == 0) {
                                 hasMore = true;
                                 startingAt = ValueId.value(id);

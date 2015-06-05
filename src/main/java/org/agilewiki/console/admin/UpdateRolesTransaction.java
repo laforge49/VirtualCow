@@ -22,7 +22,7 @@ public class UpdateRolesTransaction extends VCTransaction {
         ListNode ln = mapNode.getList("addRoles");
         if (ln != null) {
             List<String> add = ln.flatList();
-            for (String userRole: add) {
+            for (String userRole : add) {
                 String roleTypeSecondaryId =
                         SecondaryIds.secondaryId(User.ROLE_ID, NameIds.generate(userRole));
                 SecondaryIds.createSecondaryId(db, nodeId, roleTypeSecondaryId);
@@ -31,7 +31,7 @@ public class UpdateRolesTransaction extends VCTransaction {
         ln = mapNode.getList("removeRoles");
         if (ln != null) {
             List<String> remove = ln.flatList();
-            for (String userRole: remove) {
+            for (String userRole : remove) {
                 String roleTypeSecondaryId =
                         SecondaryIds.secondaryId(User.ROLE_ID, NameIds.generate(userRole));
                 SecondaryIds.removeSecondaryId(db, nodeId, roleTypeSecondaryId);

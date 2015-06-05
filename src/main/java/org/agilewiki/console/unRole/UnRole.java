@@ -47,6 +47,11 @@ public class UnRole implements Role {
     }
 
     @Override
+    public String initializeTransactionName() {
+        return null;
+    }
+
+    @Override
     public String roleName() {
         return "unRole";
     }

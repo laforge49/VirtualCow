@@ -10,6 +10,8 @@ import java.io.IOException;
  * A command set and menus.
  */
 public interface Role {
+    String initializeTransactionName();
+
     String roleName();
 
     default String niceRoleName() {
@@ -70,31 +72,31 @@ public interface Role {
     }
 
     default void menuItems(StringBuilder sb,
-                          String currentPage,
-                          String setTimestamp,
+                           String currentPage,
+                           String setTimestamp,
                            String timestamp,
-                          String setRole) {
+                           String setRole) {
     }
 
     default void menuItem(StringBuilder sb,
-                            String currentPage,
-                            String setTimestamp,
-                            String setRole,
-                            String toPage,
-                            String niceName) {
+                          String currentPage,
+                          String setTimestamp,
+                          String setRole,
+                          String toPage,
+                          String niceName) {
         sb.append("<li>");
-        if (toPage.equals(currentPage)) {
-            sb.append("<a>");
-        } else {
-            sb.append("<a href=\"?from=");
-            sb.append(currentPage);
-            sb.append("&to=");
-            sb.append(toPage);
-            sb.append(setTimestamp);
-            sb.append(setRole);
-            sb.append("#rupa\">");
-        }
+        sb.append("<a href=\"?from=");
+        sb.append(currentPage);
+        sb.append("&to=");
+        sb.append(toPage);
+        sb.append(setTimestamp);
+        sb.append(setRole);
+        sb.append("#rupa\">");
+        if (toPage.equals(currentPage))
+            sb.append("<strong>");
         sb.append(niceName);
+        if (toPage.equals(currentPage))
+            sb.append("</strong>");
         sb.append("</a>");
         sb.append("</li>\n");
     }

@@ -43,9 +43,9 @@ public class User {
     public static boolean hasRole(Db db, String userId, String role) {
         while (true) {
             try {
-        String inv = SecondaryIds.secondaryInv(userId, ROLE_ID);
-        String roleId = NameId.generate(role);
-        return db.get(inv, roleId, FactoryRegistry.MAX_TIMESTAMP) != null;
+                String inv = SecondaryIds.secondaryInv(userId, ROLE_ID);
+                String roleId = NameId.generate(role);
+                return db.get(inv, roleId, FactoryRegistry.MAX_TIMESTAMP) != null;
             } catch (UnexpectedChecksumException uce) {
             }
         }
@@ -167,7 +167,7 @@ public class User {
                                     String userId,
                                     String emailId,
                                     String passwordHash,
-                                    String ... userRoles) {
+                                    String... userRoles) {
         String emailSecondaryId = SecondaryIds.secondaryId(EMAIL_ID, emailId);
         for (String uId : SecondaryIds.vmnIdIterable(db, emailSecondaryId, db.getTimestamp())) {
             return "duplicate email: " + ValueId.value(emailId);
@@ -175,7 +175,7 @@ public class User {
 
         db.set(userId, PASSWORD_KEY, passwordHash);
         SecondaryIds.createSecondaryId(db, userId, emailSecondaryId);
-        for (String userRole: userRoles) {
+        for (String userRole : userRoles) {
             String userTypeSecondaryId =
                     SecondaryIds.secondaryId(ROLE_ID, NameIds.generate(userRole));
             SecondaryIds.createSecondaryId(db, userId, userTypeSecondaryId);

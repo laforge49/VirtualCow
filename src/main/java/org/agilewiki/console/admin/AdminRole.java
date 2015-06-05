@@ -35,6 +35,14 @@ public class AdminRole implements Role {
         editRolesBlade = new EditRolesBlade(simpleSimon);
         requests.put("editRoles", editRolesBlade);
         posts.put("editRoles", editRolesBlade);
+
+        simpleSimon.db.registerTransaction(InitializeAdminRoleTransaction.NAME, InitializeAdminRoleTransaction.class);
+        InitializeAdminRoleTransaction.adminRole = this;
+    }
+
+    @Override
+    public String initializeTransactionName() {
+        return InitializeAdminRoleTransaction.NAME;
     }
 
     @Override
