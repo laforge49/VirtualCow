@@ -18,8 +18,8 @@ public class UnRole extends RoleBase {
     public UnRole(SimpleSimon simpleSimon)
             throws Exception {
         super(simpleSimon);
-        welcomeBlade = new WelcomeBlade(simpleSimon);
 
+        welcomeBlade = new WelcomeBlade(simpleSimon);
         ForgotPasswordBlade forgotPasswordBlade = new ForgotPasswordBlade(simpleSimon);
         LoginBlade loginBlade = new LoginBlade(simpleSimon);
         NewAccountBlade newAccountBlade = new NewAccountBlade(simpleSimon);
@@ -42,6 +42,9 @@ public class UnRole extends RoleBase {
         posts.put("validated", validatedBlade);
         posts.put("forgot", forgotBlade);
         posts.put("forgotPassword", forgotPasswordBlade);
+
+        simpleSimon.db.registerTransaction(InitializeUnRoleTransaction.NAME, InitializeUnRoleTransaction.class);
+        InitializeUnRoleTransaction.unRole = this;
     }
 
     @Override
