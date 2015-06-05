@@ -95,6 +95,6 @@ public class AdminRole implements Role {
                           String setRole) {
         menuItem(sb, currentPage, setTimestamp, setRole, "admin", adminBlade.niceName());
         menuItem(sb, currentPage, setTimestamp, setRole, "emailAddresses", emailAddressesBlade.niceName());
-        menuItem(sb, currentPage, setTimestamp, setRole, "recreateRole", recreateRoleBlade.niceName());
+        menuItem(sb, currentPage, setTimestamp, setRole, "recreateRole", recreateRoleBlade.niceName(), timestamp != null);
     }
 }

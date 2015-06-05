@@ -178,18 +178,6 @@ public class DeveloperRole implements Role {
         home.append("</ul>\n");
         home.append("</li>\n");
 
-        home.append("<li>\n");
-        if ("post".equals(currentPage) || timestamp != null) {
-            home.append("<a>\n");
-        } else {
-            home.append("<a href=\"?from=");
-            home.append(currentPage);
-            home.append("&to=post");
-            home.append(setRole);
-            home.append("#rupa\">\n");
-        }
-        home.append(postBlade.niceName() + "\n");
-        home.append("</a>\n");
-        home.append("</li>\n");
+        menuItem(home, currentPage, setTimestamp, setRole, "post", postBlade.niceName(), timestamp != null);
     }
 }

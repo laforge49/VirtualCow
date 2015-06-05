@@ -86,14 +86,28 @@ public interface Role {
                           String setRole,
                           String toPage,
                           String niceName) {
+        menuItem(sb, currentPage, setTimestamp, setRole, toPage, niceName, false);
+    }
+
+    default void menuItem(StringBuilder sb,
+                          String currentPage,
+                          String setTimestamp,
+                          String setRole,
+                          String toPage,
+                          String niceName,
+                          boolean post) {
         sb.append("<li>");
-        sb.append("<a href=\"?from=");
-        sb.append(currentPage);
-        sb.append("&to=");
-        sb.append(toPage);
-        sb.append(setTimestamp);
-        sb.append(setRole);
-        sb.append("#rupa\">");
+        if (post) {
+            sb.append("<a>");
+        } else {
+            sb.append("<a href=\"?from=");
+            sb.append(currentPage);
+            sb.append("&to=");
+            sb.append(toPage);
+            sb.append(setTimestamp);
+            sb.append(setRole);
+            sb.append("#rupa\">");
+        }
         if (toPage.equals(currentPage))
             sb.append("<strong>");
         sb.append(niceName);
