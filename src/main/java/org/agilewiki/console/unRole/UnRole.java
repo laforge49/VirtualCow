@@ -1,9 +1,6 @@
 package org.agilewiki.console.unRole;
 
-import org.agilewiki.console.PostRequestBlade;
-import org.agilewiki.console.RequestBlade;
-import org.agilewiki.console.Role;
-import org.agilewiki.console.SimpleSimon;
+import org.agilewiki.console.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,16 +8,16 @@ import java.util.Map;
 /**
  * Default role when the user is not logged in.
  */
-public class UnRole implements Role {
+public class UnRole extends RoleBase {
 
     private Map<String, RequestBlade> requests = new HashMap<String, RequestBlade>();
     private Map<String, PostRequestBlade> posts = new HashMap<String, PostRequestBlade>();
 
     private WelcomeBlade welcomeBlade;
-    private final SimpleSimon simpleSimon;
 
     public UnRole(SimpleSimon simpleSimon)
             throws Exception {
+        super(simpleSimon);
         welcomeBlade = new WelcomeBlade(simpleSimon);
 
         ForgotPasswordBlade forgotPasswordBlade = new ForgotPasswordBlade(simpleSimon);
@@ -45,7 +42,6 @@ public class UnRole implements Role {
         posts.put("validated", validatedBlade);
         posts.put("forgot", forgotBlade);
         posts.put("forgotPassword", forgotPasswordBlade);
-        this.simpleSimon = simpleSimon;
     }
 
     @Override
@@ -55,7 +51,7 @@ public class UnRole implements Role {
 
     @Override
     public String initializeTransactionName() {
-        return null;
+        return InitializeUnRoleTransaction.NAME;
     }
 
     @Override

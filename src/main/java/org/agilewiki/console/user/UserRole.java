@@ -1,9 +1,6 @@
 package org.agilewiki.console.user;
 
-import org.agilewiki.console.PostRequestBlade;
-import org.agilewiki.console.RequestBlade;
-import org.agilewiki.console.Role;
-import org.agilewiki.console.SimpleSimon;
+import org.agilewiki.console.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +8,7 @@ import java.util.Map;
 /**
  * A base role.
  */
-public class UserRole implements Role {
+public class UserRole extends RoleBase {
 
     private Map<String, RequestBlade> requests = new HashMap<String, RequestBlade>();
     private Map<String, PostRequestBlade> posts = new HashMap<String, PostRequestBlade>();
@@ -21,10 +18,10 @@ public class UserRole implements Role {
     private DeleteAccountBlade deleteAccountBlade;
     private LogoutBlade logoutBlade;
     private NewEmailAddressBlade newEmailAddressBlade;
-    public final SimpleSimon simpleSimon;
 
     public UserRole(SimpleSimon simpleSimon)
             throws Exception {
+        super(simpleSimon);
         logoutBlade = new LogoutBlade(simpleSimon);
         deleteAccountBlade = new DeleteAccountBlade(simpleSimon);
         changePasswordBlade = new ChangePasswordBlade(simpleSimon);
@@ -45,7 +42,6 @@ public class UserRole implements Role {
         posts.put("newEmailAddress", newEmailAddressBlade);
         posts.put("changeEmailAddress", changeEmailAddressBlade);
 
-        this.simpleSimon = simpleSimon;
         simpleSimon.db.registerTransaction(InitializeUserRoleTransaction.NAME, InitializeUserRoleTransaction.class);
         InitializeUserRoleTransaction.userRole = this;
     }

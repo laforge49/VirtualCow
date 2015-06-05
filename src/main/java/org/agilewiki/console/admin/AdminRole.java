@@ -1,9 +1,6 @@
 package org.agilewiki.console.admin;
 
-import org.agilewiki.console.PostRequestBlade;
-import org.agilewiki.console.RequestBlade;
-import org.agilewiki.console.Role;
-import org.agilewiki.console.SimpleSimon;
+import org.agilewiki.console.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +8,7 @@ import java.util.Map;
 /**
  * A base role.
  */
-public class AdminRole implements Role {
+public class AdminRole extends RoleBase {
 
     private Map<String, RequestBlade> requests = new HashMap<String, RequestBlade>();
     private Map<String, PostRequestBlade> posts = new HashMap<String, PostRequestBlade>();
@@ -20,11 +17,10 @@ public class AdminRole implements Role {
     private UserBlade userBlade;
     private EditRolesBlade editRolesBlade;
     private RecreateRoleBlade recreateRoleBlade;
-    private final SimpleSimon simpleSimon;
 
     public AdminRole(SimpleSimon simpleSimon)
             throws Exception {
-
+        super(simpleSimon);
         adminBlade = new AdminBlade(simpleSimon);
         requests.put("admin", adminBlade);
 
@@ -42,7 +38,6 @@ public class AdminRole implements Role {
         requests.put("recreateRole", recreateRoleBlade);
         posts.put("recreateRole", recreateRoleBlade);
 
-        this.simpleSimon = simpleSimon;
         simpleSimon.db.registerTransaction(InitializeAdminRoleTransaction.NAME, InitializeAdminRoleTransaction.class);
         InitializeAdminRoleTransaction.adminRole = this;
     }

@@ -1,9 +1,6 @@
 package org.agilewiki.console.developer;
 
-import org.agilewiki.console.PostRequestBlade;
-import org.agilewiki.console.RequestBlade;
-import org.agilewiki.console.Role;
-import org.agilewiki.console.SimpleSimon;
+import org.agilewiki.console.*;
 import org.agilewiki.utils.ids.NameId;
 
 import java.util.HashMap;
@@ -12,7 +9,7 @@ import java.util.Map;
 /**
  * The developer role.
  */
-public class DeveloperRole implements Role {
+public class DeveloperRole extends RoleBase {
     private Map<String, RequestBlade> requests = new HashMap<String, RequestBlade>();
     private Map<String, PostRequestBlade> posts = new HashMap<String, PostRequestBlade>();
     private DeveloperBlade developerBlade;
@@ -30,10 +27,10 @@ public class DeveloperRole implements Role {
     private SecondaryKeysBlade transactionsBlade;
     private NodesBlade nodesBlade;
     private InvLinksBlade invLinksBlade;
-    private final SimpleSimon simpleSimon;
 
     public DeveloperRole(SimpleSimon simpleSimon)
             throws Exception {
+        super(simpleSimon);
         developerBlade = new DeveloperBlade(simpleSimon);
         postBlade = new PostBlade(simpleSimon);
         nodeBlade = new NodeBlade(simpleSimon);
@@ -76,7 +73,6 @@ public class DeveloperRole implements Role {
 
         posts.put("post", postBlade);
 
-        this.simpleSimon = simpleSimon;
         simpleSimon.db.registerTransaction(InitializeDeveloperRoleTransaction.NAME, InitializeDeveloperRoleTransaction.class);
         InitializeDeveloperRoleTransaction.developerRole = this;
     }
