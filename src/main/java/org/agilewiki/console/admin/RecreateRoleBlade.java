@@ -68,25 +68,27 @@ public class RecreateRoleBlade extends PostRequestBlade {
             protected void process()
                     throws Exception {
                 String selectedRole = request.getParameter("selectedRole");
-                if (selectedRole.length() == 0) {
+                map.put("options", options(role, selectedRole));
+                Role sRole = simpleSimon.roles.get(selectedRole);
+                if (selectedRole.length() == 0 || "unRole".equals(selectedRole) ||
+                        sRole == null) {
                     map.put("error", "Select a role");
                     map.put("submit", "<input type=\"submit\" value=\"Recreate\"/>");
-                } else {
-                    map.put("success", "Done");
-                    map.put("submit", "&nbsp;");
+                    finish();
+                    return;
                 }
-                map.put("options", options(role, selectedRole));
+
                 MapNode mn = db.dbFactoryRegistry.nilMap;
-                finish();
-/*
-                asyncRequestImpl.send(db.update(NpjeTransaction.NAME, mn), new AsyncResponseProcessor<String>() {
+                asyncRequestImpl.send(db.update(sRole.initializeTransactionName(), mn),
+                        new AsyncResponseProcessor<String>() {
                     @Override
                     public void processAsyncResponse(String _response) throws Exception {
                         map.put("success", "Done");
+                        map.put("submit", "&nbsp;");
                         finish();
                     }
                 });
-*/
+
             }
         }.signal();
     }
