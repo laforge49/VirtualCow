@@ -14,8 +14,8 @@ abstract public class RecreateRoleTransaction extends VCTransaction {
 
     @Override
     public void process(Db db, MapNode tMapNode) {
-        String rolesId = NameId.generate("ROLES");
-        String roleId = NameId.generate(role().roleName());
+        String rolesId = NameId.generate("metadata");
+        String roleId = NameId.generate(role().roleName() + "Role");
         String labelId = NameId.generate("roles");
         String linkId = Link1Id.link1Id(rolesId, labelId);
         VersionedMapNode vmn = db.get(linkId);

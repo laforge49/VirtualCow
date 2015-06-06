@@ -16,9 +16,9 @@ public class UserRole extends RoleBase {
     private LogoutBlade logoutBlade;
     private NewEmailAddressBlade newEmailAddressBlade;
 
-    public UserRole(SimpleSimon simpleSimon)
+    public UserRole(SimpleSimon simpleSimon, String roleName)
             throws Exception {
-        super(simpleSimon);
+        super(simpleSimon, roleName);
 
         logoutBlade = new LogoutBlade(this, "logout");
         deleteAccountBlade = new DeleteAccountBlade(this, "deleteAccount");
@@ -32,18 +32,8 @@ public class UserRole extends RoleBase {
     }
 
     @Override
-    public SimpleSimon simpleSimon() {
-        return simpleSimon;
-    }
-
-    @Override
     public String initializeTransactionName() {
         return RecreateUserRoleTransaction.NAME;
-    }
-
-    @Override
-    public String roleName() {
-        return "user";
     }
 
     @Override

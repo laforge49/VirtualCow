@@ -45,6 +45,7 @@ public class SimpleSimon extends HttpServlet {
     public MailOut mailOut;
 
     public Map<String, Role> roles = new TreeMap<String, Role>();
+    public SystemRole systemRole;
     public UnRole unRole;
     public UserRole userRole;
     public DeveloperRole developerRole;
@@ -105,14 +106,11 @@ public class SimpleSimon extends HttpServlet {
             mailOut = new MailOut();
 
             try {
-                unRole = new UnRole(this);
-                roles.put(unRole.roleName(), unRole);
-                userRole = new UserRole(this);
-                roles.put(userRole.roleName(), userRole);
-                developerRole = new DeveloperRole(this);
-                roles.put(developerRole.roleName(), developerRole);
-                adminRole = new AdminRole(this);
-                roles.put(adminRole.roleName(), adminRole);
+                systemRole = new SystemRole(this, "system");
+                unRole = new UnRole(this, "unRole");
+                userRole = new UserRole(this, "user");
+                developerRole = new DeveloperRole(this, "developer");
+                adminRole = new AdminRole(this, "admin");
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

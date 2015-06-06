@@ -15,9 +15,9 @@ public class AdminRole extends RoleBase {
     private EditRolesBlade editRolesBlade;
     private RecreateRoleBlade recreateRoleBlade;
 
-    public AdminRole(SimpleSimon simpleSimon)
+    public AdminRole(SimpleSimon simpleSimon, String roleName)
             throws Exception {
-        super(simpleSimon);
+        super(simpleSimon, roleName);
 
         adminBlade = new AdminBlade(this, "admin");
         emailAddressesBlade = new EmailAddressesBlade(this, "emailAddresses");
@@ -30,18 +30,8 @@ public class AdminRole extends RoleBase {
     }
 
     @Override
-    public SimpleSimon simpleSimon() {
-        return simpleSimon;
-    }
-
-    @Override
     public String initializeTransactionName() {
         return RecreateAdminRoleTransaction.NAME;
-    }
-
-    @Override
-    public String roleName() {
-        return "admin";
     }
 
     @Override

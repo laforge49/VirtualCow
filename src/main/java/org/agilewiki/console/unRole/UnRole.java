@@ -11,9 +11,9 @@ public class UnRole extends RoleBase {
 
     private WelcomeBlade welcomeBlade;
 
-    public UnRole(SimpleSimon simpleSimon)
+    public UnRole(SimpleSimon simpleSimon, String roleName)
             throws Exception {
-        super(simpleSimon);
+        super(simpleSimon, roleName);
 
         welcomeBlade = new WelcomeBlade(this, "welcome");
         ForgotPasswordBlade forgotPasswordBlade = new ForgotPasswordBlade(this, "forgotPassword");
@@ -29,18 +29,8 @@ public class UnRole extends RoleBase {
     }
 
     @Override
-    public SimpleSimon simpleSimon() {
-        return simpleSimon;
-    }
-
-    @Override
     public String initializeTransactionName() {
         return RecreateUnRoleTransaction.NAME;
-    }
-
-    @Override
-    public String roleName() {
-        return "unRole";
     }
 
     @Override

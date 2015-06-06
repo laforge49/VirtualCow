@@ -26,14 +26,14 @@ public class DeveloperRole extends RoleBase {
     private NodesBlade nodesBlade;
     private InvLinksBlade invLinksBlade;
 
-    public DeveloperRole(SimpleSimon simpleSimon)
+    public DeveloperRole(SimpleSimon simpleSimon, String roleName)
             throws Exception {
-        super(simpleSimon);
+        super(simpleSimon, roleName);
 
         developerBlade = new DeveloperBlade(this, "developer");
         postBlade = new PostBlade(this, "post");
         nodeBlade = new NodeBlade(this, "node", "Node", null);
-        rolesNodeBlade = new NodeBlade(this, "rolesNode", "ROLES Node", "$nROLES");
+        rolesNodeBlade = new NodeBlade(this, "metadataNode", "Metadata Node", "$nmetadata");
         fullJournalBlade = new FullJournalBlade(this, "journal", "Full Journal");
         subJournalBlade = new SubJournalBlade(this, "subJournal", "Journal");
         subjectJournalBlade = new JournalBlade(this, "subjectJournal",
@@ -60,18 +60,8 @@ public class DeveloperRole extends RoleBase {
     }
 
     @Override
-    public SimpleSimon simpleSimon() {
-        return simpleSimon;
-    }
-
-    @Override
     public String initializeTransactionName() {
         return RecreateDeveloperRoleTransaction.NAME;
-    }
-
-    @Override
-    public String roleName() {
-        return "developer";
     }
 
     @Override
