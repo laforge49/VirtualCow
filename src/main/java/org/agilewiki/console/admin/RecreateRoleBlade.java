@@ -40,7 +40,7 @@ public class RecreateRoleBlade extends PostRequestBlade {
         Map<String, Role> roles = simpleSimon.roles;
         StringBuilder sb = new StringBuilder();
         sb.append(option("", "-select role-", false));
-        for (String roleName: roles.keySet()) {
+        for (String roleName : roles.keySet()) {
             Role r = roles.get(roleName);
             sb.append(option(roleName, r.niceRoleName(), roleName.equals(selectedRole)));
         }
@@ -83,12 +83,12 @@ public class RecreateRoleBlade extends PostRequestBlade {
                 mn = mn.add(NameIds.REMOTE_PORT, request.getRemotePort());
                 asyncRequestImpl.send(db.update(sRole.initializeTransactionName(), mn),
                         new AsyncResponseProcessor<String>() {
-                    @Override
-                    public void processAsyncResponse(String _response) throws Exception {
-                        map.put("success", selectedRole + " recreated");
-                        finish();
-                    }
-                });
+                            @Override
+                            public void processAsyncResponse(String _response) throws Exception {
+                                map.put("success", selectedRole + " recreated");
+                                finish();
+                            }
+                        });
 
             }
         }.signal();

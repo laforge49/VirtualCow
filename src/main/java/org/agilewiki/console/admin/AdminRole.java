@@ -1,9 +1,8 @@
 package org.agilewiki.console.admin;
 
-import org.agilewiki.console.*;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.agilewiki.console.RequestBlade;
+import org.agilewiki.console.RoleBase;
+import org.agilewiki.console.SimpleSimon;
 
 /**
  * A base role.
@@ -19,6 +18,7 @@ public class AdminRole extends RoleBase {
     public AdminRole(SimpleSimon simpleSimon)
             throws Exception {
         super(simpleSimon);
+
         adminBlade = new AdminBlade(this, "admin");
         requests.put(adminBlade.page, adminBlade);
 

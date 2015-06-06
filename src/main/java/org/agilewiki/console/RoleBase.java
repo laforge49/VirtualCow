@@ -16,6 +16,16 @@ abstract public class RoleBase implements Role {
     }
 
     @Override
+    public Map<String, RequestBlade> requests() {
+        return requests;
+    }
+
+    @Override
+    public Map<String, PostRequestBlade> posts() {
+        return posts;
+    }
+
+    @Override
     public RequestBlade requestBlade(String page) {
         return requests.get(page);
     }

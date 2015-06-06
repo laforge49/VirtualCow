@@ -1,10 +1,9 @@
 package org.agilewiki.console.developer;
 
-import org.agilewiki.console.*;
+import org.agilewiki.console.RequestBlade;
+import org.agilewiki.console.RoleBase;
+import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.utils.ids.NameId;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * The developer role.

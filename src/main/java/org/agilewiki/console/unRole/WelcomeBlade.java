@@ -2,7 +2,6 @@ package org.agilewiki.console.unRole;
 
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.Role;
-import org.agilewiki.console.SimpleSimon;
 
 import javax.servlet.AsyncContext;
 

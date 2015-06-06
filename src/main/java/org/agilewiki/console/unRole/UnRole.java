@@ -1,9 +1,8 @@
 package org.agilewiki.console.unRole;
 
-import org.agilewiki.console.*;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.agilewiki.console.RequestBlade;
+import org.agilewiki.console.RoleBase;
+import org.agilewiki.console.SimpleSimon;
 
 /**
  * Default role when the user is not logged in.

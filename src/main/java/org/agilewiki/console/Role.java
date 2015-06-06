@@ -5,6 +5,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * A command set and menus.
@@ -19,6 +20,10 @@ public interface Role {
     default String niceRoleName() {
         return roleName();
     }
+
+    Map<String, RequestBlade> requests();
+
+    Map<String, PostRequestBlade> posts();
 
     RequestBlade requestBlade(String page);
 
