@@ -40,11 +40,6 @@ public class AdminRole extends RoleBase {
     }
 
     @Override
-    public String getDefaultRequestPage() {
-        return "admin";
-    }
-
-    @Override
     public void menuItems(StringBuilder sb,
                           String currentPage,
                           String setTimestamp,

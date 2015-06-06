@@ -29,7 +29,9 @@ public interface Role {
 
     RequestBlade getDefaultRequestBlade();
 
-    String getDefaultRequestPage();
+    default String getDefaultRequestPage() {
+        return getDefaultRequestBlade().page;
+    }
 
     default void dispatchGetRequest(HttpServletRequest request, String userId) {
         String page = request.getParameter("to");

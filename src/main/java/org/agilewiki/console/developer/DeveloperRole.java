@@ -70,11 +70,6 @@ public class DeveloperRole extends RoleBase {
     }
 
     @Override
-    public String getDefaultRequestPage() {
-        return "developer";
-    }
-
-    @Override
     public void menuItems(StringBuilder home,
                           String currentPage,
                           String setTimestamp,

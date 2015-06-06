@@ -37,9 +37,4 @@ public class UnRole extends RoleBase {
     public RequestBlade getDefaultRequestBlade() {
         return welcomeBlade;
     }
-
-    @Override
-    public String getDefaultRequestPage() {
-        return "welcome";
-    }
 }

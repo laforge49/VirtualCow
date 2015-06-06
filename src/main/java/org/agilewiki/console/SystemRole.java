@@ -23,9 +23,4 @@ public class SystemRole extends RoleBase {
     public RequestBlade getDefaultRequestBlade() {
         return null;
     }
-
-    @Override
-    public String getDefaultRequestPage() {
-        return null;
-    }
 }

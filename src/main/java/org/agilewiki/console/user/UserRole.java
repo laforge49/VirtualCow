@@ -42,11 +42,6 @@ public class UserRole extends RoleBase {
     }
 
     @Override
-    public String getDefaultRequestPage() {
-        return "user";
-    }
-
-    @Override
     public void menuItems(StringBuilder home,
                           String currentPage,
                           String setTimestamp,
