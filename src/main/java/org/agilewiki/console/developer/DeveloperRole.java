@@ -35,49 +35,62 @@ public class DeveloperRole implements Role {
 
     public DeveloperRole(SimpleSimon simpleSimon)
             throws Exception {
-        developerBlade = new DeveloperBlade(simpleSimon);
-        postBlade = new PostBlade(simpleSimon);
-        nodeBlade = new NodeBlade(simpleSimon, null);
-        rolesNodeBlade = new NodeBlade(simpleSimon, "$nROLES");
-        fullJournalBlade = new FullJournalBlade(simpleSimon, "Full Journal");
-        subJournalBlade = new SubJournalBlade(simpleSimon, "Journal");
-        subjectJournalBlade = new JournalBlade(simpleSimon,
+        developerBlade = new DeveloperBlade(simpleSimon, "developer");
+        requests.put(developerBlade.page, developerBlade);
+
+        postBlade = new PostBlade(simpleSimon, "post");
+        requests.put(postBlade.page, postBlade);
+        posts.put(postBlade.page, postBlade);
+
+        nodeBlade = new NodeBlade(simpleSimon, "node", null);
+        requests.put(nodeBlade.page, nodeBlade);
+
+        rolesNodeBlade = new NodeBlade(simpleSimon, "rolesNode", "$nROLES");
+        requests.put(rolesNodeBlade.page, rolesNodeBlade);
+
+        fullJournalBlade = new FullJournalBlade(simpleSimon, "journal", "Full Journal");
+        requests.put(fullJournalBlade.page, fullJournalBlade);
+
+        subJournalBlade = new SubJournalBlade(simpleSimon, "subJournal", "Journal");
+        requests.put(subJournalBlade.page, subJournalBlade);
+
+        subjectJournalBlade = new JournalBlade(simpleSimon, "subjectJournal",
                 "Subject Key Journal",
                 NameId.generate("subject"));
-        emailJournalBlade = new JournalBlade(simpleSimon,
+        requests.put(subJournalBlade.page, subjectJournalBlade);
+
+        emailJournalBlade = new JournalBlade(simpleSimon, "emailJournal",
                 "Email Address Key Journal",
                 NameId.generate("email"));
-        roleJournalBlade = new JournalBlade(simpleSimon,
+        requests.put(emailJournalBlade.page, emailJournalBlade);
+
+        roleJournalBlade = new JournalBlade(simpleSimon, "roleJournal",
                 "Role Key Journal",
                 NameId.generate("role"));
-        userJournalBlade = new JournalBlade(simpleSimon,
+        requests.put(roleJournalBlade.page, roleJournalBlade);
+
+        userJournalBlade = new JournalBlade(simpleSimon, "userLinkJournal",
                 "User Link Journal",
                 NameId.generate("user"));
-        subjectsBlade = new SecondaryKeysBlade(simpleSimon, "Subjects", "subject", "$v");
-        emailAddressesBlade = new SecondaryKeysBlade(simpleSimon, "Email Addresses", "email", "$v");
-        rolesBlade = new SecondaryKeysBlade(simpleSimon, "Roles", "role", "$n");
-        transactionsBlade = new SecondaryKeysBlade(simpleSimon, "Transactions", "transactionName", "$n");
-        nodesBlade = new NodesBlade(simpleSimon);
-        invLinksBlade = new InvLinksBlade(simpleSimon);
+        requests.put(userJournalBlade.page, userJournalBlade);
 
-        requests.put("developer", developerBlade);
-        requests.put("post", postBlade);
-        requests.put("node", nodeBlade);
-        requests.put("journal", fullJournalBlade);
-        requests.put("subJournal", subJournalBlade);
-        requests.put("subjectJournal", subjectJournalBlade);
-        requests.put("emailJournal", emailJournalBlade);
-        requests.put("roleJournal", roleJournalBlade);
-        requests.put("userLinkJournal", userJournalBlade);
-        requests.put("subjects", subjectsBlade);
-        requests.put("emailAddresses", emailAddressesBlade);
-        requests.put("roles", rolesBlade);
-        requests.put("transactions", transactionsBlade);
-        requests.put("nodes", nodesBlade);
-        requests.put("invLinks", invLinksBlade);
-        requests.put("rolesNode", rolesNodeBlade);
+        subjectsBlade = new SecondaryKeysBlade(simpleSimon, "subjects", "Subjects", "subject", "$v");
+        requests.put(subjectJournalBlade.page, subjectsBlade);
 
-        posts.put("post", postBlade);
+        emailAddressesBlade = new SecondaryKeysBlade(simpleSimon, "emailAddresses", "Email Addresses", "email", "$v");
+        requests.put(emailAddressesBlade.page, emailAddressesBlade);
+
+        rolesBlade = new SecondaryKeysBlade(simpleSimon, "roles", "Roles", "role", "$n");
+        requests.put(rolesBlade.page, rolesBlade);
+
+        transactionsBlade = new SecondaryKeysBlade(simpleSimon, "transactions", "Transactions", "transactionName", "$n");
+        requests.put(transactionsBlade.page, transactionsBlade);
+
+        nodesBlade = new NodesBlade(simpleSimon, "nodes");
+        requests.put(nodesBlade.page, nodesBlade);
+
+        invLinksBlade = new InvLinksBlade(simpleSimon, "invLinks");
+        requests.put(invLinksBlade.page, invLinksBlade);
 
         this.simpleSimon = simpleSimon;
         simpleSimon.db.registerTransaction(RecreateDeveloperRoleTransaction.NAME, RecreateDeveloperRoleTransaction.class);
@@ -130,20 +143,20 @@ public class DeveloperRole implements Role {
                           String setTimestamp,
                           String timestamp,
                           String setRole) {
-        menuItem(home, currentPage, setTimestamp, setRole, "developer", developerBlade.niceName());
-        menuItem(home, currentPage, setTimestamp, setRole, "journal", fullJournalBlade.niceName());
+        menuItem(home, currentPage, setTimestamp, setRole, developerBlade);
+        menuItem(home, currentPage, setTimestamp, setRole, fullJournalBlade);
 
         home.append("<li>\n");
         home.append("<a>Secondary Keys:</a>\n");
         home.append("<ul>\n");
 
-        menuItem(home, currentPage, setTimestamp, setRole, "subjects", subjectsBlade.niceName());
-        menuItem(home, currentPage, setTimestamp, setRole, "subjectJournal", subjectJournalBlade.niceName());
-        menuItem(home, currentPage, setTimestamp, setRole, "emailAddresses", emailAddressesBlade.niceName());
-        menuItem(home, currentPage, setTimestamp, setRole, "emailJournal", emailJournalBlade.niceName());
-        menuItem(home, currentPage, setTimestamp, setRole, "roles", rolesBlade.niceName());
-        menuItem(home, currentPage, setTimestamp, setRole, "roleJournal", roleJournalBlade.niceName());
-        menuItem(home, currentPage, setTimestamp, setRole, "transactions", transactionsBlade.niceName());
+        menuItem(home, currentPage, setTimestamp, setRole, subjectsBlade);
+        menuItem(home, currentPage, setTimestamp, setRole, subjectJournalBlade);
+        menuItem(home, currentPage, setTimestamp, setRole, emailAddressesBlade);
+        menuItem(home, currentPage, setTimestamp, setRole, emailJournalBlade);
+        menuItem(home, currentPage, setTimestamp, setRole, rolesBlade);
+        menuItem(home, currentPage, setTimestamp, setRole, roleJournalBlade);
+        menuItem(home, currentPage, setTimestamp, setRole, transactionsBlade);
 
         home.append("</ul>\n");
         home.append("</li>\n");
@@ -152,7 +165,7 @@ public class DeveloperRole implements Role {
         home.append("<a>User Links:</a>\n");
         home.append("<ul>\n");
 
-        menuItem(home, currentPage, setTimestamp, setRole, "userLinkJournal", userJournalBlade.niceName());
+        menuItem(home, currentPage, setTimestamp, setRole, userJournalBlade);
 
         /*
         home.append("<li>\n");
@@ -181,8 +194,8 @@ public class DeveloperRole implements Role {
         home.append("</ul>\n");
         home.append("</li>\n");
 
-        menuItem(home, currentPage, setTimestamp, setRole, "rolesNode", "node ROLES");
+        menuItem(home, currentPage, setTimestamp, setRole, rolesBlade);
 
-        menuItem(home, currentPage, setTimestamp, setRole, "post", postBlade.niceName(), timestamp != null);
+        menuItem(home, currentPage, setTimestamp, setRole, postBlade, timestamp != null);
     }
 }

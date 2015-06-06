@@ -18,8 +18,8 @@ import java.util.List;
  * Inverted bi-directional links.
  */
 public class InvLinksBlade extends RequestBlade {
-    public InvLinksBlade(SimpleSimon simpleSimon) throws Exception {
-        super(simpleSimon);
+    public InvLinksBlade(SimpleSimon simpleSimon, String page) throws Exception {
+        super(simpleSimon, page);
     }
 
     @Override

@@ -16,8 +16,8 @@ import javax.servlet.AsyncContext;
  * Request for a journal entry.
  */
 public class EditRolesBlade extends PostRequestBlade {
-    public EditRolesBlade(SimpleSimon simpleSimon) throws Exception {
-        super(simpleSimon);
+    public EditRolesBlade(SimpleSimon simpleSimon, String page) throws Exception {
+        super(simpleSimon, page);
         db.registerTransaction(UpdateRolesTransaction.NAME, UpdateRolesTransaction.class);
     }
 

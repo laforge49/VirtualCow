@@ -13,8 +13,8 @@ import java.security.NoSuchAlgorithmException;
  * Change the email address of the user.
  */
 public class ForgotPasswordBlade extends PostRequestBlade {
-    public ForgotPasswordBlade(SimpleSimon simpleSimon) throws Exception {
-        super(simpleSimon);
+    public ForgotPasswordBlade(SimpleSimon simpleSimon, String page) throws Exception {
+        super(simpleSimon, page);
         db.registerTransaction(ForgotPasswordTransaction.NAME, ForgotPasswordTransaction.class);
     }
 

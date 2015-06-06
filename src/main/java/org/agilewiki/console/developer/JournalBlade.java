@@ -18,8 +18,8 @@ public class JournalBlade extends RequestBlade {
     String niceName;
     String id;
 
-    public JournalBlade(SimpleSimon simpleSimon, String niceName, String id) throws Exception {
-        super(simpleSimon);
+    public JournalBlade(SimpleSimon simpleSimon, String page, String niceName, String id) throws Exception {
+        super(simpleSimon, page);
         this.niceName = niceName;
         this.id = id;
     }

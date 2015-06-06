@@ -10,8 +10,8 @@ import javax.servlet.AsyncContext;
  * Request for home page.
  */
 public class DeveloperBlade extends RequestBlade {
-    public DeveloperBlade(SimpleSimon simpleSimon) throws Exception {
-        super(simpleSimon);
+    public DeveloperBlade(SimpleSimon simpleSimon, String page) throws Exception {
+        super(simpleSimon, page);
     }
 
     @Override

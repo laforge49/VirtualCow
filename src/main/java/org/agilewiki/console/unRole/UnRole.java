@@ -19,29 +19,34 @@ public class UnRole extends RoleBase {
             throws Exception {
         super(simpleSimon);
 
-        welcomeBlade = new WelcomeBlade(simpleSimon);
-        ForgotPasswordBlade forgotPasswordBlade = new ForgotPasswordBlade(simpleSimon);
-        LoginBlade loginBlade = new LoginBlade(simpleSimon);
-        NewAccountBlade newAccountBlade = new NewAccountBlade(simpleSimon);
-        ForgotBlade forgotBlade = new ForgotBlade(simpleSimon);
-        ValidatedBlade validatedBlade = new ValidatedBlade(simpleSimon);
-        AboutBlade aboutBlade = new AboutBlade(simpleSimon);
-        ContactBlade contactBlade = new ContactBlade(simpleSimon);
+        welcomeBlade = new WelcomeBlade(simpleSimon, "welcome");
+        requests.put(welcomeBlade.page, welcomeBlade);
 
-        requests.put("welcome", welcomeBlade);
-        requests.put("about", aboutBlade);
-        requests.put("contact", contactBlade);
-        requests.put("login", loginBlade);
-        requests.put("newAccount", newAccountBlade);
-        requests.put("validated", validatedBlade);
-        requests.put("forgot", forgotBlade);
-        requests.put("forgotPassword", forgotPasswordBlade);
+        ForgotPasswordBlade forgotPasswordBlade = new ForgotPasswordBlade(simpleSimon, "forgotPassword");
+        requests.put(forgotPasswordBlade.page, forgotPasswordBlade);
+        posts.put(forgotPasswordBlade.page, forgotPasswordBlade);
 
-        posts.put("login", loginBlade);
-        posts.put("newAccount", newAccountBlade);
-        posts.put("validated", validatedBlade);
-        posts.put("forgot", forgotBlade);
-        posts.put("forgotPassword", forgotPasswordBlade);
+        LoginBlade loginBlade = new LoginBlade(simpleSimon, "login");
+        requests.put(loginBlade.page, loginBlade);
+        posts.put(loginBlade.page, loginBlade);
+
+        NewAccountBlade newAccountBlade = new NewAccountBlade(simpleSimon, "newAccount");
+        requests.put(newAccountBlade.page, newAccountBlade);
+        posts.put(newAccountBlade.page, newAccountBlade);
+
+        ForgotBlade forgotBlade = new ForgotBlade(simpleSimon, "forgot");
+        requests.put(forgotBlade.page, forgotBlade);
+        posts.put(forgotBlade.page, forgotBlade);
+
+        ValidatedBlade validatedBlade = new ValidatedBlade(simpleSimon, "validated");
+        requests.put(validatedBlade.page, validatedBlade);
+        posts.put(validatedBlade.page, validatedBlade);
+
+        AboutBlade aboutBlade = new AboutBlade(simpleSimon, "about");
+        requests.put(aboutBlade.page, aboutBlade);
+
+        ContactBlade contactBlade = new ContactBlade(simpleSimon, "contact");
+        requests.put(contactBlade.page, contactBlade);
 
         simpleSimon.db.registerTransaction(RecreateUnRoleTransaction.NAME, RecreateUnRoleTransaction.class);
         RecreateUnRoleTransaction.unRole = this;

@@ -24,13 +24,15 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
     protected final ServletContext servletContext;
     protected final Db db;
     protected final MailOut mailOut;
+    public final String page;
 
-    public RequestBlade(SimpleSimon simpleSimon)
+    public RequestBlade(SimpleSimon simpleSimon, String page)
             throws Exception {
         this.simpleSimon = simpleSimon;
         this.servletContext = simpleSimon.servletContext;
         this.db = simpleSimon.db;
         this.mailOut = simpleSimon.mailOut;
+        this.page = page;
     }
 
     protected String niceName() {

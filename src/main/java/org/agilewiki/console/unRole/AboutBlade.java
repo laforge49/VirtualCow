@@ -10,8 +10,8 @@ import javax.servlet.AsyncContext;
  * Change the email address of the user.
  */
 public class AboutBlade extends RequestBlade {
-    public AboutBlade(SimpleSimon simpleSimon) throws Exception {
-        super(simpleSimon);
+    public AboutBlade(SimpleSimon simpleSimon, String page) throws Exception {
+        super(simpleSimon, page);
     }
 
     @Override

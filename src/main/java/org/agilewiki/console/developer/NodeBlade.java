@@ -18,8 +18,8 @@ import java.util.List;
 public class NodeBlade extends RequestBlade {
     String bNodeBlade;
 
-    public NodeBlade(SimpleSimon simpleSimon, String nodeBlade) throws Exception {
-        super(simpleSimon);
+    public NodeBlade(SimpleSimon simpleSimon, String page, String nodeBlade) throws Exception {
+        super(simpleSimon, page);
         bNodeBlade = nodeBlade;
     }
 

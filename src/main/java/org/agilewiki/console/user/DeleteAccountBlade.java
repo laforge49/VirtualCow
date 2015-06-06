@@ -12,8 +12,8 @@ import javax.servlet.AsyncContext;
  */
 public class DeleteAccountBlade extends PostRequestBlade {
 
-    public DeleteAccountBlade(SimpleSimon simpleSimon) throws Exception {
-        super(simpleSimon);
+    public DeleteAccountBlade(SimpleSimon simpleSimon, String page) throws Exception {
+        super(simpleSimon, page);
         db.registerTransaction(DeleteTransaction.NAME, DeleteTransaction.class);
     }
 

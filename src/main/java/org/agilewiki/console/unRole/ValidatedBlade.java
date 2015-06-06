@@ -12,8 +12,8 @@ import java.security.NoSuchAlgorithmException;
  * Create a new user with a validated email address.
  */
 public class ValidatedBlade extends PostRequestBlade {
-    public ValidatedBlade(SimpleSimon simpleSimon) throws Exception {
-        super(simpleSimon);
+    public ValidatedBlade(SimpleSimon simpleSimon, String page) throws Exception {
+        super(simpleSimon, page);
         db.registerTransaction(NewUserTransaction.NAME, NewUserTransaction.class);
     }
 

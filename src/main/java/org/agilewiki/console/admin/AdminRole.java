@@ -21,22 +21,22 @@ public class AdminRole extends RoleBase {
     public AdminRole(SimpleSimon simpleSimon)
             throws Exception {
         super(simpleSimon);
-        adminBlade = new AdminBlade(simpleSimon);
-        requests.put("admin", adminBlade);
+        adminBlade = new AdminBlade(simpleSimon, "admin");
+        requests.put(adminBlade.page, adminBlade);
 
-        emailAddressesBlade = new EmailAddressesBlade(simpleSimon);
-        requests.put("emailAddresses", emailAddressesBlade);
+        emailAddressesBlade = new EmailAddressesBlade(simpleSimon, "emailAddresses");
+        requests.put(emailAddressesBlade.page, emailAddressesBlade);
 
-        userBlade = new UserBlade(simpleSimon);
-        requests.put("user", userBlade);
+        userBlade = new UserBlade(simpleSimon, "user");
+        requests.put(userBlade.page, userBlade);
 
-        editRolesBlade = new EditRolesBlade(simpleSimon);
-        requests.put("editRoles", editRolesBlade);
-        posts.put("editRoles", editRolesBlade);
+        editRolesBlade = new EditRolesBlade(simpleSimon, "editRoles");
+        requests.put(editRolesBlade.page, editRolesBlade);
+        posts.put(editRolesBlade.page, editRolesBlade);
 
-        recreateRoleBlade = new RecreateRoleBlade(simpleSimon);
-        requests.put("recreateRole", recreateRoleBlade);
-        posts.put("recreateRole", recreateRoleBlade);
+        recreateRoleBlade = new RecreateRoleBlade(simpleSimon, "recreateRole");
+        requests.put(recreateRoleBlade.page, recreateRoleBlade);
+        posts.put(recreateRoleBlade.page, recreateRoleBlade);
 
         simpleSimon.db.registerTransaction(RecreateAdminRoleTransaction.NAME, RecreateAdminRoleTransaction.class);
         RecreateAdminRoleTransaction.adminRole = this;
@@ -88,8 +88,8 @@ public class AdminRole extends RoleBase {
                           String setTimestamp,
                           String timestamp,
                           String setRole) {
-        menuItem(sb, currentPage, setTimestamp, setRole, "admin", adminBlade.niceName());
-        menuItem(sb, currentPage, setTimestamp, setRole, "emailAddresses", emailAddressesBlade.niceName());
-        menuItem(sb, currentPage, setTimestamp, setRole, "recreateRole", recreateRoleBlade.niceName(), timestamp != null);
+        menuItem(sb, currentPage, setTimestamp, setRole, adminBlade);
+        menuItem(sb, currentPage, setTimestamp, setRole, emailAddressesBlade);
+        menuItem(sb, currentPage, setTimestamp, setRole, recreateRoleBlade, timestamp != null);
     }
 }

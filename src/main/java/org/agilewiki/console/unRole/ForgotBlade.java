@@ -11,8 +11,8 @@ import java.security.NoSuchAlgorithmException;
  * Change the email address of the user.
  */
 public class ForgotBlade extends PostRequestBlade {
-    public ForgotBlade(SimpleSimon simpleSimon) throws Exception {
-        super(simpleSimon);
+    public ForgotBlade(SimpleSimon simpleSimon, String page) throws Exception {
+        super(simpleSimon, page);
     }
 
     @Override

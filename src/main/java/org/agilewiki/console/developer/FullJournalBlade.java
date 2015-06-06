@@ -18,8 +18,8 @@ public class FullJournalBlade extends RequestBlade {
     String niceName;
     String prefix = Timestamp.PREFIX;
 
-    public FullJournalBlade(SimpleSimon simpleSimon, String niceName) throws Exception {
-        super(simpleSimon);
+    public FullJournalBlade(SimpleSimon simpleSimon, String page, String niceName) throws Exception {
+        super(simpleSimon, page);
         this.niceName = niceName;
     }
 

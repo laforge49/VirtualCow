@@ -84,18 +84,18 @@ public interface Role {
                           String currentPage,
                           String setTimestamp,
                           String setRole,
-                          String toPage,
-                          String niceName) {
-        menuItem(sb, currentPage, setTimestamp, setRole, toPage, niceName, false);
+                          RequestBlade requestBlade) {
+        menuItem(sb, currentPage, setTimestamp, setRole, requestBlade, false);
     }
 
     default void menuItem(StringBuilder sb,
                           String currentPage,
                           String setTimestamp,
                           String setRole,
-                          String toPage,
-                          String niceName,
+                          RequestBlade requestBlade,
                           boolean post) {
+        String toPage = requestBlade.page;
+        String niceName = requestBlade.niceName();
         sb.append("<li>");
         if (post) {
             sb.append("<a>");

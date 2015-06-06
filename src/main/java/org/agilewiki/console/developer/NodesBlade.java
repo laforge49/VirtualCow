@@ -16,8 +16,8 @@ import java.util.List;
  * Request for secondary keys.
  */
 public class NodesBlade extends RequestBlade {
-    public NodesBlade(SimpleSimon simpleSimon) throws Exception {
-        super(simpleSimon);
+    public NodesBlade(SimpleSimon simpleSimon, String page) throws Exception {
+        super(simpleSimon, page);
     }
 
     @Override

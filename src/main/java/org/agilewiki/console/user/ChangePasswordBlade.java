@@ -14,8 +14,8 @@ import java.security.NoSuchAlgorithmException;
  */
 public class ChangePasswordBlade extends PostRequestBlade {
 
-    public ChangePasswordBlade(SimpleSimon simpleSimon) throws Exception {
-        super(simpleSimon);
+    public ChangePasswordBlade(SimpleSimon simpleSimon, String page) throws Exception {
+        super(simpleSimon, page);
         db.registerTransaction(ChangePasswordTransaction.NAME, ChangePasswordTransaction.class);
     }
 

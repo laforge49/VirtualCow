@@ -22,25 +22,28 @@ public class UserRole extends RoleBase {
     public UserRole(SimpleSimon simpleSimon)
             throws Exception {
         super(simpleSimon);
-        logoutBlade = new LogoutBlade(simpleSimon);
-        deleteAccountBlade = new DeleteAccountBlade(simpleSimon);
-        changePasswordBlade = new ChangePasswordBlade(simpleSimon);
-        changeEmailAddressBlade = new ChangeEmailAddressBlade(simpleSimon);
-        newEmailAddressBlade = new NewEmailAddressBlade(simpleSimon);
-        userBlade = new UserBlade(simpleSimon);
+        logoutBlade = new LogoutBlade(simpleSimon, "logout");
+        requests.put(logoutBlade.page, logoutBlade);
+        posts.put(logoutBlade.page, logoutBlade);
 
-        requests.put("logout", logoutBlade);
-        requests.put("deleteAccount", deleteAccountBlade);
-        requests.put("changePassword", changePasswordBlade);
-        requests.put("changeEmailAddress", changeEmailAddressBlade);
-        requests.put("newEmailAddress", newEmailAddressBlade);
-        requests.put("profile", userBlade);
+        deleteAccountBlade = new DeleteAccountBlade(simpleSimon, "deleteAccount");
+        requests.put(deleteAccountBlade.page, deleteAccountBlade);
+        posts.put(deleteAccountBlade.page, deleteAccountBlade);
 
-        posts.put("logout", logoutBlade);
-        posts.put("deleteAccount", deleteAccountBlade);
-        posts.put("changePassword", changePasswordBlade);
-        posts.put("newEmailAddress", newEmailAddressBlade);
-        posts.put("changeEmailAddress", changeEmailAddressBlade);
+        changePasswordBlade = new ChangePasswordBlade(simpleSimon, "changePassword");
+        requests.put(changePasswordBlade.page, changePasswordBlade);
+        posts.put(changePasswordBlade.page, changePasswordBlade);
+
+        changeEmailAddressBlade = new ChangeEmailAddressBlade(simpleSimon, "changeEmailAddress");
+        requests.put(changeEmailAddressBlade.page, changeEmailAddressBlade);
+        posts.put(changeEmailAddressBlade.page, changeEmailAddressBlade);
+
+        newEmailAddressBlade = new NewEmailAddressBlade(simpleSimon, "newEmailAddress");
+        requests.put(newEmailAddressBlade.page, newEmailAddressBlade);
+        posts.put(newEmailAddressBlade.page, newEmailAddressBlade);
+
+        userBlade = new UserBlade(simpleSimon, "user");
+        requests.put(userBlade.page, userBlade);
 
         simpleSimon.db.registerTransaction(RecreateUserRoleTransaction.NAME, RecreateUserRoleTransaction.class);
         RecreateUserRoleTransaction.userRole = this;
@@ -92,9 +95,9 @@ public class UserRole extends RoleBase {
                           String setTimestamp,
                           String timestamp,
                           String setRole) {
-        menuItem(home, currentPage, setTimestamp, setRole, "user", userBlade.niceName());
-        menuItem(home, currentPage, setTimestamp, setRole, "changePassword", changePasswordBlade.niceName());
-        menuItem(home, currentPage, setTimestamp, setRole, "changeEmailAddress", changeEmailAddressBlade.niceName());
-        menuItem(home, currentPage, setTimestamp, setRole, "deleteAccount", deleteAccountBlade.niceName());
+        menuItem(home, currentPage, setTimestamp, setRole, userBlade);
+        menuItem(home, currentPage, setTimestamp, setRole, changePasswordBlade);
+        menuItem(home, currentPage, setTimestamp, setRole, changeEmailAddressBlade);
+        menuItem(home, currentPage, setTimestamp, setRole, deleteAccountBlade);
     }
 }

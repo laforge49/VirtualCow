@@ -24,9 +24,10 @@ public class SecondaryKeysBlade extends RequestBlade {
     String keyPrefix;
     String niceName;
 
-    public SecondaryKeysBlade(SimpleSimon simpleSimon, String niceName, String secondaryType, String keyPrefix)
+    public SecondaryKeysBlade(SimpleSimon simpleSimon, String page,
+                              String niceName, String secondaryType, String keyPrefix)
             throws Exception {
-        super(simpleSimon);
+        super(simpleSimon, page);
         this.niceName = niceName;
         this.secondaryType = secondaryType;
         this.keyPrefix = keyPrefix;

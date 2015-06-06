@@ -14,8 +14,8 @@ import javax.servlet.AsyncContext;
  * Request for a journal entry.
  */
 public class UserBlade extends RequestBlade {
-    public UserBlade(SimpleSimon simpleSimon) throws Exception {
-        super(simpleSimon);
+    public UserBlade(SimpleSimon simpleSimon, String page) throws Exception {
+        super(simpleSimon, page);
     }
 
     @Override
