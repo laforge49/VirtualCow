@@ -10,8 +10,8 @@ import javax.servlet.AsyncContext;
  * Request for a non-performing journal entry.
  */
 public class PostBlade extends PostRequestBlade {
-    public PostBlade(SimpleSimon simpleSimon, String page) throws Exception {
-        super(simpleSimon, page);
+    public PostBlade(Role role, String page) throws Exception {
+        super(role, page);
         db.registerTransaction(NpjeTransaction.NAME, NpjeTransaction.class);
     }
 

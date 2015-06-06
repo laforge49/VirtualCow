@@ -11,8 +11,8 @@ import java.security.NoSuchAlgorithmException;
  * Change the email address of the user.
  */
 public class NewAccountBlade extends PostRequestBlade {
-    public NewAccountBlade(SimpleSimon simpleSimon, String page) throws Exception {
-        super(simpleSimon, page);
+    public NewAccountBlade(Role role, String page) throws Exception {
+        super(role, page);
     }
 
     @Override

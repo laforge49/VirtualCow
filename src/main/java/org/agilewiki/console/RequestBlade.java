@@ -20,15 +20,17 @@ import java.util.*;
  * Base page for requests.
  */
 public abstract class RequestBlade extends NonBlockingBladeBase {
-    protected final SimpleSimon simpleSimon;
+    public final Role role;
+    public final SimpleSimon simpleSimon;
     protected final ServletContext servletContext;
     protected final Db db;
     protected final MailOut mailOut;
     public final String page;
 
-    public RequestBlade(SimpleSimon simpleSimon, String page)
+    public RequestBlade(Role role, String page)
             throws Exception {
-        this.simpleSimon = simpleSimon;
+        this.role = role;
+        this.simpleSimon = role.simpleSimon();
         this.servletContext = simpleSimon.servletContext;
         this.db = simpleSimon.db;
         this.mailOut = simpleSimon.mailOut;

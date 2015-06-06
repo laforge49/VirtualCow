@@ -19,20 +19,20 @@ public class AdminRole extends RoleBase {
     public AdminRole(SimpleSimon simpleSimon)
             throws Exception {
         super(simpleSimon);
-        adminBlade = new AdminBlade(simpleSimon, "admin");
+        adminBlade = new AdminBlade(this, "admin");
         requests.put(adminBlade.page, adminBlade);
 
-        emailAddressesBlade = new EmailAddressesBlade(simpleSimon, "emailAddresses");
+        emailAddressesBlade = new EmailAddressesBlade(this, "emailAddresses");
         requests.put(emailAddressesBlade.page, emailAddressesBlade);
 
-        userBlade = new UserBlade(simpleSimon, "user");
+        userBlade = new UserBlade(this, "user");
         requests.put(userBlade.page, userBlade);
 
-        editRolesBlade = new EditRolesBlade(simpleSimon, "editRoles");
+        editRolesBlade = new EditRolesBlade(this, "editRoles");
         requests.put(editRolesBlade.page, editRolesBlade);
         posts.put(editRolesBlade.page, editRolesBlade);
 
-        recreateRoleBlade = new RecreateRoleBlade(simpleSimon, "recreateRole");
+        recreateRoleBlade = new RecreateRoleBlade(this, "recreateRole");
         requests.put(recreateRoleBlade.page, recreateRoleBlade);
         posts.put(recreateRoleBlade.page, recreateRoleBlade);
 

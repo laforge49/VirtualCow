@@ -12,8 +12,8 @@ import javax.servlet.http.Cookie;
  * Request for logging out.
  */
 public class LogoutBlade extends PostRequestBlade {
-    public LogoutBlade(SimpleSimon simpleSimon, String page) throws Exception {
-        super(simpleSimon, page);
+    public LogoutBlade(Role role, String page) throws Exception {
+        super(role, page);
         db.registerTransaction(LogoutTransaction.NAME, LogoutTransaction.class);
     }
 

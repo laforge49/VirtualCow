@@ -17,8 +17,8 @@ import java.util.List;
 public class SubJournalBlade extends RequestBlade {
     String niceName;
 
-    public SubJournalBlade(SimpleSimon simpleSimon, String page, String niceName) throws Exception {
-        super(simpleSimon, page);
+    public SubJournalBlade(Role role, String page, String niceName) throws Exception {
+        super(role, page);
         this.niceName = niceName;
     }
 

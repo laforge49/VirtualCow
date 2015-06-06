@@ -10,8 +10,8 @@ import java.io.IOException;
  * Request for post requests.
  */
 public abstract class PostRequestBlade extends RequestBlade {
-    public PostRequestBlade(SimpleSimon simpleSimon, String page) throws Exception {
-        super(simpleSimon, page);
+    public PostRequestBlade(Role role, String page) throws Exception {
+        super(role, page);
         db.registerTransaction(LogoutTransaction.NAME, LogoutTransaction.class);
     }
 

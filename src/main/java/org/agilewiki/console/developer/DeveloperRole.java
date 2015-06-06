@@ -30,61 +30,61 @@ public class DeveloperRole extends RoleBase {
     public DeveloperRole(SimpleSimon simpleSimon)
             throws Exception {
         super(simpleSimon);
-        developerBlade = new DeveloperBlade(simpleSimon, "developer");
+        developerBlade = new DeveloperBlade(this, "developer");
         requests.put(developerBlade.page, developerBlade);
 
-        postBlade = new PostBlade(simpleSimon, "post");
+        postBlade = new PostBlade(this, "post");
         requests.put(postBlade.page, postBlade);
         posts.put(postBlade.page, postBlade);
 
-        nodeBlade = new NodeBlade(simpleSimon, "node", "Node", null);
+        nodeBlade = new NodeBlade(this, "node", "Node", null);
         requests.put(nodeBlade.page, nodeBlade);
 
-        rolesNodeBlade = new NodeBlade(simpleSimon, "rolesNode", "ROLES Node", "$nROLES");
+        rolesNodeBlade = new NodeBlade(this, "rolesNode", "ROLES Node", "$nROLES");
         requests.put(rolesNodeBlade.page, rolesNodeBlade);
 
-        fullJournalBlade = new FullJournalBlade(simpleSimon, "journal", "Full Journal");
+        fullJournalBlade = new FullJournalBlade(this, "journal", "Full Journal");
         requests.put(fullJournalBlade.page, fullJournalBlade);
 
-        subJournalBlade = new SubJournalBlade(simpleSimon, "subJournal", "Journal");
+        subJournalBlade = new SubJournalBlade(this, "subJournal", "Journal");
         requests.put(subJournalBlade.page, subJournalBlade);
 
-        subjectJournalBlade = new JournalBlade(simpleSimon, "subjectJournal",
+        subjectJournalBlade = new JournalBlade(this, "subjectJournal",
                 "Subject Key Journal",
                 NameId.generate("subject"));
         requests.put(subJournalBlade.page, subjectJournalBlade);
 
-        emailJournalBlade = new JournalBlade(simpleSimon, "emailJournal",
+        emailJournalBlade = new JournalBlade(this, "emailJournal",
                 "Email Address Key Journal",
                 NameId.generate("email"));
         requests.put(emailJournalBlade.page, emailJournalBlade);
 
-        roleJournalBlade = new JournalBlade(simpleSimon, "roleJournal",
+        roleJournalBlade = new JournalBlade(this, "roleJournal",
                 "Role Key Journal",
                 NameId.generate("role"));
         requests.put(roleJournalBlade.page, roleJournalBlade);
 
-        userJournalBlade = new JournalBlade(simpleSimon, "userLinkJournal",
+        userJournalBlade = new JournalBlade(this, "userLinkJournal",
                 "User Link Journal",
                 NameId.generate("user"));
         requests.put(userJournalBlade.page, userJournalBlade);
 
-        subjectsBlade = new SecondaryKeysBlade(simpleSimon, "subjects", "Subjects", "subject", "$v");
+        subjectsBlade = new SecondaryKeysBlade(this, "subjects", "Subjects", "subject", "$v");
         requests.put(subjectJournalBlade.page, subjectsBlade);
 
-        emailAddressesBlade = new SecondaryKeysBlade(simpleSimon, "emailAddresses", "Email Addresses", "email", "$v");
+        emailAddressesBlade = new SecondaryKeysBlade(this, "emailAddresses", "Email Addresses", "email", "$v");
         requests.put(emailAddressesBlade.page, emailAddressesBlade);
 
-        rolesBlade = new SecondaryKeysBlade(simpleSimon, "roles", "Roles", "role", "$n");
+        rolesBlade = new SecondaryKeysBlade(this, "roles", "Roles", "role", "$n");
         requests.put(rolesBlade.page, rolesBlade);
 
-        transactionsBlade = new SecondaryKeysBlade(simpleSimon, "transactions", "Transactions", "transactionName", "$n");
+        transactionsBlade = new SecondaryKeysBlade(this, "transactions", "Transactions", "transactionName", "$n");
         requests.put(transactionsBlade.page, transactionsBlade);
 
-        nodesBlade = new NodesBlade(simpleSimon, "nodes");
+        nodesBlade = new NodesBlade(this, "nodes");
         requests.put(nodesBlade.page, nodesBlade);
 
-        invLinksBlade = new InvLinksBlade(simpleSimon, "invLinks");
+        invLinksBlade = new InvLinksBlade(this, "invLinks");
         requests.put(invLinksBlade.page, invLinksBlade);
 
         simpleSimon.db.registerTransaction(RecreateDeveloperRoleTransaction.NAME, RecreateDeveloperRoleTransaction.class);

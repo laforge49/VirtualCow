@@ -12,8 +12,8 @@ import java.util.Map;
  * Request for a non-performing journal entry.
  */
 public class RecreateRoleBlade extends PostRequestBlade {
-    public RecreateRoleBlade(SimpleSimon simpleSimon, String page) throws Exception {
-        super(simpleSimon, page);
+    public RecreateRoleBlade(Role role, String page) throws Exception {
+        super(role, page);
         db.registerTransaction(NpjeTransaction.NAME, NpjeTransaction.class);
     }
 

@@ -13,8 +13,8 @@ import java.security.NoSuchAlgorithmException;
  * Change the email address of the user.
  */
 public class NewEmailAddressBlade extends PostRequestBlade {
-    public NewEmailAddressBlade(SimpleSimon simpleSimon, String page) throws Exception {
-        super(simpleSimon, page);
+    public NewEmailAddressBlade(Role role, String page) throws Exception {
+        super(role, page);
         db.registerTransaction(NewEmailAddressTransaction.NAME, NewEmailAddressTransaction.class);
     }
 

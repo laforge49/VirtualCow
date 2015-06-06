@@ -19,8 +19,8 @@ public class NodeBlade extends RequestBlade {
     String niceName;
     String bNodeBlade;
 
-    public NodeBlade(SimpleSimon simpleSimon, String page, String niceName, String nodeBlade) throws Exception {
-        super(simpleSimon, page);
+    public NodeBlade(Role role, String page, String niceName, String nodeBlade) throws Exception {
+        super(role, page);
         bNodeBlade = nodeBlade;
         this.niceName = niceName;
     }
