@@ -1,9 +1,6 @@
 package org.agilewiki.console.developer;
 
-import org.agilewiki.console.PostRequestBlade;
-import org.agilewiki.console.RequestBlade;
-import org.agilewiki.console.Role;
-import org.agilewiki.console.SimpleSimon;
+import org.agilewiki.console.*;
 import org.agilewiki.utils.ids.NameId;
 
 import java.util.HashMap;
@@ -12,9 +9,7 @@ import java.util.Map;
 /**
  * The developer role.
  */
-public class DeveloperRole implements Role {
-    private Map<String, RequestBlade> requests = new HashMap<String, RequestBlade>();
-    private Map<String, PostRequestBlade> posts = new HashMap<String, PostRequestBlade>();
+public class DeveloperRole extends RoleBase {
     private DeveloperBlade developerBlade;
     private FullJournalBlade fullJournalBlade;
     private SubJournalBlade subJournalBlade;
@@ -31,10 +26,10 @@ public class DeveloperRole implements Role {
     private SecondaryKeysBlade transactionsBlade;
     private NodesBlade nodesBlade;
     private InvLinksBlade invLinksBlade;
-    private final SimpleSimon simpleSimon;
 
     public DeveloperRole(SimpleSimon simpleSimon)
             throws Exception {
+        super(simpleSimon);
         developerBlade = new DeveloperBlade(simpleSimon, "developer");
         requests.put(developerBlade.page, developerBlade);
 
@@ -92,7 +87,6 @@ public class DeveloperRole implements Role {
         invLinksBlade = new InvLinksBlade(simpleSimon, "invLinks");
         requests.put(invLinksBlade.page, invLinksBlade);
 
-        this.simpleSimon = simpleSimon;
         simpleSimon.db.registerTransaction(RecreateDeveloperRoleTransaction.NAME, RecreateDeveloperRoleTransaction.class);
         RecreateDeveloperRoleTransaction.developerRole = this;
     }
@@ -110,16 +104,6 @@ public class DeveloperRole implements Role {
     @Override
     public String roleName() {
         return "developer";
-    }
-
-    @Override
-    public RequestBlade requestBlade(String page) {
-        return requests.get(page);
-    }
-
-    @Override
-    public PostRequestBlade postRequestBlade(String page) {
-        return posts.get(page);
     }
 
     @Override

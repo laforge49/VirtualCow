@@ -10,9 +10,6 @@ import java.util.Map;
  */
 public class UnRole extends RoleBase {
 
-    private Map<String, RequestBlade> requests = new HashMap<String, RequestBlade>();
-    private Map<String, PostRequestBlade> posts = new HashMap<String, PostRequestBlade>();
-
     private WelcomeBlade welcomeBlade;
 
     public UnRole(SimpleSimon simpleSimon)
@@ -65,16 +62,6 @@ public class UnRole extends RoleBase {
     @Override
     public String roleName() {
         return "unRole";
-    }
-
-    @Override
-    public RequestBlade requestBlade(String page) {
-        return requests.get(page);
-    }
-
-    @Override
-    public PostRequestBlade postRequestBlade(String page) {
-        return posts.get(page);
     }
 
     @Override

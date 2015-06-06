@@ -10,8 +10,6 @@ import java.util.Map;
  */
 public class UserRole extends RoleBase {
 
-    private Map<String, RequestBlade> requests = new HashMap<String, RequestBlade>();
-    private Map<String, PostRequestBlade> posts = new HashMap<String, PostRequestBlade>();
     private UserBlade userBlade;
     private ChangeEmailAddressBlade changeEmailAddressBlade;
     private ChangePasswordBlade changePasswordBlade;
@@ -62,16 +60,6 @@ public class UserRole extends RoleBase {
     @Override
     public String roleName() {
         return "user";
-    }
-
-    @Override
-    public RequestBlade requestBlade(String page) {
-        return requests.get(page);
-    }
-
-    @Override
-    public PostRequestBlade postRequestBlade(String page) {
-        return posts.get(page);
     }
 
     @Override
