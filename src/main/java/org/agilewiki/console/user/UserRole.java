@@ -16,9 +16,9 @@ public class UserRole extends RoleBase {
     private LogoutBlade logoutBlade;
     private NewEmailAddressBlade newEmailAddressBlade;
 
-    public UserRole(SimpleSimon simpleSimon, String roleName)
+    public UserRole(SimpleSimon simpleSimon, String roleName, String niceRoleName)
             throws Exception {
-        super(simpleSimon, roleName);
+        super(simpleSimon, roleName, niceRoleName);
 
         logoutBlade = new LogoutBlade(this, "logout");
         deleteAccountBlade = new DeleteAccountBlade(this, "deleteAccount");
@@ -44,11 +44,6 @@ public class UserRole extends RoleBase {
     @Override
     public String getDefaultRequestPage() {
         return "user";
-    }
-
-    @Override
-    public String niceRoleName() {
-        return "User";
     }
 
     @Override

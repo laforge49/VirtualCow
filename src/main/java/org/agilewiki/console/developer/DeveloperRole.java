@@ -26,9 +26,9 @@ public class DeveloperRole extends RoleBase {
     private NodesBlade nodesBlade;
     private InvLinksBlade invLinksBlade;
 
-    public DeveloperRole(SimpleSimon simpleSimon, String roleName)
+    public DeveloperRole(SimpleSimon simpleSimon, String roleName, String niceRoleName)
             throws Exception {
-        super(simpleSimon, roleName);
+        super(simpleSimon, roleName, niceRoleName);
 
         developerBlade = new DeveloperBlade(this, "developer");
         postBlade = new PostBlade(this, "post");
@@ -72,11 +72,6 @@ public class DeveloperRole extends RoleBase {
     @Override
     public String getDefaultRequestPage() {
         return "developer";
-    }
-
-    @Override
-    public String niceRoleName() {
-        return "Developer";
     }
 
     @Override

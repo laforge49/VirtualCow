@@ -9,12 +9,14 @@ import java.util.Map;
 abstract public class RoleBase implements Role {
     public final SimpleSimon simpleSimon;
     public final String roleName;
+    public final String niceRoleName;
     public final Map<String, RequestBlade> requests = new HashMap<String, RequestBlade>();
     public final Map<String, PostRequestBlade> posts = new HashMap<String, PostRequestBlade>();
 
-    public RoleBase(SimpleSimon simpleSimon, String roleName) {
+    public RoleBase(SimpleSimon simpleSimon, String roleName, String niceRoleName) {
         this.simpleSimon = simpleSimon;
         this.roleName = roleName;
+        this.niceRoleName = niceRoleName;
         simpleSimon.roles.put(roleName, this);
     }
 
@@ -26,6 +28,11 @@ abstract public class RoleBase implements Role {
     @Override
     public String roleName() {
         return roleName;
+    }
+
+    @Override
+    public String niceRoleName() {
+        return niceRoleName;
     }
 
     @Override

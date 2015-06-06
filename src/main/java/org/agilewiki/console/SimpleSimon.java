@@ -106,11 +106,11 @@ public class SimpleSimon extends HttpServlet {
             mailOut = new MailOut();
 
             try {
-                systemRole = new SystemRole(this, "system");
-                unRole = new UnRole(this, "unRole");
-                userRole = new UserRole(this, "user");
-                developerRole = new DeveloperRole(this, "developer");
-                adminRole = new AdminRole(this, "admin");
+                systemRole = new SystemRole(this, "system", "System");
+                unRole = new UnRole(this, "unRole", "unRole");
+                userRole = new UserRole(this, "user", "User");
+                developerRole = new DeveloperRole(this, "developer", "Developer");
+                adminRole = new AdminRole(this, "admin", "Admin");
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

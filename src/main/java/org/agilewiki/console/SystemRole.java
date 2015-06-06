@@ -7,8 +7,8 @@ import org.agilewiki.console.admin.RecreateAdminRoleTransaction;
  */
 public class SystemRole extends RoleBase {
 
-    SystemRole(SimpleSimon simpleSimon, String roleName) {
-        super(simpleSimon, roleName);
+    SystemRole(SimpleSimon simpleSimon, String roleName, String niceRoleName) {
+        super(simpleSimon, roleName, niceRoleName);
 
         simpleSimon.db.registerTransaction(RecreateSystemRoleTransaction.NAME, RecreateSystemRoleTransaction.class);
         RecreateSystemRoleTransaction.systemRole = this;
@@ -17,11 +17,6 @@ public class SystemRole extends RoleBase {
     @Override
     public String initializeTransactionName() {
         return RecreateSystemRoleTransaction.NAME;
-    }
-
-    @Override
-    public String niceRoleName() {
-        return "System";
     }
 
     @Override

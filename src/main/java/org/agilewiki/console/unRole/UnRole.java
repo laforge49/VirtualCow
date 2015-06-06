@@ -11,9 +11,9 @@ public class UnRole extends RoleBase {
 
     private WelcomeBlade welcomeBlade;
 
-    public UnRole(SimpleSimon simpleSimon, String roleName)
+    public UnRole(SimpleSimon simpleSimon, String roleName, String niceRoleName)
             throws Exception {
-        super(simpleSimon, roleName);
+        super(simpleSimon, roleName, niceRoleName);
 
         welcomeBlade = new WelcomeBlade(this, "welcome");
         ForgotPasswordBlade forgotPasswordBlade = new ForgotPasswordBlade(this, "forgotPassword");

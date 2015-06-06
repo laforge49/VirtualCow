@@ -17,9 +17,7 @@ public interface Role {
 
     String roleName();
 
-    default String niceRoleName() {
-        return roleName();
-    }
+    String niceRoleName();
 
     Map<String, RequestBlade> requests();
 

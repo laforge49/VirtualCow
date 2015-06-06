@@ -15,9 +15,9 @@ public class AdminRole extends RoleBase {
     private EditRolesBlade editRolesBlade;
     private RecreateRoleBlade recreateRoleBlade;
 
-    public AdminRole(SimpleSimon simpleSimon, String roleName)
+    public AdminRole(SimpleSimon simpleSimon, String roleName, String niceRoleName)
             throws Exception {
-        super(simpleSimon, roleName);
+        super(simpleSimon, roleName, niceRoleName);
 
         adminBlade = new AdminBlade(this, "admin");
         emailAddressesBlade = new EmailAddressesBlade(this, "emailAddresses");
@@ -42,11 +42,6 @@ public class AdminRole extends RoleBase {
     @Override
     public String getDefaultRequestPage() {
         return "admin";
-    }
-
-    @Override
-    public String niceRoleName() {
-        return "Admin";
     }
 
     @Override
