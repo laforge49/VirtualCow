@@ -42,8 +42,7 @@ public class RecreateRoleBlade extends PostRequestBlade {
         sb.append(option("", "-select role-", false));
         for (String roleName: roles.keySet()) {
             Role r = roles.get(roleName);
-            if (!"unRole".equals(roleName))
-                sb.append(option(roleName, r.niceRoleName(), roleName.equals(selectedRole)));
+            sb.append(option(roleName, r.niceRoleName(), roleName.equals(selectedRole)));
         }
         return sb.toString();
     }
@@ -70,7 +69,7 @@ public class RecreateRoleBlade extends PostRequestBlade {
                 String selectedRole = request.getParameter("selectedRole");
                 map.put("options", options(role, selectedRole));
                 Role sRole = simpleSimon.roles.get(selectedRole);
-                if (selectedRole.length() == 0 || "unRole".equals(selectedRole) ||
+                if (selectedRole.length() == 0 ||
                         sRole == null) {
                     map.put("error", "Select a role");
                     map.put("submit", "<input type=\"submit\" value=\"Recreate\"/>");

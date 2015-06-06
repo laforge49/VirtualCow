@@ -67,8 +67,6 @@ public class InvLinksBlade extends RequestBlade {
                                 startingAt = nodeId;
                                 break;
                             }
-                            ListAccessor nla = ma.listAccessor(nodeId);
-                            VersionedMapNode nvmn = (VersionedMapNode) nla.get(0);
                             sb.append("<a href=\"?from=nodes&to=node&nodeId=");
                             sb.append(nodeId);
                             if (timestamp != null) {
@@ -78,35 +76,39 @@ public class InvLinksBlade extends RequestBlade {
                             sb.append(setRole + "\">");
                             sb.append(nodeId);
                             sb.append("</a>");
-                            if (nodeId.startsWith("$t")) {
-                                sb.append(" (");
-                                sb.append(SimpleSimon.niceTime(nodeId));
-                                sb.append(") ");
-                                String transactionName = nvmn.getList(NameIds.TRANSACTION_NAME).flatList(longTimestamp).get(0).toString();
-                                sb.append(transactionName);
-                            }
-                            StringBuilder lb = new StringBuilder();
-                            List subjectList = nvmn.getList(NameIds.SUBJECT).flatList(longTimestamp);
-                            if (subjectList.size() > 0) {
-                                lb.append(' ');
-                                String subject = subjectList.get(0).toString();
-                                lb.append(subject);
-                                lb.append(" | ");
-                            }
-                            List bodyList = nvmn.getList(NameIds.BODY).flatList(longTimestamp);
-                            if (bodyList.size() > 0) {
-                                if (subjectList.size() == 0) {
+                            ListAccessor nla = ma.listAccessor(nodeId);
+                            if (nla != null) {
+                                VersionedMapNode nvmn = (VersionedMapNode) nla.get(0);
+                                if (nodeId.startsWith("$t")) {
+                                    sb.append(" (");
+                                    sb.append(SimpleSimon.niceTime(nodeId));
+                                    sb.append(") ");
+                                    String transactionName = nvmn.getList(NameIds.TRANSACTION_NAME).flatList(longTimestamp).get(0).toString();
+                                    sb.append(transactionName);
+                                }
+                                StringBuilder lb = new StringBuilder();
+                                List subjectList = nvmn.getList(NameIds.SUBJECT).flatList(longTimestamp);
+                                if (subjectList.size() > 0) {
+                                    lb.append(' ');
+                                    String subject = subjectList.get(0).toString();
+                                    lb.append(subject);
                                     lb.append(" | ");
                                 }
-                                String body = bodyList.get(0).toString();
-                                lb.append(body);
+                                List bodyList = nvmn.getList(NameIds.BODY).flatList(longTimestamp);
+                                if (bodyList.size() > 0) {
+                                    if (subjectList.size() == 0) {
+                                        lb.append(" | ");
+                                    }
+                                    String body = bodyList.get(0).toString();
+                                    lb.append(body);
+                                }
+                                String line = lb.toString();
+                                line = line.replace("\r", "");
+                                if (line.length() > 60)
+                                    line = line.substring(0, 60);
+                                line = SimpleSimon.encode(line, 0, SimpleSimon.ENCODE_SINGLE_LINE); //line text
+                                sb.append(line);
                             }
-                            String line = lb.toString();
-                            line = line.replace("\r", "");
-                            if (line.length() > 60)
-                                line = line.substring(0, 60);
-                            line = SimpleSimon.encode(line, 0, SimpleSimon.ENCODE_SINGLE_LINE); //line text
-                            sb.append(line);
                             sb.append("<br />");
                         }
                         break;

@@ -16,13 +16,21 @@ import java.util.List;
  * Request for a journal entry.
  */
 public class NodeBlade extends RequestBlade {
-    public NodeBlade(SimpleSimon simpleSimon) throws Exception {
+    String bNodeBlade;
+
+    public NodeBlade(SimpleSimon simpleSimon, String nodeBlade) throws Exception {
         super(simpleSimon);
+        bNodeBlade = nodeBlade;
     }
 
     @Override
     protected String niceName() {
         return "Node";
+    }
+
+    @Override
+    protected String fileName(String roleName, String page) {
+        return "developer/node";
     }
 
     @Override
@@ -32,7 +40,10 @@ public class NodeBlade extends RequestBlade {
 
             @Override
             protected String setContext() {
-                nodeId = request.getParameter("nodeId");
+                if (bNodeBlade == null)
+                    nodeId = request.getParameter("nodeId");
+                else
+                    nodeId = bNodeBlade;
                 map.put("nodeId", nodeId);
                 return "&nodeId=" + nodeId;
             }
@@ -52,18 +63,18 @@ public class NodeBlade extends RequestBlade {
                         sb = new StringBuilder();
                         MapAccessor ma = db.mapAccessor();
 
+                        sb.append("node id: ");
+                        sb.append(nodeId);
+                        if (time != null) {
+                            sb.append(" (");
+                            sb.append(time);
+                            sb.append(")");
+                        }
+                        sb.append("<br />");
                         ListAccessor la = ma.listAccessor(nodeId);
                         if (la != null) {
                             VersionedMapNode vmn = (VersionedMapNode) la.get(0);
                             if (vmn != null && !vmn.isEmpty(longTimestamp)) {
-                                sb.append("node id: ");
-                                sb.append(nodeId);
-                                if (time != null) {
-                                    sb.append(" (");
-                                    sb.append(time);
-                                    sb.append(")");
-                                }
-                                sb.append("<br />");
                                 MapAccessor vma = vmn.mapAccessor(longTimestamp);
                                 for (ListAccessor vla : vma) {
                                     int sz = vla.size();
@@ -75,103 +86,105 @@ public class NodeBlade extends RequestBlade {
                                         sb.append("<br />");
                                     }
                                 }
-                                if (time != null) {
-                                    sb.append("Modifies: <br />");
-                                    for (String nId : Journal.modifies(db, nodeId, longTimestamp)) {
-                                        sb.append("&nbsp;&nbsp;&nbsp;&nbsp;" + nId + "<br />");
-                                        if (nId.startsWith(SecondaryId.SECONDARY_INV)) {
-                                            VersionedMapNode icvmn = db.get(nId);
-                                            if (icvmn != null) {
-                                                MapAccessor icma = icvmn.mapAccessor(longTimestamp);
-                                                for (ListAccessor icla : icma) {
-                                                    sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-                                                    sb.append(icla.key());
-                                                    sb.append("<br />");
-                                                }
-                                            }
+                            }
+                        }
+                        if (time != null) {
+                            sb.append("Modifies: <br />");
+                            for (String nId : Journal.modifies(db, nodeId, longTimestamp)) {
+                                sb.append("&nbsp;&nbsp;&nbsp;&nbsp;" + nId + "<br />");
+                                if (nId.startsWith(SecondaryId.SECONDARY_INV)) {
+                                    VersionedMapNode icvmn = db.get(nId);
+                                    if (icvmn != null) {
+                                        MapAccessor icma = icvmn.mapAccessor(longTimestamp);
+                                        for (ListAccessor icla : icma) {
+                                            sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                                            sb.append(icla.key());
+                                            sb.append("<br />");
                                         }
                                     }
-                                } else {
-                                    sb.append("<a href=\"?from=node&to=subJournal&subJournal=");
-                                    sb.append(nodeId);
-                                    if (timestamp != null) {
-                                        sb.append("&timestamp=" + timestamp);
-                                    }
-                                    sb.append(setRole + "\">Node Journal</a><br />");
-                                }
-                                sb.append("Secondary Keys: <br />");
-                                for (String typeId : SecondaryId.typeIdIterable(db, nodeId)) {
-                                    sb.append("&nbsp;&nbsp;&nbsp;&nbsp;typeId: " + typeId + "<br />");
-                                    for (String secondaryId :
-                                            SecondaryId.secondaryIdIterable(db, nodeId, typeId, longTimestamp)) {
-                                        sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;secondaryId - " +
-                                                secondaryId + "<br />");
-                                    }
-                                }
-                                sb.append("Links: <br />");
-                                for (String typeId : Link1Id.link1LabelIdIterable(db, nodeId)) {
-                                    sb.append("&nbsp;&nbsp;&nbsp;&nbsp;typeId: " + typeId + "<br />");
-                                    for (String targetId : Link1Id.link1IdIterable(db, nodeId, typeId, longTimestamp)) {
-                                        ListAccessor nla = ma.listAccessor(targetId);
-                                        VersionedMapNode nvmn = (VersionedMapNode) nla.get(0);
-                                        sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-                                        sb.append("<a href=\"?from=node&to=node&nodeId=");
-                                        sb.append(targetId);
-                                        if (timestamp != null) {
-                                            sb.append("&timestamp=");
-                                            sb.append(timestamp);
-                                        }
-                                        sb.append(setRole + "\">");
-                                        sb.append(targetId);
-                                        sb.append("</a>");
-                                        if (targetId.startsWith("$t")) {
-                                            sb.append(" (");
-                                            sb.append(SimpleSimon.niceTime(targetId));
-                                            sb.append(") ");
-                                            String transactionName = nvmn.getList(NameIds.TRANSACTION_NAME).flatList(longTimestamp).get(0).toString();
-                                            sb.append(transactionName);
-                                        }
-                                        StringBuilder lb = new StringBuilder();
-                                        List subjectList = nvmn.getList(NameIds.SUBJECT).flatList(longTimestamp);
-                                        if (subjectList.size() > 0) {
-                                            lb.append(' ');
-                                            String subject = subjectList.get(0).toString();
-                                            lb.append(subject);
-                                            lb.append(" | ");
-                                        }
-                                        List bodyList = nvmn.getList(NameIds.BODY).flatList(longTimestamp);
-                                        if (bodyList.size() > 0) {
-                                            if (subjectList.size() == 0) {
-                                                lb.append(" | ");
-                                            }
-                                            String body = bodyList.get(0).toString();
-                                            lb.append(body);
-                                        }
-                                        String line = lb.toString();
-                                        line = line.replace("\r", "");
-                                        if (line.length() > 60)
-                                            line = line.substring(0, 60);
-                                        line = SimpleSimon.encode(line, 0, SimpleSimon.ENCODE_SINGLE_LINE); //line text
-                                        sb.append(line);
-                                        sb.append("<br />");
-                                    }
-                                }
-                                sb.append("Inverted Links: <br />");
-                                for (String typeId : Link1Id.link1LabelInvIterable(db, nodeId)) {
-                                    sb.append("&nbsp;&nbsp;&nbsp;&nbsp;typeId: ");
-                                    sb.append("<a href=\"?from=node&to=invLinks&nodeId=");
-                                    sb.append(nodeId);
-                                    sb.append("&linkType=");
-                                    sb.append(typeId);
-                                    if (timestamp != null) {
-                                        sb.append("&timestamp=");
-                                        sb.append(timestamp);
-                                    }
-                                    sb.append(setRole + "\">");
-                                    sb.append(typeId);
-                                    sb.append("</a><br />");
                                 }
                             }
+                        } else {
+                            sb.append("<a href=\"?from=node&to=subJournal&subJournal=");
+                            sb.append(nodeId);
+                            if (timestamp != null) {
+                                sb.append("&timestamp=" + timestamp);
+                            }
+                            sb.append(setRole + "\">Node Journal</a><br />");
+                        }
+                        sb.append("Secondary Keys: <br />");
+                        for (String typeId : SecondaryId.typeIdIterable(db, nodeId)) {
+                            sb.append("&nbsp;&nbsp;&nbsp;&nbsp;typeId: " + typeId + "<br />");
+                            for (String secondaryId :
+                                    SecondaryId.secondaryIdIterable(db, nodeId, typeId, longTimestamp)) {
+                                sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;secondaryId - " +
+                                        secondaryId + "<br />");
+                            }
+                        }
+                        sb.append("Links: <br />");
+                        for (String typeId : Link1Id.link1LabelIdIterable(db, nodeId)) {
+                            sb.append("&nbsp;&nbsp;&nbsp;&nbsp;typeId: " + typeId + "<br />");
+                            for (String targetId : Link1Id.link1IdIterable(db, nodeId, typeId, longTimestamp)) {
+                                sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                                sb.append("<a href=\"?from=node&to=node&nodeId=");
+                                sb.append(targetId);
+                                if (timestamp != null) {
+                                    sb.append("&timestamp=");
+                                    sb.append(timestamp);
+                                }
+                                sb.append(setRole + "\">");
+                                sb.append(targetId);
+                                sb.append("</a>");
+                                ListAccessor nla = ma.listAccessor(targetId);
+                                if (nla != null) {
+                                    VersionedMapNode nvmn = (VersionedMapNode) nla.get(0);
+                                    if (targetId.startsWith("$t")) {
+                                        sb.append(" (");
+                                        sb.append(SimpleSimon.niceTime(targetId));
+                                        sb.append(") ");
+                                        String transactionName = nvmn.getList(NameIds.TRANSACTION_NAME).flatList(longTimestamp).get(0).toString();
+                                        sb.append(transactionName);
+                                    }
+                                    StringBuilder lb = new StringBuilder();
+                                    List subjectList = nvmn.getList(NameIds.SUBJECT).flatList(longTimestamp);
+                                    if (subjectList.size() > 0) {
+                                        lb.append(' ');
+                                        String subject = subjectList.get(0).toString();
+                                        lb.append(subject);
+                                        lb.append(" | ");
+                                    }
+                                    List bodyList = nvmn.getList(NameIds.BODY).flatList(longTimestamp);
+                                    if (bodyList.size() > 0) {
+                                        if (subjectList.size() == 0) {
+                                            lb.append(" | ");
+                                        }
+                                        String body = bodyList.get(0).toString();
+                                        lb.append(body);
+                                    }
+                                    String line = lb.toString();
+                                    line = line.replace("\r", "");
+                                    if (line.length() > 60)
+                                        line = line.substring(0, 60);
+                                    line = SimpleSimon.encode(line, 0, SimpleSimon.ENCODE_SINGLE_LINE); //line text
+                                    sb.append(line);
+                                }
+                                sb.append("<br />");
+                            }
+                        }
+                        sb.append("Inverted Links: <br />");
+                        for (String typeId : Link1Id.link1LabelInvIterable(db, nodeId)) {
+                            sb.append("&nbsp;&nbsp;&nbsp;&nbsp;typeId: ");
+                            sb.append("<a href=\"?from=node&to=invLinks&nodeId=");
+                            sb.append(nodeId);
+                            sb.append("&linkType=");
+                            sb.append(typeId);
+                            if (timestamp != null) {
+                                sb.append("&timestamp=");
+                                sb.append(timestamp);
+                            }
+                            sb.append(setRole + "\">");
+                            sb.append(typeId);
+                            sb.append("</a><br />");
                         }
                         break;
                     } catch (UnexpectedChecksumException uce) {

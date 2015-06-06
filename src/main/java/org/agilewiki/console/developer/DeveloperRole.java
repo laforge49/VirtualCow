@@ -1,6 +1,9 @@
 package org.agilewiki.console.developer;
 
-import org.agilewiki.console.*;
+import org.agilewiki.console.PostRequestBlade;
+import org.agilewiki.console.RequestBlade;
+import org.agilewiki.console.Role;
+import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.utils.ids.NameId;
 
 import java.util.HashMap;
@@ -9,7 +12,7 @@ import java.util.Map;
 /**
  * The developer role.
  */
-public class DeveloperRole extends RoleBase {
+public class DeveloperRole implements Role {
     private Map<String, RequestBlade> requests = new HashMap<String, RequestBlade>();
     private Map<String, PostRequestBlade> posts = new HashMap<String, PostRequestBlade>();
     private DeveloperBlade developerBlade;
@@ -20,6 +23,7 @@ public class DeveloperRole extends RoleBase {
     private JournalBlade roleJournalBlade;
     private JournalBlade userJournalBlade;
     private NodeBlade nodeBlade;
+    private NodeBlade rolesNodeBlade;
     private PostBlade postBlade;
     private SecondaryKeysBlade subjectsBlade;
     private SecondaryKeysBlade emailAddressesBlade;
@@ -27,13 +31,14 @@ public class DeveloperRole extends RoleBase {
     private SecondaryKeysBlade transactionsBlade;
     private NodesBlade nodesBlade;
     private InvLinksBlade invLinksBlade;
+    private final SimpleSimon simpleSimon;
 
     public DeveloperRole(SimpleSimon simpleSimon)
             throws Exception {
-        super(simpleSimon);
         developerBlade = new DeveloperBlade(simpleSimon);
         postBlade = new PostBlade(simpleSimon);
-        nodeBlade = new NodeBlade(simpleSimon);
+        nodeBlade = new NodeBlade(simpleSimon, null);
+        rolesNodeBlade = new NodeBlade(simpleSimon, "$nROLES");
         fullJournalBlade = new FullJournalBlade(simpleSimon, "Full Journal");
         subJournalBlade = new SubJournalBlade(simpleSimon, "Journal");
         subjectJournalBlade = new JournalBlade(simpleSimon,
@@ -70,9 +75,11 @@ public class DeveloperRole extends RoleBase {
         requests.put("transactions", transactionsBlade);
         requests.put("nodes", nodesBlade);
         requests.put("invLinks", invLinksBlade);
+        requests.put("rolesNode", rolesNodeBlade);
 
         posts.put("post", postBlade);
 
+        this.simpleSimon = simpleSimon;
         simpleSimon.db.registerTransaction(InitializeDeveloperRoleTransaction.NAME, InitializeDeveloperRoleTransaction.class);
         InitializeDeveloperRoleTransaction.developerRole = this;
     }
@@ -173,6 +180,8 @@ public class DeveloperRole extends RoleBase {
 
         home.append("</ul>\n");
         home.append("</li>\n");
+
+        menuItem(home, currentPage, setTimestamp, setRole, "rolesNode", "node ROLES");
 
         menuItem(home, currentPage, setTimestamp, setRole, "post", postBlade.niceName(), timestamp != null);
     }
