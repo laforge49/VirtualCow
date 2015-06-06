@@ -14,15 +14,10 @@ abstract public class RecreateRoleTransaction extends VCTransaction {
 
     @Override
     public void process(Db db, MapNode tMapNode) {
-        String rolesId = NameId.generate("metadata");
         String roleId = NameId.generate(role().roleName() + "Role");
+        Delete.delete(db, roleId);
+        String rolesId = NameId.generate("metadata");
         String labelId = NameId.generate("roles");
-        String linkId = Link1Id.link1Id(rolesId, labelId);
-        VersionedMapNode vmn = db.get(linkId);
-        String id = vmn == null ? null : (String) vmn.firstKey(db.getTimestamp());
-        if (id != null) {
-            Delete.delete(db, id);
-        }
         Link1Id.createLink1(db, roleId, labelId, rolesId);
     }
 }
