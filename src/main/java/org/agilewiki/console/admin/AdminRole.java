@@ -20,21 +20,10 @@ public class AdminRole extends RoleBase {
         super(simpleSimon);
 
         adminBlade = new AdminBlade(this, "admin");
-        requests.put(adminBlade.page, adminBlade);
-
         emailAddressesBlade = new EmailAddressesBlade(this, "emailAddresses");
-        requests.put(emailAddressesBlade.page, emailAddressesBlade);
-
         userBlade = new UserBlade(this, "user");
-        requests.put(userBlade.page, userBlade);
-
         editRolesBlade = new EditRolesBlade(this, "editRoles");
-        requests.put(editRolesBlade.page, editRolesBlade);
-        posts.put(editRolesBlade.page, editRolesBlade);
-
         recreateRoleBlade = new RecreateRoleBlade(this, "recreateRole");
-        requests.put(recreateRoleBlade.page, recreateRoleBlade);
-        posts.put(recreateRoleBlade.page, recreateRoleBlade);
 
         simpleSimon.db.registerTransaction(RecreateAdminRoleTransaction.NAME, RecreateAdminRoleTransaction.class);
         RecreateAdminRoleTransaction.adminRole = this;

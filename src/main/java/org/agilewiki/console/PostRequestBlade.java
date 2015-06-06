@@ -13,6 +13,7 @@ public abstract class PostRequestBlade extends RequestBlade {
     public PostRequestBlade(Role role, String page) throws Exception {
         super(role, page);
         db.registerTransaction(LogoutTransaction.NAME, LogoutTransaction.class);
+        role.posts().put(page, this);
     }
 
     @Override

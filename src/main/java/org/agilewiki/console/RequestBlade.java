@@ -35,6 +35,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
         this.db = simpleSimon.db;
         this.mailOut = simpleSimon.mailOut;
         this.page = page;
+        role.requests().put(page, this);
     }
 
     protected String niceName() {

@@ -19,28 +19,13 @@ public class UserRole extends RoleBase {
     public UserRole(SimpleSimon simpleSimon)
             throws Exception {
         super(simpleSimon);
+
         logoutBlade = new LogoutBlade(this, "logout");
-        requests.put(logoutBlade.page, logoutBlade);
-        posts.put(logoutBlade.page, logoutBlade);
-
         deleteAccountBlade = new DeleteAccountBlade(this, "deleteAccount");
-        requests.put(deleteAccountBlade.page, deleteAccountBlade);
-        posts.put(deleteAccountBlade.page, deleteAccountBlade);
-
         changePasswordBlade = new ChangePasswordBlade(this, "changePassword");
-        requests.put(changePasswordBlade.page, changePasswordBlade);
-        posts.put(changePasswordBlade.page, changePasswordBlade);
-
         changeEmailAddressBlade = new ChangeEmailAddressBlade(this, "changeEmailAddress");
-        requests.put(changeEmailAddressBlade.page, changeEmailAddressBlade);
-        posts.put(changeEmailAddressBlade.page, changeEmailAddressBlade);
-
         newEmailAddressBlade = new NewEmailAddressBlade(this, "newEmailAddress");
-        requests.put(newEmailAddressBlade.page, newEmailAddressBlade);
-        posts.put(newEmailAddressBlade.page, newEmailAddressBlade);
-
         userBlade = new UserBlade(this, "user");
-        requests.put(userBlade.page, userBlade);
 
         simpleSimon.db.registerTransaction(RecreateUserRoleTransaction.NAME, RecreateUserRoleTransaction.class);
         RecreateUserRoleTransaction.userRole = this;
