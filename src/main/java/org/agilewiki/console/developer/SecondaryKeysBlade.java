@@ -85,7 +85,6 @@ public class SecondaryKeysBlade extends RequestBlade {
                                 }
                             }
                             String line = id;
-                            line = line.replaceAll("\r", "");
                             if (line.length() > 60)
                                 line = line.substring(0, 60);
                             line = SimpleSimon.encode(line, 0, SimpleSimon.ENCODE_SINGLE_LINE); //line text
