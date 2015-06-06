@@ -18,7 +18,8 @@ public class NpjeTransaction extends VCTransaction {
         String jeName = db.getJEName();
         String subject = (String) mapNode.get(NameIds.SUBJECT);
         if (subject != null) {
-            String subjectVId = ValueId.generate(subject.toLowerCase());
+            String subjectVId = ValueId.generate(subject.toLowerCase().
+                    replaceAll("\r", "").replaceAll("\t", " "));
             String subjectSID = SecondaryId.secondaryId(NameIds.SUBJECT, subjectVId);
             SecondaryId.createSecondaryId(db, jeName, subjectSID);
         }
