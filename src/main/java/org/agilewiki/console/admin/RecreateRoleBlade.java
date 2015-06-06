@@ -85,7 +85,7 @@ public class RecreateRoleBlade extends PostRequestBlade {
                         new AsyncResponseProcessor<String>() {
                             @Override
                             public void processAsyncResponse(String _response) throws Exception {
-                                map.put("success", selectedRole + " recreated");
+                                map.put("success", sRole.niceRoleName() + " recreated");
                                 finish();
                             }
                         });
