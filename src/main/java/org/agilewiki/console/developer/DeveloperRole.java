@@ -37,10 +37,10 @@ public class DeveloperRole extends RoleBase {
         requests.put(postBlade.page, postBlade);
         posts.put(postBlade.page, postBlade);
 
-        nodeBlade = new NodeBlade(simpleSimon, "node", null);
+        nodeBlade = new NodeBlade(simpleSimon, "node", "Node", null);
         requests.put(nodeBlade.page, nodeBlade);
 
-        rolesNodeBlade = new NodeBlade(simpleSimon, "rolesNode", "$nROLES");
+        rolesNodeBlade = new NodeBlade(simpleSimon, "rolesNode", "ROLES Node", "$nROLES");
         requests.put(rolesNodeBlade.page, rolesNodeBlade);
 
         fullJournalBlade = new FullJournalBlade(simpleSimon, "journal", "Full Journal");
@@ -178,7 +178,7 @@ public class DeveloperRole extends RoleBase {
         home.append("</ul>\n");
         home.append("</li>\n");
 
-        menuItem(home, currentPage, setTimestamp, setRole, rolesBlade);
+        menuItem(home, currentPage, setTimestamp, setRole, rolesNodeBlade);
 
         menuItem(home, currentPage, setTimestamp, setRole, postBlade, timestamp != null);
     }

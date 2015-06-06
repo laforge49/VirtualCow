@@ -16,16 +16,18 @@ import java.util.List;
  * Request for a journal entry.
  */
 public class NodeBlade extends RequestBlade {
+    String niceName;
     String bNodeBlade;
 
-    public NodeBlade(SimpleSimon simpleSimon, String page, String nodeBlade) throws Exception {
+    public NodeBlade(SimpleSimon simpleSimon, String page, String niceName, String nodeBlade) throws Exception {
         super(simpleSimon, page);
         bNodeBlade = nodeBlade;
+        this.niceName = niceName;
     }
 
     @Override
     protected String niceName() {
-        return "Node";
+        return niceName;
     }
 
     @Override
