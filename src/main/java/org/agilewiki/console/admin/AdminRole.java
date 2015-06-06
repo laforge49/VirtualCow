@@ -38,8 +38,8 @@ public class AdminRole extends RoleBase {
         requests.put("recreateRole", recreateRoleBlade);
         posts.put("recreateRole", recreateRoleBlade);
 
-        simpleSimon.db.registerTransaction(InitializeAdminRoleTransaction.NAME, InitializeAdminRoleTransaction.class);
-        InitializeAdminRoleTransaction.adminRole = this;
+        simpleSimon.db.registerTransaction(RecreateAdminRoleTransaction.NAME, RecreateAdminRoleTransaction.class);
+        RecreateAdminRoleTransaction.adminRole = this;
     }
 
     @Override
@@ -49,7 +49,7 @@ public class AdminRole extends RoleBase {
 
     @Override
     public String initializeTransactionName() {
-        return InitializeAdminRoleTransaction.NAME;
+        return RecreateAdminRoleTransaction.NAME;
     }
 
     @Override

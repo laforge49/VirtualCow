@@ -1,20 +1,15 @@
 package org.agilewiki.console.admin;
 
-import org.agilewiki.console.Delete;
-import org.agilewiki.console.InitializeRoleTransaction;
+import org.agilewiki.console.RecreateRoleTransaction;
 import org.agilewiki.console.Role;
-import org.agilewiki.console.VCTransaction;
-import org.agilewiki.utils.ids.NameId;
-import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.collections.MapNode;
-import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
 /**
  * Creates the metadata for the admin role.
  */
-public class InitializeAdminRoleTransaction extends InitializeRoleTransaction {
-    public final static String NAME = "initializeAdminRole";
+public class RecreateAdminRoleTransaction extends RecreateRoleTransaction {
+    public final static String NAME = "recreateAdminRole";
     public static AdminRole adminRole;
 
     @Override

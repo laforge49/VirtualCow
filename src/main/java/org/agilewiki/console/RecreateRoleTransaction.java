@@ -11,7 +11,7 @@ import org.agilewiki.utils.virtualcow.Db;
 /**
  * Creates the common metadata for a role.
  */
-abstract public class InitializeRoleTransaction extends VCTransaction {
+abstract public class RecreateRoleTransaction extends VCTransaction {
     abstract public Role role();
 
     @Override
@@ -19,7 +19,7 @@ abstract public class InitializeRoleTransaction extends VCTransaction {
         String rolesId = NameId.generate("ROLES");
         String roleId = NameId.generate(role().roleName());
         String labelId = roleId + "Role";
-        String linkId = Link1Id.link1Id(rolesId, roleId);
+        String linkId = Link1Id.link1Id(rolesId, labelId);
         VersionedMapNode vmn = db.get(linkId);
         String id = vmn == null ? null : (String) vmn.firstKey(db.getTimestamp());
         if (id != null) {

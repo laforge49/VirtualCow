@@ -42,8 +42,8 @@ public class UserRole extends RoleBase {
         posts.put("newEmailAddress", newEmailAddressBlade);
         posts.put("changeEmailAddress", changeEmailAddressBlade);
 
-        simpleSimon.db.registerTransaction(InitializeUserRoleTransaction.NAME, InitializeUserRoleTransaction.class);
-        InitializeUserRoleTransaction.userRole = this;
+        simpleSimon.db.registerTransaction(RecreateUserRoleTransaction.NAME, RecreateUserRoleTransaction.class);
+        RecreateUserRoleTransaction.userRole = this;
     }
 
     @Override
@@ -53,7 +53,7 @@ public class UserRole extends RoleBase {
 
     @Override
     public String initializeTransactionName() {
-        return InitializeUserRoleTransaction.NAME;
+        return RecreateUserRoleTransaction.NAME;
     }
 
     @Override

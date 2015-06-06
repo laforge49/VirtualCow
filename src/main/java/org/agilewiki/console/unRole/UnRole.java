@@ -43,8 +43,8 @@ public class UnRole extends RoleBase {
         posts.put("forgot", forgotBlade);
         posts.put("forgotPassword", forgotPasswordBlade);
 
-        simpleSimon.db.registerTransaction(InitializeUnRoleTransaction.NAME, InitializeUnRoleTransaction.class);
-        InitializeUnRoleTransaction.unRole = this;
+        simpleSimon.db.registerTransaction(RecreateUnRoleTransaction.NAME, RecreateUnRoleTransaction.class);
+        RecreateUnRoleTransaction.unRole = this;
     }
 
     @Override
@@ -54,7 +54,7 @@ public class UnRole extends RoleBase {
 
     @Override
     public String initializeTransactionName() {
-        return InitializeUnRoleTransaction.NAME;
+        return RecreateUnRoleTransaction.NAME;
     }
 
     @Override

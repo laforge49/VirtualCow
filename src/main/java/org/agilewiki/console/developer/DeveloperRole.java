@@ -80,8 +80,8 @@ public class DeveloperRole implements Role {
         posts.put("post", postBlade);
 
         this.simpleSimon = simpleSimon;
-        simpleSimon.db.registerTransaction(InitializeDeveloperRoleTransaction.NAME, InitializeDeveloperRoleTransaction.class);
-        InitializeDeveloperRoleTransaction.developerRole = this;
+        simpleSimon.db.registerTransaction(RecreateDeveloperRoleTransaction.NAME, RecreateDeveloperRoleTransaction.class);
+        RecreateDeveloperRoleTransaction.developerRole = this;
     }
 
     @Override
@@ -91,7 +91,7 @@ public class DeveloperRole implements Role {
 
     @Override
     public String initializeTransactionName() {
-        return InitializeDeveloperRoleTransaction.NAME;
+        return RecreateDeveloperRoleTransaction.NAME;
     }
 
     @Override
