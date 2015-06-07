@@ -35,7 +35,7 @@ public class DeveloperRole extends RoleBase {
         developerBlade = new DeveloperBlade(this, "developer");
         postBlade = new PostBlade(this, "post");
         nodeBlade = new NodeBlade(this, "node", "Node", null);
-        rolesNodeBlade = new NodeBlade(this, "metadataNode", "Metadata Node", "$nmetadata");
+        rolesNodeBlade = new NodeBlade(this, "metadataNode", "Metadata Node", "$nmetadata.node");
         fullJournalBlade = new FullJournalBlade(this, "journal", "Full Journal");
         subJournalBlade = new SubJournalBlade(this, "subJournal", "Journal");
         subjectJournalBlade = new JournalBlade(this, "subjectJournal",

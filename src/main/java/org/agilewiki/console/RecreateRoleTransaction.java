@@ -16,7 +16,8 @@ abstract public class RecreateRoleTransaction extends VCTransaction {
     public void process(Db db, MapNode tMapNode) {
         String roleId = NameId.generate(role().roleName() + ".role");
         Delete.delete(db, roleId);
-        String metaDataId = NameId.generate("metadata");
+        String metaDataId = NameId.generate("metadata.node");
         Link1Id.createLink1(db, roleId, "$n.role", metaDataId);
+        Link1Id.createLink1(db, roleId, "$n.nodeType", "$n.role");
     }
 }
