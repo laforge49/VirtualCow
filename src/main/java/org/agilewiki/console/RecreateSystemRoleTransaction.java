@@ -46,6 +46,8 @@ public class RecreateSystemRoleTransaction extends RecreateRoleTransaction {
         SecondaryId.createSecondaryId(db, "$n.node", SecondaryId.secondaryId("$n.node", "$n.node"));
         Link1Id.createLink1(db, "$n.role", "$n.nodeType", "$nmetadata.node");
         SecondaryId.createSecondaryId(db, "$n.role", SecondaryId.secondaryId("$n.node", "$n.role"));
+        Link1Id.createLink1(db, "$nuser.node", "$n.nodeType", "$nmetadata.node");
+        SecondaryId.createSecondaryId(db, "$nuser.node", SecondaryId.secondaryId("$n.node", "$nuser.node"));
         Link1Id.createLink1(db, "$n.journalEntry", "$n.nodeType", "$nmetadata.node");
         SecondaryId.createSecondaryId(db, "$n.journalEntry", SecondaryId.secondaryId("$n.node", "$n.journalEntry"));
         Link1Id.createLink1(db, "$n.link1", "$n.nodeType", "$nmetadata.node");

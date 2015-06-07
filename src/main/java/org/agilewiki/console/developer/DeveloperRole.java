@@ -23,7 +23,8 @@ public class DeveloperRole extends RoleBase {
     private SecondaryKeysBlade emailAddressesBlade;
     private SecondaryKeysBlade rolesBlade;
     private SecondaryKeysBlade transactionsBlade;
-    private SecondaryKeysBlade link1sBlade;
+    private SecondaryKeysBlade metaLink1sBlade;
+    private SecondaryKeysBlade metaNodesBlade;
     private SecondaryKeysBlade invDependentBlade;
     private NodesBlade nodesBlade;
     private InvLinksBlade invLinksBlade;
@@ -55,7 +56,8 @@ public class DeveloperRole extends RoleBase {
         emailAddressesBlade = new SecondaryKeysBlade(this, "emailAddresses", "Email Addresses", "email", "$v");
         rolesBlade = new SecondaryKeysBlade(this, "roles", "Assigned Roles", "role", "$n");
         transactionsBlade = new SecondaryKeysBlade(this, "transactions", "Transactions", "transactionName", "$n");
-        link1sBlade = new SecondaryKeysBlade(this, "link1s", "Link1 Links", ".link1", "$n");
+        metaLink1sBlade = new SecondaryKeysBlade(this, "link1s", "Link1 Links", ".link1", "$n");
+        metaNodesBlade = new SecondaryKeysBlade(this, "mnodes", "Node Types", ".node", "$n");
         invDependentBlade = new SecondaryKeysBlade(this, "invDependents", "Inverse Dependent Links", "invDependent", "$n");
 
         nodesBlade = new NodesBlade(this, "nodes");
@@ -95,7 +97,8 @@ public class DeveloperRole extends RoleBase {
         menuItem(home, currentPage, setTimestamp, setRole, rolesBlade);
         menuItem(home, currentPage, setTimestamp, setRole, roleJournalBlade);
         menuItem(home, currentPage, setTimestamp, setRole, transactionsBlade);
-        menuItem(home, currentPage, setTimestamp, setRole, link1sBlade);
+        menuItem(home, currentPage, setTimestamp, setRole, metaLink1sBlade);
+        menuItem(home, currentPage, setTimestamp, setRole, metaNodesBlade);
         menuItem(home, currentPage, setTimestamp, setRole, invDependentBlade);
 
         home.append("</ul>\n");

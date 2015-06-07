@@ -2,6 +2,7 @@ package org.agilewiki.console;
 
 import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.ValueId;
+import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.virtualcow.Db;
@@ -175,6 +176,7 @@ public class User {
 
         db.set(userId, PASSWORD_KEY, passwordHash);
         SecondaryIds.createSecondaryId(db, userId, emailSecondaryId);
+        Link1Id.createLink1(db, userId, "$n.nodeType", "$nuser.node");
         for (String userRole : userRoles) {
             String userTypeSecondaryId =
                     SecondaryIds.secondaryId(ROLE_ID, NameIds.generate(userRole));
