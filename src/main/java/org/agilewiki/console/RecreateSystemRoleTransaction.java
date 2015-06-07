@@ -68,17 +68,27 @@ public class RecreateSystemRoleTransaction extends RecreateRoleTransaction {
 
         Link1Id.createLink1(db, "$nsubject.keyType", "$n.keyType", "$nsystem.role");
         Link1Id.createLink1(db, "$nsubject.keyType", "$n.nodeType", "$n.keyType");
+        SecondaryId.createSecondaryId(db, "$nsubject.keyType", SecondaryId.secondaryId("$n.keyType", "$nsubject.keyType"));
         Link1Id.createLink1(db, "$ntransactionName.keyType", "$n.keyType", "$nsystem.role");
         Link1Id.createLink1(db, "$ntransactionName.keyType", "$n.nodeType", "$n.keyType");
+        SecondaryId.createSecondaryId(db, "$ntransactionName.keyType", SecondaryId.secondaryId("$n.keyType", "$ntransactionName.keyType"));
         Link1Id.createLink1(db, "$nemail.keyType", "$n.keyType", "$nsystem.role");
         Link1Id.createLink1(db, "$nemail.keyType", "$n.nodeType", "$n.keyType");
+        SecondaryId.createSecondaryId(db, "$nemail.keyType", SecondaryId.secondaryId("$n.keyType", "$nemail.keyType"));
         Link1Id.createLink1(db, "$nrole.keyType", "$n.keyType", "$nsystem.role");
         Link1Id.createLink1(db, "$nrole.keyType", "$n.nodeType", "$n.keyType");
+        SecondaryId.createSecondaryId(db, "$nrole.keyType", SecondaryId.secondaryId("$n.keyType", "$nrole.keyType"));
         Link1Id.createLink1(db, "$n.link1.keyType", "$n.keyType", "$nsystem.role");
         Link1Id.createLink1(db, "$n.link1.keyType", "$n.nodeType", "$n.keyType");
+        SecondaryId.createSecondaryId(db, "$n.link1.keyType", SecondaryId.secondaryId("$n.keyType", "$n.link1.keyType"));
         Link1Id.createLink1(db, "$ninvDependent.keyType", "$n.keyType", "$nsystem.role");
         Link1Id.createLink1(db, "$ninvDependent.keyType", "$n.nodeType", "$n.keyType");
+        SecondaryId.createSecondaryId(db, "$ninvDependent.keyType", SecondaryId.secondaryId("$n.keyType", "$ninvDependent.keyType"));
         Link1Id.createLink1(db, "$n.node", "$n.keyType", "$nsystem.role");
         Link1Id.createLink1(db, "$n.node", "$n.nodeType", "$n.keyType");
+        SecondaryId.createSecondaryId(db, "$n.node.keyType", SecondaryId.secondaryId("$n.keyType", "$n.node.keyType"));
+        Link1Id.createLink1(db, "$n.keyType", "$n.keyType", "$nsystem.role");
+        Link1Id.createLink1(db, "$n.keyType", "$n.nodeType", "$n.keyType");
+        SecondaryId.createSecondaryId(db, "$n.keyType.keyType", SecondaryId.secondaryId("$n.keyType", "$n.keyType.keyType"));
     }
 }

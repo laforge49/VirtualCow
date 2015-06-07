@@ -25,6 +25,7 @@ public class DeveloperRole extends RoleBase {
     private SecondaryKeysBlade transactionsBlade;
     private SecondaryKeysBlade metaLink1sBlade;
     private SecondaryKeysBlade metaNodesBlade;
+    private SecondaryKeysBlade metaKeysBlade;
     private SecondaryKeysBlade invDependentBlade;
     private NodesBlade nodesBlade;
     private InvLinksBlade invLinksBlade;
@@ -58,6 +59,7 @@ public class DeveloperRole extends RoleBase {
         transactionsBlade = new SecondaryKeysBlade(this, "transactions", "Transactions", "transactionName", "$n");
         metaLink1sBlade = new SecondaryKeysBlade(this, "link1s", "Link1 Links", ".link1", "$n");
         metaNodesBlade = new SecondaryKeysBlade(this, "mnodes", "Node Types", ".node", "$n");
+        metaKeysBlade = new SecondaryKeysBlade(this, "mkeys", "Key Types", ".keyType", "$n");
         invDependentBlade = new SecondaryKeysBlade(this, "invDependents", "Inverse Dependent Links", "invDependent", "$n");
 
         nodesBlade = new NodesBlade(this, "nodes");
@@ -99,6 +101,7 @@ public class DeveloperRole extends RoleBase {
         menuItem(home, currentPage, setTimestamp, setRole, transactionsBlade);
         menuItem(home, currentPage, setTimestamp, setRole, metaLink1sBlade);
         menuItem(home, currentPage, setTimestamp, setRole, metaNodesBlade);
+        menuItem(home, currentPage, setTimestamp, setRole, metaKeysBlade);
         menuItem(home, currentPage, setTimestamp, setRole, invDependentBlade);
 
         home.append("</ul>\n");
