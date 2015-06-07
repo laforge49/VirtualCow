@@ -39,13 +39,13 @@ public class DeveloperRole extends RoleBase {
         fullJournalBlade = new FullJournalBlade(this, "journal", "Full Journal");
         subJournalBlade = new SubJournalBlade(this, "subJournal", "Journal");
         subjectJournalBlade = new JournalBlade(this, "subjectJournal",
-                "Subject Key Journal",
+                "Subject Journal",
                 NameId.generate("subject"));
         emailJournalBlade = new JournalBlade(this, "emailJournal",
-                "Email Address Key Journal",
+                "Email Address Journal",
                 NameId.generate("email"));
         roleJournalBlade = new JournalBlade(this, "roleJournal",
-                "Role Key Journal",
+                "Role Assignment Journal",
                 NameId.generate("role"));
         userJournalBlade = new JournalBlade(this, "userLinkJournal",
                 "User Link Journal",
@@ -53,9 +53,9 @@ public class DeveloperRole extends RoleBase {
 
         subjectsBlade = new SecondaryKeysBlade(this, "subjects", "Subjects", "subject", "$v");
         emailAddressesBlade = new SecondaryKeysBlade(this, "emailAddresses", "Email Addresses", "email", "$v");
-        rolesBlade = new SecondaryKeysBlade(this, "roles", "Roles", "role", "$n");
+        rolesBlade = new SecondaryKeysBlade(this, "roles", "Assigned Roles", "role", "$n");
         transactionsBlade = new SecondaryKeysBlade(this, "transactions", "Transactions", "transactionName", "$n");
-        link1sBlade = new SecondaryKeysBlade(this, "link1s", "Link1 Links", "link1Links", "$n");
+        link1sBlade = new SecondaryKeysBlade(this, "link1s", "Link1 Links", ".link1", "$n");
         invDependentBlade = new SecondaryKeysBlade(this, "invDependents", "Inverse Dependent Links", "invDependent", "$n");
 
         nodesBlade = new NodesBlade(this, "nodes");

@@ -22,14 +22,14 @@ public class RecreateSystemRoleTransaction extends RecreateRoleTransaction {
     @Override
     public void process(Db db, MapNode tMapNode) {
         super.process(db, tMapNode);
-        String rolesId = NameId.generate("systemRole");
-        String labelId = NameId.generate("link1s");
-        Link1Id.createLink1(db, "$nuser", labelId, rolesId);
-        SecondaryId.createSecondaryId(db, "$nuser", SecondaryId.secondaryId("$nlink1Links", "$nuserLink"));
-        Link1Id.createLink1(db, "$nroles", labelId, rolesId);
-        SecondaryId.createSecondaryId(db, "$nroles", SecondaryId.secondaryId("$nlink1Links", "$nrolesLink"));
-        Link1Id.createLink1(db, "$nlink1s", labelId, rolesId);
-        SecondaryId.createSecondaryId(db, "$nlink1s", SecondaryId.secondaryId("$nlink1Links", "$nlink1sLink"));
-        SecondaryId.createSecondaryId(db, "$nlink1s", SecondaryId.secondaryId("$ninvDependent", "$nlink1Links"));
+
+        Link1Id.createLink1(db, "$nuser.link1", "$n.link1", "$nsystem.role");
+        SecondaryId.createSecondaryId(db, "$nuser.link1", SecondaryId.secondaryId("$n.link1", "$nuser.link1"));
+        Link1Id.createLink1(db, "$n.role.link1", "$n.link1", "$nsystem.role");
+        SecondaryId.createSecondaryId(db, "$n.role.link1", SecondaryId.secondaryId("$n.link1", "$n.role.link1"));
+        Link1Id.createLink1(db, "$n.link1.link1", "$n.link1", "$nsystem.role");
+        SecondaryId.createSecondaryId(db, "$n.link1.link1", SecondaryId.secondaryId("$n.link1", "$n.link1.link1"));
+
+        SecondaryId.createSecondaryId(db, "$n.link1.link1", SecondaryId.secondaryId("$ninvDependent", "$n.link1"));
     }
 }
