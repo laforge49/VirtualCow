@@ -48,8 +48,8 @@ public class RecreateSystemRoleTransaction extends RecreateRoleTransaction {
         SecondaryId.createSecondaryId(db, "$n.role", SecondaryId.secondaryId("$n.node", "$n.role"));
         Link1Id.createLink1(db, "$nuser.node", "$n.nodeType", "$nmetadata.node");
         SecondaryId.createSecondaryId(db, "$nuser.node", SecondaryId.secondaryId("$n.node", "$nuser.node"));
-        Link1Id.createLink1(db, "$n.journalEntry", "$n.nodeType", "$nmetadata.node");
-        SecondaryId.createSecondaryId(db, "$n.journalEntry", SecondaryId.secondaryId("$n.node", "$n.journalEntry"));
+        Link1Id.createLink1(db, "$njournalEntry.node", "$n.nodeType", "$nmetadata.node");
+        SecondaryId.createSecondaryId(db, "$njournalEntry.node", SecondaryId.secondaryId("$n.node", "$njournalEntry.node"));
         Link1Id.createLink1(db, "$n.link1", "$n.nodeType", "$nmetadata.node");
         SecondaryId.createSecondaryId(db, "$n.link1", SecondaryId.secondaryId("$n.node", "$n.link1"));
         Link1Id.createLink1(db, "$n.keyType", "$n.nodeType", "$nmetadata.node");
@@ -65,30 +65,40 @@ public class RecreateSystemRoleTransaction extends RecreateRoleTransaction {
         SecondaryId.createSecondaryId(db, "$n.node.link1", SecondaryId.secondaryId("$n.node", "$n.node.link1"));
         Link1Id.createLink1(db, "$n.nodeType.link1", "$n.nodeType", "$n.link1");
         SecondaryId.createSecondaryId(db, "$n.nodeType.link1", SecondaryId.secondaryId("$n.node", "$n.nodeType.link1"));
+        Link1Id.createLink1(db, "$ntarget.link1", "$n.nodeType", "$n.link1");
+        SecondaryId.createSecondaryId(db, "$ntarget.link1", SecondaryId.secondaryId("$n.node", "$ntarget.link1"));
 
         Link1Id.createLink1(db, "$nsubject.keyType", "$n.keyType", "$nsystem.role");
         Link1Id.createLink1(db, "$nsubject.keyType", "$n.nodeType", "$n.keyType");
+        Link1Id.createLink1(db, "$nsubject.keyType", "$ntarget", "$njournalEntry.node");
         SecondaryId.createSecondaryId(db, "$nsubject.keyType", SecondaryId.secondaryId("$n.keyType", "$nsubject.keyType"));
         Link1Id.createLink1(db, "$ntransactionName.keyType", "$n.keyType", "$nsystem.role");
         Link1Id.createLink1(db, "$ntransactionName.keyType", "$n.nodeType", "$n.keyType");
+        Link1Id.createLink1(db, "$ntransactionName.keyType", "$ntarget", "$njournalEntry.node");
         SecondaryId.createSecondaryId(db, "$ntransactionName.keyType", SecondaryId.secondaryId("$n.keyType", "$ntransactionName.keyType"));
         Link1Id.createLink1(db, "$nemail.keyType", "$n.keyType", "$nsystem.role");
         Link1Id.createLink1(db, "$nemail.keyType", "$n.nodeType", "$n.keyType");
+        Link1Id.createLink1(db, "$nemail.keyType", "$ntarget", "$nuser.node");
         SecondaryId.createSecondaryId(db, "$nemail.keyType", SecondaryId.secondaryId("$n.keyType", "$nemail.keyType"));
         Link1Id.createLink1(db, "$nrole.keyType", "$n.keyType", "$nsystem.role");
         Link1Id.createLink1(db, "$nrole.keyType", "$n.nodeType", "$n.keyType");
+        Link1Id.createLink1(db, "$nrole.keyType", "$ntarget", "$nuser.node");
         SecondaryId.createSecondaryId(db, "$nrole.keyType", SecondaryId.secondaryId("$n.keyType", "$nrole.keyType"));
         Link1Id.createLink1(db, "$n.link1.keyType", "$n.keyType", "$nsystem.role");
         Link1Id.createLink1(db, "$n.link1.keyType", "$n.nodeType", "$n.keyType");
+        Link1Id.createLink1(db, "$n.link1.keyType", "$ntarget", "$.link1");
         SecondaryId.createSecondaryId(db, "$n.link1.keyType", SecondaryId.secondaryId("$n.keyType", "$n.link1.keyType"));
         Link1Id.createLink1(db, "$ninvDependent.keyType", "$n.keyType", "$nsystem.role");
         Link1Id.createLink1(db, "$ninvDependent.keyType", "$n.nodeType", "$n.keyType");
+        Link1Id.createLink1(db, "$ninvDependent.keyType", "$ntarget", "$.link1");
         SecondaryId.createSecondaryId(db, "$ninvDependent.keyType", SecondaryId.secondaryId("$n.keyType", "$ninvDependent.keyType"));
         Link1Id.createLink1(db, "$n.node", "$n.keyType", "$nsystem.role");
         Link1Id.createLink1(db, "$n.node", "$n.nodeType", "$n.keyType");
-        SecondaryId.createSecondaryId(db, "$n.node.keyType", SecondaryId.secondaryId("$n.keyType", "$n.node.keyType"));
+        Link1Id.createLink1(db, "$n.node", "$ntarget", "$n.node");
+        SecondaryId.createSecondaryId(db, "$n.node", SecondaryId.secondaryId("$n.keyType", "$n.node"));
         Link1Id.createLink1(db, "$n.keyType", "$n.keyType", "$nsystem.role");
         Link1Id.createLink1(db, "$n.keyType", "$n.nodeType", "$n.keyType");
-        SecondaryId.createSecondaryId(db, "$n.keyType.keyType", SecondaryId.secondaryId("$n.keyType", "$n.keyType.keyType"));
+        Link1Id.createLink1(db, "$n.keyType", "$ntarget", "$n.keyType");
+        SecondaryId.createSecondaryId(db, "$n.keyType", SecondaryId.secondaryId("$n.keyType", "$n.keyType"));
     }
 }
