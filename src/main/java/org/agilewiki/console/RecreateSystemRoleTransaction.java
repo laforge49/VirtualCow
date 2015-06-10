@@ -33,6 +33,7 @@ public class RecreateSystemRoleTransaction extends RecreateRoleTransaction {
 
         Link1Id.createLink1(db, TARGET_LNK1_ID, ORIGIN_ID, NODE_NODE_ID);
         Link1Id.createLink1(db, TARGET_LNK1_ID, DESTINATION_ID, NODE_NODE_ID);
+        Link1Id.createLink1(db, TARGET_LNK1_ID, OFROLE_ID, SYSTEM_NODE_ID);
 
         Link1Id.createLink1(db, OFROLE_LNK1_ID, ORIGIN_ID, METADATA_NODE_ID);
         Link1Id.createLink1(db, OFROLE_LNK1_ID, DESTINATION_ID, ROLE_NODE_ID);
