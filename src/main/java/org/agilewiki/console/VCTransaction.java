@@ -14,8 +14,8 @@ public abstract class VCTransaction implements Transaction {
     @Override
     public final void transform(Db db, MapNode tMapNode) {
         String transactionName = tMapNode.get(Db.transactionNameId).toString();
-        String secondaryId = SecondaryId.secondaryId(Db.transactionNameId,
-                NameId.generate(transactionName));
+        String secondaryId = SecondaryId.secondaryId(RecreateRoleTransaction.NODETYPE_ID,
+                NameId.generate(transactionName + ".node"));
         SecondaryId.createSecondaryId(db, db.getJEName(), secondaryId);
         String userId = (String) tMapNode.get(User.USER_KEY);
         if (userId != null) {

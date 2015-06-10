@@ -28,6 +28,8 @@ abstract public class RecreateRoleTransaction extends VCTransaction {
 
     final public static String EMAIL_ID = "$nemail";
     final public static String EMAIL_KEY_ID = "$nemail.key";
+    final public static String ROLE_ID = "$nrole";
+    final public static String ROLE_KEY_ID = "$nrole.key";
     final public static String SUBJECT_ID = "$nsubject";
     final public static String SUBJECT_KEY_ID = "$nsubject.key";
 
@@ -71,6 +73,8 @@ abstract public class RecreateRoleTransaction extends VCTransaction {
 
         SecondaryId.createSecondaryId(db, EMAIL_KEY_ID, SecondaryId.secondaryId(NODETYPE_ID, METADATA_NODE_ID));
         SecondaryId.createSecondaryId(db, EMAIL_KEY_ID, SecondaryId.secondaryId(NODETYPE_ID, KEY_NODE_ID));
+        SecondaryId.createSecondaryId(db, ROLE_KEY_ID, SecondaryId.secondaryId(NODETYPE_ID, METADATA_NODE_ID));
+        SecondaryId.createSecondaryId(db, ROLE_KEY_ID, SecondaryId.secondaryId(NODETYPE_ID, KEY_NODE_ID));
         SecondaryId.createSecondaryId(db, SUBJECT_KEY_ID, SecondaryId.secondaryId(NODETYPE_ID, METADATA_NODE_ID));
         SecondaryId.createSecondaryId(db, SUBJECT_KEY_ID, SecondaryId.secondaryId(NODETYPE_ID, KEY_NODE_ID));
 
@@ -82,9 +86,6 @@ abstract public class RecreateRoleTransaction extends VCTransaction {
         SecondaryId.createSecondaryId(db, DESTINATION_LNK1_ID, SecondaryId.secondaryId(NODETYPE_ID, METADATA_NODE_ID));
         SecondaryId.createSecondaryId(db, DESTINATION_LNK1_ID, SecondaryId.secondaryId(NODETYPE_ID, LNK1_NODE_ID));
 
-        System.out.println("create keys of type "+NODETYPE_ID);
-        System.out.println(METADATA_NODE_ID);
-        System.out.println(thisRoleNodeId);
         SecondaryId.createSecondaryId(db, thisRoleNodeId, SecondaryId.secondaryId(NODETYPE_ID, METADATA_NODE_ID));
         SecondaryId.createSecondaryId(db, thisRoleNodeId, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
         SecondaryId.createSecondaryId(db, thisRoleNodeId, SecondaryId.secondaryId(NODETYPE_ID, ROLE_NODE_ID));

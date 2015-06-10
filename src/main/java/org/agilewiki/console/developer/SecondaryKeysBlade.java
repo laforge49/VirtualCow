@@ -61,12 +61,9 @@ public class SecondaryKeysBlade extends RequestBlade {
                         hasMore = false;
                         int limit = 25;
                         sb = new StringBuilder();
-                        System.out.println("prefix"+prefix);
                         PeekABoo<String> idPeekABoo = db.idsIterable(prefix, longTimestamp);
                         idPeekABoo.setPosition(keyPrefix + startingAt);
-                        System.out.println("position "+keyPrefix+startingAt);
                         for (String id : idPeekABoo) {
-                            System.out.println(id);
                             if (limit == 0) {
                                 hasMore = true;
                                 startingAt = ValueId.value(id);
