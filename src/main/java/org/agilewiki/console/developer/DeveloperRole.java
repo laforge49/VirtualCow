@@ -1,5 +1,6 @@
 package org.agilewiki.console.developer;
 
+import org.agilewiki.console.RecreateRoleTransaction;
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.RoleBase;
 import org.agilewiki.console.SimpleSimon;
@@ -58,7 +59,7 @@ public class DeveloperRole extends RoleBase {
         rolesBlade = new SecondaryKeysBlade(this, "roles", "Assigned Roles", "role", "$n");
         transactionsBlade = new SecondaryKeysBlade(this, "transactions", "Transactions", "transactionName", "$n");
         metaLink1sBlade = new SecondaryKeysBlade(this, "link1s", "Link1 Links", ".link1", "$n");
-        metaNodesBlade = new SecondaryKeysBlade(this, "mnodes", "Node Types", ".node", "$n");
+        metaNodesBlade = new SecondaryKeysBlade(this, "mnodes", "Node Types", "nodeType", "$n");
         metaKeysBlade = new SecondaryKeysBlade(this, "mkeys", "Key Types", ".keyType", "$n");
         invDependentBlade = new SecondaryKeysBlade(this, "invDependents", "Inverse Dependent Links", "invDependent", "$n");
 

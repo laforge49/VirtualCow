@@ -13,7 +13,7 @@ import org.agilewiki.utils.virtualcow.Db;
 public class RecreateSystemRoleTransaction extends RecreateRoleTransaction {
     public final static String NAME = "recreateSystemRole";
     public static SystemRole systemRole;
-    final String SYSTEM_NODE_ID = "$system.node";
+    final public static String SYSTEM_NODE_ID = "$nsystem.node";
 
     @Override
     public Role role() {
