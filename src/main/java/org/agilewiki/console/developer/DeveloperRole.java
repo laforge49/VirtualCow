@@ -1,5 +1,6 @@
 package org.agilewiki.console.developer;
 
+import org.agilewiki.console.RecreateRoleTransaction;
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.RoleBase;
 import org.agilewiki.console.SimpleSimon;
@@ -28,6 +29,11 @@ public class DeveloperRole extends RoleBase {
     private SecondaryKeysBlade rolesBlade;
     private SecondaryKeysBlade metaNodesBlade;
     private SecondaryKeysBlade invDependentBlade;
+    private Lnk1OriginsBlade targetOriginsBlade;
+    private Lnk1OriginsBlade originOriginsBlade;
+    private Lnk1OriginsBlade destinationOriginsBlade;
+    private Lnk1OriginsBlade ofRoleOriginsBlade;
+    private Lnk1OriginsBlade userOriginsBlade;
     private NodesBlade nodesBlade;
     private InvLinksBlade invLinksBlade;
 
@@ -41,6 +47,7 @@ public class DeveloperRole extends RoleBase {
         rolesNodeBlade = new NodeBlade(this, "metadataNode", "Metadata Node", "$nmetadata.node");
         fullJournalBlade = new FullJournalBlade(this, "journal", "Full Journal");
         subJournalBlade = new SubJournalBlade(this, "subJournal", "Journal");
+
         subjectJournalBlade = new JournalBlade(this, "subjectJournal",
                 "Subject Journal",
                 NameId.generate("subject"));
@@ -50,18 +57,24 @@ public class DeveloperRole extends RoleBase {
         roleJournalBlade = new JournalBlade(this, "roleJournal",
                 "Role Assignment Journal",
                 NameId.generate("role"));
+
+        userOriginsBlade = new Lnk1OriginsBlade(this, "userOrigins", "User Link Origins", "user", "$n");
         userLnk1JournalBlade = new JournalBlade(this, "userLnk1Journal",
                 "User Link Journal",
                 NameId.generate("user"));
+        targetOriginsBlade = new Lnk1OriginsBlade(this, "targetOrigins", "Target Link Origins", "target", "$n");
         targetLnk1JournalBlade = new JournalBlade(this, "targetLnk1Journal",
                 "Target Link Journal",
                 NameId.generate("target"));
+        originOriginsBlade = new Lnk1OriginsBlade(this, "originOrigins", "Origin Link Origins", "origin", "$n");
         originLnk1JournalBlade = new JournalBlade(this, "originLnk1Journal",
                 "Origin Link Journal",
                 NameId.generate("origin"));
+        destinationOriginsBlade = new Lnk1OriginsBlade(this, "destinationOrigins", "Destination Link Origins", "destination", "$n");
         destinationLnk1JournalBlade = new JournalBlade(this, "destinationLnk1Journal",
                 "Destination Link Journal",
                 NameId.generate("destination"));
+        ofRoleOriginsBlade = new Lnk1OriginsBlade(this, "ofRoleOrigins", "Of Role Link Origins", "ofRole", "$n");
         ofRoleLnk1JournalBlade = new JournalBlade(this, "ofRoleLnk1Journal",
                 "Of Role Link Journal",
                 NameId.generate("ofRole"));
@@ -118,10 +131,15 @@ public class DeveloperRole extends RoleBase {
         home.append("<a>Links:</a>\n");
         home.append("<ul>\n");
 
+        menuItem(home, currentPage, setTimestamp, setRole, userOriginsBlade);
         menuItem(home, currentPage, setTimestamp, setRole, userLnk1JournalBlade);
+        menuItem(home, currentPage, setTimestamp, setRole, targetOriginsBlade);
         menuItem(home, currentPage, setTimestamp, setRole, targetLnk1JournalBlade);
+        menuItem(home, currentPage, setTimestamp, setRole, originOriginsBlade);
         menuItem(home, currentPage, setTimestamp, setRole, originLnk1JournalBlade);
+        menuItem(home, currentPage, setTimestamp, setRole, destinationOriginsBlade);
         menuItem(home, currentPage, setTimestamp, setRole, destinationLnk1JournalBlade);
+        menuItem(home, currentPage, setTimestamp, setRole, ofRoleOriginsBlade);
         menuItem(home, currentPage, setTimestamp, setRole, ofRoleLnk1JournalBlade);
 
         /*

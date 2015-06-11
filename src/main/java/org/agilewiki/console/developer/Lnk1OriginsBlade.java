@@ -18,19 +18,19 @@ import javax.servlet.AsyncContext;
 /**
  * Request for secondary keys.
  */
-public class SecondaryKeysBlade extends RequestBlade {
+public class Lnk1OriginsBlade extends RequestBlade {
 
-    String secondaryType;
-    String keyPrefix;
+    String label;
+    String labelPrefix;
     String niceName;
 
-    public SecondaryKeysBlade(Role role, String page,
-                              String niceName, String secondaryType, String keyPrefix)
+    public Lnk1OriginsBlade(Role role, String page,
+                            String niceName, String label, String labelPrefix)
             throws Exception {
         super(role, page);
         this.niceName = niceName;
-        this.secondaryType = secondaryType;
-        this.keyPrefix = keyPrefix;
+        this.label = label;
+        this.labelPrefix = labelPrefix;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class SecondaryKeysBlade extends RequestBlade {
 
     @Override
     protected String fileName(String roleName, String page) {
-        return "developer/secondaryKeys";
+        return "developer/lnk1Origins";
     }
 
     @Override
@@ -50,7 +50,7 @@ public class SecondaryKeysBlade extends RequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                String prefix = SecondaryId.SECONDARY_ID + NameIds.generate(secondaryType);
+                String prefix = SecondaryId.SECONDARY_ID + NameIds.generate(label);
                 String startingAt = request.getParameter("startingAt");
                 if (startingAt == null)
                     startingAt = "";
@@ -62,7 +62,7 @@ public class SecondaryKeysBlade extends RequestBlade {
                         int limit = 25;
                         sb = new StringBuilder();
                         PeekABoo<String> idPeekABoo = db.idsIterable(prefix, longTimestamp);
-                        idPeekABoo.setPosition(keyPrefix + startingAt);
+                        idPeekABoo.setPosition(labelPrefix + startingAt);
                         for (String id : idPeekABoo) {
                             if (limit == 0) {
                                 hasMore = true;
@@ -70,9 +70,9 @@ public class SecondaryKeysBlade extends RequestBlade {
                                 break;
                             }
                             --limit;
-                            String secondaryId = SecondaryId.secondaryId(NameId.generate(secondaryType), id);
+                            String label = SecondaryId.secondaryId(NameId.generate(Lnk1OriginsBlade.this.label), id);
                             MapAccessor ma = db.mapAccessor();
-                            ListAccessor la = ma.listAccessor(secondaryId);
+                            ListAccessor la = ma.listAccessor(label);
                             String nodeId = null;
                             if (la != null) {
                                 VersionedMapNode vmn = (VersionedMapNode) la.get(0);
@@ -92,7 +92,7 @@ public class SecondaryKeysBlade extends RequestBlade {
                                 sb.append("<a href=\"?from=");
                                 sb.append(page);
                                 sb.append("&to=nodes&secondaryId=");
-                                sb.append(secondaryId);
+                                sb.append(label);
                                 if (timestamp != null) {
                                     sb.append("&timestamp=");
                                     sb.append(timestamp);
@@ -118,7 +118,7 @@ public class SecondaryKeysBlade extends RequestBlade {
                             sb.append(", <a href=\"?from=");
                             sb.append(page);
                             sb.append("&to=subJournal&subJournal=");
-                            sb.append(secondaryId + setRole);
+                            sb.append(label + setRole);
                             sb.append("#rupa\">journal</a>");
                             sb.append("<br />");
                         }
@@ -126,7 +126,7 @@ public class SecondaryKeysBlade extends RequestBlade {
                     } catch (UnexpectedChecksumException uce) {
                     }
                 }
-                map.put("secondaryKeys", sb.toString());
+                map.put("lnk1Origins", sb.toString());
                 map.put("startingAt", hasMore ? SimpleSimon.encode(startingAt, 0, SimpleSimon.ENCODE_FIELD) : ""); //field
                 finish();
             }
