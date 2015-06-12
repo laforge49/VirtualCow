@@ -1,6 +1,5 @@
 package org.agilewiki.console.developer;
 
-import org.agilewiki.console.RecreateRoleTransaction;
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.RoleBase;
 import org.agilewiki.console.SimpleSimon;

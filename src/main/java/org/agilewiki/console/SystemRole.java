@@ -1,7 +1,5 @@
 package org.agilewiki.console;
 
-import org.agilewiki.console.admin.RecreateAdminRoleTransaction;
-
 /**
  * System role represents the general infrastructure.
  */

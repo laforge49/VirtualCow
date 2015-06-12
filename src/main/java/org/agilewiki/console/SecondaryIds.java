@@ -21,4 +21,13 @@ public class SecondaryIds extends SecondaryId {
             return false;
         return !invn.isEmpty(timestamp);
     }
+
+    public static boolean nodeIsA(Db db, String nodeId, String metaNodeId, long longTimestamp) {
+        if (nodeId.equals(metaNodeId))
+            return true;
+            if (nodeIsA(db, mnId, metaNodeId, longTimestamp))
+                return true;
+        }
+        return false;
+    }
 }

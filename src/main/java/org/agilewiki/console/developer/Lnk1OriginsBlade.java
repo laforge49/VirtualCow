@@ -4,7 +4,6 @@ import org.agilewiki.console.NameIds;
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.Role;
 import org.agilewiki.console.SimpleSimon;
-import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.immutable.collections.MapAccessor;
 import org.agilewiki.utils.immutable.collections.PeekABoo;

@@ -2,7 +2,6 @@ package org.agilewiki.console;
 
 import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.ValueId;
-import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.virtualcow.Db;
