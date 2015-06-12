@@ -5,8 +5,7 @@ import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.Role;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.utils.ids.NameId;
-import org.agilewiki.utils.ids.ValueId;
-import org.agilewiki.utils.ids.composites.SecondaryId;
+import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.immutable.collections.ListAccessor;
 import org.agilewiki.utils.immutable.collections.MapAccessor;
 import org.agilewiki.utils.immutable.collections.PeekABoo;
@@ -21,16 +20,14 @@ import javax.servlet.AsyncContext;
 public class Lnk1OriginsBlade extends RequestBlade {
 
     String label;
-    String labelPrefix;
     String niceName;
 
     public Lnk1OriginsBlade(Role role, String page,
-                            String niceName, String label, String labelPrefix)
+                            String niceName, String label)
             throws Exception {
         super(role, page);
         this.niceName = niceName;
         this.label = label;
-        this.labelPrefix = labelPrefix;
     }
 
     @Override
@@ -50,10 +47,8 @@ public class Lnk1OriginsBlade extends RequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                String prefix = SecondaryId.SECONDARY_ID + NameIds.generate(label);
+                String labelId = NameIds.generate(label);
                 String startingAt = request.getParameter("startingAt");
-                if (startingAt == null)
-                    startingAt = "";
                 boolean hasMore = false;
                 StringBuilder sb;
                 while (true) {
@@ -61,18 +56,19 @@ public class Lnk1OriginsBlade extends RequestBlade {
                         hasMore = false;
                         int limit = 25;
                         sb = new StringBuilder();
-                        PeekABoo<String> idPeekABoo = db.idsIterable(prefix, longTimestamp);
-                        idPeekABoo.setPosition(labelPrefix + startingAt);
+                        PeekABoo<String> idPeekABoo = Link1Id.label1IdIterable(db, labelId, longTimestamp);
+                        if (startingAt != null)
+                            idPeekABoo.setPosition(startingAt);
                         for (String id : idPeekABoo) {
                             if (limit == 0) {
                                 hasMore = true;
-                                startingAt = ValueId.value(id);
+                                startingAt = idPeekABoo.getPosition();
                                 break;
                             }
                             --limit;
-                            String label = SecondaryId.secondaryId(NameId.generate(Lnk1OriginsBlade.this.label), id);
+                            String label1IndexId = Link1Id.label1IndexId(NameId.generate(Lnk1OriginsBlade.this.label), id);
                             MapAccessor ma = db.mapAccessor();
-                            ListAccessor la = ma.listAccessor(label);
+                            ListAccessor la = ma.listAccessor(label1IndexId);
                             String nodeId = null;
                             if (la != null) {
                                 VersionedMapNode vmn = (VersionedMapNode) la.get(0);
@@ -92,7 +88,7 @@ public class Lnk1OriginsBlade extends RequestBlade {
                                 sb.append("<a href=\"?from=");
                                 sb.append(page);
                                 sb.append("&to=nodes&secondaryId=");
-                                sb.append(label);
+                                sb.append(label1IndexId);
                                 if (timestamp != null) {
                                     sb.append("&timestamp=");
                                     sb.append(timestamp);
@@ -118,7 +114,7 @@ public class Lnk1OriginsBlade extends RequestBlade {
                             sb.append(", <a href=\"?from=");
                             sb.append(page);
                             sb.append("&to=subJournal&subJournal=");
-                            sb.append(label + setRole);
+                            sb.append(label1IndexId + setRole);
                             sb.append("#rupa\">journal</a>");
                             sb.append("<br />");
                         }

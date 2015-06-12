@@ -58,23 +58,23 @@ public class DeveloperRole extends RoleBase {
                 "Role Assignment Journal",
                 NameId.generate("role"));
 
-        userOriginsBlade = new Lnk1OriginsBlade(this, "userOrigins", "User Link Origins", "user", "$n");
+        userOriginsBlade = new Lnk1OriginsBlade(this, "userOrigins", "User Link Origins", "user");
         userLnk1JournalBlade = new JournalBlade(this, "userLnk1Journal",
                 "User Link Journal",
                 NameId.generate("user"));
-        targetOriginsBlade = new Lnk1OriginsBlade(this, "targetOrigins", "Target Link Origins", "target", "$n");
+        targetOriginsBlade = new Lnk1OriginsBlade(this, "targetOrigins", "Target Link Origins", "target");
         targetLnk1JournalBlade = new JournalBlade(this, "targetLnk1Journal",
                 "Target Link Journal",
                 NameId.generate("target"));
-        originOriginsBlade = new Lnk1OriginsBlade(this, "originOrigins", "Origin Link Origins", "origin", "$n");
+        originOriginsBlade = new Lnk1OriginsBlade(this, "originOrigins", "Origin Link Origins", "origin");
         originLnk1JournalBlade = new JournalBlade(this, "originLnk1Journal",
                 "Origin Link Journal",
                 NameId.generate("origin"));
-        destinationOriginsBlade = new Lnk1OriginsBlade(this, "destinationOrigins", "Destination Link Origins", "destination", "$n");
+        destinationOriginsBlade = new Lnk1OriginsBlade(this, "destinationOrigins", "Destination Link Origins", "destination");
         destinationLnk1JournalBlade = new JournalBlade(this, "destinationLnk1Journal",
                 "Destination Link Journal",
                 NameId.generate("destination"));
-        ofRoleOriginsBlade = new Lnk1OriginsBlade(this, "ofRoleOrigins", "Of Role Link Origins", "ofRole", "$n");
+        ofRoleOriginsBlade = new Lnk1OriginsBlade(this, "ofRoleOrigins", "Of Role Link Origins", "ofRole");
         ofRoleLnk1JournalBlade = new JournalBlade(this, "ofRoleLnk1Journal",
                 "Of Role Link Journal",
                 NameId.generate("ofRole"));
