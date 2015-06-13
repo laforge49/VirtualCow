@@ -118,7 +118,7 @@ public class NodeBlade extends RequestBlade {
                         }
                         sb.append("<strong>Secondary Keys:</strong><br />");
                         for (String typeId : SecondaryId.typeIdIterable(db, nodeId)) {
-                            sb.append("&nbsp;&nbsp;&nbsp;&nbsp;typeId: <a href=\"?from=node&to=node&nodeId=");
+                            sb.append("&nbsp;&nbsp;&nbsp;&nbsp;key: <a href=\"?from=node&to=node&nodeId=");
                             sb.append(typeId);
                             sb.append(".key");
                             if (timestamp != null) {
@@ -133,15 +133,20 @@ public class NodeBlade extends RequestBlade {
                                     SecondaryId.secondaryIdIterable(db, nodeId, typeId, longTimestamp)) {
                                 sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value = ");
                                 String value = SecondaryId.secondaryIdValue(secondaryId);
-                                boolean valueNode = false;
+                                String valueNode = null;
                                 for (String nt : SecondaryId.secondaryIdIterable(db, value, "$nnodeType", longTimestamp)) {
-                                    valueNode = true;
+                                    valueNode = value;
                                 }
-                                if (!valueNode)
+                                if (valueNode == null && value.startsWith("$")) {
+                                    for (String nt : SecondaryId.secondaryIdIterable(db, value + ".node", "$nnodeType", longTimestamp)) {
+                                        valueNode = value + ".node";
+                                    }
+                                }
+                                if (valueNode == null)
                                     sb.append(value);
                                 else {
                                     sb.append("<a href=\"?from=node&to=node&nodeId=");
-                                    sb.append(value);
+                                    sb.append(valueNode);
                                     if (timestamp != null) {
                                         sb.append("&timestamp=");
                                         sb.append(timestamp);
@@ -156,7 +161,7 @@ public class NodeBlade extends RequestBlade {
                         }
                         sb.append("<strong>Links:</strong><br />");
                         for (String typeId : Link1Id.link1LabelIdIterable(db, nodeId)) {
-                            sb.append("&nbsp;&nbsp;&nbsp;&nbsp;typeId: <a href=\"?from=node&to=node&nodeId=");
+                            sb.append("&nbsp;&nbsp;&nbsp;&nbsp;typeIdlabel: <a href=\"?from=node&to=node&nodeId=");
                             sb.append(typeId);
                             sb.append(".lnk1");
                             if (timestamp != null) {
@@ -216,7 +221,7 @@ public class NodeBlade extends RequestBlade {
                         }
                         sb.append("<strong>Inverted Links:</strong><br />");
                         for (String typeId : Link1Id.link1LabelInvIterable(db, nodeId)) {
-                            sb.append("&nbsp;&nbsp;&nbsp;&nbsp;typeId: ");
+                            sb.append("&nbsp;&nbsp;&nbsp;&nbsp;label: ");
                             sb.append("<a href=\"?from=node&to=invLinks&nodeId=");
                             sb.append(nodeId);
                             sb.append("&linkType=");
