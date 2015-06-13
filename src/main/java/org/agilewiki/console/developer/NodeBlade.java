@@ -66,6 +66,19 @@ public class NodeBlade extends RequestBlade {
                         sb = new StringBuilder();
                         MapAccessor ma = db.mapAccessor();
 
+                        if (nodeId.startsWith("$n")) {
+                            if (nodeId.endsWith(".key")) {
+                                sb.append("<a href=\"?from=node&to=");
+                                sb.append(nodeId.substring(2).replace(".key", "Values"));
+                                if (timestamp != null) {
+                                    sb.append("&timestamp=");
+                                    sb.append(timestamp);
+                                }
+                                sb.append(setRole);
+                                sb.append("#rupa\"><strong>Values</strong></a><br />");
+                            }
+                        }
+
                         ListAccessor la = ma.listAccessor(nodeId);
                         if (la != null) {
                             VersionedMapNode vmn = (VersionedMapNode) la.get(0);
@@ -153,7 +166,7 @@ public class NodeBlade extends RequestBlade {
                         }
                         sb.append("<strong>Links:</strong><br />");
                         for (String typeId : Link1Id.link1LabelIdIterable(db, nodeId)) {
-                            sb.append("&nbsp;&nbsp;&nbsp;&nbsp;typeIdlabel: <a href=\"?from=node&to=node&nodeId=");
+                            sb.append("&nbsp;&nbsp;&nbsp;&nbsp;label: <a href=\"?from=node&to=node&nodeId=");
                             sb.append(typeId);
                             sb.append(".lnk1");
                             if (timestamp != null) {

@@ -79,12 +79,12 @@ public class DeveloperRole extends RoleBase {
                 "Of Role Link Journal",
                 NameId.generate("ofRole"));
 
-        subjectsBlade = new SecondaryKeysBlade(this, "subjects", "Subjects", "subject");
-        emailAddressesBlade = new SecondaryKeysBlade(this, "emailAddresses", "Email Addresses", "email");
-        rolesBlade = new SecondaryKeysBlade(this, "roles", "Assigned Roles", "role");
-        nodeTypeBlade = new SecondaryKeysBlade(this, "type", "Node Types", "nodeType");
-        superTypeBlade = new SecondaryKeysBlade(this, "super", "Super Types", "superType");
-        invDependentBlade = new SecondaryKeysBlade(this, "invDependents", "Inverse Dependent Links", "invDependency");
+        subjectsBlade = new SecondaryKeysBlade(this, "subjectValues", "Subjects", "subject");
+        emailAddressesBlade = new SecondaryKeysBlade(this, "emailValues", "Email Addresses", "email");
+        rolesBlade = new SecondaryKeysBlade(this, "roleValues", "Assigned Roles", "role");
+        nodeTypeBlade = new SecondaryKeysBlade(this, "nodeTypeValues", "Node Types", "nodeType");
+        superTypeBlade = new SecondaryKeysBlade(this, "superTypeValues", "Super Types", "superType");
+        invDependentBlade = new SecondaryKeysBlade(this, "invDependencyValues", "Inverse Dependent Links", "invDependency");
 
         nodesBlade = new NodesBlade(this, "nodes");
         invLinksBlade = new InvLinksBlade(this, "invLinks");
