@@ -76,6 +76,32 @@ public class NodeBlade extends RequestBlade {
                                 }
                                 sb.append(setRole);
                                 sb.append("#rupa\"><strong>Values</strong></a><br />");
+                            } else if (nodeId.endsWith(".lnk1")) {
+                                sb.append("<a href=\"?from=node&to=");
+                                sb.append(nodeId.substring(2).replace(".lnk1", "Origins"));
+                                if (timestamp != null) {
+                                    sb.append("&timestamp=");
+                                    sb.append(timestamp);
+                                }
+                                sb.append(setRole);
+                                sb.append("#rupa\"><strong>Origins</strong></a><br />");
+                            } else if (nodeId.endsWith(".node")) {
+                                sb.append("<a href=\"?from=node&to=nodes&secondaryId=$D$nsuperType");
+                                sb.append(nodeId);
+                                if (timestamp != null) {
+                                    sb.append("&timestamp=");
+                                    sb.append(timestamp);
+                                }
+                                sb.append(setRole);
+                                sb.append("#rupa\"><strong>Sub-Types</strong></a><br />");
+                                sb.append("<a href=\"?from=node&to=nodes&secondaryId=$D$nnodeType");
+                                sb.append(nodeId);
+                                if (timestamp != null) {
+                                    sb.append("&timestamp=");
+                                    sb.append(timestamp);
+                                }
+                                sb.append(setRole);
+                                sb.append("#rupa\"><strong>Instances</strong></a><br />");
                             }
                         }
 

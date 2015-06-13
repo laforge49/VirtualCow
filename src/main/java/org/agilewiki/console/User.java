@@ -177,7 +177,7 @@ public class User {
         SecondaryIds.createSecondaryId(db, userId, emailSecondaryId);
         SecondaryIds.createSecondaryId(db, userId,
                 SecondaryId.secondaryId(RecreateRoleTransaction.NODETYPE_ID,
-                        RecreateRoleTransaction.USER_ID));
+                        RecreateRoleTransaction.USER_NODE_ID));
         for (String userRole : userRoles) {
             String userTypeSecondaryId =
                     SecondaryIds.secondaryId(ROLE_ID, NameIds.generate(userRole));
