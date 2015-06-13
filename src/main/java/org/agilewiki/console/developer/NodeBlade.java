@@ -84,7 +84,15 @@ public class NodeBlade extends RequestBlade {
                                     sb.append(timestamp);
                                 }
                                 sb.append(setRole);
-                                sb.append("#rupa\"><strong>Origins</strong></a><br />");
+                                sb.append("#rupa\"><strong>Origins</strong></a>, ");
+                                sb.append("<a href=\"?from=node&to=");
+                                sb.append(nodeId.substring(2).replace(".lnk1", "Destinations"));
+                                if (timestamp != null) {
+                                    sb.append("&timestamp=");
+                                    sb.append(timestamp);
+                                }
+                                sb.append(setRole);
+                                sb.append("#rupa\"><strong>Destinations</strong></a><br />");
                             } else if (nodeId.endsWith(".node")) {
                                 sb.append("<a href=\"?from=node&to=nodes&secondaryId=$D$nsuperType");
                                 sb.append(nodeId);
@@ -93,7 +101,7 @@ public class NodeBlade extends RequestBlade {
                                     sb.append(timestamp);
                                 }
                                 sb.append(setRole);
-                                sb.append("#rupa\"><strong>Sub-Types</strong></a><br />");
+                                sb.append("#rupa\"><strong>Subtypes</strong></a>, ");
                                 sb.append("<a href=\"?from=node&to=nodes&secondaryId=$D$nnodeType");
                                 sb.append(nodeId);
                                 if (timestamp != null) {

@@ -33,6 +33,11 @@ public class DeveloperRole extends RoleBase {
     private Lnk1OriginsBlade destinationOriginsBlade;
     private Lnk1OriginsBlade ofRoleOriginsBlade;
     private Lnk1OriginsBlade userOriginsBlade;
+    private Lnk1DestinationsBlade targetDestinationsBlade;
+    private Lnk1DestinationsBlade originDestinationsBlade;
+    private Lnk1DestinationsBlade destinationDestinationsBlade;
+    private Lnk1DestinationsBlade ofRoleDestinationsBlade;
+    private Lnk1DestinationsBlade userDestinationsBlade;
     private NodesBlade nodesBlade;
     private NodesBlade nodesNodesBlade;
     private NodesBlade keysNodesBlade;
@@ -60,22 +65,29 @@ public class DeveloperRole extends RoleBase {
                 NameId.generate("role"));
 
         userOriginsBlade = new Lnk1OriginsBlade(this, "userOrigins", "User Link Origins", "user");
+        targetOriginsBlade = new Lnk1OriginsBlade(this, "targetOrigins", "Target Link Origins", "target");
+        originOriginsBlade = new Lnk1OriginsBlade(this, "originOrigins", "Origin Link Origins", "origin");
+        destinationOriginsBlade = new Lnk1OriginsBlade(this, "destinationOrigins", "Destination Link Origins", "destination");
+        ofRoleOriginsBlade = new Lnk1OriginsBlade(this, "ofRoleOrigins", "Of Role Link Origins", "ofRole");
+
+        userDestinationsBlade = new Lnk1DestinationsBlade(this, "userDestinations", "User Link Destinations", "user");
+        targetDestinationsBlade = new Lnk1DestinationsBlade(this, "targetDestinations", "Target Link Destinations", "target");
+        originDestinationsBlade = new Lnk1DestinationsBlade(this, "originDestinations", "Origin Link Destinations", "origin");
+        destinationDestinationsBlade = new Lnk1DestinationsBlade(this, "destinationDestinations", "Destination Link Destinations", "destination");
+        ofRoleDestinationsBlade = new Lnk1DestinationsBlade(this, "ofRoleDestinations", "Of Role Link Destinations", "ofRole");
+
         userLnk1JournalBlade = new JournalBlade(this, "userLnk1Journal",
                 "User Link Journal",
                 NameId.generate("user"));
-        targetOriginsBlade = new Lnk1OriginsBlade(this, "targetOrigins", "Target Link Origins", "target");
         targetLnk1JournalBlade = new JournalBlade(this, "targetLnk1Journal",
                 "Target Link Journal",
                 NameId.generate("target"));
-        originOriginsBlade = new Lnk1OriginsBlade(this, "originOrigins", "Origin Link Origins", "origin");
         originLnk1JournalBlade = new JournalBlade(this, "originLnk1Journal",
                 "Origin Link Journal",
                 NameId.generate("origin"));
-        destinationOriginsBlade = new Lnk1OriginsBlade(this, "destinationOrigins", "Destination Link Origins", "destination");
         destinationLnk1JournalBlade = new JournalBlade(this, "destinationLnk1Journal",
                 "Destination Link Journal",
                 NameId.generate("destination"));
-        ofRoleOriginsBlade = new Lnk1OriginsBlade(this, "ofRoleOrigins", "Of Role Link Origins", "ofRole");
         ofRoleLnk1JournalBlade = new JournalBlade(this, "ofRoleLnk1Journal",
                 "Of Role Link Journal",
                 NameId.generate("ofRole"));
