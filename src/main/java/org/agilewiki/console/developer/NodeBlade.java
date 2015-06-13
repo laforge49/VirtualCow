@@ -116,16 +116,38 @@ public class NodeBlade extends RequestBlade {
                         }
                         sb.append("Secondary Keys: <br />");
                         for (String typeId : SecondaryId.typeIdIterable(db, nodeId)) {
-                            sb.append("&nbsp;&nbsp;&nbsp;&nbsp;typeId: " + typeId + "<br />");
+                            sb.append("&nbsp;&nbsp;&nbsp;&nbsp;typeId: <a href=\"?from=node&to=node&nodeId=");
+                            sb.append(typeId);
+                            sb.append(".key");
+                            if (timestamp != null) {
+                                sb.append("&timestamp=");
+                                sb.append(timestamp);
+                            }
+                            sb.append(setRole);
+                            sb.append("\">");
+                            sb.append(typeId);
+                            sb.append("</a><br />");
                             for (String secondaryId :
                                     SecondaryId.secondaryIdIterable(db, nodeId, typeId, longTimestamp)) {
-                                sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;secondaryId - " +
-                                        secondaryId + "<br />");
+                                sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value = ");
+                                String value = SecondaryId.secondaryIdValue(secondaryId);
+                                sb.append(value);
+                                sb.append("<br />");
                             }
                         }
                         sb.append("Links: <br />");
                         for (String typeId : Link1Id.link1LabelIdIterable(db, nodeId)) {
-                            sb.append("&nbsp;&nbsp;&nbsp;&nbsp;typeId: " + typeId + "<br />");
+                            sb.append("&nbsp;&nbsp;&nbsp;&nbsp;typeId: <a href=\"?from=node&to=node&nodeId=");
+                            sb.append(typeId);
+                            sb.append(".lnk1");
+                            if (timestamp != null) {
+                                sb.append("&timestamp=");
+                                sb.append(timestamp);
+                            }
+                            sb.append(setRole);
+                            sb.append("\">");
+                            sb.append(typeId);
+                            sb.append("</a><br />");
                             for (String targetId : Link1Id.link1IdIterable(db, nodeId, typeId, longTimestamp)) {
                                 sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
                                 sb.append("<a href=\"?from=node&to=node&nodeId=");
