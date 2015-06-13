@@ -66,14 +66,6 @@ public class NodeBlade extends RequestBlade {
                         sb = new StringBuilder();
                         MapAccessor ma = db.mapAccessor();
 
-                        sb.append("node id: ");
-                        sb.append(nodeId);
-                        if (time != null) {
-                            sb.append(" (");
-                            sb.append(time);
-                            sb.append(")");
-                        }
-                        sb.append("<br />");
                         ListAccessor la = ma.listAccessor(nodeId);
                         if (la != null) {
                             VersionedMapNode vmn = (VersionedMapNode) la.get(0);

@@ -21,16 +21,14 @@ import javax.servlet.AsyncContext;
 public class SecondaryKeysBlade extends RequestBlade {
 
     String secondaryType;
-    String keyPrefix;
     String niceName;
 
     public SecondaryKeysBlade(Role role, String page,
-                              String niceName, String secondaryType, String keyPrefix)
+                              String niceName, String secondaryType)
             throws Exception {
         super(role, page);
         this.niceName = niceName;
         this.secondaryType = secondaryType;
-        this.keyPrefix = keyPrefix;
     }
 
     @Override
@@ -52,8 +50,6 @@ public class SecondaryKeysBlade extends RequestBlade {
                     throws Exception {
                 String prefix = SecondaryId.SECONDARY_ID + NameIds.generate(secondaryType);
                 String startingAt = request.getParameter("startingAt");
-                if (startingAt == null)
-                    startingAt = "";
                 boolean hasMore = false;
                 StringBuilder sb;
                 while (true) {
@@ -62,11 +58,12 @@ public class SecondaryKeysBlade extends RequestBlade {
                         int limit = 25;
                         sb = new StringBuilder();
                         PeekABoo<String> idPeekABoo = db.idsIterable(prefix, longTimestamp);
-                        idPeekABoo.setPosition(keyPrefix + startingAt);
+                        if (startingAt != null)
+                            idPeekABoo.setPosition(startingAt);
                         for (String id : idPeekABoo) {
                             if (limit == 0) {
                                 hasMore = true;
-                                startingAt = ValueId.value(id);
+                                startingAt = id;
                                 break;
                             }
                             --limit;
