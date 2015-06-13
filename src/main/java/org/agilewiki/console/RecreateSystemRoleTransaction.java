@@ -36,7 +36,6 @@ public class RecreateSystemRoleTransaction extends RecreateRoleTransaction {
 
         Link1Id.createLink1(db, OFROLE_LNK1_ID, ORIGIN_ID, METADATA_NODE_ID);
         Link1Id.createLink1(db, OFROLE_LNK1_ID, DESTINATION_ID, ROLE_NODE_ID);
-        SecondaryId.createSecondaryId(db, OFROLE_LNK1_ID, SecondaryId.secondaryId(INVDEPENDENCY_ID, OFROLE_ID));
 
         Link1Id.createLink1(db, ORIGIN_LNK1_ID, ORIGIN_ID, LNK1_NODE_ID);
         Link1Id.createLink1(db, ORIGIN_LNK1_ID, DESTINATION_ID, NODE_NODE_ID);
@@ -51,9 +50,8 @@ public class RecreateSystemRoleTransaction extends RecreateRoleTransaction {
         Link1Id.createLink1(db, USER_LNK1_ID, OFROLE_ID, SYSTEM_NODE_ID);
 
         for (String transactionName : db.transactionRegistry.keySet()) {
-            SecondaryId.createSecondaryId(db, "$" + transactionName + ".node", SecondaryId.secondaryId(NODETYPE_ID, METADATA_NODE_ID));
-            SecondaryId.createSecondaryId(db, "$" + transactionName + ".node", SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
-            SecondaryId.createSecondaryId(db, "$" + transactionName + ".node", SecondaryId.secondaryId(NODETYPE_ID, JOURNALENTRY_NODE_ID));
+            SecondaryId.createSecondaryId(db, "$n" + transactionName + ".node", SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
+            SecondaryId.createSecondaryId(db, "$n" + transactionName + ".node", SecondaryId.secondaryId(SUPERTYPE_ID, JOURNALENTRY_NODE_ID));
         }
     }
 }

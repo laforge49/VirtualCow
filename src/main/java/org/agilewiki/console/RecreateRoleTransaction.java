@@ -86,10 +86,16 @@ abstract public class RecreateRoleTransaction extends VCTransaction {
 
         SecondaryId.createSecondaryId(db, TARGET_LNK1_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
         SecondaryId.createSecondaryId(db, TARGET_LNK1_ID, SecondaryId.secondaryId(SUPERTYPE_ID, LNK1_NODE_ID));
+        SecondaryId.createSecondaryId(db, OFROLE_LNK1_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
+        SecondaryId.createSecondaryId(db, OFROLE_LNK1_ID, SecondaryId.secondaryId(SUPERTYPE_ID, LNK1_NODE_ID));
+        SecondaryId.createSecondaryId(db, OFROLE_LNK1_ID, SecondaryId.secondaryId(INVDEPENDENCY_ID, OFROLE_ID));
         SecondaryId.createSecondaryId(db, ORIGIN_LNK1_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
         SecondaryId.createSecondaryId(db, ORIGIN_LNK1_ID, SecondaryId.secondaryId(SUPERTYPE_ID, LNK1_NODE_ID));
         SecondaryId.createSecondaryId(db, DESTINATION_LNK1_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
         SecondaryId.createSecondaryId(db, DESTINATION_LNK1_ID, SecondaryId.secondaryId(SUPERTYPE_ID, LNK1_NODE_ID));
+
+        SecondaryId.createSecondaryId(db, USER_LNK1_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
+        SecondaryId.createSecondaryId(db, USER_LNK1_ID, SecondaryId.secondaryId(SUPERTYPE_ID, LNK1_NODE_ID));
 
         SecondaryId.createSecondaryId(db, thisRoleNodeId, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
         SecondaryId.createSecondaryId(db, thisRoleNodeId, SecondaryId.secondaryId(SUPERTYPE_ID, ROLE_NODE_ID));
