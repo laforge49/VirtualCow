@@ -94,22 +94,30 @@ public class NodeBlade extends RequestBlade {
                                 sb.append(setRole);
                                 sb.append("#rupa\"><strong>Destinations</strong></a><br />");
                             } else if (nodeId.endsWith(".node")) {
-                                sb.append("<a href=\"?from=node&to=nodes&secondaryId=$D$nsuperType");
-                                sb.append(nodeId);
-                                if (timestamp != null) {
-                                    sb.append("&timestamp=");
-                                    sb.append(timestamp);
-                                }
-                                sb.append(setRole);
-                                sb.append("#rupa\"><strong>Subtypes</strong></a>, ");
-                                sb.append("<a href=\"?from=node&to=nodes&secondaryId=$D$nnodeType");
-                                sb.append(nodeId);
-                                if (timestamp != null) {
-                                    sb.append("&timestamp=");
-                                    sb.append(timestamp);
-                                }
-                                sb.append(setRole);
-                                sb.append("#rupa\"><strong>Instances</strong></a><br />");
+                                VersionedMapNode vmn = (VersionedMapNode) ma.get("$D$nsuperType" + nodeId);
+                                if (vmn != null && vmn.firstKey(longTimestamp) != null) {
+                                    sb.append("<a href=\"?from=node&to=nodes&secondaryId=$D$nsuperType");
+                                    sb.append(nodeId);
+                                    if (timestamp != null) {
+                                        sb.append("&timestamp=");
+                                        sb.append(timestamp);
+                                    }
+                                    sb.append(setRole);
+                                    sb.append("#rupa\"><strong>Subtypes</strong></a>, ");
+                                } else
+                                    sb.append("Subtypes, ");
+                                vmn = (VersionedMapNode) ma.get("$D$nnodeType" + nodeId);
+                                if (vmn != null && vmn.firstKey(longTimestamp) != null) {
+                                    sb.append("<a href=\"?from=node&to=nodes&secondaryId=$D$nnodeType");
+                                    sb.append(nodeId);
+                                    if (timestamp != null) {
+                                        sb.append("&timestamp=");
+                                        sb.append(timestamp);
+                                    }
+                                    sb.append(setRole);
+                                    sb.append("#rupa\"><strong>Instances</strong></a><br />");
+                                } else
+                                    sb.append("Instances<br />");
                             }
                         }
 
