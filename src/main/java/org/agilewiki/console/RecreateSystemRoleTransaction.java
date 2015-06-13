@@ -23,6 +23,7 @@ public class RecreateSystemRoleTransaction extends RecreateRoleTransaction {
         super.process(db, tMapNode);
 
         Link1Id.createLink1(db, NODETYPE_KEY_ID, TARGET_ID, NODE_NODE_ID);
+        Link1Id.createLink1(db, SUPERTYPE_KEY_ID, TARGET_ID, NODE_NODE_ID);
         Link1Id.createLink1(db, INVDEPENDENCY_KEY_ID, TARGET_ID, LNK1_NODE_ID);
 
         Link1Id.createLink1(db, EMAIL_KEY_ID, TARGET_ID, USER_NODE_ID);

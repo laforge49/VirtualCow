@@ -20,6 +20,8 @@ abstract public class RecreateRoleTransaction extends VCTransaction {
 
     final public static String NODETYPE_ID = "$nnodeType";
     final public static String NODETYPE_KEY_ID = "$nnodeType.key";
+    final public static String SUPERTYPE_ID = "$nsuperType";
+    final public static String SUPERTYPE_KEY_ID = "$nsuperType.key";
     final public static String INVDEPENDENCY_ID = "$ninvDependency";
     final public static String INVDEPENDENCY_KEY_ID = "$ninvDependency.key";
 
@@ -52,39 +54,44 @@ abstract public class RecreateRoleTransaction extends VCTransaction {
 
         Delete.delete(db, thisRoleNodeId);
 
-        SecondaryId.createSecondaryId(db, METADATA_NODE_ID, SecondaryId.secondaryId(NODETYPE_ID, METADATA_NODE_ID));
+        SecondaryId.createSecondaryId(db, METADATA_NODE_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
 
-        SecondaryId.createSecondaryId(db, NODE_NODE_ID, SecondaryId.secondaryId(NODETYPE_ID, METADATA_NODE_ID));
-        SecondaryId.createSecondaryId(db, ROLE_NODE_ID, SecondaryId.secondaryId(NODETYPE_ID, METADATA_NODE_ID));
+        SecondaryId.createSecondaryId(db, NODE_NODE_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
+        SecondaryId.createSecondaryId(db, NODE_NODE_ID, SecondaryId.secondaryId(SUPERTYPE_ID, METADATA_NODE_ID));
+        SecondaryId.createSecondaryId(db, KEY_NODE_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
+        SecondaryId.createSecondaryId(db, KEY_NODE_ID, SecondaryId.secondaryId(SUPERTYPE_ID, METADATA_NODE_ID));
+        SecondaryId.createSecondaryId(db, LNK1_NODE_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
+        SecondaryId.createSecondaryId(db, LNK1_NODE_ID, SecondaryId.secondaryId(SUPERTYPE_ID, METADATA_NODE_ID));
+
         SecondaryId.createSecondaryId(db, ROLE_NODE_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
-        SecondaryId.createSecondaryId(db, USER_NODE_ID, SecondaryId.secondaryId(NODETYPE_ID, METADATA_NODE_ID));
+        SecondaryId.createSecondaryId(db, ROLE_NODE_ID, SecondaryId.secondaryId(SUPERTYPE_ID, NODE_NODE_ID));
         SecondaryId.createSecondaryId(db, USER_NODE_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
-        SecondaryId.createSecondaryId(db, JOURNALENTRY_NODE_ID, SecondaryId.secondaryId(NODETYPE_ID, METADATA_NODE_ID));
+        SecondaryId.createSecondaryId(db, USER_NODE_ID, SecondaryId.secondaryId(SUPERTYPE_ID, NODE_NODE_ID));
         SecondaryId.createSecondaryId(db, JOURNALENTRY_NODE_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
+        SecondaryId.createSecondaryId(db, JOURNALENTRY_NODE_ID, SecondaryId.secondaryId(SUPERTYPE_ID, NODE_NODE_ID));
 
-        SecondaryId.createSecondaryId(db, KEY_NODE_ID, SecondaryId.secondaryId(NODETYPE_ID, METADATA_NODE_ID));
-        SecondaryId.createSecondaryId(db, NODETYPE_KEY_ID, SecondaryId.secondaryId(NODETYPE_ID, METADATA_NODE_ID));
-        SecondaryId.createSecondaryId(db, NODETYPE_KEY_ID, SecondaryId.secondaryId(NODETYPE_ID, KEY_NODE_ID));
-        SecondaryId.createSecondaryId(db, INVDEPENDENCY_KEY_ID, SecondaryId.secondaryId(NODETYPE_ID, METADATA_NODE_ID));
-        SecondaryId.createSecondaryId(db, INVDEPENDENCY_KEY_ID, SecondaryId.secondaryId(NODETYPE_ID, KEY_NODE_ID));
+        SecondaryId.createSecondaryId(db, NODETYPE_KEY_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
+        SecondaryId.createSecondaryId(db, NODETYPE_KEY_ID, SecondaryId.secondaryId(SUPERTYPE_ID, KEY_NODE_ID));
+        SecondaryId.createSecondaryId(db, SUPERTYPE_KEY_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
+        SecondaryId.createSecondaryId(db, SUPERTYPE_KEY_ID, SecondaryId.secondaryId(SUPERTYPE_ID, KEY_NODE_ID));
+        SecondaryId.createSecondaryId(db, INVDEPENDENCY_KEY_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
+        SecondaryId.createSecondaryId(db, INVDEPENDENCY_KEY_ID, SecondaryId.secondaryId(SUPERTYPE_ID, KEY_NODE_ID));
 
-        SecondaryId.createSecondaryId(db, EMAIL_KEY_ID, SecondaryId.secondaryId(NODETYPE_ID, METADATA_NODE_ID));
-        SecondaryId.createSecondaryId(db, EMAIL_KEY_ID, SecondaryId.secondaryId(NODETYPE_ID, KEY_NODE_ID));
-        SecondaryId.createSecondaryId(db, ROLE_KEY_ID, SecondaryId.secondaryId(NODETYPE_ID, METADATA_NODE_ID));
-        SecondaryId.createSecondaryId(db, ROLE_KEY_ID, SecondaryId.secondaryId(NODETYPE_ID, KEY_NODE_ID));
-        SecondaryId.createSecondaryId(db, SUBJECT_KEY_ID, SecondaryId.secondaryId(NODETYPE_ID, METADATA_NODE_ID));
-        SecondaryId.createSecondaryId(db, SUBJECT_KEY_ID, SecondaryId.secondaryId(NODETYPE_ID, KEY_NODE_ID));
+        SecondaryId.createSecondaryId(db, EMAIL_KEY_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
+        SecondaryId.createSecondaryId(db, EMAIL_KEY_ID, SecondaryId.secondaryId(SUPERTYPE_ID, KEY_NODE_ID));
+        SecondaryId.createSecondaryId(db, ROLE_KEY_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
+        SecondaryId.createSecondaryId(db, ROLE_KEY_ID, SecondaryId.secondaryId(SUPERTYPE_ID, KEY_NODE_ID));
+        SecondaryId.createSecondaryId(db, SUBJECT_KEY_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
+        SecondaryId.createSecondaryId(db, SUBJECT_KEY_ID, SecondaryId.secondaryId(SUPERTYPE_ID, KEY_NODE_ID));
 
-        SecondaryId.createSecondaryId(db, LNK1_NODE_ID, SecondaryId.secondaryId(NODETYPE_ID, METADATA_NODE_ID));
-        SecondaryId.createSecondaryId(db, TARGET_LNK1_ID, SecondaryId.secondaryId(NODETYPE_ID, METADATA_NODE_ID));
-        SecondaryId.createSecondaryId(db, TARGET_LNK1_ID, SecondaryId.secondaryId(NODETYPE_ID, LNK1_NODE_ID));
-        SecondaryId.createSecondaryId(db, ORIGIN_LNK1_ID, SecondaryId.secondaryId(NODETYPE_ID, METADATA_NODE_ID));
-        SecondaryId.createSecondaryId(db, ORIGIN_LNK1_ID, SecondaryId.secondaryId(NODETYPE_ID, LNK1_NODE_ID));
-        SecondaryId.createSecondaryId(db, DESTINATION_LNK1_ID, SecondaryId.secondaryId(NODETYPE_ID, METADATA_NODE_ID));
-        SecondaryId.createSecondaryId(db, DESTINATION_LNK1_ID, SecondaryId.secondaryId(NODETYPE_ID, LNK1_NODE_ID));
+        SecondaryId.createSecondaryId(db, TARGET_LNK1_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
+        SecondaryId.createSecondaryId(db, TARGET_LNK1_ID, SecondaryId.secondaryId(SUPERTYPE_ID, LNK1_NODE_ID));
+        SecondaryId.createSecondaryId(db, ORIGIN_LNK1_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
+        SecondaryId.createSecondaryId(db, ORIGIN_LNK1_ID, SecondaryId.secondaryId(SUPERTYPE_ID, LNK1_NODE_ID));
+        SecondaryId.createSecondaryId(db, DESTINATION_LNK1_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
+        SecondaryId.createSecondaryId(db, DESTINATION_LNK1_ID, SecondaryId.secondaryId(SUPERTYPE_ID, LNK1_NODE_ID));
 
-        SecondaryId.createSecondaryId(db, thisRoleNodeId, SecondaryId.secondaryId(NODETYPE_ID, METADATA_NODE_ID));
         SecondaryId.createSecondaryId(db, thisRoleNodeId, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
-        SecondaryId.createSecondaryId(db, thisRoleNodeId, SecondaryId.secondaryId(NODETYPE_ID, ROLE_NODE_ID));
+        SecondaryId.createSecondaryId(db, thisRoleNodeId, SecondaryId.secondaryId(SUPERTYPE_ID, ROLE_NODE_ID));
     }
 }
