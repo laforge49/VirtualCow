@@ -6,6 +6,8 @@ import org.agilewiki.utils.immutable.collections.MapAccessor;
 import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
+import java.util.List;
+
 /**
  * Adds methods to SecondaryId.
  */
@@ -30,5 +32,25 @@ public class SecondaryIds extends SecondaryId {
                 return true;
         }
         return false;
+    }
+
+    public static String nodeTypeId(Db db, String nodeId, long longTimestamp) {
+        String metaNodeId = null;
+        for (String mnId : SecondaryId.secondaryIdIterable(db, nodeId, RecreateRoleTransaction.NODETYPE_ID, longTimestamp)) {
+            if (metaNodeId == null || nodeIsA(db, mnId, metaNodeId, longTimestamp))
+                metaNodeId = mnId;
+        }
+        return metaNodeId;
+    }
+
+    public static String nodeTypeId(Db db, String nodeId, List<String> metaIds, long longTimestamp) {
+        String metaNodeId = null;
+        for (String mnId : metaIds) {
+            if (nodeIsA(db, nodeId, mnId, longTimestamp)) {
+                if (metaNodeId == null || nodeIsA(db, mnId, metaNodeId, longTimestamp))
+                    metaNodeId = mnId;
+            }
+        }
+        return metaNodeId;
     }
 }
