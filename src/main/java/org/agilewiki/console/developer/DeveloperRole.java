@@ -21,7 +21,6 @@ public class DeveloperRole extends RoleBase {
     private JournalBlade destinationLnk1JournalBlade;
     private JournalBlade ofRoleLnk1JournalBlade;
     private NodeBlade nodeBlade;
-    private NodeBlade rolesNodeBlade;
     private PostBlade postBlade;
     private SecondaryKeysBlade subjectsBlade;
     private SecondaryKeysBlade emailAddressesBlade;
@@ -35,6 +34,9 @@ public class DeveloperRole extends RoleBase {
     private Lnk1OriginsBlade ofRoleOriginsBlade;
     private Lnk1OriginsBlade userOriginsBlade;
     private NodesBlade nodesBlade;
+    private NodesBlade nodesNodesBlade;
+    private NodesBlade keysNodesBlade;
+    private NodesBlade lnk1sNodesBlade;
     private InvLinksBlade invLinksBlade;
 
     public DeveloperRole(SimpleSimon simpleSimon, String roleName, String niceRoleName)
@@ -44,7 +46,6 @@ public class DeveloperRole extends RoleBase {
         developerBlade = new DeveloperBlade(this, "developer");
         postBlade = new PostBlade(this, "post");
         nodeBlade = new NodeBlade(this, "node", "Node", null);
-        rolesNodeBlade = new NodeBlade(this, "metadataNode", "Metadata Node", "$nmetadata.node");
         fullJournalBlade = new FullJournalBlade(this, "journal", "Full Journal");
         subJournalBlade = new SubJournalBlade(this, "subJournal", "Journal");
 
@@ -87,6 +88,9 @@ public class DeveloperRole extends RoleBase {
         invDependentBlade = new SecondaryKeysBlade(this, "invDependencyValues", "Inverse Dependent Links", "invDependency");
 
         nodesBlade = new NodesBlade(this, "nodes");
+        nodesNodesBlade = new NodesBlade(this, "nodesNodes", "NodeTypes", "$D$nsuperType$nnode.node");
+        keysNodesBlade = new NodesBlade(this, "keysNodes", "Key Types", "$D$nsuperType$nkey.node");
+        lnk1sNodesBlade = new NodesBlade(this, "lnk1Nodes", "Label Types", "$D$nsuperType$nlnk1.node");
         invLinksBlade = new InvLinksBlade(this, "invLinks");
 
         simpleSimon.db.registerTransaction(RecreateDeveloperRoleTransaction.NAME, RecreateDeveloperRoleTransaction.class);
@@ -116,15 +120,9 @@ public class DeveloperRole extends RoleBase {
         home.append("<a>Secondary Keys:</a>\n");
         home.append("<ul>\n");
 
-        menuItem(home, currentPage, setTimestamp, setRole, subjectsBlade);
         menuItem(home, currentPage, setTimestamp, setRole, subjectJournalBlade);
-        menuItem(home, currentPage, setTimestamp, setRole, emailAddressesBlade);
         menuItem(home, currentPage, setTimestamp, setRole, emailJournalBlade);
-        menuItem(home, currentPage, setTimestamp, setRole, rolesBlade);
         menuItem(home, currentPage, setTimestamp, setRole, roleJournalBlade);
-        menuItem(home, currentPage, setTimestamp, setRole, nodeTypeBlade);
-        menuItem(home, currentPage, setTimestamp, setRole, superTypeBlade);
-        menuItem(home, currentPage, setTimestamp, setRole, invDependentBlade);
 
         home.append("</ul>\n");
         home.append("</li>\n");
@@ -133,45 +131,18 @@ public class DeveloperRole extends RoleBase {
         home.append("<a>Links:</a>\n");
         home.append("<ul>\n");
 
-        menuItem(home, currentPage, setTimestamp, setRole, userOriginsBlade);
         menuItem(home, currentPage, setTimestamp, setRole, userLnk1JournalBlade);
-        menuItem(home, currentPage, setTimestamp, setRole, targetOriginsBlade);
         menuItem(home, currentPage, setTimestamp, setRole, targetLnk1JournalBlade);
-        menuItem(home, currentPage, setTimestamp, setRole, originOriginsBlade);
         menuItem(home, currentPage, setTimestamp, setRole, originLnk1JournalBlade);
-        menuItem(home, currentPage, setTimestamp, setRole, destinationOriginsBlade);
         menuItem(home, currentPage, setTimestamp, setRole, destinationLnk1JournalBlade);
-        menuItem(home, currentPage, setTimestamp, setRole, ofRoleOriginsBlade);
         menuItem(home, currentPage, setTimestamp, setRole, ofRoleLnk1JournalBlade);
-
-        /*
-        home.append("<li>\n");
-        home.append("<a href=\"?from=");
-        home.append(currentPage);
-        home.append("&to=targets&linkType=users");
-        home.append(setTimestamp);
-        home.append(setRole);
-        home.append("#rupa\">\n");
-        home.append("Users\n");
-        home.append("</a>\n");
-        home.append("</li>\n");
-
-        home.append("<li>\n");
-        home.append("<a href=\"?from=");
-        home.append(currentPage);
-        home.append("&to=sources&linkType=users");
-        home.append(setTimestamp);
-        home.append(setRole);
-        home.append("#rupa\">\n");
-        home.append("Owned\n");
-        home.append("</a>\n");
-        home.append("</li>\n");
-        */
 
         home.append("</ul>\n");
         home.append("</li>\n");
 
-        menuItem(home, currentPage, setTimestamp, setRole, rolesNodeBlade);
+        menuItem(home, currentPage, setTimestamp, setRole, nodesNodesBlade);
+        menuItem(home, currentPage, setTimestamp, setRole, keysNodesBlade);
+        menuItem(home, currentPage, setTimestamp, setRole, lnk1sNodesBlade);
 
         menuItem(home, currentPage, setTimestamp, setRole, postBlade, timestamp != null);
     }

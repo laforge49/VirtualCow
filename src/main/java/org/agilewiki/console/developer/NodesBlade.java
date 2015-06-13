@@ -16,13 +16,29 @@ import java.util.List;
  * Request for secondary keys.
  */
 public class NodesBlade extends RequestBlade {
+    public final String niceName;
+    public final String secondaryId;
+
     public NodesBlade(Role role, String page) throws Exception {
+        this(role, page, null, null);
+    }
+
+    public NodesBlade(Role role, String page, String niceName, String secondaryId) throws Exception {
         super(role, page);
+        this.niceName = niceName;
+        this.secondaryId = secondaryId;
+    }
+
+    @Override
+    protected String fileName(String roleName, String page) {
+        return "developer/nodes";
     }
 
     @Override
     protected String niceName() {
-        return "Nodes";
+        if (niceName == null)
+            return "Nodes";
+        return niceName;
     }
 
     @Override
@@ -32,7 +48,10 @@ public class NodesBlade extends RequestBlade {
 
             @Override
             protected String setContext() {
-                secondaryId = request.getParameter("secondaryId");
+                if (NodesBlade.this.secondaryId == null)
+                    secondaryId = request.getParameter("secondaryId");
+                else
+                    secondaryId = NodesBlade.this.secondaryId;
                 map.put("secondaryId", secondaryId);
                 return "&secondaryId=" + secondaryId;
             }
