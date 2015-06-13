@@ -26,7 +26,8 @@ public class DeveloperRole extends RoleBase {
     private SecondaryKeysBlade subjectsBlade;
     private SecondaryKeysBlade emailAddressesBlade;
     private SecondaryKeysBlade rolesBlade;
-    private SecondaryKeysBlade metaNodesBlade;
+    private SecondaryKeysBlade nodeTypeBlade;
+    private SecondaryKeysBlade superTypeBlade;
     private SecondaryKeysBlade invDependentBlade;
     private Lnk1OriginsBlade targetOriginsBlade;
     private Lnk1OriginsBlade originOriginsBlade;
@@ -81,7 +82,8 @@ public class DeveloperRole extends RoleBase {
         subjectsBlade = new SecondaryKeysBlade(this, "subjects", "Subjects", "subject", "$v");
         emailAddressesBlade = new SecondaryKeysBlade(this, "emailAddresses", "Email Addresses", "email", "$v");
         rolesBlade = new SecondaryKeysBlade(this, "roles", "Assigned Roles", "role", "$n");
-        metaNodesBlade = new SecondaryKeysBlade(this, "mnodes", "Node Types", "nodeType", "$n");
+        nodeTypeBlade = new SecondaryKeysBlade(this, "type", "Node Types", "nodeType", "$n");
+        superTypeBlade = new SecondaryKeysBlade(this, "super", "Super Types", "superType", "$n");
         invDependentBlade = new SecondaryKeysBlade(this, "invDependents", "Inverse Dependent Links", "invDependency", "$n");
 
         nodesBlade = new NodesBlade(this, "nodes");
@@ -120,7 +122,8 @@ public class DeveloperRole extends RoleBase {
         menuItem(home, currentPage, setTimestamp, setRole, emailJournalBlade);
         menuItem(home, currentPage, setTimestamp, setRole, rolesBlade);
         menuItem(home, currentPage, setTimestamp, setRole, roleJournalBlade);
-        menuItem(home, currentPage, setTimestamp, setRole, metaNodesBlade);
+        menuItem(home, currentPage, setTimestamp, setRole, nodeTypeBlade);
+        menuItem(home, currentPage, setTimestamp, setRole, superTypeBlade);
         menuItem(home, currentPage, setTimestamp, setRole, invDependentBlade);
 
         home.append("</ul>\n");
