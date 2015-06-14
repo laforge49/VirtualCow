@@ -4,6 +4,7 @@ import org.agilewiki.console.NameIds;
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.Role;
 import org.agilewiki.console.SimpleSimon;
+import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.collections.ListAccessor;
 import org.agilewiki.utils.immutable.collections.MapAccessor;
 import org.agilewiki.utils.immutable.collections.VersionedMapNode;
@@ -52,6 +53,12 @@ public class NodesBlade extends RequestBlade {
                     secondaryId = request.getParameter("secondaryId");
                 else
                     secondaryId = NodesBlade.this.secondaryId;
+                String keyId = SecondaryId.secondaryIdType(secondaryId);
+                String valueId = SecondaryId.secondaryIdValue(secondaryId);
+                map.put("keyId", keyId + ".key");
+                map.put("--keyId", keyId.substring(2));
+                map.put("valueId", valueId);
+                map.put("--valueId", valueId.substring(2));
                 map.put("secondaryId", secondaryId);
                 return "&secondaryId=" + secondaryId;
             }
@@ -94,15 +101,16 @@ public class NodesBlade extends RequestBlade {
                                 sb.append(timestamp);
                             }
                             sb.append(setRole + "\">");
-                            sb.append(nodeId);
+                            if (nodeId.startsWith("$t")) {
+                                sb.append(SimpleSimon.niceTime(nodeId));
+                            } else
+                                sb.append(nodeId.substring(2));
                             sb.append("</a>");
                             ListAccessor nla = ma.listAccessor(nodeId);
                             if (nla != null) {
                                 VersionedMapNode nvmn = (VersionedMapNode) nla.get(0);
                                 if (nodeId.startsWith("$t")) {
-                                    sb.append(" (");
-                                    sb.append(SimpleSimon.niceTime(nodeId));
-                                    sb.append(") ");
+                                    sb.append(' ');
                                     String transactionName = nvmn.getList(NameIds.TRANSACTION_NAME).flatList(longTimestamp).get(0).toString();
                                     sb.append(transactionName);
                                 }
