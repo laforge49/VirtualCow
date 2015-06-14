@@ -281,18 +281,21 @@ public class NodeBlade extends RequestBlade {
                         }
                         sb.append("<strong>Inverted Links:</strong><br />");
                         for (String typeId : Link1Id.link1LabelInvIterable(db, nodeId)) {
-                            sb.append("&nbsp;&nbsp;&nbsp;&nbsp;label: ");
-                            sb.append("<a href=\"?from=node&to=invLinks&nodeId=");
-                            sb.append(nodeId);
-                            sb.append("&linkType=");
-                            sb.append(typeId);
-                            if (timestamp != null) {
-                                sb.append("&timestamp=");
-                                sb.append(timestamp);
+                            PeekABoo<String> peekABoo = Link1Id.link1InvIterable(db, nodeId, typeId, longTimestamp);
+                            if (peekABoo.hasNext()) {
+                                sb.append("&nbsp;&nbsp;&nbsp;&nbsp;label: ");
+                                sb.append("<a href=\"?from=node&to=invLinks&nodeId=");
+                                sb.append(nodeId);
+                                sb.append("&linkType=");
+                                sb.append(typeId);
+                                if (timestamp != null) {
+                                    sb.append("&timestamp=");
+                                    sb.append(timestamp);
+                                }
+                                sb.append(setRole + "\">");
+                                sb.append(typeId.substring(2));
+                                sb.append("</a><br />");
                             }
-                            sb.append(setRole + "\">");
-                            sb.append(typeId.substring(2));
-                            sb.append("</a><br />");
                         }
                         break;
                     } catch (UnexpectedChecksumException uce) {
