@@ -66,9 +66,7 @@ public class NodeBlade extends RequestBlade {
                     try {
                         sb = new StringBuilder();
                         MapAccessor ma = db.mapAccessor();
-                        String secInv = SecondaryId.secondaryInv(nodeId, "$nnodeType");
-                        VersionedMapNode veln = (VersionedMapNode) ma.get(secInv);
-                        if (veln == null || veln.isEmpty(longTimestamp)) {
+                        if (!SecondaryIds.isNode(db, nodeId, longTimestamp)) {
                             sb.append("Not a node.");
                             break;
                         }
@@ -150,10 +148,24 @@ public class NodeBlade extends RequestBlade {
                                 for (ListAccessor vla : vma) {
                                     int sz = vla.size();
                                     for (int i = 0; i < sz; ++i) {
-                                        String s = vla.key() + "[" + i + "] = ";
-                                        sb.append("&nbsp;&nbsp;&nbsp;&nbsp;" + s +
-                                                SimpleSimon.encode("" + vla.get(i), s.length() + 4,
-                                                        SimpleSimon.ENCODE_MULTIPLE_LINES)); //body text
+                                        String s = ((String) vla.key()).substring(2) + "[" + i + "] = ";
+                                        sb.append("&nbsp;&nbsp;&nbsp;&nbsp;" + s);
+                                        String value = vla.get(i).toString();
+                                        if (!value.startsWith("$") || !SecondaryIds.isNode(db, value, longTimestamp)) {
+                                            sb.append(SimpleSimon.encode(value, s.length() + 4,
+                                                    SimpleSimon.ENCODE_MULTIPLE_LINES)); //body text
+                                        } else {
+                                            sb.append("<a href=\"?from=node&to=node&nodeId=");
+                                            sb.append(value);
+                                            if (timestamp != null) {
+                                                sb.append("&timestamp=");
+                                                sb.append(timestamp);
+                                            }
+                                            sb.append(setRole);
+                                            sb.append("#rupa\">");
+                                            sb.append(value.substring(2));
+                                            sb.append("</a>");
+                                        }
                                         sb.append("<br />");
                                     }
                                 }
@@ -200,9 +212,7 @@ public class NodeBlade extends RequestBlade {
                                     SecondaryId.secondaryIdIterable(db, nodeId, typeId, longTimestamp)) {
                                 sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value = ");
                                 String value = SecondaryId.secondaryIdValue(secondaryId);
-                                String svInv = SecondaryId.secondaryInv(value, "$nnodeType");
-                                VersionedMapNode vveln = (VersionedMapNode) ma.get(svInv);
-                                if (vveln == null || vveln.isEmpty(longTimestamp)) {
+                                if (!SecondaryIds.isNode(db, value, longTimestamp)) {
                                     sb.append(value.substring(2));
                                 } else {
                                     sb.append("<a href=\"?from=node&to=node&nodeId=");

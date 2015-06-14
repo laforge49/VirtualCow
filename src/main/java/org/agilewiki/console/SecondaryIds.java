@@ -34,6 +34,13 @@ public class SecondaryIds extends SecondaryId {
         return false;
     }
 
+    public static boolean isNode(Db db, String id, long longTimestamp) {
+        MapAccessor ma = db.mapAccessor();
+        String secInv = SecondaryId.secondaryInv(id, "$nnodeType");
+        VersionedMapNode veln = (VersionedMapNode) ma.get(secInv);
+        return veln != null && !veln.isEmpty(longTimestamp);
+    }
+
     public static String nodeTypeId(Db db, String nodeId, long longTimestamp) {
         String metaNodeId = null;
         for (String mnId : SecondaryId.secondaryIdIterable(db, nodeId, RecreateRoleTransaction.NODETYPE_ID, longTimestamp)) {
