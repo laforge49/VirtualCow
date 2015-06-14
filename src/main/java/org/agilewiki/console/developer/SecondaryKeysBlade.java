@@ -81,7 +81,7 @@ public class SecondaryKeysBlade extends RequestBlade {
                                     }
                                 }
                             }
-                            String line = id;
+                            String line = id.substring(2);
                             if (line.length() > 60)
                                 line = line.substring(0, 60);
                             line = SimpleSimon.encode(line, 0, SimpleSimon.ENCODE_SINGLE_LINE); //line text
@@ -109,7 +109,10 @@ public class SecondaryKeysBlade extends RequestBlade {
                                     sb.append(timestamp);
                                 }
                                 sb.append(setRole + "#rupa\">");
-                                sb.append(nodeId);
+                                if (nodeId.startsWith("$t")) {
+                                    sb.append(simpleSimon.niceTime(nodeId));
+                                } else
+                                    sb.append(nodeId.substring(2));
                                 sb.append("</a>");
                             }
                             sb.append(", <a href=\"?from=");
