@@ -4,10 +4,7 @@ import org.agilewiki.console.*;
 import org.agilewiki.utils.ids.composites.Journal;
 import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.ids.composites.SecondaryId;
-import org.agilewiki.utils.immutable.collections.ListAccessor;
-import org.agilewiki.utils.immutable.collections.MapAccessor;
-import org.agilewiki.utils.immutable.collections.PeekABoo;
-import org.agilewiki.utils.immutable.collections.VersionedMapNode;
+import org.agilewiki.utils.immutable.collections.*;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
 import javax.servlet.AsyncContext;
@@ -69,12 +66,13 @@ public class NodeBlade extends RequestBlade {
                     try {
                         sb = new StringBuilder();
                         MapAccessor ma = db.mapAccessor();
-                        String secInv = SecondaryId.secondaryInv(nodeId, "$nodeType");
-                        ListAccessor lia = ma.listAccessor(secInv);
-                        if (lia == null) {
+                        String secInv = SecondaryId.secondaryInv(nodeId, "$nnodeType");
+                        VersionedMapNode veln = (VersionedMapNode) ma.get(secInv);
+                        if (veln == null || veln.isEmpty(longTimestamp)) {
                             sb.append("Not a node.");
                             break;
                         }
+
                         if (nodeId.startsWith("$n")) {
                             if (nodeId.endsWith(".key")) {
                                 String prefix = SecondaryId.SECONDARY_ID + nodeId.substring(0, nodeId.length() - 4);
@@ -202,20 +200,13 @@ public class NodeBlade extends RequestBlade {
                                     SecondaryId.secondaryIdIterable(db, nodeId, typeId, longTimestamp)) {
                                 sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value = ");
                                 String value = SecondaryId.secondaryIdValue(secondaryId);
-                                String valueNode = null;
-                                for (String nt : SecondaryId.secondaryIdIterable(db, value, "$nnodeType", longTimestamp)) {
-                                    valueNode = value;
-                                }
-                                if (valueNode == null && value.startsWith("$")) {
-                                    for (String nt : SecondaryId.secondaryIdIterable(db, value + ".node", "$nnodeType", longTimestamp)) {
-                                        valueNode = value + ".node";
-                                    }
-                                }
-                                if (valueNode == null)
-                                    sb.append(value);
-                                else {
+                                String svInv = SecondaryId.secondaryInv(value, "$nnodeType");
+                                VersionedMapNode vveln = (VersionedMapNode) ma.get(svInv);
+                                if (vveln == null || vveln.isEmpty(longTimestamp)) {
+                                    sb.append(value.substring(2));
+                                } else {
                                     sb.append("<a href=\"?from=node&to=node&nodeId=");
-                                    sb.append(valueNode);
+                                    sb.append(value);
                                     if (timestamp != null) {
                                         sb.append("&timestamp=");
                                         sb.append(timestamp);
