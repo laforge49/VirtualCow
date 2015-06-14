@@ -48,7 +48,10 @@ public class NodeBlade extends RequestBlade {
                 else
                     nodeId = bNodeBlade;
                 map.put("nodeId", nodeId);
-                map.put("--node", nodeId.substring(2));
+                if (nodeId.startsWith("$"))
+                    map.put("--node", nodeId.substring(2));
+                else
+                    map.put("--node", nodeId);
                 return "&nodeId=" + nodeId;
             }
 
@@ -66,6 +69,12 @@ public class NodeBlade extends RequestBlade {
                     try {
                         sb = new StringBuilder();
                         MapAccessor ma = db.mapAccessor();
+                        String secInv = SecondaryId.secondaryInv(nodeId, "$nodeType");
+                        ListAccessor lia = ma.listAccessor(secInv);
+                        if (lia == null) {
+                            sb.append("Not a node.");
+                            break;
+                        }
                         if (nodeId.startsWith("$n")) {
                             if (nodeId.endsWith(".key")) {
                                 String prefix = SecondaryId.SECONDARY_ID + nodeId.substring(0, nodeId.length() - 4);
