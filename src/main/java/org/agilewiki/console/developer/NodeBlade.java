@@ -6,6 +6,7 @@ import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.collections.ListAccessor;
 import org.agilewiki.utils.immutable.collections.MapAccessor;
+import org.agilewiki.utils.immutable.collections.PeekABoo;
 import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
@@ -65,34 +66,46 @@ public class NodeBlade extends RequestBlade {
                     try {
                         sb = new StringBuilder();
                         MapAccessor ma = db.mapAccessor();
-
                         if (nodeId.startsWith("$n")) {
                             if (nodeId.endsWith(".key")) {
-                                sb.append("<a href=\"?from=node&to=");
-                                sb.append(nodeId.substring(2).replace(".key", "Values"));
-                                if (timestamp != null) {
-                                    sb.append("&timestamp=");
-                                    sb.append(timestamp);
+                                String prefix = SecondaryId.SECONDARY_ID + nodeId.substring(0, nodeId.length() - 4);
+                                PeekABoo<String> idPeekABoo = db.idsIterable(prefix, longTimestamp);
+                                if (idPeekABoo.hasNext()) {
+                                    sb.append("<a href=\"?from=node&to=");
+                                    sb.append(nodeId.substring(2).replace(".key", "Values"));
+                                    if (timestamp != null) {
+                                        sb.append("&timestamp=");
+                                        sb.append(timestamp);
+                                    }
+                                    sb.append(setRole);
+                                    sb.append("#rupa\"><strong>Values</strong></a><br />");
                                 }
-                                sb.append(setRole);
-                                sb.append("#rupa\"><strong>Values</strong></a><br />");
                             } else if (nodeId.endsWith(".lnk1")) {
-                                sb.append("<a href=\"?from=node&to=");
-                                sb.append(nodeId.substring(2).replace(".lnk1", "Origins"));
-                                if (timestamp != null) {
-                                    sb.append("&timestamp=");
-                                    sb.append(timestamp);
-                                }
-                                sb.append(setRole);
-                                sb.append("#rupa\"><strong>Origins</strong></a>, ");
-                                sb.append("<a href=\"?from=node&to=");
-                                sb.append(nodeId.substring(2).replace(".lnk1", "Destinations"));
-                                if (timestamp != null) {
-                                    sb.append("&timestamp=");
-                                    sb.append(timestamp);
-                                }
-                                sb.append(setRole);
-                                sb.append("#rupa\"><strong>Destinations</strong></a><br />");
+                                String label = nodeId.substring(0, nodeId.length() - 5);
+                                PeekABoo<String> idPeekABoo = Link1Id.label1IdIterable(db, label, longTimestamp);
+                                if (idPeekABoo.hasNext()) {
+                                    sb.append("<a href=\"?from=node&to=");
+                                    sb.append(nodeId.substring(2).replace(".lnk1", "Origins"));
+                                    if (timestamp != null) {
+                                        sb.append("&timestamp=");
+                                        sb.append(timestamp);
+                                    }
+                                    sb.append(setRole);
+                                    sb.append("#rupa\"><strong>Origins</strong></a>, ");
+                                } else
+                                    sb.append("Origins, ");
+                                idPeekABoo = Link1Id.label1InvIterable(db, label, longTimestamp);
+                                if (idPeekABoo.hasNext()) {
+                                    sb.append("<a href=\"?from=node&to=");
+                                    sb.append(nodeId.substring(2).replace(".lnk1", "Destinations"));
+                                    if (timestamp != null) {
+                                        sb.append("&timestamp=");
+                                        sb.append(timestamp);
+                                    }
+                                    sb.append(setRole);
+                                    sb.append("#rupa\"><strong>Destinations</strong></a><br />");
+                                } else
+                                    sb.append("Destinations<br />");
                             } else if (nodeId.endsWith(".node")) {
                                 VersionedMapNode vmn = (VersionedMapNode) ma.get("$D$nsuperType" + nodeId);
                                 if (vmn != null && vmn.firstKey(longTimestamp) != null) {
