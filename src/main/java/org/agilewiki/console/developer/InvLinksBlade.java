@@ -39,6 +39,8 @@ public class InvLinksBlade extends RequestBlade {
                 labelId = request.getParameter("linkType");
                 map.put("nodeId", targetId);
                 map.put("linkType", labelId);
+                map.put("--nodeId", targetId.substring(2));
+                map.put("--linkType", labelId.substring(2));
                 return "&nodeId=" + targetId +
                         "&linkType=" + labelId;
             }
@@ -74,7 +76,7 @@ public class InvLinksBlade extends RequestBlade {
                                 sb.append(timestamp);
                             }
                             sb.append(setRole + "\">");
-                            sb.append(nodeId);
+                            sb.append(nodeId.substring(2));
                             sb.append("</a>");
                             ListAccessor nla = ma.listAccessor(nodeId);
                             if (nla != null) {
