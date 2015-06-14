@@ -50,12 +50,12 @@ public class NodeBlade extends RequestBlade {
                     jeTimestamp = TimestampIds.value(nodeId);
                     time = SimpleSimon.niceTime(nodeId);
                 }
-                String nodeType = SecondaryIds.nodeTypeId(db, nodeId, longTimestamp);
-                String nodeTypeHref = "<a href=\"?from=node&to=node&nodeId=" + nodeType + setRole;
+                String kindId = SecondaryIds.kindId(db, nodeId, longTimestamp);
+                String nodeTypeHref = "<a href=\"?from=node&to=node&nodeId=" + kindId + setRole;
                 if (timestamp != null) {
                     nodeTypeHref += "&timestamp=" + timestamp;
                 }
-                nodeTypeHref += "#rupa\">" + nodeType.substring(2) + "</a>";
+                nodeTypeHref += "#rupa\">" + kindId.substring(2) + "</a>";
                 map.put("nodeType", nodeTypeHref);
                 StringBuilder sb;
                 while (true) {

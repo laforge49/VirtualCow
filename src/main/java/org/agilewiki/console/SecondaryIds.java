@@ -61,4 +61,18 @@ public class SecondaryIds extends SecondaryId {
         }
         return metaNodeId;
     }
+
+    public static String superTypeId(Db db, String nodeId, long longTimestamp) {
+        for (String mnId : db.keysIterable(secondaryInv(nodeId, RecreateRoleTransaction.SUPERTYPE_ID), longTimestamp)) {
+            return mnId;
+        }
+        return null;
+    }
+
+    public static String kindId(Db db, String nodeId, long longTimestamp) {
+        String kind = superTypeId(db, nodeId, longTimestamp);
+        if (kind == null)
+            kind = nodeTypeId(db, nodeId, longTimestamp);
+        return kind;
+    }
 }
