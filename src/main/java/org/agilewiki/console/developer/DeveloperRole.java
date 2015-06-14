@@ -50,7 +50,7 @@ public class DeveloperRole extends RoleBase {
 
         developerBlade = new DeveloperBlade(this, "developer");
         postBlade = new PostBlade(this, "post");
-        nodeBlade = new NodeBlade(this, "node", "Node", null);
+        nodeBlade = new NodeBlade(this, "node");
         fullJournalBlade = new FullJournalBlade(this, "journal", "Full Journal");
         subJournalBlade = new SubJournalBlade(this, "subJournal", "Journal");
 

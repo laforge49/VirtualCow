@@ -3,6 +3,7 @@ package org.agilewiki.console;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.collections.ListAccessor;
 import org.agilewiki.utils.immutable.collections.MapAccessor;
+import org.agilewiki.utils.immutable.collections.PeekABoo;
 import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
@@ -43,7 +44,7 @@ public class SecondaryIds extends SecondaryId {
 
     public static String nodeTypeId(Db db, String nodeId, long longTimestamp) {
         String metaNodeId = null;
-        for (String mnId : SecondaryId.secondaryIdIterable(db, nodeId, RecreateRoleTransaction.NODETYPE_ID, longTimestamp)) {
+        for (String mnId : db.keysIterable(secondaryInv(nodeId, RecreateRoleTransaction.NODETYPE_ID), longTimestamp)) {
             if (metaNodeId == null || nodeIsA(db, mnId, metaNodeId, longTimestamp))
                 metaNodeId = mnId;
         }

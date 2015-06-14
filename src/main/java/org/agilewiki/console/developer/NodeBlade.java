@@ -14,18 +14,9 @@ import java.util.List;
  * Request for a journal entry.
  */
 public class NodeBlade extends RequestBlade {
-    String niceName;
-    String bNodeBlade;
 
-    public NodeBlade(Role role, String page, String niceName, String nodeBlade) throws Exception {
+    public NodeBlade(Role role, String page) throws Exception {
         super(role, page);
-        bNodeBlade = nodeBlade;
-        this.niceName = niceName;
-    }
-
-    @Override
-    protected String niceName() {
-        return niceName;
     }
 
     @Override
@@ -40,15 +31,13 @@ public class NodeBlade extends RequestBlade {
 
             @Override
             protected String setContext() {
-                if (bNodeBlade == null)
-                    nodeId = request.getParameter("nodeId");
-                else
-                    nodeId = bNodeBlade;
+                nodeId = request.getParameter("nodeId");
                 map.put("nodeId", nodeId);
-                if (nodeId.startsWith("$"))
+                if (nodeId.startsWith("$")) {
                     map.put("--node", nodeId.substring(2));
-                else
+                } else {
                     map.put("--node", nodeId);
+                }
                 return "&nodeId=" + nodeId;
             }
 
@@ -61,6 +50,13 @@ public class NodeBlade extends RequestBlade {
                     jeTimestamp = TimestampIds.value(nodeId);
                     time = SimpleSimon.niceTime(nodeId);
                 }
+                String nodeType = SecondaryIds.nodeTypeId(db, nodeId, longTimestamp);
+                String nodeTypeHref = "<a href=\"?from=node&to=node&nodeId=" + nodeType + setRole;
+                if (timestamp != null) {
+                    nodeTypeHref += "&timestamp=" + timestamp;
+                }
+                nodeTypeHref += "#rupa\">" + nodeType.substring(2) + "</a>";
+                map.put("nodeType", nodeTypeHref);
                 StringBuilder sb;
                 while (true) {
                     try {
