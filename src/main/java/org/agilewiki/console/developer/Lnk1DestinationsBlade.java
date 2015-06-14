@@ -1,9 +1,6 @@
 package org.agilewiki.console.developer;
 
-import org.agilewiki.console.NameIds;
-import org.agilewiki.console.RequestBlade;
-import org.agilewiki.console.Role;
-import org.agilewiki.console.SimpleSimon;
+import org.agilewiki.console.*;
 import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.immutable.collections.MapAccessor;
 import org.agilewiki.utils.immutable.collections.PeekABoo;
@@ -64,7 +61,19 @@ public class Lnk1DestinationsBlade extends RequestBlade {
                             }
                             --limit;
                             MapAccessor ma = db.mapAccessor();
-                            sb.append("<a href=\"?from=");
+                            String kindId = SecondaryIds.kindId(db, nodeId, longTimestamp);
+                            sb.append(" <a href=\"?from=");
+                            sb.append(page);
+                            sb.append("&to=node&nodeId=");
+                            sb.append(kindId);
+                            if (timestamp != null) {
+                                sb.append("&timestamp=");
+                                sb.append(timestamp);
+                            }
+                            sb.append(setRole + "#rupa\">");
+                            sb.append(kindId.substring(2));
+                            sb.append("</a>");
+                            sb.append(" <a href=\"?from=");
                             sb.append(page);
                             sb.append("&to=node&nodeId=");
                             sb.append(nodeId);
@@ -73,7 +82,10 @@ public class Lnk1DestinationsBlade extends RequestBlade {
                                 sb.append(timestamp);
                             }
                             sb.append(setRole + "#rupa\">");
-                            sb.append(nodeId);
+                            if (!nodeId.startsWith("$t"))
+                                sb.append(nodeId.substring(2));
+                            else
+                                sb.append(simpleSimon.niceTime(nodeId));
                             sb.append("</a>");
                             sb.append("<br />");
                         }
