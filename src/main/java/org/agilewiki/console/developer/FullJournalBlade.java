@@ -64,16 +64,20 @@ public class FullJournalBlade extends RequestBlade {
                             MapAccessor ma = db.mapAccessor();
                             ListAccessor la = ma.listAccessor(tsId);
                             VersionedMapNode vmn = (VersionedMapNode) la.get(0);
+                            String transactionId = "$n" + vmn.getList(NameIds.TRANSACTION_NAME).flatList(longTimestamp).get(0).toString() + ".node";
                             String jeId = TimestampIds.generate(next);
+                            sb.append("<a href=\"?from=journal&to=node&nodeId=" + transactionId);
+                            if (timestamp != null) {
+                                sb.append("&timestamp=" + timestamp);
+                            }
+                            sb.append(setRole + "#rupa\">" + transactionId.substring(2) + "</a>");
+                            sb.append(' ');
                             sb.append("<a href=\"?from=journal&to=node&nodeId=" + jeId);
                             if (timestamp != null) {
                                 sb.append("&timestamp=" + timestamp);
                             }
                             sb.append(setRole + "#rupa\">" + SimpleSimon.niceTime(tsId) + "</a>");
-                            sb.append(' ');
                             StringBuilder lb = new StringBuilder();
-                            String transactionName = vmn.getList(NameIds.TRANSACTION_NAME).flatList(longTimestamp).get(0).toString();
-                            lb.append(transactionName);
                             List subjectList = vmn.getList(NameIds.SUBJECT).flatList(longTimestamp);
                             if (subjectList.size() > 0) {
                                 lb.append(' ');

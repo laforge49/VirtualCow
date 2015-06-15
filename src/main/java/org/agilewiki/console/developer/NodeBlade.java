@@ -210,7 +210,7 @@ public class NodeBlade extends RequestBlade {
                                     sb.append("</a>");
                                     sb.append("<br />");
                                 } else if (nId.startsWith(SecondaryId.SECONDARY_INV)) {
-                                    sb.append("&nbsp;&nbsp;&nbsp;&nbsp;Node: ");
+                                    sb.append("&nbsp;&nbsp;&nbsp;&nbsp;Target: ");
                                     String vnmId = SecondaryId.secondaryInvVmn(nId);
                                     sb.append("<a href=\"?from=");
                                     sb.append(page);
@@ -271,21 +271,61 @@ public class NodeBlade extends RequestBlade {
                                     sb.append("<br />");
                                 } else if (nId.startsWith(SecondaryId.SECONDARY_ID)) {
                                 } else if (nId.startsWith(Link1Id.LINK1_ID)) {
-                                    sb.append("&nbsp;&nbsp;&nbsp;&nbsp;");
-                                    sb.append(nId);
+                                    sb.append("&nbsp;&nbsp;&nbsp;&nbsp;Origin: ");
+                                    String originId = Link1Id.link1IdOrigin(nId);
+                                    sb.append("<a href=\"?from=");
+                                    sb.append(page);
+                                    sb.append("&to=node&nodeId=");
+                                    sb.append(originId);
+                                    if (timestamp != null) {
+                                        sb.append("&timestamp=");
+                                        sb.append(timestamp);
+                                    }
+                                    sb.append(setRole + "#rupa\">");
+                                    if (!originId.startsWith("$t"))
+                                        sb.append(originId.substring(2));
+                                    else
+                                        sb.append(simpleSimon.niceTime(originId));
+                                    sb.append("</a>");
+                                    sb.append(" Label: ");
+                                    String labelId = Link1Id.link1IdLabel(nId);
+                                    sb.append("<a href=\"?from=");
+                                    sb.append(page);
+                                    sb.append("&to=node&nodeId=");
+                                    sb.append(labelId + ".lnk1");
+                                    if (timestamp != null) {
+                                        sb.append("&timestamp=");
+                                        sb.append(timestamp);
+                                    }
+                                    sb.append(setRole + "#rupa\">");
+                                    sb.append(labelId.substring(2));
+                                    sb.append("</a>");
+                                    VersionedMapNode icvmn = db.get(nId);
+                                    if (icvmn != null) {
+                                        MapAccessor icma = icvmn.mapAccessor(longTimestamp);
+                                        for (ListAccessor icla : icma) {
+                                            sb.append(" Destination: ");
+                                            String destinationId = icla.key().toString();
+                                            sb.append("<a href=\"?from=");
+                                            sb.append(page);
+                                            sb.append("&to=node&nodeId=");
+                                            sb.append(destinationId);
+                                            if (timestamp != null) {
+                                                sb.append("&timestamp=");
+                                                sb.append(timestamp);
+                                            }
+                                            sb.append(setRole + "#rupa\">");
+                                            if (!destinationId.startsWith("$t"))
+                                                sb.append(destinationId.substring(2));
+                                            else
+                                                sb.append(simpleSimon.niceTime(destinationId));
+                                            sb.append("</a>");
+                                        }
+                                    }
                                     sb.append("<br />");
                                 } else if (nId.startsWith(Link1Id.LINK1_INV)) {
-                                    sb.append("&nbsp;&nbsp;&nbsp;&nbsp;");
-                                    sb.append(nId);
-                                    sb.append("<br />");
                                 } else if (nId.startsWith(Link1Id.LABEL1_INDEX_ID)) {
-                                    sb.append("&nbsp;&nbsp;&nbsp;&nbsp;");
-                                    sb.append(nId);
-                                    sb.append("<br />");
                                 } else if (nId.startsWith(Link1Id.LABEL1_INDEX_INV)) {
-                                    sb.append("&nbsp;&nbsp;&nbsp;&nbsp;");
-                                    sb.append(nId);
-                                    sb.append("<br />");
                                 }
                             }
                         } else {
