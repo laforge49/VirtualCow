@@ -1,9 +1,6 @@
 package org.agilewiki.console.developer;
 
-import org.agilewiki.console.NameIds;
-import org.agilewiki.console.RequestBlade;
-import org.agilewiki.console.Role;
-import org.agilewiki.console.SimpleSimon;
+import org.agilewiki.console.*;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.collections.ListAccessor;
 import org.agilewiki.utils.immutable.collections.MapAccessor;
@@ -94,6 +91,21 @@ public class NodesBlade extends RequestBlade {
                                 startingAt = nodeId;
                                 break;
                             }
+
+                            String kindId = SecondaryIds.kindId(db, nodeId, longTimestamp);
+                            sb.append("<a href=\"?from=");
+                            sb.append(page);
+                            sb.append("&to=node&nodeId=");
+                            sb.append(kindId);
+                            if (timestamp != null) {
+                                sb.append("&timestamp=");
+                                sb.append(timestamp);
+                            }
+                            sb.append(setRole + "#rupa\">");
+                            sb.append(kindId.substring(2));
+                            sb.append("</a> ");
+
+
                             sb.append("<a href=\"?from=nodes&to=node&nodeId=");
                             sb.append(nodeId);
                             if (timestamp != null) {
@@ -109,11 +121,6 @@ public class NodesBlade extends RequestBlade {
                             ListAccessor nla = ma.listAccessor(nodeId);
                             if (nla != null) {
                                 VersionedMapNode nvmn = (VersionedMapNode) nla.get(0);
-                                if (nodeId.startsWith("$t")) {
-                                    sb.append(' ');
-                                    String transactionName = nvmn.getList(NameIds.TRANSACTION_NAME).flatList(longTimestamp).get(0).toString();
-                                    sb.append(transactionName);
-                                }
                                 StringBuilder lb = new StringBuilder();
                                 List subjectList = nvmn.getList(NameIds.SUBJECT).flatList(longTimestamp);
                                 if (subjectList.size() > 0) {

@@ -62,7 +62,7 @@ public class Lnk1OriginsBlade extends RequestBlade {
                             --limit;
                             MapAccessor ma = db.mapAccessor();
                             String kindId = SecondaryIds.kindId(db, nodeId, longTimestamp);
-                            sb.append(" <a href=\"?from=");
+                            sb.append("<a href=\"?from=");
                             sb.append(page);
                             sb.append("&to=node&nodeId=");
                             sb.append(kindId);

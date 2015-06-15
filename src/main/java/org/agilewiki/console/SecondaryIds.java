@@ -36,6 +36,9 @@ public class SecondaryIds extends SecondaryId {
     }
 
     public static boolean isNode(Db db, String id, long longTimestamp) {
+        char idtyp = id.charAt(1);
+        if (!Character.isLowerCase(idtyp) || idtyp == 'v')
+            return false;
         MapAccessor ma = db.mapAccessor();
         String secInv = SecondaryId.secondaryInv(id, "$nnodeType");
         VersionedMapNode veln = (VersionedMapNode) ma.get(secInv);

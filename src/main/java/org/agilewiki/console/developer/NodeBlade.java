@@ -8,6 +8,7 @@ import org.agilewiki.utils.immutable.collections.*;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
 import javax.servlet.AsyncContext;
+import javax.servlet.ServletException;
 import java.util.List;
 
 /**
@@ -44,6 +45,9 @@ public class NodeBlade extends RequestBlade {
             @Override
             protected void process()
                     throws Exception {
+                if (!SecondaryIds.isNode(db, nodeId, longTimestamp)) {
+                    throw new ServletException("not a node");
+                }
                 String time = null;
                 String jeTimestamp = "";
                 if (nodeId.startsWith("$t")) {
@@ -62,11 +66,6 @@ public class NodeBlade extends RequestBlade {
                     try {
                         sb = new StringBuilder();
                         MapAccessor ma = db.mapAccessor();
-                        if (!SecondaryIds.isNode(db, nodeId, longTimestamp)) {
-                            sb.append("Not a node.");
-                            break;
-                        }
-
                         if (nodeId.startsWith("$n")) {
                             if (nodeId.endsWith(".key")) {
                                 String prefix = SecondaryId.SECONDARY_ID + nodeId.substring(0, nodeId.length() - 4);
@@ -170,17 +169,123 @@ public class NodeBlade extends RequestBlade {
                         if (time != null) {
                             sb.append("<strong>Modifies:</strong><br />");
                             for (String nId : Journal.modifies(db, nodeId, longTimestamp)) {
-                                sb.append("&nbsp;&nbsp;&nbsp;&nbsp;" + nId + "<br />");
-                                if (nId.startsWith(SecondaryId.SECONDARY_INV)) {
+                                String onId = nId;
+                                boolean isNode = SecondaryIds.isNode(db, nId, longTimestamp);
+                                if (!isNode && SecondaryIds.isNode(db, nId + ".lnk1", longTimestamp)) {
+                                    isNode = true;
+                                    nId = nId + ".lnk1";
+                                }
+                                if (!isNode && SecondaryIds.isNode(db, nId + ".key", longTimestamp)) {
+                                    isNode = true;
+                                    nId = nId + ".key";
+                                }
+                                if (isNode) {
+                                    sb.append("&nbsp;&nbsp;&nbsp;&nbsp;");
+                                    String kId = SecondaryIds.kindId(db, nId, longTimestamp);
+                                    sb.append("<a href=\"?from=");
+                                    sb.append(page);
+                                    sb.append("&to=node&nodeId=");
+                                    sb.append(kId);
+                                    if (timestamp != null) {
+                                        sb.append("&timestamp=");
+                                        sb.append(timestamp);
+                                    }
+                                    sb.append(setRole + "#rupa\">");
+                                    sb.append(kId.substring(2));
+                                    sb.append("</a>");
+                                    sb.append(" ");
+                                    sb.append("<a href=\"?from=");
+                                    sb.append(page);
+                                    sb.append("&to=node&nodeId=");
+                                    sb.append(nId);
+                                    if (timestamp != null) {
+                                        sb.append("&timestamp=");
+                                        sb.append(timestamp);
+                                    }
+                                    sb.append(setRole + "#rupa\">");
+                                    if (!onId.startsWith("$t"))
+                                        sb.append(onId.substring(2));
+                                    else
+                                        sb.append(simpleSimon.niceTime(nId));
+                                    sb.append("</a>");
+                                    sb.append("<br />");
+                                } else if (nId.startsWith(SecondaryId.SECONDARY_INV)) {
+                                    sb.append("&nbsp;&nbsp;&nbsp;&nbsp;Node: ");
+                                    String vnmId = SecondaryId.secondaryInvVmn(nId);
+                                    sb.append("<a href=\"?from=");
+                                    sb.append(page);
+                                    sb.append("&to=node&nodeId=");
+                                    sb.append(vnmId);
+                                    if (timestamp != null) {
+                                        sb.append("&timestamp=");
+                                        sb.append(timestamp);
+                                    }
+                                    sb.append(setRole + "#rupa\">");
+                                    if (!vnmId.startsWith("$t"))
+                                        sb.append(vnmId.substring(2));
+                                    else
+                                        sb.append(simpleSimon.niceTime(vnmId));
+                                    sb.append("</a>");
+                                    sb.append(" Key: ");
+                                    String keyId = SecondaryId.secondaryInvType(nId);
+                                    sb.append("<a href=\"?from=");
+                                    sb.append(page);
+                                    sb.append("&to=node&nodeId=");
+                                    sb.append(keyId + ".key");
+                                    if (timestamp != null) {
+                                        sb.append("&timestamp=");
+                                        sb.append(timestamp);
+                                    }
+                                    sb.append(setRole + "#rupa\">");
+                                    sb.append(keyId.substring(2));
+                                    sb.append("</a>");
                                     VersionedMapNode icvmn = db.get(nId);
                                     if (icvmn != null) {
                                         MapAccessor icma = icvmn.mapAccessor(longTimestamp);
                                         for (ListAccessor icla : icma) {
-                                            sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-                                            sb.append(icla.key());
-                                            sb.append("<br />");
+                                            sb.append(" Value: ");
+                                            String value = icla.key().toString();
+                                            String valueId = value;
+                                            boolean isN = SecondaryIds.isNode(db, value, longTimestamp);
+                                            if (!isN && SecondaryIds.isNode(db, value + ".lnk1", longTimestamp)) {
+                                                valueId = value + ".lnk1";
+                                                isN = true;
+                                            }
+                                            if (!isN)
+                                                sb.append(value);
+                                            else {
+                                                sb.append("<a href=\"?from=");
+                                                sb.append(page);
+                                                sb.append("&to=node&nodeId=");
+                                                sb.append(valueId);
+                                                if (timestamp != null) {
+                                                    sb.append("&timestamp=");
+                                                    sb.append(timestamp);
+                                                }
+                                                sb.append(setRole + "#rupa\">");
+                                                sb.append(value.substring(2));
+                                                sb.append("</a>");
+                                            }
                                         }
                                     }
+                                    sb.append("<br />");
+                                } else if (nId.startsWith(SecondaryId.SECONDARY_ID)) {
+                                } else if (nId.startsWith(Link1Id.LINK1_ID)) {
+                                    sb.append("&nbsp;&nbsp;&nbsp;&nbsp;");
+                                    sb.append(nId);
+                                    sb.append("<br />");
+                                } else if (nId.startsWith(Link1Id.LINK1_INV)) {
+                                    sb.append("&nbsp;&nbsp;&nbsp;&nbsp;");
+                                    sb.append(nId);
+                                    sb.append("<br />");
+                                } else if (nId.startsWith(Link1Id.LABEL1_INDEX_ID)) {
+                                    sb.append("&nbsp;&nbsp;&nbsp;&nbsp;");
+                                    sb.append(nId);
+                                    sb.append("<br />");
+                                } else if (nId.startsWith(Link1Id.LABEL1_INDEX_INV)) {
+                                    sb.append("&nbsp;&nbsp;&nbsp;&nbsp;");
+                                    sb.append(nId);
+                                    sb.append("<br />");
                                 }
                             }
                         } else {

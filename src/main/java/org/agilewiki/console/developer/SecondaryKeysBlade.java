@@ -1,9 +1,6 @@
 package org.agilewiki.console.developer;
 
-import org.agilewiki.console.NameIds;
-import org.agilewiki.console.RequestBlade;
-import org.agilewiki.console.Role;
-import org.agilewiki.console.SimpleSimon;
+import org.agilewiki.console.*;
 import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.ids.composites.SecondaryId;
@@ -100,6 +97,18 @@ public class SecondaryKeysBlade extends RequestBlade {
                             } else {
                                 sb.append(line);
                                 sb.append(" -> ");
+                                String kindId = SecondaryIds.kindId(db, nodeId, longTimestamp);
+                                sb.append("<a href=\"?from=");
+                                sb.append(page);
+                                sb.append("&to=node&nodeId=");
+                                sb.append(kindId);
+                                if (timestamp != null) {
+                                    sb.append("&timestamp=");
+                                    sb.append(timestamp);
+                                }
+                                sb.append(setRole + "#rupa\">");
+                                sb.append(kindId.substring(2));
+                                sb.append("</a> ");
                                 sb.append("<a href=\"?from=");
                                 sb.append(page);
                                 sb.append("&to=node&nodeId=");
