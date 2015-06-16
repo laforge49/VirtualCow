@@ -95,7 +95,7 @@ public class SimpleSimon extends HttpServlet {
             servletConfig = getServletConfig();
             servletContext = servletConfig.getServletContext();
 
-            ooDb = new OODb();
+            ooDb = new OODb(100000, 10000L);
             db = ooDb.db;
 
             mailOut = new MailOut();
