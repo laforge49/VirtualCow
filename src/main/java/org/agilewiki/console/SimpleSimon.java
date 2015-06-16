@@ -1,10 +1,10 @@
 package org.agilewiki.console;
 
-import org.agilewiki.console.admin.AdminRole;
-import org.agilewiki.console.developer.DeveloperRole;
+import org.agilewiki.console.oodb.nodes.roles.admin.AdminRole;
+import org.agilewiki.console.oodb.nodes.roles.developer.DeveloperRole;
 import org.agilewiki.console.oodb.OODb;
-import org.agilewiki.console.unRole.UnRole;
-import org.agilewiki.console.user.UserRole;
+import org.agilewiki.console.oodb.nodes.roles.unRole.UnRole;
+import org.agilewiki.console.oodb.nodes.roles.user.UserRole;
 import org.agilewiki.utils.ids.Timestamp;
 import org.agilewiki.utils.virtualcow.Db;
 
