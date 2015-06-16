@@ -9,7 +9,6 @@ import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
 import javax.servlet.AsyncContext;
-import javax.servlet.ServletException;
 import java.util.List;
 
 /**

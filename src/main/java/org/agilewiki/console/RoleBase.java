@@ -1,12 +1,14 @@
 package org.agilewiki.console;
 
+import org.agilewiki.console.oodb.NodeBase;
+
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Base class for roles.
  */
-abstract public class RoleBase implements Role {
+abstract public class RoleBase extends NodeBase implements Role {
     public final SimpleSimon simpleSimon;
     public final String roleName;
     public final String niceRoleName;
@@ -14,6 +16,7 @@ abstract public class RoleBase implements Role {
     public final Map<String, PostRequestBlade> posts = new HashMap<String, PostRequestBlade>();
 
     public RoleBase(SimpleSimon simpleSimon, String roleName, String niceRoleName) {
+        super(simpleSimon.ooDb, "$n" + roleName + ".node");
         this.simpleSimon = simpleSimon;
         this.roleName = roleName;
         this.niceRoleName = niceRoleName;

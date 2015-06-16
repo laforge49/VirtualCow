@@ -6,6 +6,8 @@ import org.agilewiki.utils.immutable.FactoryRegistry;
  * A durable object.
  */
 public interface Node {
+    OODb getOODb();
+
     String getNodeId();
 
     String getFactoryId();
