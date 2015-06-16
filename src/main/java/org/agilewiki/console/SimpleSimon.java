@@ -1,5 +1,6 @@
 package org.agilewiki.console;
 
+import org.agilewiki.console.oodb.nodes.roles.MetaDataNodeFactory;
 import org.agilewiki.console.oodb.nodes.roles.admin.AdminRole;
 import org.agilewiki.console.oodb.nodes.roles.developer.DeveloperRole;
 import org.agilewiki.console.oodb.OODb;
@@ -93,6 +94,8 @@ public class SimpleSimon extends HttpServlet {
 
             ooDb = new OODb(100000, 10000L);
             db = ooDb.db;
+
+            new MetaDataNodeFactory(ooDb);
 
             mailOut = new MailOut();
 
