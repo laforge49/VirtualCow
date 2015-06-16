@@ -72,6 +72,16 @@ public class OODb {
         return nodeCache.get(id);
     }
 
+    public void addNode(String nodeId, Node node) {
+        addNode(nodeId, FactoryRegistry.MAX_TIMESTAMP, node);
+    }
+
+    public void addNode(String nodeId, long longTimestamp, Node node) {
+        String timestampId = Timestamp.timestampId(longTimestamp);
+        String id = timestampId + nodeId;
+        nodeCache.put(id, node);
+    }
+
     public void dropNode(String nodeId) {
         String timestampId = Timestamp.timestampId(FactoryRegistry.MAX_TIMESTAMP);
         String id = timestampId + nodeId;
