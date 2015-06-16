@@ -24,11 +24,6 @@ public class FullJournalBlade extends RequestBlade {
     }
 
     @Override
-    protected String niceName() {
-        return niceName;
-    }
-
-    @Override
     protected String fileName(String roleName, String page) {
         return "developer/journal";
     }
@@ -39,6 +34,7 @@ public class FullJournalBlade extends RequestBlade {
             @Override
             protected void process()
                     throws Exception {
+                map.put("heading", niceName);
                 String startingAt = request.getParameter("startingAt");
                 if (startingAt == null)
                     startingAt = "";

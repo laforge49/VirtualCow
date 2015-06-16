@@ -4,7 +4,10 @@ import org.agilewiki.console.*;
 import org.agilewiki.utils.ids.composites.Journal;
 import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.ids.composites.SecondaryId;
-import org.agilewiki.utils.immutable.collections.*;
+import org.agilewiki.utils.immutable.collections.ListAccessor;
+import org.agilewiki.utils.immutable.collections.MapAccessor;
+import org.agilewiki.utils.immutable.collections.PeekABoo;
+import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
 import javax.servlet.AsyncContext;
@@ -329,6 +332,22 @@ public class NodeBlade extends RequestBlade {
                                 }
                             }
                         } else {
+                            if (nodeId.endsWith(".key")) {
+                                sb.append("<a href=\"?from=node&to=subJournal&subJournal=");
+                                sb.append(nodeId.substring(0, nodeId.length() - 4));
+                                if (timestamp != null) {
+                                    sb.append("&timestamp=" + timestamp);
+                                }
+                                sb.append(setRole + "\"><strong>Key Journal</strong></a>, ");
+                            }
+                            if (nodeId.endsWith(".lnk1")) {
+                                sb.append("<a href=\"?from=node&to=subJournal&subJournal=");
+                                sb.append(nodeId.substring(0, nodeId.length() - 5));
+                                if (timestamp != null) {
+                                    sb.append("&timestamp=" + timestamp);
+                                }
+                                sb.append(setRole + "\"><strong>Label Journal</strong></a>, ");
+                            }
                             sb.append("<a href=\"?from=node&to=subJournal&subJournal=");
                             sb.append(nodeId);
                             if (timestamp != null) {

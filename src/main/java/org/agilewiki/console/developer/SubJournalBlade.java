@@ -36,14 +36,10 @@ public class SubJournalBlade extends RequestBlade {
             @Override
             protected String setContext() {
                 subJournal = request.getParameter("subJournal");
+                map.put("heading", niceName + " for " + subJournal);
                 map.put("hiddenContext", "<input type=\"hidden\" name=\"subJournal\" value=\"" + subJournal + "\"/>");
                 map.put("subJournal", subJournal);
                 return "&subJournal=" + subJournal;
-            }
-
-            @Override
-            protected String niceName() {
-                return niceName + " for " + subJournal;
             }
 
             @Override

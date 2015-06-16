@@ -3,7 +3,6 @@ package org.agilewiki.console.developer;
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.RoleBase;
 import org.agilewiki.console.SimpleSimon;
-import org.agilewiki.utils.ids.NameId;
 
 /**
  * The developer role.
@@ -12,14 +11,6 @@ public class DeveloperRole extends RoleBase {
     private DeveloperBlade developerBlade;
     private FullJournalBlade fullJournalBlade;
     private SubJournalBlade subJournalBlade;
-    private JournalBlade subjectJournalBlade;
-    private JournalBlade emailJournalBlade;
-    private JournalBlade roleJournalBlade;
-    private JournalBlade userLnk1JournalBlade;
-    private JournalBlade targetLnk1JournalBlade;
-    private JournalBlade originLnk1JournalBlade;
-    private JournalBlade destinationLnk1JournalBlade;
-    private JournalBlade ofRoleLnk1JournalBlade;
     private NodeBlade nodeBlade;
     private PostBlade postBlade;
     private SecondaryKeysBlade subjectsBlade;
@@ -54,16 +45,6 @@ public class DeveloperRole extends RoleBase {
         fullJournalBlade = new FullJournalBlade(this, "journal", "Full Journal");
         subJournalBlade = new SubJournalBlade(this, "subJournal", "Journal");
 
-        subjectJournalBlade = new JournalBlade(this, "subjectJournal",
-                "Subject Journal",
-                NameId.generate("subject"));
-        emailJournalBlade = new JournalBlade(this, "emailJournal",
-                "Email Address Journal",
-                NameId.generate("email"));
-        roleJournalBlade = new JournalBlade(this, "roleJournal",
-                "Role Assignment Journal",
-                NameId.generate("role"));
-
         userOriginsBlade = new Lnk1OriginsBlade(this, "userOrigins", "User Link Origins", "user");
         targetOriginsBlade = new Lnk1OriginsBlade(this, "targetOrigins", "Target Link Origins", "target");
         originOriginsBlade = new Lnk1OriginsBlade(this, "originOrigins", "Origin Link Origins", "origin");
@@ -75,22 +56,6 @@ public class DeveloperRole extends RoleBase {
         originDestinationsBlade = new Lnk1DestinationsBlade(this, "originDestinations", "Origin Link Destinations", "origin");
         destinationDestinationsBlade = new Lnk1DestinationsBlade(this, "destinationDestinations", "Destination Link Destinations", "destination");
         ofRoleDestinationsBlade = new Lnk1DestinationsBlade(this, "ofRoleDestinations", "Of Role Link Destinations", "ofRole");
-
-        userLnk1JournalBlade = new JournalBlade(this, "userLnk1Journal",
-                "User Link Journal",
-                NameId.generate("user"));
-        targetLnk1JournalBlade = new JournalBlade(this, "targetLnk1Journal",
-                "Target Link Journal",
-                NameId.generate("target"));
-        originLnk1JournalBlade = new JournalBlade(this, "originLnk1Journal",
-                "Origin Link Journal",
-                NameId.generate("origin"));
-        destinationLnk1JournalBlade = new JournalBlade(this, "destinationLnk1Journal",
-                "Destination Link Journal",
-                NameId.generate("destination"));
-        ofRoleLnk1JournalBlade = new JournalBlade(this, "ofRoleLnk1Journal",
-                "Of Role Link Journal",
-                NameId.generate("ofRole"));
 
         subjectsBlade = new SecondaryKeysBlade(this, "subjectValues", "Subjects", "subject");
         emailAddressesBlade = new SecondaryKeysBlade(this, "emailValues", "Email Addresses", "email");
@@ -127,30 +92,6 @@ public class DeveloperRole extends RoleBase {
                           String setRole) {
         menuItem(home, currentPage, setTimestamp, setRole, developerBlade);
         menuItem(home, currentPage, setTimestamp, setRole, fullJournalBlade);
-
-        home.append("<li>\n");
-        home.append("<a>Secondary Keys:</a>\n");
-        home.append("<ul>\n");
-
-        menuItem(home, currentPage, setTimestamp, setRole, subjectJournalBlade);
-        menuItem(home, currentPage, setTimestamp, setRole, emailJournalBlade);
-        menuItem(home, currentPage, setTimestamp, setRole, roleJournalBlade);
-
-        home.append("</ul>\n");
-        home.append("</li>\n");
-
-        home.append("<li>\n");
-        home.append("<a>Links:</a>\n");
-        home.append("<ul>\n");
-
-        menuItem(home, currentPage, setTimestamp, setRole, userLnk1JournalBlade);
-        menuItem(home, currentPage, setTimestamp, setRole, targetLnk1JournalBlade);
-        menuItem(home, currentPage, setTimestamp, setRole, originLnk1JournalBlade);
-        menuItem(home, currentPage, setTimestamp, setRole, destinationLnk1JournalBlade);
-        menuItem(home, currentPage, setTimestamp, setRole, ofRoleLnk1JournalBlade);
-
-        home.append("</ul>\n");
-        home.append("</li>\n");
 
         menuItem(home, currentPage, setTimestamp, setRole, nodesNodesBlade);
         menuItem(home, currentPage, setTimestamp, setRole, keysNodesBlade);
