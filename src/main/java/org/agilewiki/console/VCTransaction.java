@@ -26,6 +26,7 @@ public abstract class VCTransaction implements Transaction, Node {
         this.parameters = parameters;
         this.factoryId = factoryId;
         this.longTimestamp = longTimestamp;
+        getOODb().addNode(nodeId, this);
     }
 
     public VCTransaction() {}
@@ -63,6 +64,7 @@ public abstract class VCTransaction implements Transaction, Node {
             Link1Id.createLink1(db, nodeId, User.USER_KEY, userId);
         }
         process(db, tMapNode);
+        getOODb().addNode(nodeId, this);
     }
 
     public abstract void process(Db db, MapNode tMapNode);
