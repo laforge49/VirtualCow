@@ -2,6 +2,7 @@ package org.agilewiki.console;
 
 import org.agilewiki.console.admin.AdminRole;
 import org.agilewiki.console.developer.DeveloperRole;
+import org.agilewiki.console.oodb.OODb;
 import org.agilewiki.console.unRole.UnRole;
 import org.agilewiki.console.user.UserRole;
 import org.agilewiki.jactor2.core.impl.Plant;
@@ -33,6 +34,7 @@ public class SimpleSimon extends HttpServlet {
 
     public final static String self = System.getProperties().getProperty("self", "http://localhost/");
 
+    public OODb ooDb;
     public Db db;
     protected ServletConfig servletConfig;
     public ServletContext servletContext;
@@ -93,15 +95,8 @@ public class SimpleSimon extends HttpServlet {
             servletConfig = getServletConfig();
             servletContext = servletConfig.getServletContext();
 
-            new Plant();
-            Path dbPath = Paths.get("vcow.db");
-            int maxRootBlockSize = 100000;
-            db = new Db(new BaseRegistry(), dbPath, maxRootBlockSize);
-
-            if (Files.exists(dbPath))
-                db.open();
-            else
-                db.open(true);
+            ooDb = new OODb();
+            db = ooDb.db;
 
             mailOut = new MailOut();
 
