@@ -7,11 +7,19 @@ import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
+import java.util.Map;
+
 /**
  * Non-performing Journal Entry.
  */
 public class BadUserAddressTransaction extends VCTransaction {
     public final static String NAME = "badUserAddress";
+
+    public BadUserAddressTransaction() {}
+
+    public BadUserAddressTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
+        super(nodeId, parameters, factoryId, longTimestamp);
+    }
 
     @Override
     public void process(Db db, MapNode mapNode) {
