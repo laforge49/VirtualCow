@@ -41,6 +41,8 @@ public class SimpleSimon extends HttpServlet {
     public final static int ENCODE_SINGLE_LINE = 2;
     public final static int ENCODE_FIELD = 3;
 
+    public static SimpleSimon simpleSimon;
+
     public MailOut mailOut;
 
     public Map<String, Role> roles = new TreeMap<String, Role>();
@@ -87,6 +89,10 @@ public class SimpleSimon extends HttpServlet {
         return sb.toString();
     }
 
+    public SimpleSimon() {
+        simpleSimon = this;
+    }
+
     public void init() {
         try {
             servletConfig = getServletConfig();
@@ -120,7 +126,6 @@ public class SimpleSimon extends HttpServlet {
             }
 
             db.registerTransaction(ServletStartTransaction.NAME, ServletStartTransaction.class);
-            ServletStartTransaction.simpleSimon = this;
 
             db.registerTransaction(ServletStopTransaction.NAME, ServletStopTransaction.class);
 

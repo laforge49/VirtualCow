@@ -9,8 +9,6 @@ import org.agilewiki.utils.virtualcow.Db;
 public class ServletStartTransaction extends VCTransaction {
     public final static String NAME = "servletStart";
 
-    public static SimpleSimon simpleSimon;
-
     public static String update(Db db)
             throws Exception {
         MapNode mn = db.dbFactoryRegistry.nilMap;
@@ -19,6 +17,6 @@ public class ServletStartTransaction extends VCTransaction {
 
     @Override
     public void process(Db db, MapNode tMapNode) {
-        User.init(simpleSimon);
+        User.init(SimpleSimon.simpleSimon);
     }
 }
