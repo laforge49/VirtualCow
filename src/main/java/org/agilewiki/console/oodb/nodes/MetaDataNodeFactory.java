@@ -1,9 +1,8 @@
-package org.agilewiki.console.oodb.nodes.roles;
+package org.agilewiki.console.oodb.nodes;
 
 import org.agilewiki.console.oodb.Node;
 import org.agilewiki.console.oodb.NodeFactory;
 import org.agilewiki.console.oodb.OODb;
-import org.agilewiki.console.oodb.nodes.MetaDataNode;
 
 import java.util.HashMap;
 
@@ -16,7 +15,7 @@ public class MetaDataNodeFactory implements NodeFactory {
     }
 
     @Override
-    public Node createNode(OODb ooDb, String nodeId, String factoryId, long longTimestamp) {
-        return new MetaDataNode(ooDb, nodeId, new HashMap(), factoryId, longTimestamp);
+    public Node createNode(String nodeId, String factoryId, long longTimestamp) {
+        return new MetaDataNode(nodeId, new HashMap(), factoryId, longTimestamp);
     }
 }

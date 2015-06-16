@@ -47,7 +47,7 @@ public class OODb {
                     factoryId = SecondaryIds.kindId(db, nodeId, longTimestamp);
                     nodeFactory = nodeFactories.get(factoryId);
                 }
-                return nodeFactory.createNode(OODb.this, nodeId, factoryId, longTimestamp);
+                return nodeFactory.createNode(nodeId, factoryId, longTimestamp);
             }
         });
         nodeCache = cache.asMap();

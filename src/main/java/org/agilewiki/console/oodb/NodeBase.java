@@ -8,32 +8,25 @@ import java.util.Map;
  * Base class for Node.
  */
 public class NodeBase implements Node {
-    protected OODb ooDb;
     private String nodeId;
     protected Map<String, String> parameters;
     private String factoryId;
     private long longTimestamp;
 
-    public NodeBase(OODb ooDb, String nodeId, Map<String, String> parameters) {
-        this(ooDb, nodeId, parameters, null);
+    public NodeBase(String nodeId, Map<String, String> parameters) {
+        this(nodeId, parameters, null);
     }
 
-    public NodeBase(OODb ooDb, String nodeId, Map<String, String> parameters, String factoryId) {
-        this(ooDb, nodeId, parameters, factoryId, FactoryRegistry.MAX_TIMESTAMP);
+    public NodeBase(String nodeId, Map<String, String> parameters, String factoryId) {
+        this(nodeId, parameters, factoryId, FactoryRegistry.MAX_TIMESTAMP);
     }
 
-    public NodeBase(OODb ooDb, String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
-        this.ooDb = ooDb;
+    public NodeBase(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
         this.nodeId = nodeId;
         this.parameters = parameters;
         this.factoryId = factoryId;
         this.longTimestamp = longTimestamp;
-        ooDb.addNode(nodeId, this);
-    }
-
-    @Override
-    public OODb getOODb() {
-        return ooDb;
+        getOODb().addNode(nodeId, this);
     }
 
     @Override
