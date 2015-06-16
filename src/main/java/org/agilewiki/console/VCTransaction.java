@@ -21,9 +21,14 @@ public abstract class VCTransaction implements Transaction, Node {
     private String factoryId = null;
     private long longTimestamp;
 
-    public VCTransaction() {
-
+    public VCTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
+        this.nodeId = nodeId;
+        this.parameters = parameters;
+        this.factoryId = factoryId;
+        this.longTimestamp = longTimestamp;
     }
+
+    public VCTransaction() {}
 
     @Override
     public String getNodeId() {
