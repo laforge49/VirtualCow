@@ -9,6 +9,7 @@ import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
 import javax.servlet.AsyncContext;
+import javax.servlet.ServletException;
 import java.util.List;
 
 /**
@@ -35,8 +36,6 @@ public class SubJournalBlade extends RequestBlade {
 
             @Override
             protected String setContext() {
-                subJournal = request.getParameter("subJournal");
-                map.put("heading", niceName + " for " + subJournal);
                 map.put("hiddenContext", "<input type=\"hidden\" name=\"subJournal\" value=\"" + subJournal + "\"/>");
                 map.put("subJournal", subJournal);
                 return "&subJournal=" + subJournal;
@@ -45,6 +44,25 @@ public class SubJournalBlade extends RequestBlade {
             @Override
             protected void process()
                     throws Exception {
+                subJournal = request.getParameter("subJournal");
+                String what = null;
+                String href = null;
+                if (SecondaryIds.isNode(db, subJournal, longTimestamp)) {
+                    what = "";
+                    href = subJournal;
+                } else if (SecondaryIds.isNode(db, subJournal + ".lnk1", longTimestamp)) {
+                    what = "label ";
+                    href = subJournal + ".lnk1";
+                } else if (SecondaryIds.isNode(db, subJournal + ".key", longTimestamp)) {
+                    what = "key ";
+                    href = subJournal + ".key";
+                }
+                String heading = niceName + " for " + what + "<a href=\"?from=journal&to=node&nodeId=" + href;
+                if (timestamp != null) {
+                    heading += "&timestamp=" + timestamp;
+                }
+                heading += setRole + "#rupa\">" + subJournal.substring(2) + "</a>";
+                map.put("heading", heading);
                 String startingAt = request.getParameter("startingAt");
                 if (startingAt == null)
                     startingAt = "";
