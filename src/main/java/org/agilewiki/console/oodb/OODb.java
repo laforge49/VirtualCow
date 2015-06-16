@@ -58,6 +58,10 @@ public class OODb {
         nodeFactories.put(factoryId, nodeFactory);
     }
 
+    public NodeFactory getNodeFactory(String factoryId) {
+        return nodeFactories.get(factoryId);
+    }
+
     public Node fetchNode(String nodeId) {
         return fetchNode(nodeId, FactoryRegistry.MAX_TIMESTAMP);
     }
