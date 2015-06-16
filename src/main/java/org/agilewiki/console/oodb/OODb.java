@@ -42,19 +42,20 @@ public class OODb {
                 String nodeId = id.substring(i);
                 String timestampId = id.substring(0, i);
                 long longTimestamp = Timestamp.timestamp(timestampId);
-                NodeFactory nodeFactory = nodeFactories.get(nodeId);
+                String factoryId = nodeId;
+                NodeFactory nodeFactory = nodeFactories.get(factoryId);
                 if (nodeFactory == null) {
-                    String kindId = SecondaryIds.kindId(db, nodeId, longTimestamp);
-                    nodeFactory = nodeFactories.get(kindId);
+                    factoryId = SecondaryIds.kindId(db, nodeId, longTimestamp);
+                    nodeFactory = nodeFactories.get(factoryId);
                 }
-                return nodeFactory.createNode(nodeId, longTimestamp);
+                return nodeFactory.createNode(nodeId, factoryId, longTimestamp);
             }
         });
         nodeCache = cache.asMap();
     }
 
-    public void registerNodeFactory(String id, NodeFactory nodeFactory) {
-        nodeFactories.put(id, nodeFactory);
+    public void registerNodeFactory(String factoryId, NodeFactory nodeFactory) {
+        nodeFactories.put(factoryId, nodeFactory);
     }
 
     public Node fetchNode(String nodeId) {
