@@ -4,6 +4,8 @@ import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.RoleBase;
 import org.agilewiki.console.SimpleSimon;
 
+import java.util.Map;
+
 /**
  * A base role.
  */
@@ -15,9 +17,9 @@ public class AdminRole extends RoleBase {
     private EditRolesBlade editRolesBlade;
     private RecreateRoleBlade recreateRoleBlade;
 
-    public AdminRole(SimpleSimon simpleSimon, String roleName, String niceRoleName)
+    public AdminRole(SimpleSimon simpleSimon, String roleId, Map<String, String> parameters)
             throws Exception {
-        super(simpleSimon, roleName, niceRoleName);
+        super(simpleSimon, roleId, parameters);
 
         adminBlade = new AdminBlade(this, "admin");
         emailAddressesBlade = new EmailAddressesBlade(this, "emailAddresses");

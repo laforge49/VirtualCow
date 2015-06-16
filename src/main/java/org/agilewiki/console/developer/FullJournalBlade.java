@@ -24,6 +24,11 @@ public class FullJournalBlade extends RequestBlade {
     }
 
     @Override
+    public String niceName() {
+        return niceName;
+    }
+
+    @Override
     protected String fileName(String roleName, String page) {
         return "developer/journal";
     }

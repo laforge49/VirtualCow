@@ -1,5 +1,7 @@
 package org.agilewiki.console.oodb;
 
+import java.util.Map;
+
 /**
  * A factory to create a node.
  */

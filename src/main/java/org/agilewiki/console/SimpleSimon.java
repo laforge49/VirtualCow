@@ -22,6 +22,7 @@ import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -96,11 +97,21 @@ public class SimpleSimon extends HttpServlet {
             mailOut = new MailOut();
 
             try {
-                systemRole = new SystemRole(this, "system", "System");
-                unRole = new UnRole(this, "unRole", "unRole");
-                userRole = new UserRole(this, "user", "User");
-                developerRole = new DeveloperRole(this, "developer", "Developer");
-                adminRole = new AdminRole(this, "admin", "Admin");
+                Map<String, String> systemParameters = new HashMap<>();
+                systemParameters.put("niceRoleName", "System");
+                systemRole = new SystemRole(this, "$nsystem.node", systemParameters);
+                Map<String, String> unRoleParameters = new HashMap<>();
+                unRoleParameters.put("niceRoleName", "unRole");
+                unRole = new UnRole(this, "$nunRole.node", unRoleParameters);
+                Map<String, String> userParameters = new HashMap<>();
+                userParameters.put("niceRoleName", "User");
+                userRole = new UserRole(this, "$nuser.node", userParameters);
+                Map<String, String> developerParameters = new HashMap<>();
+                developerParameters.put("niceRoleName", "Developer");
+                developerRole = new DeveloperRole(this, "$ndeveloper.node", developerParameters);
+                Map<String, String> adminParameters = new HashMap<>();
+                adminParameters.put("niceRoleName", "Admin");
+                adminRole = new AdminRole(this, "$nadmin.node", adminParameters);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

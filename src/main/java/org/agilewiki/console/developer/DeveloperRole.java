@@ -4,6 +4,8 @@ import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.RoleBase;
 import org.agilewiki.console.SimpleSimon;
 
+import java.util.Map;
+
 /**
  * The developer role.
  */
@@ -35,9 +37,9 @@ public class DeveloperRole extends RoleBase {
     private NodesBlade lnk1sNodesBlade;
     private InvLinksBlade invLinksBlade;
 
-    public DeveloperRole(SimpleSimon simpleSimon, String roleName, String niceRoleName)
+    public DeveloperRole(SimpleSimon simpleSimon, String roleId, Map<String, String> parameters)
             throws Exception {
-        super(simpleSimon, roleName, niceRoleName);
+        super(simpleSimon, roleId, parameters);
 
         developerBlade = new DeveloperBlade(this, "developer");
         postBlade = new PostBlade(this, "post");

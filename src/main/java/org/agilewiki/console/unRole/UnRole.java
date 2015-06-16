@@ -4,6 +4,8 @@ import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.RoleBase;
 import org.agilewiki.console.SimpleSimon;
 
+import java.util.Map;
+
 /**
  * Default role when the user is not logged in.
  */
@@ -11,9 +13,9 @@ public class UnRole extends RoleBase {
 
     private WelcomeBlade welcomeBlade;
 
-    public UnRole(SimpleSimon simpleSimon, String roleName, String niceRoleName)
+    public UnRole(SimpleSimon simpleSimon, String roleId, Map<String, String> parameters)
             throws Exception {
-        super(simpleSimon, roleName, niceRoleName);
+        super(simpleSimon, roleId, parameters);
 
         welcomeBlade = new WelcomeBlade(this, "welcome");
         ForgotPasswordBlade forgotPasswordBlade = new ForgotPasswordBlade(this, "forgotPassword");

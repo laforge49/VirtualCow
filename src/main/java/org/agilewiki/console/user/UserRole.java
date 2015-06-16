@@ -4,6 +4,8 @@ import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.RoleBase;
 import org.agilewiki.console.SimpleSimon;
 
+import java.util.Map;
+
 /**
  * A base role.
  */
@@ -16,9 +18,9 @@ public class UserRole extends RoleBase {
     private LogoutBlade logoutBlade;
     private NewEmailAddressBlade newEmailAddressBlade;
 
-    public UserRole(SimpleSimon simpleSimon, String roleName, String niceRoleName)
+    public UserRole(SimpleSimon simpleSimon, String roleId, Map<String, String> parameters)
             throws Exception {
-        super(simpleSimon, roleName, niceRoleName);
+        super(simpleSimon, roleId, parameters);
 
         logoutBlade = new LogoutBlade(this, "logout");
         deleteAccountBlade = new DeleteAccountBlade(this, "deleteAccount");

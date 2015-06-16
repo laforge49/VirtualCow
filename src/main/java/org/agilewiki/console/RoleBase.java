@@ -15,11 +15,11 @@ abstract public class RoleBase extends NodeBase implements Role {
     public final Map<String, RequestBlade> requests = new HashMap<String, RequestBlade>();
     public final Map<String, PostRequestBlade> posts = new HashMap<String, PostRequestBlade>();
 
-    public RoleBase(SimpleSimon simpleSimon, String roleName, String niceRoleName) {
-        super(simpleSimon.ooDb, "$n" + roleName + ".node");
+    public RoleBase(SimpleSimon simpleSimon, String roleId, Map<String, String> parameters) {
+        super(simpleSimon.ooDb, roleId, parameters);
         this.simpleSimon = simpleSimon;
-        this.roleName = roleName;
-        this.niceRoleName = niceRoleName;
+        this.roleName = roleId.substring(2, roleId.length() - 5);
+        this.niceRoleName = parameters.get("niceRoleName");
         simpleSimon.roles.put(roleName, this);
     }
 
