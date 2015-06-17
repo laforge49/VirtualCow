@@ -125,8 +125,10 @@ public class SimpleSimon extends HttpServlet {
                 ex.printStackTrace();
             }
 
+            ooDb.registerNodeFactory("servletStart.node", new ServletStartTransactionFactory());
             db.registerTransaction(ServletStartTransaction.NAME, ServletStartTransaction.class);
 
+            ooDb.registerNodeFactory("servletStop.node", new ServletStopTransactionFactory());
             db.registerTransaction(ServletStopTransaction.NAME, ServletStopTransaction.class);
 
             ServletStartTransaction.update(db);

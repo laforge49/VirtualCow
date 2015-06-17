@@ -12,6 +12,7 @@ import javax.servlet.AsyncContext;
 public class PostBlade extends PostRequestBlade {
     public PostBlade(Role role, String page) throws Exception {
         super(role, page);
+        ooDb.registerNodeFactory("npje.node", new NpjeTransactionFactory());
         db.registerTransaction(NpjeTransaction.NAME, NpjeTransaction.class);
     }
 

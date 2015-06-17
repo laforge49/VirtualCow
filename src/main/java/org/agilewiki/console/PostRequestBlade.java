@@ -1,6 +1,7 @@
 package org.agilewiki.console;
 
 import org.agilewiki.console.oodb.nodes.roles.user.LogoutTransaction;
+import org.agilewiki.console.oodb.nodes.roles.user.LogoutTransactionFactory;
 
 import javax.servlet.AsyncContext;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +13,7 @@ import java.io.IOException;
 public abstract class PostRequestBlade extends RequestBlade {
     public PostRequestBlade(Role role, String page) throws Exception {
         super(role, page);
+        ooDb.registerNodeFactory("logout.node", new LogoutTransactionFactory());
         db.registerTransaction(LogoutTransaction.NAME, LogoutTransaction.class);
         role.posts().put(page, this);
     }

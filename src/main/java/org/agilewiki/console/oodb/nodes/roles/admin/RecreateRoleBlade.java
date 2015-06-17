@@ -2,6 +2,7 @@ package org.agilewiki.console.oodb.nodes.roles.admin;
 
 import org.agilewiki.console.*;
 import org.agilewiki.console.oodb.nodes.roles.developer.NpjeTransaction;
+import org.agilewiki.console.oodb.nodes.roles.developer.NpjeTransactionFactory;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.utils.immutable.collections.MapNode;
 
@@ -14,7 +15,6 @@ import java.util.Map;
 public class RecreateRoleBlade extends PostRequestBlade {
     public RecreateRoleBlade(Role role, String page) throws Exception {
         super(role, page);
-        db.registerTransaction(NpjeTransaction.NAME, NpjeTransaction.class);
     }
 
     @Override

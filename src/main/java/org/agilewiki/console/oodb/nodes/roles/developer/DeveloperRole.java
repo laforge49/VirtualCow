@@ -1,5 +1,6 @@
 package org.agilewiki.console.oodb.nodes.roles.developer;
 
+import org.agilewiki.console.RecreateSystemRoleTransactionFactory;
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.RoleBase;
 import org.agilewiki.console.SimpleSimon;
@@ -72,6 +73,7 @@ public class DeveloperRole extends RoleBase {
         lnk1sNodesBlade = new NodesBlade(this, "lnk1Nodes", "Label Types", "$D$nsuperType$nlnk1.node");
         invLinksBlade = new InvLinksBlade(this, "invLinks");
 
+        getOODb().registerNodeFactory("recreateDeveloperRole.node", new RecreateSystemRoleTransactionFactory());
         simpleSimon.db.registerTransaction(RecreateDeveloperRoleTransaction.NAME, RecreateDeveloperRoleTransaction.class);
         RecreateDeveloperRoleTransaction.developerRole = this;
     }
