@@ -90,18 +90,18 @@ public class SubJournalBlade extends RequestBlade {
                             MapAccessor ma = db.mapAccessor();
                             ListAccessor la = ma.listAccessor(jeId);
                             VersionedMapNode vmn = (VersionedMapNode) la.get(0);
-                            String transactionId = "$n" + vmn.getList(NameIds.TRANSACTION_NAME).flatList(longTimestamp).get(0).toString() + ".node";
-                            sb.append("<a href=\"?from=journal&to=node&nodeId=" + transactionId);
-                            if (timestamp != null) {
-                                sb.append("&timestamp=" + timestamp);
-                            }
-                            sb.append(setRole + "#rupa\">" + transactionId.substring(2) + "</a>");
-                            sb.append(' ');
+
                             sb.append("<a href=\"?from=journal&to=node&nodeId=" + jeId);
                             if (timestamp != null) {
                                 sb.append("&timestamp=" + timestamp);
                             }
                             sb.append(setRole + "#rupa\">" + SimpleSimon.niceTime(jeId) + "</a>");
+
+                            sb.append(' ');
+
+                            String transactionId = vmn.getList(NameIds.TRANSACTION_NAME).flatList(longTimestamp).get(0).toString() + ".node";
+                            sb.append(transactionId);
+
                             StringBuilder lb = new StringBuilder();
                             List subjectList = vmn.getList(NameIds.SUBJECT).flatList(longTimestamp);
                             if (subjectList.size() > 0) {

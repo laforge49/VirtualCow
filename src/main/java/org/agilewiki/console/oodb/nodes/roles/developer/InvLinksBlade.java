@@ -2,6 +2,7 @@ package org.agilewiki.console.oodb.nodes.roles.developer;
 
 import org.agilewiki.console.NameIds;
 import org.agilewiki.console.RequestBlade;
+import org.agilewiki.console.SecondaryIds;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.utils.ids.composites.Link1Id;
@@ -69,24 +70,42 @@ public class InvLinksBlade extends RequestBlade {
                                 startingAt = nodeId;
                                 break;
                             }
-                            sb.append("<a href=\"?from=nodes&to=node&nodeId=");
-                            sb.append(nodeId);
-                            if (timestamp != null) {
-                                sb.append("&timestamp=");
-                                sb.append(timestamp);
+
+                            if (!nodeId.startsWith("$t")) {
+                                String kindId = SecondaryIds.kindId(db, nodeId, longTimestamp);
+                                sb.append(kindId.substring(2));
+
+                                sb.append(" ");
+
+                                sb.append("<a href=\"?from=nodes&to=node&nodeId=");
+                                sb.append(nodeId);
+                                if (timestamp != null) {
+                                    sb.append("&timestamp=");
+                                    sb.append(timestamp);
+                                }
+                                sb.append(setRole + "\">");
+                                sb.append(nodeId.substring(2));
+                                sb.append("</a>");
                             }
-                            sb.append(setRole + "\">");
-                            sb.append(nodeId.substring(2));
-                            sb.append("</a>");
+
                             ListAccessor nla = ma.listAccessor(nodeId);
                             if (nla != null) {
                                 VersionedMapNode nvmn = (VersionedMapNode) nla.get(0);
                                 if (nodeId.startsWith("$t")) {
-                                    sb.append(" (");
-                                    sb.append(SimpleSimon.niceTime(nodeId));
-                                    sb.append(") ");
                                     String transactionName = nvmn.getList(NameIds.TRANSACTION_NAME).flatList(longTimestamp).get(0).toString();
-                                    sb.append(transactionName);
+                                    sb.append(transactionName + ".node");
+
+                                    sb.append(' ');
+
+                                    sb.append("<a href=\"?from=nodes&to=node&nodeId=");
+                                    sb.append(nodeId);
+                                    if (timestamp != null) {
+                                        sb.append("&timestamp=");
+                                        sb.append(timestamp);
+                                    }
+                                    sb.append(setRole + "\">");
+                                    sb.append(SimpleSimon.niceTime(nodeId));
+                                    sb.append("</a>");
                                 }
                                 StringBuilder lb = new StringBuilder();
                                 List subjectList = nvmn.getList(NameIds.SUBJECT).flatList(longTimestamp);
