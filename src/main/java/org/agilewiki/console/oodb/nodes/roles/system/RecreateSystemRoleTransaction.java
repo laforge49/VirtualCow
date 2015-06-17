@@ -1,5 +1,7 @@
-package org.agilewiki.console;
+package org.agilewiki.console.oodb.nodes.roles.system;
 
+import org.agilewiki.console.RecreateRoleTransaction;
+import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.collections.MapNode;
@@ -15,7 +17,8 @@ public class RecreateSystemRoleTransaction extends RecreateRoleTransaction {
     public static SystemRole systemRole;
     final public static String SYSTEM_NODE_ID = "$nsystem.node";
 
-    public RecreateSystemRoleTransaction() {}
+    public RecreateSystemRoleTransaction() {
+    }
 
     public RecreateSystemRoleTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
         super(nodeId, parameters, factoryId, longTimestamp);

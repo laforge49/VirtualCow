@@ -1,4 +1,8 @@
-package org.agilewiki.console;
+package org.agilewiki.console.oodb.nodes.roles;
+
+import org.agilewiki.console.PostRequestBlade;
+import org.agilewiki.console.RequestBlade;
+import org.agilewiki.console.SimpleSimon;
 
 import javax.servlet.AsyncContext;
 import javax.servlet.ServletException;

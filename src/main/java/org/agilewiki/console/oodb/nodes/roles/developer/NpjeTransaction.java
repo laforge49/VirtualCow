@@ -15,7 +15,8 @@ import java.util.Map;
 public class NpjeTransaction extends VCTransaction {
     public final static String NAME = "npje";
 
-    public NpjeTransaction() {}
+    public NpjeTransaction() {
+    }
 
     public NpjeTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
         super(nodeId, parameters, factoryId, longTimestamp);

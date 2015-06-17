@@ -15,7 +15,8 @@ import java.util.Map;
 public class LoginTransaction extends VCTransaction {
     public final static String NAME = "login";
 
-    public LoginTransaction() {}
+    public LoginTransaction() {
+    }
 
     public LoginTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
         super(nodeId, parameters, factoryId, longTimestamp);

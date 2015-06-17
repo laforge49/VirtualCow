@@ -1,6 +1,10 @@
 package org.agilewiki.console.oodb.nodes.roles.unRole;
 
-import org.agilewiki.console.*;
+import org.agilewiki.console.PostRequestBlade;
+import org.agilewiki.console.SimpleSimon;
+import org.agilewiki.console.Tokens;
+import org.agilewiki.console.User;
+import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
@@ -16,7 +20,7 @@ public class NewAccountBlade extends PostRequestBlade {
     }
 
     @Override
-    protected String niceName() {
+    public String niceName() {
         return "New Account";
     }
 

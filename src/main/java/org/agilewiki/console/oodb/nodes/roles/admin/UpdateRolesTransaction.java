@@ -17,7 +17,8 @@ import java.util.Map;
 public class UpdateRolesTransaction extends VCTransaction {
     public final static String NAME = "updateRoles";
 
-    public UpdateRolesTransaction() {}
+    public UpdateRolesTransaction() {
+    }
 
     public UpdateRolesTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
         super(nodeId, parameters, factoryId, longTimestamp);

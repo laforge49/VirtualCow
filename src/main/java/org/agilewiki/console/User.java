@@ -1,5 +1,6 @@
 package org.agilewiki.console;
 
+import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.ids.composites.SecondaryId;

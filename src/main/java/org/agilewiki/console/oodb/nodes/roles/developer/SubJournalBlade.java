@@ -1,6 +1,7 @@
 package org.agilewiki.console.oodb.nodes.roles.developer;
 
 import org.agilewiki.console.*;
+import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.utils.ids.composites.Journal;
 import org.agilewiki.utils.immutable.collections.ListAccessor;
 import org.agilewiki.utils.immutable.collections.MapAccessor;

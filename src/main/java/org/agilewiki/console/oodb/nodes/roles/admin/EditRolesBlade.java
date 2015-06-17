@@ -1,8 +1,8 @@
 package org.agilewiki.console.oodb.nodes.roles.admin;
 
 import org.agilewiki.console.PostRequestBlade;
-import org.agilewiki.console.Role;
 import org.agilewiki.console.User;
+import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.composites.SecondaryId;
@@ -22,7 +22,7 @@ public class EditRolesBlade extends PostRequestBlade {
     }
 
     @Override
-    protected String niceName() {
+    public String niceName() {
         return "Edit Roles";
     }
 

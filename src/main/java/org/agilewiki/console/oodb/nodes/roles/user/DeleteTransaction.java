@@ -14,7 +14,8 @@ import java.util.Map;
 public class DeleteTransaction extends VCTransaction {
     public final static String NAME = "delete";
 
-    public DeleteTransaction() {}
+    public DeleteTransaction() {
+    }
 
     public DeleteTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
         super(nodeId, parameters, factoryId, longTimestamp);

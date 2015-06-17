@@ -1,8 +1,8 @@
 package org.agilewiki.console.oodb.nodes.roles.unRole;
 
 import org.agilewiki.console.RequestBlade;
-import org.agilewiki.console.RoleBase;
 import org.agilewiki.console.SimpleSimon;
+import org.agilewiki.console.oodb.nodes.roles.RoleBase;
 
 import java.util.Map;
 

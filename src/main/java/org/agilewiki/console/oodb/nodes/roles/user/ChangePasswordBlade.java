@@ -1,9 +1,9 @@
 package org.agilewiki.console.oodb.nodes.roles.user;
 
 import org.agilewiki.console.PostRequestBlade;
-import org.agilewiki.console.Role;
 import org.agilewiki.console.Tokens;
 import org.agilewiki.console.User;
+import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.MapNode;
@@ -19,11 +19,12 @@ public class ChangePasswordBlade extends PostRequestBlade {
 
     public ChangePasswordBlade(Role role, String page) throws Exception {
         super(role, page);
+        ooDb.registerNodeFactory("changePassword.node", new ChangePasswordTransactionFactory());
         db.registerTransaction(ChangePasswordTransaction.NAME, ChangePasswordTransaction.class);
     }
 
     @Override
-    protected String niceName() {
+    public String niceName() {
         return "Change Password";
     }
 

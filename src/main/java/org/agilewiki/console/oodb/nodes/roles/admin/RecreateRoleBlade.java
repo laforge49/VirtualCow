@@ -1,8 +1,10 @@
 package org.agilewiki.console.oodb.nodes.roles.admin;
 
-import org.agilewiki.console.*;
-import org.agilewiki.console.oodb.nodes.roles.developer.NpjeTransaction;
-import org.agilewiki.console.oodb.nodes.roles.developer.NpjeTransactionFactory;
+import org.agilewiki.console.NameIds;
+import org.agilewiki.console.PostRequestBlade;
+import org.agilewiki.console.SimpleSimon;
+import org.agilewiki.console.User;
+import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.utils.immutable.collections.MapNode;
 
@@ -18,7 +20,7 @@ public class RecreateRoleBlade extends PostRequestBlade {
     }
 
     @Override
-    protected String niceName() {
+    public String niceName() {
         return "Recreate Role";
     }
 

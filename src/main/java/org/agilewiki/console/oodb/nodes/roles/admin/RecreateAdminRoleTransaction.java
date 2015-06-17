@@ -1,7 +1,7 @@
 package org.agilewiki.console.oodb.nodes.roles.admin;
 
 import org.agilewiki.console.RecreateRoleTransaction;
-import org.agilewiki.console.Role;
+import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
@@ -14,7 +14,8 @@ public class RecreateAdminRoleTransaction extends RecreateRoleTransaction {
     public final static String NAME = "recreateAdminRole";
     public static AdminRole adminRole;
 
-    public RecreateAdminRoleTransaction() {}
+    public RecreateAdminRoleTransaction() {
+    }
 
     public RecreateAdminRoleTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
         super(nodeId, parameters, factoryId, longTimestamp);

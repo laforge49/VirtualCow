@@ -1,8 +1,8 @@
 package org.agilewiki.console.oodb.nodes.roles.user;
 
 import org.agilewiki.console.RequestBlade;
-import org.agilewiki.console.RoleBase;
 import org.agilewiki.console.SimpleSimon;
+import org.agilewiki.console.oodb.nodes.roles.RoleBase;
 
 import java.util.Map;
 
@@ -29,6 +29,7 @@ public class UserRole extends RoleBase {
         newEmailAddressBlade = new NewEmailAddressBlade(this, "newEmailAddress");
         userBlade = new UserBlade(this, "user");
 
+        getOODb().registerNodeFactory("recreateUserRole.node", new RecreateUserRoleTransactionFactory());
         simpleSimon.db.registerTransaction(RecreateUserRoleTransaction.NAME, RecreateUserRoleTransaction.class);
         RecreateUserRoleTransaction.userRole = this;
     }

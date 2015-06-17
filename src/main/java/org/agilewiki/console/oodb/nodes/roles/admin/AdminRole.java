@@ -1,9 +1,9 @@
 package org.agilewiki.console.oodb.nodes.roles.admin;
 
-import org.agilewiki.console.RecreateSystemRoleTransactionFactory;
 import org.agilewiki.console.RequestBlade;
-import org.agilewiki.console.RoleBase;
 import org.agilewiki.console.SimpleSimon;
+import org.agilewiki.console.oodb.nodes.roles.RoleBase;
+import org.agilewiki.console.oodb.nodes.roles.system.RecreateSystemRoleTransactionFactory;
 
 import java.util.Map;
 

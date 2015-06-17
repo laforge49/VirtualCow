@@ -1,8 +1,8 @@
 package org.agilewiki.console.oodb.nodes.roles.admin;
 
 import org.agilewiki.console.RequestBlade;
-import org.agilewiki.console.Role;
 import org.agilewiki.console.User;
+import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
@@ -18,7 +18,7 @@ public class UserBlade extends RequestBlade {
     }
 
     @Override
-    protected String niceName() {
+    public String niceName() {
         return "User";
     }
 

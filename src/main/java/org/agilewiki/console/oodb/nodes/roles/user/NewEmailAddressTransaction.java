@@ -15,7 +15,8 @@ import java.util.Map;
 public class NewEmailAddressTransaction extends VCTransaction {
     public final static String NAME = "newEmailAddress";
 
-    public NewEmailAddressTransaction() {}
+    public NewEmailAddressTransaction() {
+    }
 
     public NewEmailAddressTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
         super(nodeId, parameters, factoryId, longTimestamp);

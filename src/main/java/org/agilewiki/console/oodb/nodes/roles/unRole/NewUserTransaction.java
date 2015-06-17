@@ -15,7 +15,8 @@ import java.util.Map;
 public class NewUserTransaction extends VCTransaction {
     public final static String NAME = "newUser";
 
-    public NewUserTransaction() {}
+    public NewUserTransaction() {
+    }
 
     public NewUserTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
         super(nodeId, parameters, factoryId, longTimestamp);

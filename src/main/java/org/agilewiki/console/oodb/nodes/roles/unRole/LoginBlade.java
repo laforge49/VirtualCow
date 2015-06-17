@@ -1,6 +1,7 @@
 package org.agilewiki.console.oodb.nodes.roles.unRole;
 
 import org.agilewiki.console.*;
+import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.MapNode;
@@ -24,7 +25,7 @@ public class LoginBlade extends PostRequestBlade {
     }
 
     @Override
-    protected String niceName() {
+    public String niceName() {
         return "Login";
     }
 

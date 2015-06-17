@@ -1,6 +1,7 @@
 package org.agilewiki.console;
 
 import org.agilewiki.console.oodb.OODb;
+import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.jactor2.core.blades.NonBlockingBladeBase;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.jactor2.core.messages.ExceptionHandler;
@@ -41,7 +42,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
         role.requests().put(page, this);
     }
 
-    protected String niceName() {
+    public String niceName() {
         return "";
     }
 

@@ -1,5 +1,6 @@
 package org.agilewiki.console;
 
+import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
@@ -47,7 +48,8 @@ abstract public class RecreateRoleTransaction extends VCTransaction {
     final public static String USER_ID = "$nuser";
     final public static String USER_LNK1_ID = "$nuser.lnk1";
 
-    public RecreateRoleTransaction() {}
+    public RecreateRoleTransaction() {
+    }
 
     public RecreateRoleTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
         super(nodeId, parameters, factoryId, longTimestamp);

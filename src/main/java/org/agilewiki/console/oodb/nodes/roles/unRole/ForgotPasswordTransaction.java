@@ -13,7 +13,8 @@ import java.util.Map;
 public class ForgotPasswordTransaction extends VCTransaction {
     public final static String NAME = "forgotPassword";
 
-    public ForgotPasswordTransaction() {}
+    public ForgotPasswordTransaction() {
+    }
 
     public ForgotPasswordTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
         super(nodeId, parameters, factoryId, longTimestamp);

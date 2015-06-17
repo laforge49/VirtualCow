@@ -1,6 +1,10 @@
 package org.agilewiki.console.oodb.nodes.roles.developer;
 
-import org.agilewiki.console.*;
+import org.agilewiki.console.NameIds;
+import org.agilewiki.console.RequestBlade;
+import org.agilewiki.console.SecondaryIds;
+import org.agilewiki.console.SimpleSimon;
+import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.collections.ListAccessor;
 import org.agilewiki.utils.immutable.collections.MapAccessor;
@@ -33,7 +37,7 @@ public class NodesBlade extends RequestBlade {
     }
 
     @Override
-    protected String niceName() {
+    public String niceName() {
         if (niceName == null)
             return "Nodes";
         return niceName;

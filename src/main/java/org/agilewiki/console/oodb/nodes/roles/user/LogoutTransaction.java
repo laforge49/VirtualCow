@@ -15,7 +15,8 @@ import java.util.Map;
 public class LogoutTransaction extends VCTransaction {
     public final static String NAME = "logout";
 
-    public LogoutTransaction() {}
+    public LogoutTransaction() {
+    }
 
     public LogoutTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
         super(nodeId, parameters, factoryId, longTimestamp);

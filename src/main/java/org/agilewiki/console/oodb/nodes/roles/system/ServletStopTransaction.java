@@ -1,5 +1,6 @@
-package org.agilewiki.console;
+package org.agilewiki.console.oodb.nodes.roles.system;
 
+import org.agilewiki.console.VCTransaction;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
@@ -11,7 +12,8 @@ import java.util.Map;
 public class ServletStopTransaction extends VCTransaction {
     public final static String NAME = "servletStop";
 
-    public ServletStopTransaction() {}
+    public ServletStopTransaction() {
+    }
 
     public ServletStopTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
         super(nodeId, parameters, factoryId, longTimestamp);

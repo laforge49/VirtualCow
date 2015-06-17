@@ -1,6 +1,10 @@
 package org.agilewiki.console.oodb.nodes.roles.user;
 
-import org.agilewiki.console.*;
+import org.agilewiki.console.PostRequestBlade;
+import org.agilewiki.console.SimpleSimon;
+import org.agilewiki.console.Tokens;
+import org.agilewiki.console.User;
+import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.MapNode;
@@ -15,11 +19,12 @@ import java.security.NoSuchAlgorithmException;
 public class NewEmailAddressBlade extends PostRequestBlade {
     public NewEmailAddressBlade(Role role, String page) throws Exception {
         super(role, page);
+        ooDb.registerNodeFactory("newEmailAddress.node", new NewEmailAddressTransactionFactory());
         db.registerTransaction(NewEmailAddressTransaction.NAME, NewEmailAddressTransaction.class);
     }
 
     @Override
-    protected String niceName() {
+    public String niceName() {
         return "New Email Address";
     }
 

@@ -2,8 +2,8 @@ package org.agilewiki.console.oodb.nodes.roles.user;
 
 import org.agilewiki.console.NameIds;
 import org.agilewiki.console.PostRequestBlade;
-import org.agilewiki.console.Role;
 import org.agilewiki.console.User;
+import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.MapNode;
@@ -17,11 +17,12 @@ import javax.servlet.http.Cookie;
 public class LogoutBlade extends PostRequestBlade {
     public LogoutBlade(Role role, String page) throws Exception {
         super(role, page);
+        ooDb.registerNodeFactory("logout.node", new LogoutTransactionFactory());
         db.registerTransaction(LogoutTransaction.NAME, LogoutTransaction.class);
     }
 
     @Override
-    protected String niceName() {
+    public String niceName() {
         return "Log Out";
     }
 

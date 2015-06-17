@@ -1,8 +1,7 @@
-package org.agilewiki.console;
+package org.agilewiki.console.oodb.nodes.roles.system;
 
 import org.agilewiki.console.oodb.Node;
 import org.agilewiki.console.oodb.NodeFactory;
-import org.agilewiki.console.oodb.nodes.roles.developer.RecreateDeveloperRoleTransaction;
 
 import java.util.HashMap;
 

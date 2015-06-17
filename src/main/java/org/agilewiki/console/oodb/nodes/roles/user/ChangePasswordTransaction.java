@@ -13,7 +13,8 @@ import java.util.Map;
 public class ChangePasswordTransaction extends VCTransaction {
     public final static String NAME = "changePassword";
 
-    public ChangePasswordTransaction() {}
+    public ChangePasswordTransaction() {
+    }
 
     public ChangePasswordTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
         super(nodeId, parameters, factoryId, longTimestamp);

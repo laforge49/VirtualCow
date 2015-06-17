@@ -1,7 +1,7 @@
 package org.agilewiki.console.oodb.nodes.roles.unRole;
 
 import org.agilewiki.console.RequestBlade;
-import org.agilewiki.console.Role;
+import org.agilewiki.console.oodb.nodes.roles.Role;
 
 import javax.servlet.AsyncContext;
 
@@ -14,7 +14,7 @@ public class WelcomeBlade extends RequestBlade {
     }
 
     @Override
-    protected String niceName() {
+    public String niceName() {
         return "Welcome";
     }
 

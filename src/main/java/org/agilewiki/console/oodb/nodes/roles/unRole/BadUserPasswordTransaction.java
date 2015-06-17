@@ -15,7 +15,8 @@ import java.util.Map;
 public class BadUserPasswordTransaction extends VCTransaction {
     public final static String NAME = "badUserPassword";
 
-    public BadUserPasswordTransaction() {}
+    public BadUserPasswordTransaction() {
+    }
 
     public BadUserPasswordTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
         super(nodeId, parameters, factoryId, longTimestamp);

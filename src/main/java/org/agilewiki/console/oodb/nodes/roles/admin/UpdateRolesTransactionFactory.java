@@ -1,6 +1,5 @@
 package org.agilewiki.console.oodb.nodes.roles.admin;
 
-import org.agilewiki.console.RecreateSystemRoleTransaction;
 import org.agilewiki.console.oodb.Node;
 import org.agilewiki.console.oodb.NodeFactory;
 

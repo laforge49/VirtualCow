@@ -2,8 +2,8 @@ package org.agilewiki.console.oodb.nodes.roles.developer;
 
 import org.agilewiki.console.NameIds;
 import org.agilewiki.console.RequestBlade;
-import org.agilewiki.console.Role;
 import org.agilewiki.console.SimpleSimon;
+import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.immutable.collections.ListAccessor;
 import org.agilewiki.utils.immutable.collections.MapAccessor;
@@ -23,7 +23,7 @@ public class InvLinksBlade extends RequestBlade {
     }
 
     @Override
-    protected String niceName() {
+    public String niceName() {
         return "Inverted Links";
     }
 

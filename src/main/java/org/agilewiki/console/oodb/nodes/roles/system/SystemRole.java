@@ -1,4 +1,8 @@
-package org.agilewiki.console;
+package org.agilewiki.console.oodb.nodes.roles.system;
+
+import org.agilewiki.console.RequestBlade;
+import org.agilewiki.console.SimpleSimon;
+import org.agilewiki.console.oodb.nodes.roles.RoleBase;
 
 import java.util.Map;
 
@@ -7,8 +11,8 @@ import java.util.Map;
  */
 public class SystemRole extends RoleBase {
 
-    SystemRole(SimpleSimon simpleSimon, String roleId, Map<String, String> parameterse) {
-        super(simpleSimon, roleId, parameterse);
+    public SystemRole(SimpleSimon simpleSimon, String roleId, Map<String, String> parameters) {
+        super(simpleSimon, roleId, parameters);
 
         getOODb().registerNodeFactory("recreateSystemRole.node", new RecreateSystemRoleTransactionFactory());
         simpleSimon.db.registerTransaction(RecreateSystemRoleTransaction.NAME, RecreateSystemRoleTransaction.class);

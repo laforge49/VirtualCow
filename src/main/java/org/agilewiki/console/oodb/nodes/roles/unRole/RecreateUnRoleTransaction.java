@@ -1,9 +1,7 @@
 package org.agilewiki.console.oodb.nodes.roles.unRole;
 
 import org.agilewiki.console.RecreateRoleTransaction;
-import org.agilewiki.console.Role;
-import org.agilewiki.utils.immutable.collections.MapNode;
-import org.agilewiki.utils.virtualcow.Db;
+import org.agilewiki.console.oodb.nodes.roles.Role;
 
 import java.util.Map;
 
@@ -14,7 +12,8 @@ public class RecreateUnRoleTransaction extends RecreateRoleTransaction {
     public final static String NAME = "recreateUnRole";
     public static UnRole unRole;
 
-    public RecreateUnRoleTransaction() {}
+    public RecreateUnRoleTransaction() {
+    }
 
     public RecreateUnRoleTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
         super(nodeId, parameters, factoryId, longTimestamp);
