@@ -254,7 +254,7 @@ public class SimpleSimon extends HttpServlet {
 
     public static String niceTime(String timestampId) {
         Date date = new Date(Timestamp.time(timestampId));
-        DateFormat formatter = new SimpleDateFormat("MM/dd/yy HH:mm");
+        DateFormat formatter = new SimpleDateFormat("MM/dd/yy HH:mm:ss");
         return formatter.format(date);
     }
 }
