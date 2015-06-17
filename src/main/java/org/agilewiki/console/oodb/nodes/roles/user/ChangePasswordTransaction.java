@@ -5,11 +5,19 @@ import org.agilewiki.console.VCTransaction;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
+import java.util.Map;
+
 /**
  * Changes the user's password.
  */
 public class ChangePasswordTransaction extends VCTransaction {
     public final static String NAME = "changePassword";
+
+    public ChangePasswordTransaction() {}
+
+    public ChangePasswordTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
+        super(nodeId, parameters, factoryId, longTimestamp);
+    }
 
     @Override
     public void process(Db db, MapNode mapNode) {
