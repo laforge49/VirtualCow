@@ -13,6 +13,12 @@ import java.util.HashMap;
 public class Key_NodeFactory implements NodeFactory {
     public Key_NodeFactory(OODb ooDb) {
         ooDb.registerNodeFactory("key.node", this);
+        new Email_KeyFactory(ooDb);
+        new InvDependency_KeyFactory(ooDb);
+        new NodeType_KeyFactory(ooDb);
+        new Role_KeyFactory(ooDb);
+        new Subject_KeyFactory(ooDb);
+        new SuperType_KeyFactory(ooDb);
     }
 
     @Override

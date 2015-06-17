@@ -13,6 +13,11 @@ import java.util.HashMap;
 public class Lnk1_NodeFactory implements NodeFactory {
     public Lnk1_NodeFactory(OODb ooDb) {
         ooDb.registerNodeFactory("lnk1.node", this);
+        new Destination_Lnk1Factory(ooDb);
+        new OfRole_Lnk1Factory(ooDb);
+        new Origin_Lnk1Factory(ooDb);
+        new Target_Lnk1Factory(ooDb);
+        new User_Lnk1Factory(ooDb);
     }
 
     @Override
