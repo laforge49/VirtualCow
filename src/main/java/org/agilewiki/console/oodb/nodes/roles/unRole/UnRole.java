@@ -26,6 +26,7 @@ public class UnRole extends RoleBase {
         AboutBlade aboutBlade = new AboutBlade(this, "about");
         ContactBlade contactBlade = new ContactBlade(this, "contact");
 
+        simpleSimon.ooDb.registerNodeFactory("recreateUnRole.node", new RecreateUnRoleTransactionFactory());
         simpleSimon.db.registerTransaction(RecreateUnRoleTransaction.NAME, RecreateUnRoleTransaction.class);
         RecreateUnRoleTransaction.unRole = this;
     }

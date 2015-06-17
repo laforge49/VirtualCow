@@ -14,6 +14,7 @@ import java.security.NoSuchAlgorithmException;
 public class ValidatedBlade extends PostRequestBlade {
     public ValidatedBlade(Role role, String page) throws Exception {
         super(role, page);
+        ooDb.registerNodeFactory("newUser.node", new NewUserTransactionFactory());
         db.registerTransaction(NewUserTransaction.NAME, NewUserTransaction.class);
     }
 

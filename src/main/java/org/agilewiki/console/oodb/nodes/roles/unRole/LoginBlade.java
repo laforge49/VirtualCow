@@ -15,8 +15,11 @@ import java.security.NoSuchAlgorithmException;
 public class LoginBlade extends PostRequestBlade {
     public LoginBlade(Role role, String page) throws Exception {
         super(role, page);
+        ooDb.registerNodeFactory("login.node", new LoginTransactionFactory());
         db.registerTransaction(LoginTransaction.NAME, LoginTransaction.class);
+        ooDb.registerNodeFactory("badUserAddress.node", new BadUserAddressTransactionFactory());
         db.registerTransaction(BadUserAddressTransaction.NAME, BadUserAddressTransaction.class);
+        ooDb.registerNodeFactory("badUserPassword.node", new BadUserPasswordTransactionFactory());
         db.registerTransaction(BadUserPasswordTransaction.NAME, BadUserPasswordTransaction.class);
     }
 
