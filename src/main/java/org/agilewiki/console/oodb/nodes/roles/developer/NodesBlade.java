@@ -97,18 +97,9 @@ public class NodesBlade extends RequestBlade {
                             }
 
                             String kindId = SecondaryIds.kindId(db, nodeId, longTimestamp);
-                            sb.append("<a href=\"?from=");
-                            sb.append(page);
-                            sb.append("&to=node&nodeId=");
-                            sb.append(kindId);
-                            if (timestamp != null) {
-                                sb.append("&timestamp=");
-                                sb.append(timestamp);
-                            }
-                            sb.append(setRole + "#rupa\">");
                             sb.append(kindId.substring(2));
-                            sb.append("</a> ");
 
+                            sb.append(' ');
 
                             sb.append("<a href=\"?from=nodes&to=node&nodeId=");
                             sb.append(nodeId);
