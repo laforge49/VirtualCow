@@ -5,6 +5,8 @@ import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
+import java.util.Map;
+
 /**
  * Creates the metadata for the unRole.
  */
@@ -12,6 +14,12 @@ public class RecreateSystemRoleTransaction extends RecreateRoleTransaction {
     public final static String NAME = "recreateSystemRole";
     public static SystemRole systemRole;
     final public static String SYSTEM_NODE_ID = "$nsystem.node";
+
+    public RecreateSystemRoleTransaction() {}
+
+    public RecreateSystemRoleTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
+        super(nodeId, parameters, factoryId, longTimestamp);
+    }
 
     @Override
     public Role role() {

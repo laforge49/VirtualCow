@@ -5,12 +5,20 @@ import org.agilewiki.console.Role;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
+import java.util.Map;
+
 /**
  * Creates the metadata for the user role.
  */
 public class RecreateDeveloperRoleTransaction extends RecreateRoleTransaction {
     public final static String NAME = "recreateDeveloperRole";
     public static DeveloperRole developerRole;
+
+    public RecreateDeveloperRoleTransaction() {}
+
+    public RecreateDeveloperRoleTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
+        super(nodeId, parameters, factoryId, longTimestamp);
+    }
 
     @Override
     public Role role() {

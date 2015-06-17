@@ -5,12 +5,20 @@ import org.agilewiki.console.Role;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
+import java.util.Map;
+
 /**
  * Creates the metadata for the admin role.
  */
 public class RecreateAdminRoleTransaction extends RecreateRoleTransaction {
     public final static String NAME = "recreateAdminRole";
     public static AdminRole adminRole;
+
+    public RecreateAdminRoleTransaction() {}
+
+    public RecreateAdminRoleTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
+        super(nodeId, parameters, factoryId, longTimestamp);
+    }
 
     @Override
     public Role role() {
