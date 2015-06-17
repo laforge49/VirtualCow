@@ -11,21 +11,15 @@ public class NodeBase implements Node {
     private String nodeId;
     protected Map<String, String> parameters;
     private String factoryId;
-    private long longTimestamp;
 
     public NodeBase(String nodeId, Map<String, String> parameters) {
         this(nodeId, parameters, null);
     }
 
     public NodeBase(String nodeId, Map<String, String> parameters, String factoryId) {
-        this(nodeId, parameters, factoryId, FactoryRegistry.MAX_TIMESTAMP);
-    }
-
-    public NodeBase(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
         this.nodeId = nodeId;
         this.parameters = parameters;
         this.factoryId = factoryId;
-        this.longTimestamp = longTimestamp;
         getOODb().addNode(nodeId, this);
     }
 
@@ -42,10 +36,5 @@ public class NodeBase implements Node {
     @Override
     public String getFactoryId() {
         return null;
-    }
-
-    @Override
-    public long getLongTimestamp() {
-        return 0;
     }
 }

@@ -17,8 +17,8 @@ public class ServletStartTransaction extends VCTransaction {
     public ServletStartTransaction() {
     }
 
-    public ServletStartTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
-        super(nodeId, parameters, factoryId, longTimestamp);
+    public ServletStartTransaction(String nodeId, Map<String, String> parameters, String factoryId) {
+        super(nodeId, parameters, factoryId);
     }
 
     public static String update(Db db)

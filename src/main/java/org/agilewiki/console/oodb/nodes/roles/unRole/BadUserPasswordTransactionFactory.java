@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class BadUserPasswordTransactionFactory implements NodeFactory {
     @Override
-    public Node createNode(String nodeId, String factoryId, long longTimestamp) {
-        return new BadUserPasswordTransaction(nodeId, new HashMap<String, String>(), factoryId, longTimestamp);
+    public Node createNode(String nodeId, String factoryId) {
+        return new BadUserPasswordTransaction(nodeId, new HashMap<String, String>(), factoryId);
     }
 }

@@ -51,8 +51,8 @@ abstract public class RecreateRoleTransaction extends VCTransaction {
     public RecreateRoleTransaction() {
     }
 
-    public RecreateRoleTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
-        super(nodeId, parameters, factoryId, longTimestamp);
+    public RecreateRoleTransaction(String nodeId, Map<String, String> parameters, String factoryId) {
+        super(nodeId, parameters, factoryId);
     }
 
     abstract public Role role();

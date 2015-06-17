@@ -18,8 +18,8 @@ public class NpjeTransaction extends VCTransaction {
     public NpjeTransaction() {
     }
 
-    public NpjeTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
-        super(nodeId, parameters, factoryId, longTimestamp);
+    public NpjeTransaction(String nodeId, Map<String, String> parameters, String factoryId) {
+        super(nodeId, parameters, factoryId);
     }
 
     @Override

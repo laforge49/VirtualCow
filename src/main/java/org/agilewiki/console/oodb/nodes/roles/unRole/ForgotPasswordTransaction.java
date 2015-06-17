@@ -16,8 +16,8 @@ public class ForgotPasswordTransaction extends VCTransaction {
     public ForgotPasswordTransaction() {
     }
 
-    public ForgotPasswordTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
-        super(nodeId, parameters, factoryId, longTimestamp);
+    public ForgotPasswordTransaction(String nodeId, Map<String, String> parameters, String factoryId) {
+        super(nodeId, parameters, factoryId);
     }
 
     @Override

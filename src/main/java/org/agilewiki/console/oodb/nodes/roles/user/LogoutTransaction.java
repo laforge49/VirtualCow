@@ -18,8 +18,8 @@ public class LogoutTransaction extends VCTransaction {
     public LogoutTransaction() {
     }
 
-    public LogoutTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
-        super(nodeId, parameters, factoryId, longTimestamp);
+    public LogoutTransaction(String nodeId, Map<String, String> parameters, String factoryId) {
+        super(nodeId, parameters, factoryId);
     }
 
     @Override

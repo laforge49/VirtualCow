@@ -15,8 +15,8 @@ public class ServletStopTransaction extends VCTransaction {
     public ServletStopTransaction() {
     }
 
-    public ServletStopTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
-        super(nodeId, parameters, factoryId, longTimestamp);
+    public ServletStopTransaction(String nodeId, Map<String, String> parameters, String factoryId) {
+        super(nodeId, parameters, factoryId);
     }
 
     public static String update(Db db)

@@ -17,8 +17,8 @@ public class RecreateDeveloperRoleTransaction extends RecreateRoleTransaction {
     public RecreateDeveloperRoleTransaction() {
     }
 
-    public RecreateDeveloperRoleTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
-        super(nodeId, parameters, factoryId, longTimestamp);
+    public RecreateDeveloperRoleTransaction(String nodeId, Map<String, String> parameters, String factoryId) {
+        super(nodeId, parameters, factoryId);
     }
 
     @Override

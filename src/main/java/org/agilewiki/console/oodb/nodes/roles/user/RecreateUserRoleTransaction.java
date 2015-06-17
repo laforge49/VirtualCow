@@ -17,8 +17,8 @@ public class RecreateUserRoleTransaction extends RecreateRoleTransaction {
     public RecreateUserRoleTransaction() {
     }
 
-    public RecreateUserRoleTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
-        super(nodeId, parameters, factoryId, longTimestamp);
+    public RecreateUserRoleTransaction(String nodeId, Map<String, String> parameters, String factoryId) {
+        super(nodeId, parameters, factoryId);
     }
 
     @Override

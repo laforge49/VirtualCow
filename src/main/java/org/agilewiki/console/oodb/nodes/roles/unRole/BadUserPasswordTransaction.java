@@ -18,8 +18,8 @@ public class BadUserPasswordTransaction extends VCTransaction {
     public BadUserPasswordTransaction() {
     }
 
-    public BadUserPasswordTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
-        super(nodeId, parameters, factoryId, longTimestamp);
+    public BadUserPasswordTransaction(String nodeId, Map<String, String> parameters, String factoryId) {
+        super(nodeId, parameters, factoryId);
     }
 
     @Override

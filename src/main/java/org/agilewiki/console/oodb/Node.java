@@ -18,14 +18,4 @@ public interface Node {
     Map<String, String> getParameters();
 
     String getFactoryId();
-
-    long getLongTimestamp();
-
-    default boolean isCurrent(long longTimestamp) {
-        return longTimestamp == FactoryRegistry.MAX_TIMESTAMP;
-    }
-
-    default boolean isCurrent() {
-        return isCurrent(getLongTimestamp());
-    }
 }

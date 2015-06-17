@@ -15,7 +15,7 @@ public class MetaDataNodeFactory implements NodeFactory {
     }
 
     @Override
-    public Node createNode(String nodeId, String factoryId, long longTimestamp) {
-        return new MetaDataNode(nodeId, new HashMap(), factoryId, longTimestamp);
+    public Node createNode(String nodeId, String factoryId) {
+        return new MetaDataNode(nodeId, new HashMap(), factoryId);
     }
 }

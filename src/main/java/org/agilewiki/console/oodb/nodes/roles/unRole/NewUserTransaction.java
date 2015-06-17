@@ -18,8 +18,8 @@ public class NewUserTransaction extends VCTransaction {
     public NewUserTransaction() {
     }
 
-    public NewUserTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
-        super(nodeId, parameters, factoryId, longTimestamp);
+    public NewUserTransaction(String nodeId, Map<String, String> parameters, String factoryId) {
+        super(nodeId, parameters, factoryId);
     }
 
     @Override

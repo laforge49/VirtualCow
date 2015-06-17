@@ -18,8 +18,8 @@ public class BadUserAddressTransaction extends VCTransaction {
     public BadUserAddressTransaction() {
     }
 
-    public BadUserAddressTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
-        super(nodeId, parameters, factoryId, longTimestamp);
+    public BadUserAddressTransaction(String nodeId, Map<String, String> parameters, String factoryId) {
+        super(nodeId, parameters, factoryId);
     }
 
     @Override

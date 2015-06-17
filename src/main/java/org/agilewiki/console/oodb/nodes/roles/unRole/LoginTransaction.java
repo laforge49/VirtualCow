@@ -18,8 +18,8 @@ public class LoginTransaction extends VCTransaction {
     public LoginTransaction() {
     }
 
-    public LoginTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
-        super(nodeId, parameters, factoryId, longTimestamp);
+    public LoginTransaction(String nodeId, Map<String, String> parameters, String factoryId) {
+        super(nodeId, parameters, factoryId);
     }
 
     @Override

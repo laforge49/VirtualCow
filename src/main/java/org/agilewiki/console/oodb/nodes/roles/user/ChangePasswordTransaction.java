@@ -16,8 +16,8 @@ public class ChangePasswordTransaction extends VCTransaction {
     public ChangePasswordTransaction() {
     }
 
-    public ChangePasswordTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
-        super(nodeId, parameters, factoryId, longTimestamp);
+    public ChangePasswordTransaction(String nodeId, Map<String, String> parameters, String factoryId) {
+        super(nodeId, parameters, factoryId);
     }
 
     @Override

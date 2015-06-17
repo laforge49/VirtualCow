@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class BadUserAddressTransactionFactory implements NodeFactory {
     @Override
-    public Node createNode(String nodeId, String factoryId, long longTimestamp) {
-        return new BadUserAddressTransaction(nodeId, new HashMap<String, String>(), factoryId, longTimestamp);
+    public Node createNode(String nodeId, String factoryId) {
+        return new BadUserAddressTransaction(nodeId, new HashMap<String, String>(), factoryId);
     }
 }

@@ -20,8 +20,8 @@ public class UpdateRolesTransaction extends VCTransaction {
     public UpdateRolesTransaction() {
     }
 
-    public UpdateRolesTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
-        super(nodeId, parameters, factoryId, longTimestamp);
+    public UpdateRolesTransaction(String nodeId, Map<String, String> parameters, String factoryId) {
+        super(nodeId, parameters, factoryId);
     }
 
     @Override

@@ -18,8 +18,8 @@ public class NewEmailAddressTransaction extends VCTransaction {
     public NewEmailAddressTransaction() {
     }
 
-    public NewEmailAddressTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
-        super(nodeId, parameters, factoryId, longTimestamp);
+    public NewEmailAddressTransaction(String nodeId, Map<String, String> parameters, String factoryId) {
+        super(nodeId, parameters, factoryId);
     }
 
     @Override

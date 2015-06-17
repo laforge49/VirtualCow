@@ -17,8 +17,8 @@ public class DeleteTransaction extends VCTransaction {
     public DeleteTransaction() {
     }
 
-    public DeleteTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
-        super(nodeId, parameters, factoryId, longTimestamp);
+    public DeleteTransaction(String nodeId, Map<String, String> parameters, String factoryId) {
+        super(nodeId, parameters, factoryId);
     }
 
     @Override

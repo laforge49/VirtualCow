@@ -19,16 +19,14 @@ public abstract class VCTransaction implements Transaction, Node {
     private String nodeId;
     private Map<String, String> parameters = new HashMap<String, String>();
     private String factoryId = null;
-    private long longTimestamp;
 
     public VCTransaction() {
     }
 
-    public VCTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
+    public VCTransaction(String nodeId, Map<String, String> parameters, String factoryId) {
         this.nodeId = nodeId;
         this.parameters = parameters;
         this.factoryId = factoryId;
-        this.longTimestamp = longTimestamp;
         getOODb().addNode(nodeId, this);
     }
 
@@ -48,13 +46,7 @@ public abstract class VCTransaction implements Transaction, Node {
     }
 
     @Override
-    public long getLongTimestamp() {
-        return longTimestamp;
-    }
-
-    @Override
     public final void transform(Db db, MapNode tMapNode) {
-        longTimestamp = FactoryRegistry.MAX_TIMESTAMP;
         String transactionName = tMapNode.get(Db.transactionNameId).toString();
         String secondaryId = SecondaryId.secondaryId(RecreateRoleTransaction.NODETYPE_ID,
                 NameId.generate(transactionName + ".node"));

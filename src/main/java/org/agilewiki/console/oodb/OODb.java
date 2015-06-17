@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Object Oriented Database.
+ * Object Oriented Database, without state caching.
  */
 public class OODb {
     public final Db db;
@@ -36,18 +36,14 @@ public class OODb {
         LoadingCache<String, Node> cache = CacheBuilder.newBuilder().concurrencyLevel(1).
                 maximumSize(maxNodeCacheSize).build(new CacheLoader<String, Node>() {
             @Override
-            public Node load(String id) throws Exception {
-                int i = id.indexOf('$', 2);
-                String nodeId = id.substring(i);
-                String timestampId = id.substring(0, i);
-                long longTimestamp = Timestamp.timestamp(timestampId);
+            public Node load(String nodeId) throws Exception {
                 String factoryId = nodeId;
                 NodeFactory nodeFactory = nodeFactories.get(factoryId);
                 if (nodeFactory == null) {
-                    factoryId = SecondaryIds.kindId(db, nodeId, longTimestamp);
+                    factoryId = SecondaryIds.kindId(db, nodeId, FactoryRegistry.MAX_TIMESTAMP);
                     nodeFactory = nodeFactories.get(factoryId);
                 }
-                return nodeFactory.createNode(nodeId, factoryId, longTimestamp);
+                return nodeFactory.createNode(nodeId, factoryId);
             }
         });
         nodeCache = cache.asMap();
@@ -62,28 +58,14 @@ public class OODb {
     }
 
     public Node fetchNode(String nodeId) {
-        return fetchNode(nodeId, FactoryRegistry.MAX_TIMESTAMP);
-    }
-
-    public Node fetchNode(String nodeId, long longTimestamp) {
-        String timestampId = Timestamp.timestampId(longTimestamp);
-        String id = timestampId + nodeId;
-        return nodeCache.get(id);
+        return nodeCache.get(nodeId);
     }
 
     public void addNode(String nodeId, Node node) {
-        addNode(nodeId, FactoryRegistry.MAX_TIMESTAMP, node);
-    }
-
-    public void addNode(String nodeId, long longTimestamp, Node node) {
-        String timestampId = Timestamp.timestampId(longTimestamp);
-        String id = timestampId + nodeId;
-        nodeCache.put(id, node);
+        nodeCache.put(nodeId, node);
     }
 
     public void dropNode(String nodeId) {
-        String timestampId = Timestamp.timestampId(FactoryRegistry.MAX_TIMESTAMP);
-        String id = timestampId + nodeId;
-        nodeCache.remove(id);
+        nodeCache.remove(nodeId);
     }
 }
