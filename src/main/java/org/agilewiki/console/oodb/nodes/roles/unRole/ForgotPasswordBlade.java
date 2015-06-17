@@ -15,6 +15,7 @@ import java.security.NoSuchAlgorithmException;
 public class ForgotPasswordBlade extends PostRequestBlade {
     public ForgotPasswordBlade(Role role, String page) throws Exception {
         super(role, page);
+        ooDb.registerNodeFactory("forgotPassword.node", new ForgotPasswordTransactionFactory());
         db.registerTransaction(ForgotPasswordTransaction.NAME, ForgotPasswordTransaction.class);
     }
 

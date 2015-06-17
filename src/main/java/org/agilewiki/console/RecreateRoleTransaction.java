@@ -4,6 +4,8 @@ import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
+import java.util.Map;
+
 /**
  * Creates the common metadata for a role.
  */
@@ -44,6 +46,12 @@ abstract public class RecreateRoleTransaction extends VCTransaction {
 
     final public static String USER_ID = "$nuser";
     final public static String USER_LNK1_ID = "$nuser.lnk1";
+
+    public RecreateRoleTransaction() {}
+
+    public RecreateRoleTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
+        super(nodeId, parameters, factoryId, longTimestamp);
+    }
 
     abstract public Role role();
 

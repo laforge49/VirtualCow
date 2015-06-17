@@ -7,12 +7,19 @@ import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Create a new user.
  */
 public class NewUserTransaction extends VCTransaction {
     public final static String NAME = "newUser";
+
+    public NewUserTransaction() {}
+
+    public NewUserTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
+        super(nodeId, parameters, factoryId, longTimestamp);
+    }
 
     @Override
     public void process(Db db, MapNode mapNode) {

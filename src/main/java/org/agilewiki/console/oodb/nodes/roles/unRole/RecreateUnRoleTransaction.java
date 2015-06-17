@@ -5,6 +5,8 @@ import org.agilewiki.console.Role;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
+import java.util.Map;
+
 /**
  * Creates the metadata for the unRole.
  */
@@ -12,13 +14,14 @@ public class RecreateUnRoleTransaction extends RecreateRoleTransaction {
     public final static String NAME = "recreateUnRole";
     public static UnRole unRole;
 
-    @Override
-    public Role role() {
-        return unRole;
+    public RecreateUnRoleTransaction() {}
+
+    public RecreateUnRoleTransaction(String nodeId, Map<String, String> parameters, String factoryId, long longTimestamp) {
+        super(nodeId, parameters, factoryId, longTimestamp);
     }
 
     @Override
-    public void process(Db db, MapNode tMapNode) {
-        super.process(db, tMapNode);
+    public Role role() {
+        return unRole;
     }
 }

@@ -1,5 +1,6 @@
 package org.agilewiki.console;
 
+import org.agilewiki.console.oodb.OODb;
 import org.agilewiki.jactor2.core.blades.NonBlockingBladeBase;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.jactor2.core.messages.ExceptionHandler;
@@ -23,6 +24,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
     public final Role role;
     public final SimpleSimon simpleSimon;
     protected final ServletContext servletContext;
+    protected final OODb ooDb;
     protected final Db db;
     protected final MailOut mailOut;
     public final String page;
@@ -32,6 +34,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
         this.role = role;
         this.simpleSimon = role.simpleSimon();
         this.servletContext = simpleSimon.servletContext;
+        this.ooDb = simpleSimon.ooDb;
         this.db = simpleSimon.db;
         this.mailOut = simpleSimon.mailOut;
         this.page = page;
