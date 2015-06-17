@@ -16,6 +16,6 @@ public class JournalEntry_NodeFactory implements NodeFactory {
 
     @Override
     public Node createNode(String nodeId, String factoryId) {
-        return new MetaData_Node(nodeId, new HashMap(), factoryId);
+        return new JournalEntry_Node(nodeId, new HashMap(), factoryId);
     }
 }

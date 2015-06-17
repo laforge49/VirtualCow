@@ -1,4 +1,4 @@
-package org.agilewiki.console.oodb.nodes;
+package org.agilewiki.console.oodb.nodes.key;
 
 import org.agilewiki.console.oodb.Node;
 import org.agilewiki.console.oodb.NodeFactory;
@@ -9,13 +9,13 @@ import java.util.HashMap;
 /**
  * The meta data node factory.
  */
-public class Key_NodeFactory implements NodeFactory {
-    public Key_NodeFactory(OODb ooDb) {
-        ooDb.registerNodeFactory("key.node", this);
+public class Role_KeyFactory implements NodeFactory {
+    public Role_KeyFactory(OODb ooDb) {
+        ooDb.registerNodeFactory("role.key", this);
     }
 
     @Override
     public Node createNode(String nodeId, String factoryId) {
-        return new MetaData_Node(nodeId, new HashMap(), factoryId);
+        return new Role_Key(nodeId, new HashMap(), factoryId);
     }
 }
