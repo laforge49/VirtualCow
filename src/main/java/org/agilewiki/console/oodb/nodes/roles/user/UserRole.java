@@ -29,7 +29,7 @@ public class UserRole extends RoleBase {
         newEmailAddressBlade = new NewEmailAddressBlade(this, "newEmailAddress");
         userBlade = new UserBlade(this, "user");
 
-        getOODb().registerNodeFactory("recreateUserRole.node", new RecreateUserRoleTransactionFactory());
+        simpleSimon.ooDb.registerNodeFactory("recreateUserRole.node", new RecreateUserRoleTransactionFactory());
         simpleSimon.db.registerTransaction(RecreateUserRoleTransaction.NAME, RecreateUserRoleTransaction.class);
         RecreateUserRoleTransaction.userRole = this;
     }

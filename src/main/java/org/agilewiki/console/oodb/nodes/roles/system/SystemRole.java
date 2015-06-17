@@ -14,7 +14,7 @@ public class SystemRole extends RoleBase {
     public SystemRole(SimpleSimon simpleSimon, String roleId, Map<String, String> parameters) {
         super(simpleSimon, roleId, parameters);
 
-        getOODb().registerNodeFactory("recreateSystemRole.node", new RecreateSystemRoleTransactionFactory());
+        simpleSimon.ooDb.registerNodeFactory("recreateSystemRole.node", new RecreateSystemRoleTransactionFactory());
         simpleSimon.db.registerTransaction(RecreateSystemRoleTransaction.NAME, RecreateSystemRoleTransaction.class);
         RecreateSystemRoleTransaction.systemRole = this;
     }

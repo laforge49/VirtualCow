@@ -51,9 +51,9 @@ public abstract class VCTransaction implements Transaction, Node {
         String secondaryId = SecondaryId.secondaryId(RecreateRoleTransaction.NODETYPE_ID,
                 NameId.generate(transactionName + ".node"));
         SecondaryId.createSecondaryId(db, db.getJEName(), secondaryId);
+        nodeId = db.getJEName();
         String userId = (String) tMapNode.get(User.USER_KEY);
         if (userId != null) {
-            nodeId = db.getJEName();
             Link1Id.createLink1(db, nodeId, User.USER_KEY, userId);
         }
         process(db, tMapNode);

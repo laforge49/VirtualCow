@@ -73,7 +73,7 @@ public class DeveloperRole extends RoleBase {
         lnk1sNodesBlade = new NodesBlade(this, "lnk1Nodes", "Label Types", "$D$nsuperType$nlnk1.node");
         invLinksBlade = new InvLinksBlade(this, "invLinks");
 
-        getOODb().registerNodeFactory("recreateDeveloperRole.node", new RecreateSystemRoleTransactionFactory());
+        simpleSimon.ooDb.registerNodeFactory("recreateDeveloperRole.node", new RecreateSystemRoleTransactionFactory());
         simpleSimon.db.registerTransaction(RecreateDeveloperRoleTransaction.NAME, RecreateDeveloperRoleTransaction.class);
         RecreateDeveloperRoleTransaction.developerRole = this;
     }

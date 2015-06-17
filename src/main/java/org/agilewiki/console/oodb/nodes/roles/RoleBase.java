@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Base class for roles.
  */
-abstract public class RoleBase extends NodeBase implements Role {
+abstract public class RoleBase implements Role {
     public final SimpleSimon simpleSimon;
     public final String roleName;
     public final String niceRoleName;
@@ -19,7 +19,6 @@ abstract public class RoleBase extends NodeBase implements Role {
     public final Map<String, PostRequestBlade> posts = new HashMap<String, PostRequestBlade>();
 
     public RoleBase(SimpleSimon simpleSimon, String roleId, Map<String, String> parameters) {
-        super(roleId, parameters);
         this.simpleSimon = simpleSimon;
         this.roleName = roleId.substring(2, roleId.length() - 5);
         this.niceRoleName = parameters.get("niceRoleName");

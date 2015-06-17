@@ -28,7 +28,7 @@ public class AdminRole extends RoleBase {
         editRolesBlade = new EditRolesBlade(this, "editRoles");
         recreateRoleBlade = new RecreateRoleBlade(this, "recreateRole");
 
-        getOODb().registerNodeFactory("recreateAdminRole.node", new RecreateSystemRoleTransactionFactory());
+        simpleSimon.ooDb.registerNodeFactory("recreateAdminRole.node", new RecreateSystemRoleTransactionFactory());
         simpleSimon.db.registerTransaction(RecreateAdminRoleTransaction.NAME, RecreateAdminRoleTransaction.class);
         RecreateAdminRoleTransaction.adminRole = this;
     }

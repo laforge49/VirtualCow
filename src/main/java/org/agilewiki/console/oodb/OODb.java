@@ -38,11 +38,8 @@ public class OODb {
             @Override
             public Node load(String nodeId) throws Exception {
                 String factoryId = nodeId;
+                factoryId = SecondaryIds.nodeTypeId(db, nodeId, FactoryRegistry.MAX_TIMESTAMP);
                 NodeFactory nodeFactory = nodeFactories.get(factoryId);
-                if (nodeFactory == null) {
-                    factoryId = SecondaryIds.kindId(db, nodeId, FactoryRegistry.MAX_TIMESTAMP);
-                    nodeFactory = nodeFactories.get(factoryId);
-                }
                 return nodeFactory.createNode(nodeId, factoryId);
             }
         });
