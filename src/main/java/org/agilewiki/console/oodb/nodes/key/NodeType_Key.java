@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * The root super class.
  */
-public class NodeType_Key extends NodeBase {
+public class NodeType_Key extends Key_Node {
     public NodeType_Key(String nodeId, Map<String, String> parameters, String factoryId) {
         super(nodeId, parameters, factoryId);
     }
