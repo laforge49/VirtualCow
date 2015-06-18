@@ -59,7 +59,7 @@ abstract public class RecreateRoleTransaction extends VCTransaction {
 
     @Override
     public void process(Db db, MapNode tMapNode) {
-        final String thisRoleId = "$n" + role().roleName();
+        final String thisRoleId = "$n" + role().roleName() + "Role";
         final String thisRoleNodeId = thisRoleId + ".node";
 
         Delete.delete(db, thisRoleNodeId);
@@ -107,7 +107,6 @@ abstract public class RecreateRoleTransaction extends VCTransaction {
         SecondaryId.createSecondaryId(db, USER_LNK1_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
         SecondaryId.createSecondaryId(db, USER_LNK1_ID, SecondaryId.secondaryId(SUPERTYPE_ID, LNK1_NODE_ID));
 
-        SecondaryId.createSecondaryId(db, thisRoleNodeId, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
-        SecondaryId.createSecondaryId(db, thisRoleNodeId, SecondaryId.secondaryId(SUPERTYPE_ID, ROLE_NODE_ID));
+        SecondaryId.createSecondaryId(db, thisRoleNodeId, SecondaryId.secondaryId(NODETYPE_ID, ROLE_NODE_ID));
     }
 }
