@@ -3,7 +3,6 @@ package org.agilewiki.console.oodb.nodes.roles;
 import org.agilewiki.console.PostRequestBlade;
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.SimpleSimon;
-import org.agilewiki.console.oodb.NodeBase;
 
 import java.util.HashMap;
 import java.util.Map;

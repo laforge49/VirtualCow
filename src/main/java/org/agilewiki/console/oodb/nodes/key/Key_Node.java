@@ -1,6 +1,5 @@
 package org.agilewiki.console.oodb.nodes.key;
 
-import org.agilewiki.console.oodb.NodeBase;
 import org.agilewiki.console.oodb.nodes.MetaData_Node;
 
 import java.util.Map;

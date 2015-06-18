@@ -1,7 +1,5 @@
 package org.agilewiki.console.oodb.nodes;
 
-import org.agilewiki.console.oodb.NodeBase;
-
 import java.util.Map;
 
 /**

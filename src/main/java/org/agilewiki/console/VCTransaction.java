@@ -4,7 +4,6 @@ import org.agilewiki.console.oodb.Node;
 import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.ids.composites.SecondaryId;
-import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 import org.agilewiki.utils.virtualcow.Transaction;

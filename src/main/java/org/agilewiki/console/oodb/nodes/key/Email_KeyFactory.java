@@ -3,7 +3,6 @@ package org.agilewiki.console.oodb.nodes.key;
 import org.agilewiki.console.oodb.Node;
 import org.agilewiki.console.oodb.NodeFactory;
 import org.agilewiki.console.oodb.OODb;
-import org.agilewiki.console.oodb.nodes.MetaData_Node;
 
 import java.util.HashMap;
 

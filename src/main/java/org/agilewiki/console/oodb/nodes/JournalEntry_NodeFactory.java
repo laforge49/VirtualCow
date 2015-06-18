@@ -3,7 +3,6 @@ package org.agilewiki.console.oodb.nodes;
 import org.agilewiki.console.oodb.Node;
 import org.agilewiki.console.oodb.NodeFactory;
 import org.agilewiki.console.oodb.OODb;
-import org.agilewiki.console.oodb.nodes.roles.unRole.BadUserAddressTransactionFactory;
 
 import java.util.HashMap;
 

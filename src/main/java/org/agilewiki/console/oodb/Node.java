@@ -1,7 +1,6 @@
 package org.agilewiki.console.oodb;
 
 import org.agilewiki.console.SimpleSimon;
-import org.agilewiki.utils.immutable.FactoryRegistry;
 
 import java.util.Map;
 
