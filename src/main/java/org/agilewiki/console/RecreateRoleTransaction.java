@@ -1,5 +1,6 @@
 package org.agilewiki.console;
 
+import org.agilewiki.console.oodb.nodes.JournalEntry_Node;
 import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.collections.MapNode;
@@ -10,7 +11,7 @@ import java.util.Map;
 /**
  * Creates the common metadata for a role.
  */
-abstract public class RecreateRoleTransaction extends VCTransaction {
+abstract public class RecreateRoleTransaction extends JournalEntry_Node {
     final public static String METADATA_NODE_ID = "$nmetadata.node";
 
     final public static String NODE_NODE_ID = "$nnode.node";

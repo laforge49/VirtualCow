@@ -6,9 +6,9 @@ import java.util.Map;
  * Base class for Node.
  */
 public class NodeBase implements Node {
-    private String nodeId;
+    protected String nodeId;
     protected Map<String, String> parameters;
-    private String factoryId;
+    protected String factoryId;
 
     public NodeBase(String nodeId, Map<String, String> parameters) {
         this(nodeId, parameters, null);
@@ -18,12 +18,13 @@ public class NodeBase implements Node {
         this.nodeId = nodeId;
         this.parameters = parameters;
         this.factoryId = factoryId;
-        getOODb().addNode(nodeId, this);
+        if (nodeId != null)
+            getOODb().addNode(nodeId, this);
     }
 
     @Override
     public String getNodeId() {
-        return null;
+        return nodeId;
     }
 
     @Override
@@ -33,6 +34,6 @@ public class NodeBase implements Node {
 
     @Override
     public String getFactoryId() {
-        return null;
+        return factoryId;
     }
 }

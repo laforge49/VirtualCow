@@ -1,6 +1,6 @@
 package org.agilewiki.console.oodb.nodes.roles.system;
 
-import org.agilewiki.console.VCTransaction;
+import org.agilewiki.console.oodb.nodes.JournalEntry_Node;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Run when the servlet has started.
  */
-public class ServletStopTransaction extends VCTransaction {
+public class ServletStopTransaction extends JournalEntry_Node {
     public final static String NAME = "servletStop";
 
     public ServletStopTransaction() {

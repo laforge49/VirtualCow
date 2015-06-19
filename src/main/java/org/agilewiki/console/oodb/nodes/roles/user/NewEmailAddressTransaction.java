@@ -1,7 +1,7 @@
 package org.agilewiki.console.oodb.nodes.roles.user;
 
 import org.agilewiki.console.User;
-import org.agilewiki.console.VCTransaction;
+import org.agilewiki.console.oodb.nodes.JournalEntry_Node;
 import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.collections.MapNode;
@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * Changes the user's password.
  */
-public class NewEmailAddressTransaction extends VCTransaction {
+public class NewEmailAddressTransaction extends JournalEntry_Node {
     public final static String NAME = "newEmailAddress";
 
     public NewEmailAddressTransaction() {

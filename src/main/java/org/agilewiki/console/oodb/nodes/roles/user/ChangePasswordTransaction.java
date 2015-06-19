@@ -1,7 +1,7 @@
 package org.agilewiki.console.oodb.nodes.roles.user;
 
 import org.agilewiki.console.User;
-import org.agilewiki.console.VCTransaction;
+import org.agilewiki.console.oodb.nodes.JournalEntry_Node;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Changes the user's password.
  */
-public class ChangePasswordTransaction extends VCTransaction {
+public class ChangePasswordTransaction extends JournalEntry_Node {
     public final static String NAME = "changePassword";
 
     public ChangePasswordTransaction() {

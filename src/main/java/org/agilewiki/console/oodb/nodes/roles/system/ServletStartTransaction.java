@@ -2,7 +2,7 @@ package org.agilewiki.console.oodb.nodes.roles.system;
 
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.User;
-import org.agilewiki.console.VCTransaction;
+import org.agilewiki.console.oodb.nodes.JournalEntry_Node;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Run when the servlet has started.
  */
-public class ServletStartTransaction extends VCTransaction {
+public class ServletStartTransaction extends JournalEntry_Node {
     public final static String NAME = "servletStart";
 
     public ServletStartTransaction() {

@@ -3,7 +3,7 @@ package org.agilewiki.console.oodb.nodes.roles.admin;
 import org.agilewiki.console.NameIds;
 import org.agilewiki.console.SecondaryIds;
 import org.agilewiki.console.User;
-import org.agilewiki.console.VCTransaction;
+import org.agilewiki.console.oodb.nodes.JournalEntry_Node;
 import org.agilewiki.utils.immutable.collections.ListNode;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * Updates the roles of a user.
  */
-public class UpdateRolesTransaction extends VCTransaction {
+public class UpdateRolesTransaction extends JournalEntry_Node {
     public final static String NAME = "updateRoles";
 
     public UpdateRolesTransaction() {

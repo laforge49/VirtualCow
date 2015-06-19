@@ -1,7 +1,7 @@
 package org.agilewiki.console.oodb.nodes.roles.unRole;
 
 import org.agilewiki.console.User;
-import org.agilewiki.console.VCTransaction;
+import org.agilewiki.console.oodb.nodes.JournalEntry_Node;
 import org.agilewiki.utils.immutable.collections.ListNode;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * Create a new user.
  */
-public class NewUserTransaction extends VCTransaction {
+public class NewUserTransaction extends JournalEntry_Node {
     public final static String NAME = "newUser";
 
     public NewUserTransaction() {

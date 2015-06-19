@@ -1,7 +1,7 @@
 package org.agilewiki.console.oodb.nodes.roles.unRole;
 
 import org.agilewiki.console.NameIds;
-import org.agilewiki.console.VCTransaction;
+import org.agilewiki.console.oodb.nodes.JournalEntry_Node;
 import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.collections.MapNode;
@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * Non-performing Journal Entry.
  */
-public class LoginTransaction extends VCTransaction {
+public class LoginTransaction extends JournalEntry_Node {
     public final static String NAME = "login";
 
     public LoginTransaction() {
