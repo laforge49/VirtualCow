@@ -1,4 +1,4 @@
-package org.agilewiki.console.oodb.nodes.key;
+package org.agilewiki.console.oodb.nodes;
 
 import org.agilewiki.console.oodb.NodeBase;
 

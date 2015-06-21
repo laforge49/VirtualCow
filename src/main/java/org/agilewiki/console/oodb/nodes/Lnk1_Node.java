@@ -1,7 +1,6 @@
-package org.agilewiki.console.oodb.nodes.lnk1;
+package org.agilewiki.console.oodb.nodes;
 
 import org.agilewiki.console.oodb.Node;
-import org.agilewiki.console.oodb.nodes.Metadata_Node;
 
 public class Lnk1_Node extends Metadata_Node {
     private static Lnk1_Node lnk1_node;
@@ -12,11 +11,6 @@ public class Lnk1_Node extends Metadata_Node {
 
     public static void create() {
         lnk1_node = new Lnk1_Node("$nlnk1.node", "$nnode.node");
-        Destination_Lnk1.create();
-        OfRole_Lnk1.create();
-        Origin_Lnk1.create();
-        Target_Lnk1.create();
-        User_Lnk1.create();
     }
 
     public Lnk1_Node(String nodeId, String factoryId) {

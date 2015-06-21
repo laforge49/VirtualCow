@@ -1,8 +1,6 @@
 package org.agilewiki.console.oodb.nodes;
 
 import org.agilewiki.console.oodb.Node;
-import org.agilewiki.console.oodb.nodes.key.Key_Node;
-import org.agilewiki.console.oodb.nodes.lnk1.Lnk1_Node;
 
 public class Metadata_Node extends Node_NodeInstance {
     private static Metadata_Node metaData_Node;
