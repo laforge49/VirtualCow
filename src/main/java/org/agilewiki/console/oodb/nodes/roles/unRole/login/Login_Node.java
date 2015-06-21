@@ -6,6 +6,10 @@ import org.agilewiki.console.oodb.nodes.JournalEntry_Node;
 public class Login_Node extends JournalEntry_Node {
     private static Login_Node login_node;
 
+    public static Login_Node get() {
+        return login_node;
+    }
+
     public static void create() {
         login_node = new Login_Node("$nlogin.node", "$njournalEntry.node");
     }

@@ -6,6 +6,10 @@ import org.agilewiki.console.oodb.nodes.JournalEntry_Node;
 public class BadUserAddress_Node extends JournalEntry_Node {
     private static BadUserAddress_Node badUserAddress_node;
 
+    public static BadUserAddress_Node get() {
+        return badUserAddress_node;
+    }
+
     public static void create() {
         badUserAddress_node = new BadUserAddress_Node("$nbadUserAddress.node", "$njournalEntry.node");
     }

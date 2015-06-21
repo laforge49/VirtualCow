@@ -6,6 +6,10 @@ import org.agilewiki.console.oodb.nodes.Metadata_Node;
 public class Lnk1_Node extends Metadata_Node {
     private static Lnk1_Node lnk1_node;
 
+    public static Lnk1_Node get() {
+        return lnk1_node;
+    }
+
     public static void create() {
         lnk1_node = new Lnk1_Node("$nlnk1.node", "$nnode.node");
         Destination_Lnk1.create();

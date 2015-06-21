@@ -4,10 +4,14 @@ import org.agilewiki.console.oodb.Node;
 import org.agilewiki.console.oodb.nodes.JournalEntry_Node;
 
 public class ServletStart_Node extends JournalEntry_Node {
-    private static ServletStart_Node npje_node;
+    private static ServletStart_Node servletStart_node;
+
+    public static ServletStart_Node get() {
+        return servletStart_node;
+    }
 
     public static void create() {
-        npje_node = new ServletStart_Node("$nservletStart.node", "$njournalEntry.node");
+        servletStart_node = new ServletStart_Node("$nservletStart.node", "$njournalEntry.node");
     }
 
     public ServletStart_Node(String nodeId, String factoryId) {

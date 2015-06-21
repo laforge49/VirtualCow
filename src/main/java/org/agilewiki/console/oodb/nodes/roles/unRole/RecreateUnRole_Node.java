@@ -6,6 +6,10 @@ import org.agilewiki.console.oodb.nodes.JournalEntry_Node;
 public class RecreateUnRole_Node extends JournalEntry_Node {
     private static RecreateUnRole_Node recreateUnRole_node;
 
+    public static RecreateUnRole_Node get() {
+        return recreateUnRole_node;
+    }
+
     public static void create() {
         recreateUnRole_node = new RecreateUnRole_Node("$nrecreateUnRole.node", "$njournalEntry.node");
     }

@@ -5,6 +5,10 @@ import org.agilewiki.console.oodb.Node;
 public class JournalEntry_Node extends Node_NodeInstance {
     private static JournalEntry_Node journalEntry_node;
 
+    public static JournalEntry_Node get() {
+        return journalEntry_node;
+    }
+
     public static void create() {
         journalEntry_node = new JournalEntry_Node("$njournalEntry.node", "$nnode.node");
     }

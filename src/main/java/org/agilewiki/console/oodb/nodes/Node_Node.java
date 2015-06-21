@@ -6,6 +6,10 @@ import org.agilewiki.console.oodb.nodes.roles.Role_Node;
 public class Node_Node extends Metadata_Node {
     private static Node_Node node_node;
 
+    public static Node_Node get() {
+        return node_node;
+    }
+
     public static void create() {
         node_node = new Node_Node("$nnode.node", "$nnode.node");
         JournalEntry_Node.create();

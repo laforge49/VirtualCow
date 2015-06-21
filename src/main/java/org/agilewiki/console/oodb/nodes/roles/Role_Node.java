@@ -11,6 +11,10 @@ import org.agilewiki.console.oodb.nodes.roles.user.UserRole_Node;
 public class Role_Node extends Node_NodeInstance {
     private static Role_Node role_node;
 
+    public static Role_Node get() {
+        return role_node;
+    }
+
     public static void create() {
         role_node = new Role_Node("$nrole.node", "$nnode.node");
         AdminRole_Node.create();

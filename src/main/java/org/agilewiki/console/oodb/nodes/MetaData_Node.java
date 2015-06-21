@@ -7,6 +7,10 @@ import org.agilewiki.console.oodb.nodes.lnk1.Lnk1_Node;
 public class Metadata_Node extends Node_NodeInstance {
     private static Metadata_Node metaData_Node;
 
+    public static Metadata_Node get() {
+        return metaData_Node;
+    }
+
     public static void create() {
         metaData_Node = new Metadata_Node("$nmetadata.node", "$Nnode.node");
         Node_Node.create();

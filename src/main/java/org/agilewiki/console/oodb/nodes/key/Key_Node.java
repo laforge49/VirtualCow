@@ -6,6 +6,10 @@ import org.agilewiki.console.oodb.nodes.Metadata_Node;
 public class Key_Node extends Metadata_Node {
     private static Key_Node key_node;
 
+    public static Key_Node get() {
+        return key_node;
+    }
+
     public static void create() {
         key_node = new Key_Node("$nkey.node", "$nnode.node");
         Email_Key.create();

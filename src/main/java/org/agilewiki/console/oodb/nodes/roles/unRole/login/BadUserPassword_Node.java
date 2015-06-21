@@ -6,6 +6,10 @@ import org.agilewiki.console.oodb.nodes.JournalEntry_Node;
 public class BadUserPassword_Node extends JournalEntry_Node {
     private static BadUserPassword_Node badUserPassword_node;
 
+    public static BadUserPassword_Node get() {
+        return badUserPassword_node;
+    }
+
     public static void create() {
         badUserPassword_node = new BadUserPassword_Node("$nbadUserPassword.node", "$njournalEntry.node");
     }

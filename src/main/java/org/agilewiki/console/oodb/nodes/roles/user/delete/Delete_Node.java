@@ -6,6 +6,10 @@ import org.agilewiki.console.oodb.nodes.JournalEntry_Node;
 public class Delete_Node extends JournalEntry_Node {
     private static Delete_Node delete_node;
 
+    public static Delete_Node get() {
+        return delete_node;
+    }
+
     public static void create() {
         delete_node = new Delete_Node("$ndelete.node", "$njournalEntry.node");
     }

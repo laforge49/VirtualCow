@@ -6,6 +6,10 @@ import org.agilewiki.console.oodb.nodes.JournalEntry_Node;
 public class RecreateUserRole_Node extends JournalEntry_Node {
     private static RecreateUserRole_Node recreateUserRole_node;
 
+    public static RecreateUserRole_Node get() {
+        return recreateUserRole_node;
+    }
+
     public static void create() {
         recreateUserRole_node = new RecreateUserRole_Node("$nrecreateUserRole.node", "$njournalEntry.node");
     }

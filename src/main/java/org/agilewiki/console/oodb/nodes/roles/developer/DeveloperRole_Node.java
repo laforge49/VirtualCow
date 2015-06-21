@@ -5,6 +5,10 @@ import org.agilewiki.console.oodb.nodes.roles.Role_NodeInstance;
 public class DeveloperRole_Node extends Role_NodeInstance {
     private static DeveloperRole_Node developerRole_node;
 
+    public static DeveloperRole_Node get() {
+        return developerRole_node;
+    }
+
     public static void create() {
         developerRole_node = new DeveloperRole_Node("$ndeveloperRole.node", "$nrole.node");
     }

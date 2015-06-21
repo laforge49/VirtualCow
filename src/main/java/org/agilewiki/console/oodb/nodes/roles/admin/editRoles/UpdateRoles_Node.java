@@ -6,6 +6,10 @@ import org.agilewiki.console.oodb.nodes.JournalEntry_Node;
 public class UpdateRoles_Node extends JournalEntry_Node {
     private static UpdateRoles_Node updateRolesNode;
 
+    public static UpdateRoles_Node get() {
+        return updateRolesNode;
+    }
+
     public static void create() {
         updateRolesNode = new UpdateRoles_Node("$nupdateRoles.node", "$njournalEntry.node");
     }
