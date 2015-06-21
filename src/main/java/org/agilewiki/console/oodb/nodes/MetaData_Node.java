@@ -11,7 +11,8 @@ public class Metadata_Node extends Node_NodeInstance {
         return metaData_Node;
     }
 
-    public static void create() {
+    public static void create()
+            throws Exception {
         metaData_Node = new Metadata_Node("$nmetadata.node", "$Nnode.node");
         Node_Node.create();
         Lnk1_Node.create();

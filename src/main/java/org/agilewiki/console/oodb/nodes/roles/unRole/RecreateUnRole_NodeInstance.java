@@ -5,7 +5,7 @@ import org.agilewiki.console.oodb.nodes.roles.Role;
 
 public class RecreateUnRole_NodeInstance extends RecreateRole_NodeInstance {
     public final static String NAME = "recreateUnRole";
-    public static UnRole unRole;
+    public static UnRole_Node unRole;
 
     public RecreateUnRole_NodeInstance() {
     }

@@ -10,7 +10,8 @@ public class Node_Node extends Metadata_Node {
         return node_node;
     }
 
-    public static void create() {
+    public static void create()
+            throws Exception {
         node_node = new Node_Node("$nnode.node", "$nnode.node");
         JournalEntry_Node.create();
         Role_Node.create();

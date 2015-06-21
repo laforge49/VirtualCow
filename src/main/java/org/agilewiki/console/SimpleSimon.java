@@ -3,11 +3,11 @@ package org.agilewiki.console;
 import org.agilewiki.console.oodb.OODb;
 import org.agilewiki.console.oodb.nodes.Metadata_Node;
 import org.agilewiki.console.oodb.nodes.roles.Role;
-import org.agilewiki.console.oodb.nodes.roles.admin.AdminRole;
-import org.agilewiki.console.oodb.nodes.roles.developer.DeveloperRole;
+import org.agilewiki.console.oodb.nodes.roles.admin.AdminRole_Node;
+import org.agilewiki.console.oodb.nodes.roles.developer.DeveloperRole_Node;
 import org.agilewiki.console.oodb.nodes.roles.system.*;
-import org.agilewiki.console.oodb.nodes.roles.unRole.UnRole;
-import org.agilewiki.console.oodb.nodes.roles.user.UserRole;
+import org.agilewiki.console.oodb.nodes.roles.unRole.UnRole_Node;
+import org.agilewiki.console.oodb.nodes.roles.user.UserRole_Node;
 import org.agilewiki.utils.ids.Timestamp;
 import org.agilewiki.utils.virtualcow.Db;
 
@@ -25,7 +25,6 @@ import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -47,11 +46,11 @@ public class SimpleSimon extends HttpServlet {
     public MailOut mailOut;
 
     public Map<String, Role> roles = new TreeMap<String, Role>();
-    public SystemRole systemRole;
-    public UnRole unRole;
-    public UserRole userRole;
-    public DeveloperRole developerRole;
-    public AdminRole adminRole;
+    public SystemRole_Node systemRole;
+    public UnRole_Node unRole;
+    public UserRole_Node userRole;
+    public DeveloperRole_Node developerRole;
+    public AdminRole_Node adminRole;
 
     public static String readResource(ServletContext servletContext, String pageName) throws IOException {
         InputStream is = servletContext.getResourceAsStream("/WEB-INF/pages/" + pageName + ".html");
@@ -102,29 +101,19 @@ public class SimpleSimon extends HttpServlet {
             ooDb = new OODb(100000, 10000L);
             db = ooDb.db;
 
-            Metadata_Node.create();
-
-            mailOut = new MailOut();
-
             try {
-                Map<String, String> systemParameters = new HashMap<>();
-                systemParameters.put("niceRoleName", "System");
-                systemRole = new SystemRole(this, "$nsystem.node", systemParameters);
-                Map<String, String> unRoleParameters = new HashMap<>();
-                unRoleParameters.put("niceRoleName", "unRole");
-                unRole = new UnRole(this, "$nunRole.node", unRoleParameters);
-                Map<String, String> userParameters = new HashMap<>();
-                userParameters.put("niceRoleName", "User");
-                userRole = new UserRole(this, "$nuser.node", userParameters);
-                Map<String, String> developerParameters = new HashMap<>();
-                developerParameters.put("niceRoleName", "Developer");
-                developerRole = new DeveloperRole(this, "$ndeveloper.node", developerParameters);
-                Map<String, String> adminParameters = new HashMap<>();
-                adminParameters.put("niceRoleName", "Admin");
-                adminRole = new AdminRole(this, "$nadmin.node", adminParameters);
+                Metadata_Node.create();
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+
+            mailOut = new MailOut();
+
+            adminRole = AdminRole_Node.get();
+            developerRole = DeveloperRole_Node.get();
+            systemRole = SystemRole_Node.get();
+            unRole = UnRole_Node.get();
+            userRole = UserRole_Node.get();
 
             ServletStart_Node.create();
             db.registerTransaction(ServletStart_NodeInstance.NAME, ServletStart_NodeInstance.class);

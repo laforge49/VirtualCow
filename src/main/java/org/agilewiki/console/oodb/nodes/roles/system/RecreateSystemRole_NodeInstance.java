@@ -9,7 +9,7 @@ import org.agilewiki.utils.virtualcow.Db;
 
 public class RecreateSystemRole_NodeInstance extends RecreateRole_NodeInstance {
     public final static String NAME = "recreateSystemRole";
-    public static SystemRole systemRole;
+    public static SystemRole_Node systemRole;
     final public static String SYSTEM_NODE_ID = "$nsystem.node";
 
     public RecreateSystemRole_NodeInstance() {

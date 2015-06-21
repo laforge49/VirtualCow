@@ -15,7 +15,7 @@ public class Role_Node extends Node_NodeInstance {
         return role_node;
     }
 
-    public static void create() {
+    public static void create() throws Exception {
         role_node = new Role_Node("$nrole.node", "$nnode.node");
         AdminRole_Node.create();
         DeveloperRole_Node.create();
