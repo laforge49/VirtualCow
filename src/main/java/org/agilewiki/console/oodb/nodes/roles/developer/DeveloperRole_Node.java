@@ -1,14 +1,15 @@
 package org.agilewiki.console.oodb.nodes.roles.developer;
 
-import org.agilewiki.console.oodb.nodes.Node_Node;
+import org.agilewiki.console.oodb.nodes.roles.Role_NodeInstance;
 
-import java.util.Map;
+public class DeveloperRole_Node extends Role_NodeInstance {
+    private static DeveloperRole_Node developerRole_node;
 
-/**
- * The root super class.
- */
-public class DeveloperRole_Node extends Node_Node {
-    public DeveloperRole_Node(String nodeId, Map<String, String> parameters, String factoryId) {
-        super(nodeId, parameters, factoryId);
+    public static void create() {
+        developerRole_node = new DeveloperRole_Node("$ndeveloperRole.node", "$nrole.node");
+    }
+
+    public DeveloperRole_Node(String nodeId, String factoryId) {
+        super(nodeId, factoryId);
     }
 }

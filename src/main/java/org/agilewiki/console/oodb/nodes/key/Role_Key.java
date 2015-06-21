@@ -1,12 +1,13 @@
 package org.agilewiki.console.oodb.nodes.key;
 
-import java.util.Map;
+public class Role_Key extends Key_NodeInstance {
+    private static Role_Key role_key;
 
-/**
- * The root super class.
- */
-public class Role_Key extends Key_Node {
-    public Role_Key(String nodeId, Map<String, String> parameters, String factoryId) {
-        super(nodeId, parameters, factoryId);
+    public static void create() {
+        role_key = new Role_Key("$nrole.key", "$nkey.node");
+    }
+
+    public Role_Key(String nodeId, String factoryId) {
+        super(nodeId, factoryId);
     }
 }

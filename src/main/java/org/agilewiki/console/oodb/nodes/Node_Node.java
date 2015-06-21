@@ -1,12 +1,24 @@
 package org.agilewiki.console.oodb.nodes;
 
-import java.util.Map;
+import org.agilewiki.console.oodb.Node;
+import org.agilewiki.console.oodb.nodes.roles.Role_Node;
 
-/**
- * The root super class.
- */
-public class Node_Node extends MetaData_Node {
-    public Node_Node(String nodeId, Map<String, String> parameters, String factoryId) {
-        super(nodeId, parameters, factoryId);
+public class Node_Node extends Metadata_Node {
+    private static Node_Node node_node;
+
+    public static void create() {
+        node_node = new Node_Node("$nnode.node", "$nnode.node");
+        JournalEntry_Node.create();
+        Role_Node.create();
+        User_Node.create();
+    }
+
+    public Node_Node(String nodeId, String factoryIdb) {
+        super(nodeId, factoryIdb);
+    }
+
+    @Override
+    public Node createNode(String nodeId, String factoryId) {
+        throw new UnsupportedOperationException();
     }
 }

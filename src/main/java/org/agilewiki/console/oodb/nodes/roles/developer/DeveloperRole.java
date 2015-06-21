@@ -3,7 +3,7 @@ package org.agilewiki.console.oodb.nodes.roles.developer;
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.oodb.nodes.roles.RoleBase;
-import org.agilewiki.console.oodb.nodes.roles.system.RecreateSystemRoleTransactionFactory;
+import org.agilewiki.console.oodb.nodes.roles.developer.npje.PostBlade;
 
 import java.util.Map;
 
@@ -73,14 +73,14 @@ public class DeveloperRole extends RoleBase {
         lnk1sNodesBlade = new NodesBlade(this, "lnk1Nodes", "Label Types", "$D$nsuperType$nlnk1.node");
         invLinksBlade = new InvLinksBlade(this, "invLinks");
 
-        simpleSimon.ooDb.registerNodeFactory("recreateDeveloperRole.node", new RecreateSystemRoleTransactionFactory());
-        simpleSimon.db.registerTransaction(RecreateDeveloperRoleTransaction.NAME, RecreateDeveloperRoleTransaction.class);
-        RecreateDeveloperRoleTransaction.developerRole = this;
+        RecreateDeveloperRole_Node.create();
+        simpleSimon.db.registerTransaction(RecreateDeveloperRole_NodeInstance.NAME, RecreateDeveloperRole_NodeInstance.class);
+        RecreateDeveloperRole_NodeInstance.developerRole = this;
     }
 
     @Override
     public String initializeTransactionName() {
-        return RecreateDeveloperRoleTransaction.NAME;
+        return RecreateDeveloperRole_NodeInstance.NAME;
     }
 
     @Override

@@ -1,12 +1,13 @@
 package org.agilewiki.console.oodb.nodes.key;
 
-import java.util.Map;
+public class Subject_Key extends Key_NodeInstance {
+    private static Subject_Key subject_key;
 
-/**
- * The root super class.
- */
-public class Subject_Key extends Key_Node {
-    public Subject_Key(String nodeId, Map<String, String> parameters, String factoryId) {
-        super(nodeId, parameters, factoryId);
+    public static void create() {
+        subject_key = new Subject_Key("$nsubject.key", "$nkey.node");
+    }
+
+    public Subject_Key(String nodeId, String factoryId) {
+        super(nodeId, factoryId);
     }
 }

@@ -32,25 +32,20 @@ public class OODb {
             db.open();
         else
             db.open(true);
-        LoadingCache<String, Node> cache = CacheBuilder.newBuilder().concurrencyLevel(1).
-                maximumSize(maxNodeCacheSize).build(new CacheLoader<String, Node>() {
+        final LoadingCache<String, Node> cache = CacheBuilder.newBuilder().concurrencyLevel(1).
+                softValues().build(new CacheLoader<String, Node>() {
             @Override
             public Node load(String nodeId) throws Exception {
-                String factoryId = nodeId;
-                factoryId = SecondaryIds.nodeTypeId(db, nodeId, FactoryRegistry.MAX_TIMESTAMP);
-                NodeFactory nodeFactory = nodeFactories.get(factoryId);
+                String factoryId = SecondaryIds.nodeTypeId(db, nodeId, FactoryRegistry.MAX_TIMESTAMP);
+                NodeFactory nodeFactory = getNodeFactory(factoryId);
                 return nodeFactory.createNode(nodeId, factoryId);
             }
         });
         nodeCache = cache.asMap();
     }
 
-    public void registerNodeFactory(String factoryId, NodeFactory nodeFactory) {
-        nodeFactories.put(factoryId, nodeFactory);
-    }
-
     public NodeFactory getNodeFactory(String factoryId) {
-        return nodeFactories.get(factoryId);
+        return (NodeFactory) fetchNode(factoryId);
     }
 
     public Node fetchNode(String nodeId) {

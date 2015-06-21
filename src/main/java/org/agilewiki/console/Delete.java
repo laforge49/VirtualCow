@@ -36,7 +36,7 @@ public class Delete {
             for (String oId : Link1Id.link1InvIterable(db, id, lnkTyp, db.getTimestamp())) {
                 if (SecondaryId.hasSecondaryId(db,
                         lnkTyp + ".lnk1",
-                        SecondaryId.secondaryId(RecreateRoleTransaction.INVDEPENDENCY_ID, lnkTyp),
+                        SecondaryId.secondaryId(RecreateRole_NodeInstance.INVDEPENDENCY_ID, lnkTyp),
                         db.getTimestamp())) {
                     deleter(db, oId);
                 }

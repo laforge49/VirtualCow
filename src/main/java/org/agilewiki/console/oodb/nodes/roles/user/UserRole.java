@@ -3,6 +3,10 @@ package org.agilewiki.console.oodb.nodes.roles.user;
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.oodb.nodes.roles.RoleBase;
+import org.agilewiki.console.oodb.nodes.roles.user.changePassword.ChangePasswordBlade;
+import org.agilewiki.console.oodb.nodes.roles.user.delete.DeleteAccountBlade;
+import org.agilewiki.console.oodb.nodes.roles.user.logout.LogoutBlade;
+import org.agilewiki.console.oodb.nodes.roles.user.newEmailAddress.NewEmailAddressBlade;
 
 import java.util.Map;
 
@@ -29,14 +33,14 @@ public class UserRole extends RoleBase {
         newEmailAddressBlade = new NewEmailAddressBlade(this, "newEmailAddress");
         userBlade = new UserBlade(this, "user");
 
-        simpleSimon.ooDb.registerNodeFactory("recreateUserRole.node", new RecreateUserRoleTransactionFactory());
-        simpleSimon.db.registerTransaction(RecreateUserRoleTransaction.NAME, RecreateUserRoleTransaction.class);
-        RecreateUserRoleTransaction.userRole = this;
+        RecreateUserRole_Node.create();
+        simpleSimon.db.registerTransaction(RecreateUserRole_NodeInstance.NAME, RecreateUserRole_NodeInstance.class);
+        RecreateUserRole_NodeInstance.userRole = this;
     }
 
     @Override
     public String initializeTransactionName() {
-        return RecreateUserRoleTransaction.NAME;
+        return RecreateUserRole_NodeInstance.NAME;
     }
 
     @Override

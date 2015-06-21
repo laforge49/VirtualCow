@@ -3,7 +3,7 @@ package org.agilewiki.console.oodb.nodes.roles.admin;
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.oodb.nodes.roles.RoleBase;
-import org.agilewiki.console.oodb.nodes.roles.system.RecreateSystemRoleTransactionFactory;
+import org.agilewiki.console.oodb.nodes.roles.admin.editRoles.EditRolesBlade;
 
 import java.util.Map;
 
@@ -28,14 +28,14 @@ public class AdminRole extends RoleBase {
         editRolesBlade = new EditRolesBlade(this, "editRoles");
         recreateRoleBlade = new RecreateRoleBlade(this, "recreateRole");
 
-        simpleSimon.ooDb.registerNodeFactory("recreateAdminRole.node", new RecreateSystemRoleTransactionFactory());
-        simpleSimon.db.registerTransaction(RecreateAdminRoleTransaction.NAME, RecreateAdminRoleTransaction.class);
-        RecreateAdminRoleTransaction.adminRole = this;
+        RecreateAdminRole_Node.create();
+        simpleSimon.db.registerTransaction(RecreateAdminRole_NodeInstance.NAME, RecreateAdminRole_NodeInstance.class);
+        RecreateAdminRole_NodeInstance.adminRole = this;
     }
 
     @Override
     public String initializeTransactionName() {
-        return RecreateAdminRoleTransaction.NAME;
+        return RecreateAdminRole_NodeInstance.NAME;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package org.agilewiki.console;
 
 import org.agilewiki.console.oodb.OODb;
-import org.agilewiki.console.oodb.nodes.MetaData_NodeFactory;
+import org.agilewiki.console.oodb.nodes.Metadata_Node;
 import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.console.oodb.nodes.roles.admin.AdminRole;
 import org.agilewiki.console.oodb.nodes.roles.developer.DeveloperRole;
@@ -33,18 +33,17 @@ public class SimpleSimon extends HttpServlet {
 
     public final static String self = System.getProperties().getProperty("self", "http://localhost/");
 
-    public OODb ooDb;
-    public Db db;
-    protected ServletConfig servletConfig;
-    public ServletContext servletContext;
     final static Charset utf8 = Charset.forName("UTF-8");
     final static String SPECIAL = "&<>'\"";
     public final static int ENCODE_MULTIPLE_LINES = 1;
     public final static int ENCODE_SINGLE_LINE = 2;
     public final static int ENCODE_FIELD = 3;
-
     public static SimpleSimon simpleSimon;
 
+    public OODb ooDb;
+    public Db db;
+    protected ServletConfig servletConfig;
+    public ServletContext servletContext;
     public MailOut mailOut;
 
     public Map<String, Role> roles = new TreeMap<String, Role>();
@@ -103,7 +102,7 @@ public class SimpleSimon extends HttpServlet {
             ooDb = new OODb(100000, 10000L);
             db = ooDb.db;
 
-            new MetaData_NodeFactory(ooDb);
+            Metadata_Node.create();
 
             mailOut = new MailOut();
 
@@ -127,13 +126,13 @@ public class SimpleSimon extends HttpServlet {
                 ex.printStackTrace();
             }
 
-            ooDb.registerNodeFactory("servletStart.node", new ServletStartTransactionFactory());
-            db.registerTransaction(ServletStartTransaction.NAME, ServletStartTransaction.class);
+            ServletStart_Node.create();
+            db.registerTransaction(ServletStart_NodeInstance.NAME, ServletStart_NodeInstance.class);
 
-            ooDb.registerNodeFactory("servletStop.node", new ServletStopTransactionFactory());
-            db.registerTransaction(ServletStopTransaction.NAME, ServletStopTransaction.class);
+            ServletStop_Node.create();
+            db.registerTransaction(ServletStop_NodeInstance.NAME, ServletStop_NodeInstance.class);
 
-            ServletStartTransaction.update(db);
+            ServletStart_NodeInstance.update(db);
         } catch (Exception ex) {
             destroy();
         }
@@ -141,7 +140,7 @@ public class SimpleSimon extends HttpServlet {
 
     public void destroy() {
         try {
-            ServletStopTransaction.update(db);
+            ServletStop_NodeInstance.update(db);
         } catch (Exception e) {
         }
         db.close();

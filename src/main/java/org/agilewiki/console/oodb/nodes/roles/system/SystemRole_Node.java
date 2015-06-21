@@ -1,14 +1,15 @@
 package org.agilewiki.console.oodb.nodes.roles.system;
 
-import org.agilewiki.console.oodb.nodes.Node_Node;
+import org.agilewiki.console.oodb.nodes.roles.Role_NodeInstance;
 
-import java.util.Map;
+public class SystemRole_Node extends Role_NodeInstance {
+    private static SystemRole_Node systemRole_node;
 
-/**
- * The root super class.
- */
-public class SystemRole_Node extends Node_Node {
-    public SystemRole_Node(String nodeId, Map<String, String> parameters, String factoryId) {
-        super(nodeId, parameters, factoryId);
+    public static void create() {
+        systemRole_node = new SystemRole_Node("$nsystemRole.node", "$nrole.node");
+    }
+
+    public SystemRole_Node(String nodeId, String factoryId) {
+        super(nodeId, factoryId);
     }
 }

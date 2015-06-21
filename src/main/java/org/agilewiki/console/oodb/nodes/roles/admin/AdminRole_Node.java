@@ -1,14 +1,15 @@
 package org.agilewiki.console.oodb.nodes.roles.admin;
 
-import org.agilewiki.console.oodb.nodes.Node_Node;
+import org.agilewiki.console.oodb.nodes.roles.Role_NodeInstance;
 
-import java.util.Map;
+public class AdminRole_Node extends Role_NodeInstance {
+    private static AdminRole_Node adminRole_node;
 
-/**
- * The root super class.
- */
-public class AdminRole_Node extends Node_Node {
-    public AdminRole_Node(String nodeId, Map<String, String> parameters, String factoryId) {
-        super(nodeId, parameters, factoryId);
+    public static void create() {
+        adminRole_node = new AdminRole_Node("$nadminRole.node", "$nrole.node");
+    }
+
+    public AdminRole_Node(String nodeId, String factoryId) {
+        super(nodeId, factoryId);
     }
 }

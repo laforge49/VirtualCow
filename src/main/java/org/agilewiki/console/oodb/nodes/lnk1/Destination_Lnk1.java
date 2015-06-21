@@ -1,12 +1,13 @@
 package org.agilewiki.console.oodb.nodes.lnk1;
 
-import java.util.Map;
+public class Destination_Lnk1 extends Lnk1_NodeInstance {
+    private static Destination_Lnk1 destination_lnk1;
 
-/**
- * The root super class.
- */
-public class Destination_Lnk1 extends Lnk1_Node {
-    public Destination_Lnk1(String nodeId, Map<String, String> parameters, String factoryId) {
-        super(nodeId, parameters, factoryId);
+    public static void create() {
+        destination_lnk1 = new Destination_Lnk1("$ndestination.lnk1", "$nlnk1.node");
+    }
+
+    public Destination_Lnk1(String nodeId, String factoryId) {
+        super(nodeId, factoryId);
     }
 }

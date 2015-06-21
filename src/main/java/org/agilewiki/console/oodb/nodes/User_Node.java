@@ -1,12 +1,20 @@
 package org.agilewiki.console.oodb.nodes;
 
-import java.util.Map;
+import org.agilewiki.console.oodb.Node;
 
-/**
- * The root super class.
- */
-public class User_Node extends Node_Node {
-    public User_Node(String nodeId, Map<String, String> parameters, String factoryId) {
-        super(nodeId, parameters, factoryId);
+public class User_Node extends Node_NodeInstance {
+    private static User_Node user_node;
+
+    public static void create() {
+        user_node = new User_Node("$nuser.node", "$nnode.node");
+    }
+
+    public User_Node(String nodeId, String factoryId) {
+        super(nodeId, factoryId);
+    }
+
+    @Override
+    public Node createNode(String nodeId, String factoryId) {
+        return new User_NodeInstance(nodeId, factoryId);
     }
 }

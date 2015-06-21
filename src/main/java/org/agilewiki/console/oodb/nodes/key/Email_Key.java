@@ -1,12 +1,13 @@
 package org.agilewiki.console.oodb.nodes.key;
 
-import java.util.Map;
+public class Email_Key extends Key_NodeInstance {
+    private static Email_Key email_key;
 
-/**
- * The root super class.
- */
-public class Email_Key extends Key_Node {
-    public Email_Key(String nodeId, Map<String, String> parameters, String factoryId) {
-        super(nodeId, parameters, factoryId);
+    public static void create() {
+        email_key = new Email_Key("$nemail.key", "$nkey.node");
+    }
+
+    public Email_Key(String nodeId, String factoryId) {
+        super(nodeId, factoryId);
     }
 }

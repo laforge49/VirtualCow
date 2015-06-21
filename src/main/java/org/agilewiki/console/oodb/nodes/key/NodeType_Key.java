@@ -1,12 +1,13 @@
 package org.agilewiki.console.oodb.nodes.key;
 
-import java.util.Map;
+public class NodeType_Key extends Key_NodeInstance {
+    private static NodeType_Key nodeType_key;
 
-/**
- * The root super class.
- */
-public class NodeType_Key extends Key_Node {
-    public NodeType_Key(String nodeId, Map<String, String> parameters, String factoryId) {
-        super(nodeId, parameters, factoryId);
+    public static void create() {
+        nodeType_key = new NodeType_Key("$nnodeType.key", "$nkey.node");
+    }
+
+    public NodeType_Key(String nodeId, String factoryId) {
+        super(nodeId, factoryId);
     }
 }

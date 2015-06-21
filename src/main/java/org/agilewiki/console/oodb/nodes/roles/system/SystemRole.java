@@ -14,14 +14,14 @@ public class SystemRole extends RoleBase {
     public SystemRole(SimpleSimon simpleSimon, String roleId, Map<String, String> parameters) {
         super(simpleSimon, roleId, parameters);
 
-        simpleSimon.ooDb.registerNodeFactory("recreateSystemRole.node", new RecreateSystemRoleTransactionFactory());
-        simpleSimon.db.registerTransaction(RecreateSystemRoleTransaction.NAME, RecreateSystemRoleTransaction.class);
-        RecreateSystemRoleTransaction.systemRole = this;
+        RecreateSystemRole_Node.create();
+        simpleSimon.db.registerTransaction(RecreateSystemRole_NodeInstance.NAME, RecreateSystemRole_NodeInstance.class);
+        RecreateSystemRole_NodeInstance.systemRole = this;
     }
 
     @Override
     public String initializeTransactionName() {
-        return RecreateSystemRoleTransaction.NAME;
+        return RecreateSystemRole_NodeInstance.NAME;
     }
 
     @Override

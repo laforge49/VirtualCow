@@ -3,6 +3,9 @@ package org.agilewiki.console.oodb.nodes.roles.unRole;
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.oodb.nodes.roles.RoleBase;
+import org.agilewiki.console.oodb.nodes.roles.unRole.forgotPassword.ForgotPasswordBlade;
+import org.agilewiki.console.oodb.nodes.roles.unRole.login.LoginBlade;
+import org.agilewiki.console.oodb.nodes.roles.unRole.newUser.ValidatedBlade;
 
 import java.util.Map;
 
@@ -26,14 +29,14 @@ public class UnRole extends RoleBase {
         AboutBlade aboutBlade = new AboutBlade(this, "about");
         ContactBlade contactBlade = new ContactBlade(this, "contact");
 
-        simpleSimon.ooDb.registerNodeFactory("recreateUnRole.node", new RecreateUnRoleTransactionFactory());
-        simpleSimon.db.registerTransaction(RecreateUnRoleTransaction.NAME, RecreateUnRoleTransaction.class);
-        RecreateUnRoleTransaction.unRole = this;
+        RecreateUnRole_Node.create();
+        simpleSimon.db.registerTransaction(RecreateUnRole_NodeInstance.NAME, RecreateUnRole_NodeInstance.class);
+        RecreateUnRole_NodeInstance.unRole = this;
     }
 
     @Override
     public String initializeTransactionName() {
-        return RecreateUnRoleTransaction.NAME;
+        return RecreateUnRole_NodeInstance.NAME;
     }
 
     @Override
