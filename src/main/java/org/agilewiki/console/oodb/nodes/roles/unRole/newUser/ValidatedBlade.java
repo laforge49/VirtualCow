@@ -2,6 +2,8 @@ package org.agilewiki.console.oodb.nodes.roles.unRole.newUser;
 
 import org.agilewiki.console.*;
 import org.agilewiki.console.oodb.nodes.roles.Role;
+import org.agilewiki.console.oodb.nodes.roles.developer.DeveloperRole_Node;
+import org.agilewiki.console.oodb.nodes.roles.user.UserRole_Node;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.immutable.collections.MapNode;
@@ -92,9 +94,9 @@ public class ValidatedBlade extends PostRequestBlade {
                 mn = mn.add(User.EMAIL_ID, emailId);
                 mn = mn.add(User.PASSWORD_KEY, passwordHash);
                 mn = mn.add(User.ROLE_ID,
-                        simpleSimon.userRole.roleName());
+                        UserRole_Node.get().roleName());
                 mn = mn.add(User.ROLE_ID,
-                        simpleSimon.developerRole.roleName());
+                        DeveloperRole_Node.get().roleName());
                 asyncRequestImpl.send(db.update(NewUser_NodeInstance.NAME, mn),
                         new AsyncResponseProcessor<String>() {
                             @Override

@@ -46,11 +46,6 @@ public class SimpleSimon extends HttpServlet {
     public MailOut mailOut;
 
     public Map<String, Role> roles = new TreeMap<String, Role>();
-    public SystemRole_Node systemRole;
-    public UnRole_Node unRole;
-    public UserRole_Node userRole;
-    public DeveloperRole_Node developerRole;
-    public AdminRole_Node adminRole;
 
     public static String readResource(ServletContext servletContext, String pageName) throws IOException {
         InputStream is = servletContext.getResourceAsStream("/WEB-INF/pages/" + pageName + ".html");
@@ -109,12 +104,6 @@ public class SimpleSimon extends HttpServlet {
 
             mailOut = new MailOut();
 
-            adminRole = AdminRole_Node.get();
-            developerRole = DeveloperRole_Node.get();
-            systemRole = SystemRole_Node.get();
-            unRole = UnRole_Node.get();
-            userRole = UserRole_Node.get();
-
             ServletStart_Node.create();
             db.registerTransaction(ServletStart_NodeInstance.NAME, ServletStart_NodeInstance.class);
 
@@ -153,14 +142,14 @@ public class SimpleSimon extends HttpServlet {
         if (userIdToken != null)
             userId = Tokens.parse(db, userIdToken);
         if (userId == null) {
-            unRole.dispatchGetRequest(request, null);
+            UnRole_Node.get().dispatchGetRequest(request, null);
         } else {
             String roleName = request.getParameter("role");
             if (roleName == null || !User.hasRole(db, userId, roleName))
                 roleName = "profile";
             Role role = roles.get(roleName);
             if (role == null) {
-                role = userRole;
+                role = UserRole_Node.get();
             }
             role.dispatchGetRequest(request, userId);
         }
@@ -184,14 +173,14 @@ public class SimpleSimon extends HttpServlet {
             userId = Tokens.parse(db, userIdToken);
 
         if (userId == null) {
-            unRole.dispatchPostRequest(request, response, null);
+            UnRole_Node.get().dispatchPostRequest(request, response, null);
         } else {
             String roleName = request.getParameter("role");
             if (roleName == null || !User.hasRole(db, userId, roleName))
                 roleName = "profile";
             Role role = roles.get(roleName);
             if (role == null) {
-                role = userRole;
+                role = UserRole_Node.get();
             }
             role.dispatchPostRequest(request, response, userId);
         }

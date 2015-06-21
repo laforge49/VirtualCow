@@ -13,7 +13,6 @@ import java.util.Map;
  */
 public class Role_NodeInstance extends NodeBase implements Role {
     public final SimpleSimon simpleSimon;
-    public final String roleName;
     public String niceRoleName;
     public final Map<String, RequestBlade> requests = new HashMap<String, RequestBlade>();
     public final Map<String, PostRequestBlade> posts = new HashMap<String, PostRequestBlade>();
@@ -21,8 +20,7 @@ public class Role_NodeInstance extends NodeBase implements Role {
     public Role_NodeInstance(String nodeId, String factoryId) {
         super(nodeId, factoryId);
         this.simpleSimon = SimpleSimon.simpleSimon;
-        this.roleName = nodeId.substring(2, nodeId.length() - 9);
-        simpleSimon.roles.put(roleName, this);
+        simpleSimon.roles.put(roleName(), this);
     }
 
     @Override
@@ -37,7 +35,7 @@ public class Role_NodeInstance extends NodeBase implements Role {
 
     @Override
     public String roleName() {
-        return roleName;
+        return nodeId.substring(2, nodeId.length() - 9);
     }
 
     @Override

@@ -41,6 +41,11 @@ public class UnRole_Node extends Role_NodeInstance {
     }
 
     @Override
+    public String roleName() {
+        return nodeId.substring(2, nodeId.length() - 5);
+    }
+
+    @Override
     public String initializeTransactionName() {
         return RecreateUnRole_NodeInstance.NAME;
     }
