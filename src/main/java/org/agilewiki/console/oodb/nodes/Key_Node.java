@@ -14,6 +14,8 @@ public class Key_Node extends Metadata_Node {
     final public static String SUPERTYPE_KEY_ID = "$nsuperType.key";
     final public static String INVDEPENDENCY_ID = "$ninvDependency";
     final public static String INVDEPENDENCY_KEY_ID = "$ninvDependency.key";
+    final public static String ATTRIBUTENAME_ID = "$nattributeName";
+    final public static String ATTRIBUTENAME_KEY_ID = "$nattributeName.key";
 
     final public static String EMAIL_ID = "$nemail";
     final public static String EMAIL_KEY_ID = "$nemail.key";

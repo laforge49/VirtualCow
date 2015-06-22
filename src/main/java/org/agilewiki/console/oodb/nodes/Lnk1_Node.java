@@ -14,6 +14,8 @@ public class Lnk1_Node extends Metadata_Node {
 
     final public static String OFROLE_ID = "$nofRole";
     final public static String OFROLE_LNK1_ID = "$nofRole.lnk1";
+    final public static String ATTRIBUTEOF_ID = "$nattributeOf";
+    final public static String ATTRIBUTEOF_LNK1_ID = "$nattributeOf.lnk1";
     final public static String ORIGIN_ID = "$norigin";
     final public static String ORIGIN_LNK1_ID = "$norigin.lnk1";
     final public static String DESTINATION_ID = "$ndestination";

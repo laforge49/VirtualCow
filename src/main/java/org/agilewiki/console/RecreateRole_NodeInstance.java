@@ -35,6 +35,7 @@ abstract public class RecreateRole_NodeInstance extends JournalEntry_NodeInstanc
         Node_Node.define(Lnk1_Node.ID, Node_Node.ID, Metadata_Node.ID);
 
         Node_Node.define(Role_Node.ID, Node_Node.ID, Node_Node.ID);
+        Node_Node.define(Attribute_Node.ID, Node_Node.ID, Node_Node.ID);
         Node_Node.define(User_Node.ID, Node_Node.ID, Node_Node.ID);
         Node_Node.define(JournalEntry_Node.ID, Node_Node.ID, Node_Node.ID);
 

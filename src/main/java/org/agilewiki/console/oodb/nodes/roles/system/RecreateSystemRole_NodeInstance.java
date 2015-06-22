@@ -29,6 +29,7 @@ public class RecreateSystemRole_NodeInstance extends RecreateRole_NodeInstance {
 
         Key_Node.define(Key_Node.NODETYPE_KEY_ID, Node_Node.ID);
         Key_Node.define(Key_Node.SUPERTYPE_KEY_ID, Node_Node.ID);
+        Key_Node.define(Key_Node.ATTRIBUTENAME_KEY_ID, Attribute_Node.ID);
         Key_Node.define(Key_Node.INVDEPENDENCY_KEY_ID, Lnk1_Node.ID);
 
         Key_Node.define(Key_Node.EMAIL_KEY_ID, User_Node.ID);
@@ -37,6 +38,7 @@ public class RecreateSystemRole_NodeInstance extends RecreateRole_NodeInstance {
 
         Lnk1_Node.define(Lnk1_Node.TARGET_LNK1_ID, null, Node_Node.ID, Node_Node.ID, System_Role.ID);
         Lnk1_Node.define(Lnk1_Node.OFROLE_LNK1_ID, Lnk1_Node.OFROLE_ID, Metadata_Node.ID, Role_Node.ID, null);
+        Lnk1_Node.define(Lnk1_Node.ATTRIBUTEOF_LNK1_ID, Lnk1_Node.ATTRIBUTEOF_ID, Attribute_Node.ID, Metadata_Node.ID, null);
         Lnk1_Node.define(Lnk1_Node.ORIGIN_LNK1_ID, null, Lnk1_Node.ID, Node_Node.ID, System_Role.ID);
         Lnk1_Node.define(Lnk1_Node.DESTINATION_LNK1_ID, null, Lnk1_Node.ID, Node_Node.ID, System_Role.ID);
 
