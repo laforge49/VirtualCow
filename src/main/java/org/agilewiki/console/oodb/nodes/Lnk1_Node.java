@@ -23,7 +23,7 @@ public class Lnk1_Node extends Metadata_Node {
         if (invDependency != null) {
             SecondaryId.createSecondaryId(SimpleSimon.simpleSimon.db,
                     nodeId,
-                    SecondaryId.secondaryId(RecreateRole_NodeInstance.INVDEPENDENCY_ID, invDependency));
+                    SecondaryId.secondaryId(Key_Node.INVDEPENDENCY_ID, invDependency));
         }
         Link1Id.createLink1(SimpleSimon.simpleSimon.db,
                 nodeId,

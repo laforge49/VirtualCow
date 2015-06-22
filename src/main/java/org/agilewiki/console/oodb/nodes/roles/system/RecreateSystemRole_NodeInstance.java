@@ -30,13 +30,13 @@ public class RecreateSystemRole_NodeInstance extends RecreateRole_NodeInstance {
     public void process(Db db, MapNode tMapNode) {
         super.process(db, tMapNode);
 
-        Key_Node.define(NODETYPE_KEY_ID, Node_Node.ID);
-        Key_Node.define(SUPERTYPE_KEY_ID, Node_Node.ID);
-        Key_Node.define(INVDEPENDENCY_KEY_ID, Lnk1_Node.ID);
+        Key_Node.define(Key_Node.NODETYPE_KEY_ID, Node_Node.ID);
+        Key_Node.define(Key_Node.SUPERTYPE_KEY_ID, Node_Node.ID);
+        Key_Node.define(Key_Node.INVDEPENDENCY_KEY_ID, Lnk1_Node.ID);
 
-        Key_Node.define(EMAIL_KEY_ID, User_Node.ID);
-        Key_Node.define(ROLE_KEY_ID, User_Node.ID);
-        Key_Node.define(SUBJECT_KEY_ID, Node_Node.ID);
+        Key_Node.define(Key_Node.EMAIL_KEY_ID, User_Node.ID);
+        Key_Node.define(Key_Node.ROLE_KEY_ID, User_Node.ID);
+        Key_Node.define(Key_Node.SUBJECT_KEY_ID, Node_Node.ID);
 
         Lnk1_Node.define(TARGET_LNK1_ID, null, Node_Node.ID, Node_Node.ID, SYSTEM_NODE_ID);
         Lnk1_Node.define(OFROLE_LNK1_ID, OFROLE_ID, Metadata_Node.ID, Role_Node.ID, null);

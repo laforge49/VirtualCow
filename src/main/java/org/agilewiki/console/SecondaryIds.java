@@ -1,5 +1,6 @@
 package org.agilewiki.console;
 
+import org.agilewiki.console.oodb.nodes.Key_Node;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.collections.ListAccessor;
 import org.agilewiki.utils.immutable.collections.MapAccessor;
@@ -27,7 +28,7 @@ public class SecondaryIds extends SecondaryId {
     public static boolean nodeIsA(Db db, String nodeId, String metaNodeId, long longTimestamp) {
         if (nodeId.equals(metaNodeId))
             return true;
-        for (String mnId : SecondaryId.secondaryIdIterable(db, nodeId, RecreateRole_NodeInstance.NODETYPE_ID, longTimestamp)) {
+        for (String mnId : SecondaryId.secondaryIdIterable(db, nodeId, Key_Node.NODETYPE_ID, longTimestamp)) {
             if (nodeIsA(db, mnId, metaNodeId, longTimestamp))
                 return true;
         }
@@ -46,7 +47,7 @@ public class SecondaryIds extends SecondaryId {
 
     public static String nodeTypeId(Db db, String nodeId, long longTimestamp) {
         String metaNodeId = null;
-        for (String mnId : db.keysIterable(secondaryInv(nodeId, RecreateRole_NodeInstance.NODETYPE_ID), longTimestamp)) {
+        for (String mnId : db.keysIterable(secondaryInv(nodeId, Key_Node.NODETYPE_ID), longTimestamp)) {
             if (metaNodeId == null || nodeIsA(db, mnId, metaNodeId, longTimestamp))
                 metaNodeId = mnId;
         }
@@ -65,7 +66,7 @@ public class SecondaryIds extends SecondaryId {
     }
 
     public static String superTypeId(Db db, String nodeId, long longTimestamp) {
-        for (String mnId : db.keysIterable(secondaryInv(nodeId, RecreateRole_NodeInstance.SUPERTYPE_ID), longTimestamp)) {
+        for (String mnId : db.keysIterable(secondaryInv(nodeId, Key_Node.SUPERTYPE_ID), longTimestamp)) {
             return mnId;
         }
         return null;

@@ -1,5 +1,6 @@
 package org.agilewiki.console;
 
+import org.agilewiki.console.oodb.nodes.Key_Node;
 import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.ids.composites.Link2Id;
 import org.agilewiki.utils.ids.composites.SecondaryId;
@@ -36,7 +37,7 @@ public class Delete {
             for (String oId : Link1Id.link1InvIterable(db, id, lnkTyp, db.getTimestamp())) {
                 if (SecondaryId.hasSecondaryId(db,
                         lnkTyp + ".lnk1",
-                        SecondaryId.secondaryId(RecreateRole_NodeInstance.INVDEPENDENCY_ID, lnkTyp),
+                        SecondaryId.secondaryId(Key_Node.INVDEPENDENCY_ID, lnkTyp),
                         db.getTimestamp())) {
                     deleter(db, oId);
                 }

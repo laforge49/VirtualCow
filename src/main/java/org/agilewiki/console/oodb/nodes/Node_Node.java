@@ -26,12 +26,12 @@ public class Node_Node extends Metadata_Node {
         if (nodeType != null) {
             SecondaryId.createSecondaryId(SimpleSimon.simpleSimon.db,
                     nodeId,
-                    SecondaryId.secondaryId(RecreateRole_NodeInstance.NODETYPE_ID, nodeType));
+                    SecondaryId.secondaryId(Key_Node.NODETYPE_ID, nodeType));
         }
         if (superType != null) {
             SecondaryId.createSecondaryId(SimpleSimon.simpleSimon.db,
                     nodeId,
-                    SecondaryId.secondaryId(RecreateRole_NodeInstance.SUPERTYPE_ID, superType));
+                    SecondaryId.secondaryId(Key_Node.SUPERTYPE_ID, superType));
         }
     }
 
