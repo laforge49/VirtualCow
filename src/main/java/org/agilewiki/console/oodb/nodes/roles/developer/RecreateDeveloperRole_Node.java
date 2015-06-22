@@ -5,13 +5,14 @@ import org.agilewiki.console.oodb.nodes.JournalEntry_Node;
 
 public class RecreateDeveloperRole_Node extends JournalEntry_Node {
     private static RecreateDeveloperRole_Node recreateDeveloperRole_node;
+    public final static String ID = "$nrecreateDeveloperRole.node";
 
     public static RecreateDeveloperRole_Node get() {
         return recreateDeveloperRole_node;
     }
 
     public static void create() {
-        recreateDeveloperRole_node = new RecreateDeveloperRole_Node("$nrecreateDeveloperRole.node", "$njournalEntry.node");
+        recreateDeveloperRole_node = new RecreateDeveloperRole_Node(ID, JournalEntry_Node.ID);
     }
 
     public RecreateDeveloperRole_Node(String nodeId, String factoryId) {

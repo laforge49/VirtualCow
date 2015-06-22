@@ -40,7 +40,7 @@ public class SecondaryIds extends SecondaryId {
         if (!Character.isLowerCase(idtyp) || idtyp == 'v')
             return false;
         MapAccessor ma = db.mapAccessor();
-        String secInv = SecondaryId.secondaryInv(id, "$nnodeType");
+        String secInv = SecondaryId.secondaryInv(id, Key_Node.NODETYPE_ID);
         VersionedMapNode veln = (VersionedMapNode) ma.get(secInv);
         return veln != null && !veln.isEmpty(longTimestamp);
     }

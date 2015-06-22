@@ -5,13 +5,14 @@ import org.agilewiki.console.oodb.nodes.JournalEntry_Node;
 
 public class Npje_Node extends JournalEntry_Node {
     private static Npje_Node npje_node;
+    public final static String ID = "$nnpje.node";
 
     public static Npje_Node get() {
         return npje_node;
     }
 
     public static void create() {
-        npje_node = new Npje_Node("$nnpje.node", "$njournalEntry.node");
+        npje_node = new Npje_Node(ID, JournalEntry_Node.ID);
     }
 
     public Npje_Node(String nodeId, String factoryId) {
