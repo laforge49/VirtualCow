@@ -178,7 +178,7 @@ public class User {
         for (String uId : SecondaryIds.vmnIdIterable(db, emailSecondaryId, db.getTimestamp())) {
             return "duplicate email: " + ValueId.value(emailId);
         }
-
+        db.set(userId, "$nsubject", emailId);
         db.set(userId, PASSWORD_KEY, passwordHash);
         SecondaryIds.createSecondaryId(db, userId, emailSecondaryId);
         SecondaryIds.createSecondaryId(db, userId,

@@ -18,6 +18,20 @@ public class Attribute_Node extends Node_NodeInstance {
         attribute_node = new Attribute_Node(ID, Node_Node.ID);
     }
 
+    public static void define(String attributeNameId, String nodeId) {
+        String attributeId = RandomIds.randomId.generate();
+        SimpleSimon.simpleSimon.db.set(attributeId, "$nsubject", attributeNameId);
+        SecondaryId.createSecondaryId(SimpleSimon.simpleSimon.db,
+                attributeId,
+                SecondaryId.secondaryId(Key_Node.NODETYPE_ID, ID));
+        SecondaryId.createSecondaryId(SimpleSimon.simpleSimon.db,
+                attributeId,
+                SecondaryId.secondaryId(Key_Node.ATTRIBUTENAME_ID, attributeNameId));
+        Link1Id.createLink1(SimpleSimon.simpleSimon.db,
+                attributeId, Lnk1_Node.ATTRIBUTEOF_ID,
+                nodeId);
+    }
+
     public Attribute_Node(String nodeId, String factoryId) {
         super(nodeId, factoryId);
     }
@@ -25,15 +39,5 @@ public class Attribute_Node extends Node_NodeInstance {
     @Override
     public Node createNode(String nodeId, String factoryId) {
         return new Attribute_NodeInstance(nodeId, factoryId);
-    }
-
-    public void define(String attributeNameId, String nodeId) {
-        String attributeId = RandomIds.randomId.generate();
-        SecondaryId.createSecondaryId(SimpleSimon.simpleSimon.db,
-                attributeId,
-                SecondaryId.secondaryId(Key_Node.ATTRIBUTENAME_ID, attributeNameId));
-        Link1Id.createLink1(SimpleSimon.simpleSimon.db,
-                attributeId, Lnk1_Node.ATTRIBUTEOF_ID,
-                nodeId);
     }
 }

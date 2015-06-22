@@ -47,5 +47,7 @@ public class RecreateSystemRole_NodeInstance extends RecreateRole_NodeInstance {
         for (String transactionName : db.transactionRegistry.keySet()) {
             Node_Node.define("$n" + transactionName + ".node", Node_Node.ID, JournalEntry_Node.ID);
         }
+
+        Attribute_Node.define("$npassword", User_Node.ID);
     }
 }
