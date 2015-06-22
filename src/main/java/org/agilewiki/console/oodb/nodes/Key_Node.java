@@ -7,17 +7,18 @@ import org.agilewiki.utils.ids.composites.Link1Id;
 
 public class Key_Node extends Metadata_Node {
     private static Key_Node key_node;
+    public final static String ID = "$nkey.node";
 
     public static Key_Node get() {
         return key_node;
     }
 
     public static void create() {
-        key_node = new Key_Node("$nkey.node", "$nnode.node");
+        key_node = new Key_Node(ID, Node_Node.ID);
     }
 
     public static void define(String nodeId, String targetType) {
-        Node_Node.define(nodeId, RecreateRole_NodeInstance.KEY_NODE_ID, null);
+        Node_Node.define(nodeId, ID, null);
         Link1Id.createLink1(SimpleSimon.simpleSimon.db,
                 nodeId,
                 RecreateRole_NodeInstance.TARGET_ID,

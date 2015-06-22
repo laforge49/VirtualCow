@@ -1,5 +1,6 @@
 package org.agilewiki.console;
 
+import org.agilewiki.console.oodb.nodes.User_Node;
 import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.console.oodb.nodes.roles.admin.AdminRole_Node;
 import org.agilewiki.console.oodb.nodes.roles.developer.DeveloperRole_Node;
@@ -180,8 +181,7 @@ public class User {
         db.set(userId, PASSWORD_KEY, passwordHash);
         SecondaryIds.createSecondaryId(db, userId, emailSecondaryId);
         SecondaryIds.createSecondaryId(db, userId,
-                SecondaryId.secondaryId(RecreateRole_NodeInstance.NODETYPE_ID,
-                        RecreateRole_NodeInstance.USER_NODE_ID));
+                SecondaryId.secondaryId(RecreateRole_NodeInstance.NODETYPE_ID, User_Node.ID));
         for (String userRole : userRoles) {
             String userTypeSecondaryId =
                     SecondaryIds.secondaryId(ROLE_ID, NameIds.generate(userRole));

@@ -44,6 +44,7 @@ public class DeveloperRole_Node extends Role_NodeInstance {
     private NodesBlade nodesNodesBlade;
     private NodesBlade keysNodesBlade;
     private NodesBlade lnk1sNodesBlade;
+    private NodesBlade rolesNodesBlade;
     private InvLinksBlade invLinksBlade;
 
     public DeveloperRole_Node(String nodeId, String factoryId)
@@ -79,6 +80,7 @@ public class DeveloperRole_Node extends Role_NodeInstance {
         nodesNodesBlade = new NodesBlade(this, "nodesNodes", "NodeTypes", "$D$nnodeType$nnode.node");
         keysNodesBlade = new NodesBlade(this, "keysNodes", "Key Types", "$D$nnodeType$nkey.node");
         lnk1sNodesBlade = new NodesBlade(this, "lnk1Nodes", "Label Types", "$D$nnodeType$nlnk1.node");
+        rolesNodesBlade = new NodesBlade(this, "roleNodes", "Role Types", "$D$nnodeType$nrole.node");
         invLinksBlade = new InvLinksBlade(this, "invLinks");
 
         RecreateDeveloperRole_Node.create();
@@ -108,6 +110,7 @@ public class DeveloperRole_Node extends Role_NodeInstance {
         menuItem(home, currentPage, setTimestamp, setRole, nodesNodesBlade);
         menuItem(home, currentPage, setTimestamp, setRole, keysNodesBlade);
         menuItem(home, currentPage, setTimestamp, setRole, lnk1sNodesBlade);
+        menuItem(home, currentPage, setTimestamp, setRole, rolesNodesBlade);
 
         menuItem(home, currentPage, setTimestamp, setRole, postBlade, timestamp != null);
     }

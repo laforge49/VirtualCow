@@ -1,8 +1,8 @@
 package org.agilewiki.console;
 
-import org.agilewiki.console.oodb.nodes.JournalEntry_NodeInstance;
-import org.agilewiki.console.oodb.nodes.Node_Node;
+import org.agilewiki.console.oodb.nodes.*;
 import org.agilewiki.console.oodb.nodes.roles.Role;
+import org.agilewiki.console.oodb.nodes.roles.Role_Node;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
@@ -11,16 +11,6 @@ import org.agilewiki.utils.virtualcow.Db;
  * Creates the common metadata for a role.
  */
 abstract public class RecreateRole_NodeInstance extends JournalEntry_NodeInstance {
-    final public static String METADATA_NODE_ID = "$nmetadata.node";
-
-    final public static String NODE_NODE_ID = "$nnode.node";
-    final public static String KEY_NODE_ID = "$nkey.node";
-    final public static String LNK1_NODE_ID = "$nlnk1.node";
-
-    final public static String ROLE_NODE_ID = "$nrole.node";
-    final public static String USER_NODE_ID = "$nuser.node";
-    final public static String JOURNALENTRY_NODE_ID = "$njournalEntry.node";
-
     final public static String NODETYPE_ID = "$nnodeType";
     final public static String NODETYPE_KEY_ID = "$nnodeType.key";
     final public static String SUPERTYPE_ID = "$nsuperType";
@@ -64,16 +54,16 @@ abstract public class RecreateRole_NodeInstance extends JournalEntry_NodeInstanc
 
         Delete.delete(db, thisRoleNodeId);
 
-        Node_Node.define(METADATA_NODE_ID, NODE_NODE_ID, null);
+        Node_Node.define(Metadata_Node.ID, Node_Node.ID, null);
 
-        Node_Node.define(NODE_NODE_ID, NODE_NODE_ID, METADATA_NODE_ID);
-        Node_Node.define(KEY_NODE_ID, NODE_NODE_ID, METADATA_NODE_ID);
-        Node_Node.define(LNK1_NODE_ID, NODE_NODE_ID, METADATA_NODE_ID);
+        Node_Node.define(Node_Node.ID, Node_Node.ID, Metadata_Node.ID);
+        Node_Node.define(Key_Node.ID, Node_Node.ID, Metadata_Node.ID);
+        Node_Node.define(Lnk1_Node.ID, Node_Node.ID, Metadata_Node.ID);
 
-        Node_Node.define(ROLE_NODE_ID, NODE_NODE_ID, NODE_NODE_ID);
-        Node_Node.define(USER_NODE_ID, NODE_NODE_ID, NODE_NODE_ID);
-        Node_Node.define(JOURNALENTRY_NODE_ID, NODE_NODE_ID, NODE_NODE_ID);
+        Node_Node.define(Role_Node.ID, Node_Node.ID, Node_Node.ID);
+        Node_Node.define(User_Node.ID, Node_Node.ID, Node_Node.ID);
+        Node_Node.define(JournalEntry_Node.ID, Node_Node.ID, Node_Node.ID);
 
-        SecondaryId.createSecondaryId(db, thisRoleNodeId, SecondaryId.secondaryId(NODETYPE_ID, ROLE_NODE_ID));
+        SecondaryId.createSecondaryId(db, thisRoleNodeId, SecondaryId.secondaryId(NODETYPE_ID, Role_Node.ID));
     }
 }

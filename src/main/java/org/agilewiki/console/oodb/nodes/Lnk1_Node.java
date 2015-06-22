@@ -8,17 +8,18 @@ import org.agilewiki.utils.ids.composites.SecondaryId;
 
 public class Lnk1_Node extends Metadata_Node {
     private static Lnk1_Node lnk1_node;
+    public final static String ID = "$nlnk1.node";
 
     public static Lnk1_Node get() {
         return lnk1_node;
     }
 
     public static void create() {
-        lnk1_node = new Lnk1_Node("$nlnk1.node", "$nnode.node");
+        lnk1_node = new Lnk1_Node(ID, Node_Node.ID);
     }
 
     public static void define(String nodeId, String invDependency, String originType, String destinationType, String ofRole) {
-        Node_Node.define(nodeId, RecreateRole_NodeInstance.LNK1_NODE_ID, null);
+        Node_Node.define(nodeId, ID, null);
         if (invDependency != null) {
             SecondaryId.createSecondaryId(SimpleSimon.simpleSimon.db,
                     nodeId,

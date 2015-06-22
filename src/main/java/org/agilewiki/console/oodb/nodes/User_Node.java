@@ -4,13 +4,14 @@ import org.agilewiki.console.oodb.Node;
 
 public class User_Node extends Node_NodeInstance {
     private static User_Node user_node;
+    public final static String ID = "$nuser.node";
 
     public static User_Node get() {
         return user_node;
     }
 
     public static void create() {
-        user_node = new User_Node("$nuser.node", "$nnode.node");
+        user_node = new User_Node(ID, Node_Node.ID);
     }
 
     public User_Node(String nodeId, String factoryId) {

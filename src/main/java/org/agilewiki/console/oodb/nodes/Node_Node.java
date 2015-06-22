@@ -8,6 +8,7 @@ import org.agilewiki.utils.ids.composites.SecondaryId;
 
 public class Node_Node extends Metadata_Node {
     private static Node_Node node_node;
+    public final static String ID = "$nnode.node";
 
     public static Node_Node get() {
         return node_node;
@@ -15,7 +16,7 @@ public class Node_Node extends Metadata_Node {
 
     public static void create()
             throws Exception {
-        node_node = new Node_Node("$nnode.node", "$nnode.node");
+        node_node = new Node_Node(ID, ID);
         JournalEntry_Node.create();
         Role_Node.create();
         User_Node.create();
