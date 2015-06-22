@@ -53,7 +53,7 @@ public class EditRolesBlade extends PostRequestBlade {
                     try {
                         sb = new StringBuilder();
                         for (String roleName : simpleSimon.roles.keySet()) {
-                            if (!roleName.equals("unRole") && !roleName.equals("system")) {
+                            if (!roleName.equals("visitor") && !roleName.equals("system")) {
                                 String niceRoleName = simpleSimon.roles.get(roleName).niceRoleName();
                                 sb.append("<tr>");
                                 sb.append("<td>");
@@ -108,7 +108,7 @@ public class EditRolesBlade extends PostRequestBlade {
                         mn = mn.add(User.USER_KEY, userId);
                         mn = mn.add("nodeId", nodeId);
                         for (String role : simpleSimon.roles.keySet()) {
-                            if (!roleName.equals("unRole") && !roleName.equals("system")) {
+                            if (!roleName.equals("visitor") && !roleName.equals("system")) {
                                 boolean o = false;
                                 boolean n = false;
                                 if (request.getParameter("role-" + role) != null) {
@@ -148,7 +148,7 @@ public class EditRolesBlade extends PostRequestBlade {
                             try {
                                 sb = new StringBuilder();
                                 for (String roleName : simpleSimon.roles.keySet()) {
-                                    if (!roleName.equals("unRole") && !roleName.equals("system")) {
+                                    if (!roleName.equals("visitor") && !roleName.equals("system")) {
                                         String niceRoleName = simpleSimon.roles.get(roleName).niceRoleName();
                                         sb.append("<tr>");
                                         sb.append("<td>");

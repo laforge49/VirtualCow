@@ -1,4 +1,4 @@
-package org.agilewiki.console.oodb.nodes.roles.unRole.forgotPassword;
+package org.agilewiki.console.oodb.nodes.roles.visitor.forgotPassword;
 
 import org.agilewiki.console.PostRequestBlade;
 import org.agilewiki.console.SimpleSimon;

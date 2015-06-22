@@ -1,4 +1,4 @@
-package org.agilewiki.console.oodb.nodes.roles.unRole.newUser;
+package org.agilewiki.console.oodb.nodes.roles.visitor.newUser;
 
 import org.agilewiki.console.oodb.Node;
 import org.agilewiki.console.oodb.nodes.JournalEntry_Node;

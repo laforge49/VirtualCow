@@ -1,4 +1,4 @@
-package org.agilewiki.console.oodb.nodes.roles.unRole;
+package org.agilewiki.console.oodb.nodes.roles.visitor;
 
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.oodb.nodes.roles.Role;
@@ -8,14 +8,14 @@ import javax.servlet.AsyncContext;
 /**
  * Change the email address of the user.
  */
-public class AboutBlade extends RequestBlade {
-    public AboutBlade(Role role, String page) throws Exception {
+public class ContactBlade extends RequestBlade {
+    public ContactBlade(Role role, String page) throws Exception {
         super(role, page);
     }
 
     @Override
     public String niceName() {
-        return "About";
+        return "Contact";
     }
 
     public void get(String page, AsyncContext asyncContext, String userId, Role role) {

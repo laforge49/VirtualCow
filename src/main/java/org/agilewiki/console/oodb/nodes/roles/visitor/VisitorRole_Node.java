@@ -1,33 +1,33 @@
-package org.agilewiki.console.oodb.nodes.roles.unRole;
+package org.agilewiki.console.oodb.nodes.roles.visitor;
 
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.oodb.nodes.roles.Role_Node;
 import org.agilewiki.console.oodb.nodes.roles.Role_NodeInstance;
-import org.agilewiki.console.oodb.nodes.roles.unRole.forgotPassword.ForgotPasswordBlade;
-import org.agilewiki.console.oodb.nodes.roles.unRole.login.LoginBlade;
-import org.agilewiki.console.oodb.nodes.roles.unRole.newUser.ValidatedBlade;
+import org.agilewiki.console.oodb.nodes.roles.visitor.forgotPassword.ForgotPasswordBlade;
+import org.agilewiki.console.oodb.nodes.roles.visitor.login.LoginBlade;
+import org.agilewiki.console.oodb.nodes.roles.visitor.newUser.ValidatedBlade;
 
 /**
  * Default role when the user is not logged in.
  */
-public class UnRole_Node extends Role_NodeInstance {
-    private static UnRole_Node unRole_node;
-    public final static String ID = "$nunRole.node";
+public class VisitorRole_Node extends Role_NodeInstance {
+    private static VisitorRole_Node visitorRole_node;
+    public final static String ID = "$nvisitorRole.node";
 
-    public static UnRole_Node get() {
-        return unRole_node;
+    public static VisitorRole_Node get() {
+        return visitorRole_node;
     }
 
     public static void create() throws Exception {
-        unRole_node = new UnRole_Node(ID, Role_Node.ID);
+        visitorRole_node = new VisitorRole_Node(ID, Role_Node.ID);
     }
 
     private WelcomeBlade welcomeBlade;
 
-    public UnRole_Node(String nodeId, String factoryId)
+    public VisitorRole_Node(String nodeId, String factoryId)
             throws Exception {
         super(nodeId, factoryId);
-        niceRoleName = "unRole";
+        niceRoleName = "Visitor";
         welcomeBlade = new WelcomeBlade(this, "welcome");
         ForgotPasswordBlade forgotPasswordBlade = new ForgotPasswordBlade(this, "forgotPassword");
         LoginBlade loginBlade = new LoginBlade(this, "login");
@@ -37,19 +37,14 @@ public class UnRole_Node extends Role_NodeInstance {
         AboutBlade aboutBlade = new AboutBlade(this, "about");
         ContactBlade contactBlade = new ContactBlade(this, "contact");
 
-        RecreateUnRole_Node.create();
-        simpleSimon.db.registerTransaction(RecreateUnRole_NodeInstance.NAME, RecreateUnRole_NodeInstance.class);
-        RecreateUnRole_NodeInstance.unRole = this;
-    }
-
-    @Override
-    public String roleName() {
-        return nodeId.substring(2, nodeId.length() - 5);
+        RecreateVisitorRole_Node.create();
+        simpleSimon.db.registerTransaction(RecreateVisitorRole_NodeInstance.NAME, RecreateVisitorRole_NodeInstance.class);
+        RecreateVisitorRole_NodeInstance.visitorRole = this;
     }
 
     @Override
     public String initializeTransactionName() {
-        return RecreateUnRole_NodeInstance.NAME;
+        return RecreateVisitorRole_NodeInstance.NAME;
     }
 
     @Override

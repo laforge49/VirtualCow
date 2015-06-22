@@ -6,7 +6,7 @@ import org.agilewiki.console.oodb.nodes.Node_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.admin.AdminRole_Node;
 import org.agilewiki.console.oodb.nodes.roles.developer.DeveloperRole_Node;
 import org.agilewiki.console.oodb.nodes.roles.system.SystemRole_Node;
-import org.agilewiki.console.oodb.nodes.roles.unRole.UnRole_Node;
+import org.agilewiki.console.oodb.nodes.roles.visitor.VisitorRole_Node;
 import org.agilewiki.console.oodb.nodes.roles.user.UserRole_Node;
 
 public class Role_Node extends Node_NodeInstance {
@@ -22,7 +22,7 @@ public class Role_Node extends Node_NodeInstance {
         AdminRole_Node.create();
         DeveloperRole_Node.create();
         SystemRole_Node.create();
-        UnRole_Node.create();
+        VisitorRole_Node.create();
         UserRole_Node.create();
     }
 

@@ -1,4 +1,4 @@
-package org.agilewiki.console.oodb.nodes.roles.unRole.login;
+package org.agilewiki.console.oodb.nodes.roles.visitor.login;
 
 import org.agilewiki.console.NameIds;
 import org.agilewiki.console.oodb.nodes.JournalEntry_NodeInstance;
@@ -7,13 +7,13 @@ import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
-public class BadUserAddress_NodeInstance extends JournalEntry_NodeInstance {
-    public final static String NAME = "badUserAddress";
+public class Login_NodeInstance extends JournalEntry_NodeInstance {
+    public final static String NAME = "login";
 
-    public BadUserAddress_NodeInstance() {
+    public Login_NodeInstance() {
     }
 
-    public BadUserAddress_NodeInstance(String nodeId, String factoryId) {
+    public Login_NodeInstance(String nodeId, String factoryId) {
         super(nodeId, factoryId);
     }
 

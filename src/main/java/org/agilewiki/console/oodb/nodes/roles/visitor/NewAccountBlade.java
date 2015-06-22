@@ -1,4 +1,4 @@
-package org.agilewiki.console.oodb.nodes.roles.unRole;
+package org.agilewiki.console.oodb.nodes.roles.visitor;
 
 import org.agilewiki.console.PostRequestBlade;
 import org.agilewiki.console.SimpleSimon;

@@ -3,10 +3,8 @@ package org.agilewiki.console;
 import org.agilewiki.console.oodb.OODb;
 import org.agilewiki.console.oodb.nodes.Metadata_Node;
 import org.agilewiki.console.oodb.nodes.roles.Role;
-import org.agilewiki.console.oodb.nodes.roles.admin.AdminRole_Node;
-import org.agilewiki.console.oodb.nodes.roles.developer.DeveloperRole_Node;
 import org.agilewiki.console.oodb.nodes.roles.system.*;
-import org.agilewiki.console.oodb.nodes.roles.unRole.UnRole_Node;
+import org.agilewiki.console.oodb.nodes.roles.visitor.VisitorRole_Node;
 import org.agilewiki.console.oodb.nodes.roles.user.UserRole_Node;
 import org.agilewiki.utils.ids.Timestamp;
 import org.agilewiki.utils.virtualcow.Db;
@@ -142,7 +140,7 @@ public class SimpleSimon extends HttpServlet {
         if (userIdToken != null)
             userId = Tokens.parse(db, userIdToken);
         if (userId == null) {
-            UnRole_Node.get().dispatchGetRequest(request, null);
+            VisitorRole_Node.get().dispatchGetRequest(request, null);
         } else {
             String roleName = request.getParameter("role");
             if (roleName == null || !User.hasRole(db, userId, roleName))
@@ -173,7 +171,7 @@ public class SimpleSimon extends HttpServlet {
             userId = Tokens.parse(db, userIdToken);
 
         if (userId == null) {
-            UnRole_Node.get().dispatchPostRequest(request, response, null);
+            VisitorRole_Node.get().dispatchPostRequest(request, response, null);
         } else {
             String roleName = request.getParameter("role");
             if (roleName == null || !User.hasRole(db, userId, roleName))
