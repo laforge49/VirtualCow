@@ -1,6 +1,7 @@
 package org.agilewiki.console.oodb.nodes.roles.user;
 
 import org.agilewiki.console.RequestBlade;
+import org.agilewiki.console.oodb.nodes.roles.Role_Node;
 import org.agilewiki.console.oodb.nodes.roles.Role_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.user.changePassword.ChangePasswordBlade;
 import org.agilewiki.console.oodb.nodes.roles.user.delete.DeleteAccountBlade;
@@ -12,6 +13,7 @@ import org.agilewiki.console.oodb.nodes.roles.user.newEmailAddress.NewEmailAddre
  */
 public class UserRole_Node extends Role_NodeInstance {
     private static UserRole_Node userRole_node;
+    public final static String ID = "$nuserRole.node";
 
     public static UserRole_Node get() {
         return userRole_node;
@@ -19,7 +21,7 @@ public class UserRole_Node extends Role_NodeInstance {
 
     public static void create()
             throws Exception {
-        userRole_node = new UserRole_Node("$nuserRole.node", "$nrole.node");
+        userRole_node = new UserRole_Node(ID, Role_Node.ID);
     }
 
     private UserBlade userBlade;

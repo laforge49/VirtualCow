@@ -1,6 +1,7 @@
 package org.agilewiki.console.oodb.nodes.roles.developer;
 
 import org.agilewiki.console.RequestBlade;
+import org.agilewiki.console.oodb.nodes.roles.Role_Node;
 import org.agilewiki.console.oodb.nodes.roles.Role_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.developer.npje.PostBlade;
 
@@ -9,6 +10,7 @@ import org.agilewiki.console.oodb.nodes.roles.developer.npje.PostBlade;
  */
 public class DeveloperRole_Node extends Role_NodeInstance {
     private static DeveloperRole_Node developerRole_node;
+    public final static String ID = "$ndeveloperRole.node";
 
     public static DeveloperRole_Node get() {
         return developerRole_node;
@@ -16,7 +18,7 @@ public class DeveloperRole_Node extends Role_NodeInstance {
 
     public static void create()
             throws Exception {
-        developerRole_node = new DeveloperRole_Node("$ndeveloperRole.node", "$nrole.node");
+        developerRole_node = new DeveloperRole_Node(ID, Role_Node.ID);
     }
 
     private DeveloperBlade developerBlade;

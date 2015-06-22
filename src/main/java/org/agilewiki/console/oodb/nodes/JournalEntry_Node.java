@@ -21,7 +21,7 @@ public class JournalEntry_Node extends Node_NodeInstance {
         Node_Node.define(nodeId, Node_Node.ID, ID);
         Link1Id.createLink1(SimpleSimon.simpleSimon.db,
                 nodeId,
-                RecreateRole_NodeInstance.OFROLE_ID,
+                Lnk1_Node.OFROLE_ID,
                 ofRole);
     }
 

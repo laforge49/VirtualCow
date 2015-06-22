@@ -10,7 +10,6 @@ import org.agilewiki.utils.virtualcow.Db;
 public class RecreateUnRole_NodeInstance extends RecreateRole_NodeInstance {
     public final static String NAME = "recreateUnRole";
     public static UnRole_Node unRole;
-    final public static String UNROLE_NODE_ID = "$nunRole.node";
 
     public RecreateUnRole_NodeInstance() {
     }
@@ -28,7 +27,7 @@ public class RecreateUnRole_NodeInstance extends RecreateRole_NodeInstance {
     public void process(Db db, MapNode tMapNode) {
         super.process(db, tMapNode);
 
-        //JournalEntry_Node.define("$nbadUserAddress.node", UNROLE_NODE_ID);
-        //JournalEntry_Node.define("$nbadUserPassword.node", UNROLE_NODE_ID);
+        //JournalEntry_Node.define("$nbadUserAddress.node", UnRole_Node.ID);
+        //JournalEntry_Node.define("$nbadUserPassword.node", UnRole_Node.ID);
     }
 }

@@ -1,6 +1,7 @@
 package org.agilewiki.console.oodb.nodes.roles.admin;
 
 import org.agilewiki.console.RequestBlade;
+import org.agilewiki.console.oodb.nodes.roles.Role_Node;
 import org.agilewiki.console.oodb.nodes.roles.Role_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.admin.editRoles.EditRolesBlade;
 
@@ -9,6 +10,7 @@ import org.agilewiki.console.oodb.nodes.roles.admin.editRoles.EditRolesBlade;
  */
 public class AdminRole_Node extends Role_NodeInstance {
     private static AdminRole_Node adminRole_node;
+    public final static String ID = "$nadminRole.node";
 
     public static AdminRole_Node get() {
         return adminRole_node;
@@ -16,7 +18,7 @@ public class AdminRole_Node extends Role_NodeInstance {
 
     public static void create()
             throws Exception {
-        adminRole_node = new AdminRole_Node("$nadminRole.node", "$nrole.node");
+        adminRole_node = new AdminRole_Node(ID, Role_Node.ID);
     }
 
     private AdminBlade adminBlade;

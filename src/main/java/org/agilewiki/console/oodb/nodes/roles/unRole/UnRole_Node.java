@@ -1,6 +1,7 @@
 package org.agilewiki.console.oodb.nodes.roles.unRole;
 
 import org.agilewiki.console.RequestBlade;
+import org.agilewiki.console.oodb.nodes.roles.Role_Node;
 import org.agilewiki.console.oodb.nodes.roles.Role_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.unRole.forgotPassword.ForgotPasswordBlade;
 import org.agilewiki.console.oodb.nodes.roles.unRole.login.LoginBlade;
@@ -11,13 +12,14 @@ import org.agilewiki.console.oodb.nodes.roles.unRole.newUser.ValidatedBlade;
  */
 public class UnRole_Node extends Role_NodeInstance {
     private static UnRole_Node unRole_node;
+    public final static String ID = "$nunRole.node";
 
     public static UnRole_Node get() {
         return unRole_node;
     }
 
     public static void create() throws Exception {
-        unRole_node = new UnRole_Node("$nunRole.node", "$nrole.node");
+        unRole_node = new UnRole_Node(ID, Role_Node.ID);
     }
 
     private WelcomeBlade welcomeBlade;

@@ -11,18 +11,6 @@ import org.agilewiki.utils.virtualcow.Db;
  * Creates the common metadata for a role.
  */
 abstract public class RecreateRole_NodeInstance extends JournalEntry_NodeInstance {
-    final public static String TARGET_ID = "$ntarget";
-    final public static String TARGET_LNK1_ID = "$ntarget.lnk1";
-
-    final public static String OFROLE_ID = "$nofRole";
-    final public static String OFROLE_LNK1_ID = "$nofRole.lnk1";
-    final public static String ORIGIN_ID = "$norigin";
-    final public static String ORIGIN_LNK1_ID = "$norigin.lnk1";
-    final public static String DESTINATION_ID = "$ndestination";
-    final public static String DESTINATION_LNK1_ID = "$ndestination.lnk1";
-
-    final public static String USER_ID = "$nuser";
-    final public static String USER_LNK1_ID = "$nuser.lnk1";
 
     public RecreateRole_NodeInstance() {
     }
