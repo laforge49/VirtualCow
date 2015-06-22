@@ -1,6 +1,8 @@
 package org.agilewiki.console.oodb.nodes.roles.system;
 
 import org.agilewiki.console.RecreateRole_NodeInstance;
+import org.agilewiki.console.oodb.nodes.Key_Node;
+import org.agilewiki.console.oodb.nodes.Node_Node;
 import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.ids.composites.SecondaryId;
@@ -28,13 +30,13 @@ public class RecreateSystemRole_NodeInstance extends RecreateRole_NodeInstance {
     public void process(Db db, MapNode tMapNode) {
         super.process(db, tMapNode);
 
-        Link1Id.createLink1(db, NODETYPE_KEY_ID, TARGET_ID, NODE_NODE_ID);
-        Link1Id.createLink1(db, SUPERTYPE_KEY_ID, TARGET_ID, NODE_NODE_ID);
-        Link1Id.createLink1(db, INVDEPENDENCY_KEY_ID, TARGET_ID, LNK1_NODE_ID);
+        Key_Node.define(NODETYPE_KEY_ID, NODE_NODE_ID);
+        Key_Node.define(SUPERTYPE_KEY_ID, NODE_NODE_ID);
+        Key_Node.define(INVDEPENDENCY_KEY_ID, LNK1_NODE_ID);
 
-        Link1Id.createLink1(db, EMAIL_KEY_ID, TARGET_ID, USER_NODE_ID);
-        Link1Id.createLink1(db, ROLE_KEY_ID, TARGET_ID, USER_NODE_ID);
-        Link1Id.createLink1(db, SUBJECT_KEY_ID, TARGET_ID, NODE_NODE_ID);
+        Key_Node.define(EMAIL_KEY_ID, USER_NODE_ID);
+        Key_Node.define(ROLE_KEY_ID, USER_NODE_ID);
+        Key_Node.define(SUBJECT_KEY_ID, NODE_NODE_ID);
 
         Link1Id.createLink1(db, TARGET_LNK1_ID, ORIGIN_ID, NODE_NODE_ID);
         Link1Id.createLink1(db, TARGET_LNK1_ID, DESTINATION_ID, NODE_NODE_ID);
@@ -56,8 +58,7 @@ public class RecreateSystemRole_NodeInstance extends RecreateRole_NodeInstance {
         Link1Id.createLink1(db, USER_LNK1_ID, OFROLE_ID, SYSTEM_NODE_ID);
 
         for (String transactionName : db.transactionRegistry.keySet()) {
-            SecondaryId.createSecondaryId(db, "$n" + transactionName + ".node", SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
-            SecondaryId.createSecondaryId(db, "$n" + transactionName + ".node", SecondaryId.secondaryId(SUPERTYPE_ID, JOURNALENTRY_NODE_ID));
+            Node_Node.define("$n" + transactionName + ".node", NODE_NODE_ID, JOURNALENTRY_NODE_ID);
         }
     }
 }

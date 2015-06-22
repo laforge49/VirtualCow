@@ -1,6 +1,7 @@
 package org.agilewiki.console;
 
 import org.agilewiki.console.oodb.nodes.JournalEntry_NodeInstance;
+import org.agilewiki.console.oodb.nodes.Node_Node;
 import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.collections.MapNode;
@@ -63,48 +64,23 @@ abstract public class RecreateRole_NodeInstance extends JournalEntry_NodeInstanc
 
         Delete.delete(db, thisRoleNodeId);
 
-        SecondaryId.createSecondaryId(db, METADATA_NODE_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
+        Node_Node.define(METADATA_NODE_ID, NODE_NODE_ID, null);
 
-        SecondaryId.createSecondaryId(db, NODE_NODE_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
-        SecondaryId.createSecondaryId(db, NODE_NODE_ID, SecondaryId.secondaryId(SUPERTYPE_ID, METADATA_NODE_ID));
-        SecondaryId.createSecondaryId(db, KEY_NODE_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
-        SecondaryId.createSecondaryId(db, KEY_NODE_ID, SecondaryId.secondaryId(SUPERTYPE_ID, METADATA_NODE_ID));
-        SecondaryId.createSecondaryId(db, LNK1_NODE_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
-        SecondaryId.createSecondaryId(db, LNK1_NODE_ID, SecondaryId.secondaryId(SUPERTYPE_ID, METADATA_NODE_ID));
+        Node_Node.define(NODE_NODE_ID, NODE_NODE_ID, METADATA_NODE_ID);
+        Node_Node.define(KEY_NODE_ID, NODE_NODE_ID, METADATA_NODE_ID);
+        Node_Node.define(LNK1_NODE_ID, NODE_NODE_ID, METADATA_NODE_ID);
 
-        SecondaryId.createSecondaryId(db, ROLE_NODE_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
-        SecondaryId.createSecondaryId(db, ROLE_NODE_ID, SecondaryId.secondaryId(SUPERTYPE_ID, NODE_NODE_ID));
-        SecondaryId.createSecondaryId(db, USER_NODE_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
-        SecondaryId.createSecondaryId(db, USER_NODE_ID, SecondaryId.secondaryId(SUPERTYPE_ID, NODE_NODE_ID));
-        SecondaryId.createSecondaryId(db, JOURNALENTRY_NODE_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
-        SecondaryId.createSecondaryId(db, JOURNALENTRY_NODE_ID, SecondaryId.secondaryId(SUPERTYPE_ID, NODE_NODE_ID));
+        Node_Node.define(ROLE_NODE_ID, NODE_NODE_ID, NODE_NODE_ID);
+        Node_Node.define(USER_NODE_ID, NODE_NODE_ID, NODE_NODE_ID);
+        Node_Node.define(JOURNALENTRY_NODE_ID, NODE_NODE_ID, NODE_NODE_ID);
 
-        SecondaryId.createSecondaryId(db, NODETYPE_KEY_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
-        SecondaryId.createSecondaryId(db, NODETYPE_KEY_ID, SecondaryId.secondaryId(SUPERTYPE_ID, KEY_NODE_ID));
-        SecondaryId.createSecondaryId(db, SUPERTYPE_KEY_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
-        SecondaryId.createSecondaryId(db, SUPERTYPE_KEY_ID, SecondaryId.secondaryId(SUPERTYPE_ID, KEY_NODE_ID));
-        SecondaryId.createSecondaryId(db, INVDEPENDENCY_KEY_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
-        SecondaryId.createSecondaryId(db, INVDEPENDENCY_KEY_ID, SecondaryId.secondaryId(SUPERTYPE_ID, KEY_NODE_ID));
-
-        SecondaryId.createSecondaryId(db, EMAIL_KEY_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
-        SecondaryId.createSecondaryId(db, EMAIL_KEY_ID, SecondaryId.secondaryId(SUPERTYPE_ID, KEY_NODE_ID));
-        SecondaryId.createSecondaryId(db, ROLE_KEY_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
-        SecondaryId.createSecondaryId(db, ROLE_KEY_ID, SecondaryId.secondaryId(SUPERTYPE_ID, KEY_NODE_ID));
-        SecondaryId.createSecondaryId(db, SUBJECT_KEY_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
-        SecondaryId.createSecondaryId(db, SUBJECT_KEY_ID, SecondaryId.secondaryId(SUPERTYPE_ID, KEY_NODE_ID));
-
-        SecondaryId.createSecondaryId(db, TARGET_LNK1_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
-        SecondaryId.createSecondaryId(db, TARGET_LNK1_ID, SecondaryId.secondaryId(SUPERTYPE_ID, LNK1_NODE_ID));
-        SecondaryId.createSecondaryId(db, OFROLE_LNK1_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
-        SecondaryId.createSecondaryId(db, OFROLE_LNK1_ID, SecondaryId.secondaryId(SUPERTYPE_ID, LNK1_NODE_ID));
+        SecondaryId.createSecondaryId(db, TARGET_LNK1_ID, SecondaryId.secondaryId(NODETYPE_ID, LNK1_NODE_ID));
+        SecondaryId.createSecondaryId(db, OFROLE_LNK1_ID, SecondaryId.secondaryId(NODETYPE_ID, LNK1_NODE_ID));
         SecondaryId.createSecondaryId(db, OFROLE_LNK1_ID, SecondaryId.secondaryId(INVDEPENDENCY_ID, OFROLE_ID));
-        SecondaryId.createSecondaryId(db, ORIGIN_LNK1_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
-        SecondaryId.createSecondaryId(db, ORIGIN_LNK1_ID, SecondaryId.secondaryId(SUPERTYPE_ID, LNK1_NODE_ID));
-        SecondaryId.createSecondaryId(db, DESTINATION_LNK1_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
-        SecondaryId.createSecondaryId(db, DESTINATION_LNK1_ID, SecondaryId.secondaryId(SUPERTYPE_ID, LNK1_NODE_ID));
+        SecondaryId.createSecondaryId(db, ORIGIN_LNK1_ID, SecondaryId.secondaryId(NODETYPE_ID, LNK1_NODE_ID));
+        SecondaryId.createSecondaryId(db, DESTINATION_LNK1_ID, SecondaryId.secondaryId(NODETYPE_ID, LNK1_NODE_ID));
 
-        SecondaryId.createSecondaryId(db, USER_LNK1_ID, SecondaryId.secondaryId(NODETYPE_ID, NODE_NODE_ID));
-        SecondaryId.createSecondaryId(db, USER_LNK1_ID, SecondaryId.secondaryId(SUPERTYPE_ID, LNK1_NODE_ID));
+        SecondaryId.createSecondaryId(db, USER_LNK1_ID, SecondaryId.secondaryId(NODETYPE_ID, LNK1_NODE_ID));
 
         SecondaryId.createSecondaryId(db, thisRoleNodeId, SecondaryId.secondaryId(NODETYPE_ID, ROLE_NODE_ID));
     }

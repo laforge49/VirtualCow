@@ -1,7 +1,10 @@
 package org.agilewiki.console.oodb.nodes;
 
+import org.agilewiki.console.RecreateRole_NodeInstance;
+import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.oodb.Node;
 import org.agilewiki.console.oodb.nodes.roles.Role_Node;
+import org.agilewiki.utils.ids.composites.SecondaryId;
 
 public class Node_Node extends Metadata_Node {
     private static Node_Node node_node;
@@ -16,6 +19,19 @@ public class Node_Node extends Metadata_Node {
         JournalEntry_Node.create();
         Role_Node.create();
         User_Node.create();
+    }
+
+    public static void define(String nodeId, String nodeType, String superType) {
+        if (nodeType != null) {
+            SecondaryId.createSecondaryId(SimpleSimon.simpleSimon.db,
+                    nodeId,
+                    SecondaryId.secondaryId(RecreateRole_NodeInstance.NODETYPE_ID, nodeType));
+        }
+        if (superType != null) {
+            SecondaryId.createSecondaryId(SimpleSimon.simpleSimon.db,
+                    nodeId,
+                    SecondaryId.secondaryId(RecreateRole_NodeInstance.SUPERTYPE_ID, superType));
+        }
     }
 
     public Node_Node(String nodeId, String factoryIdb) {

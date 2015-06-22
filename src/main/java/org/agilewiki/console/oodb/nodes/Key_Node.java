@@ -1,6 +1,9 @@
 package org.agilewiki.console.oodb.nodes;
 
+import org.agilewiki.console.RecreateRole_NodeInstance;
+import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.oodb.Node;
+import org.agilewiki.utils.ids.composites.Link1Id;
 
 public class Key_Node extends Metadata_Node {
     private static Key_Node key_node;
@@ -11,6 +14,14 @@ public class Key_Node extends Metadata_Node {
 
     public static void create() {
         key_node = new Key_Node("$nkey.node", "$nnode.node");
+    }
+
+    public static void define(String nodeId, String targetType) {
+        Node_Node.define(nodeId, RecreateRole_NodeInstance.KEY_NODE_ID, null);
+        Link1Id.createLink1(SimpleSimon.simpleSimon.db,
+                nodeId,
+                RecreateRole_NodeInstance.TARGET_ID,
+                targetType);
     }
 
     public Key_Node(String nodeId, String factoryId) {

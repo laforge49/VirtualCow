@@ -76,9 +76,9 @@ public class DeveloperRole_Node extends Role_NodeInstance {
         invDependentBlade = new SecondaryKeysBlade(this, "invDependencyValues", "Inverse Dependent Links", "invDependency");
 
         nodesBlade = new NodesBlade(this, "nodes");
-        nodesNodesBlade = new NodesBlade(this, "nodesNodes", "NodeTypes", "$D$nsuperType$nnode.node");
-        keysNodesBlade = new NodesBlade(this, "keysNodes", "Key Types", "$D$nsuperType$nkey.node");
-        lnk1sNodesBlade = new NodesBlade(this, "lnk1Nodes", "Label Types", "$D$nsuperType$nlnk1.node");
+        nodesNodesBlade = new NodesBlade(this, "nodesNodes", "NodeTypes", "$D$nnodeType$nnode.node");
+        keysNodesBlade = new NodesBlade(this, "keysNodes", "Key Types", "$D$nnodeType$nkey.node");
+        lnk1sNodesBlade = new NodesBlade(this, "lnk1Nodes", "Label Types", "$D$nnodeType$nlnk1.node");
         invLinksBlade = new InvLinksBlade(this, "invLinks");
 
         RecreateDeveloperRole_Node.create();
