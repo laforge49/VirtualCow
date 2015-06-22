@@ -7,8 +7,8 @@ import org.agilewiki.console.oodb.nodes.roles.system.ServletStart_Node;
 import org.agilewiki.console.oodb.nodes.roles.system.ServletStart_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.system.ServletStop_Node;
 import org.agilewiki.console.oodb.nodes.roles.system.ServletStop_NodeInstance;
-import org.agilewiki.console.oodb.nodes.roles.user.UserRole_Node;
-import org.agilewiki.console.oodb.nodes.roles.visitor.VisitorRole_Node;
+import org.agilewiki.console.oodb.nodes.roles.user.User_Role;
+import org.agilewiki.console.oodb.nodes.roles.visitor.Visitor_Role;
 import org.agilewiki.utils.ids.Timestamp;
 import org.agilewiki.utils.virtualcow.Db;
 
@@ -143,14 +143,14 @@ public class SimpleSimon extends HttpServlet {
         if (userIdToken != null)
             userId = Tokens.parse(db, userIdToken);
         if (userId == null) {
-            VisitorRole_Node.get().dispatchGetRequest(request, null);
+            Visitor_Role.get().dispatchGetRequest(request, null);
         } else {
             String roleName = request.getParameter("role");
             if (roleName == null || !User.hasRole(db, userId, roleName))
                 roleName = "profile";
             Role role = roles.get(roleName);
             if (role == null) {
-                role = UserRole_Node.get();
+                role = User_Role.get();
             }
             role.dispatchGetRequest(request, userId);
         }
@@ -174,14 +174,14 @@ public class SimpleSimon extends HttpServlet {
             userId = Tokens.parse(db, userIdToken);
 
         if (userId == null) {
-            VisitorRole_Node.get().dispatchPostRequest(request, response, null);
+            Visitor_Role.get().dispatchPostRequest(request, response, null);
         } else {
             String roleName = request.getParameter("role");
             if (roleName == null || !User.hasRole(db, userId, roleName))
                 roleName = "profile";
             Role role = roles.get(roleName);
             if (role == null) {
-                role = UserRole_Node.get();
+                role = User_Role.get();
             }
             role.dispatchPostRequest(request, response, userId);
         }

@@ -35,7 +35,7 @@ public class Role_NodeInstance extends NodeBase implements Role {
 
     @Override
     public String roleName() {
-        return nodeId.substring(2, nodeId.length() - 9);
+        return nodeId.substring(2, nodeId.length() - 5);
     }
 
     @Override

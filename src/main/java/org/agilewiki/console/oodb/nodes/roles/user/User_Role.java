@@ -11,17 +11,17 @@ import org.agilewiki.console.oodb.nodes.roles.user.newEmailAddress.NewEmailAddre
 /**
  * A base role.
  */
-public class UserRole_Node extends Role_NodeInstance {
-    private static UserRole_Node userRole_node;
-    public final static String ID = "$nuserRole.node";
+public class User_Role extends Role_NodeInstance {
+    private static User_Role user_role;
+    public final static String ID = "$nuser.role";
 
-    public static UserRole_Node get() {
-        return userRole_node;
+    public static User_Role get() {
+        return user_role;
     }
 
     public static void create()
             throws Exception {
-        userRole_node = new UserRole_Node(ID, Role_Node.ID);
+        user_role = new User_Role(ID, Role_Node.ID);
     }
 
     private UserBlade userBlade;
@@ -31,7 +31,7 @@ public class UserRole_Node extends Role_NodeInstance {
     private LogoutBlade logoutBlade;
     private NewEmailAddressBlade newEmailAddressBlade;
 
-    public UserRole_Node(String nodeId, String factoryId)
+    public User_Role(String nodeId, String factoryId)
             throws Exception {
         super(nodeId, factoryId);
         niceRoleName = "User";

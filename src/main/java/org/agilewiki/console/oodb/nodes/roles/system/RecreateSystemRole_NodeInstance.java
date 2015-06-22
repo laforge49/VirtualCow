@@ -9,8 +9,7 @@ import org.agilewiki.utils.virtualcow.Db;
 
 public class RecreateSystemRole_NodeInstance extends RecreateRole_NodeInstance {
     public final static String NAME = "recreateSystemRole";
-    public static SystemRole_Node systemRole;
-    final public static String SYSTEM_NODE_ID = "$nsystemRole.node";
+    public static System_Role systemRole;
 
     public RecreateSystemRole_NodeInstance() {
     }
@@ -36,12 +35,12 @@ public class RecreateSystemRole_NodeInstance extends RecreateRole_NodeInstance {
         Key_Node.define(Key_Node.ROLE_KEY_ID, User_Node.ID);
         Key_Node.define(Key_Node.SUBJECT_KEY_ID, Node_Node.ID);
 
-        Lnk1_Node.define(Lnk1_Node.TARGET_LNK1_ID, null, Node_Node.ID, Node_Node.ID, SystemRole_Node.ID);
+        Lnk1_Node.define(Lnk1_Node.TARGET_LNK1_ID, null, Node_Node.ID, Node_Node.ID, System_Role.ID);
         Lnk1_Node.define(Lnk1_Node.OFROLE_LNK1_ID, Lnk1_Node.OFROLE_ID, Metadata_Node.ID, Role_Node.ID, null);
-        Lnk1_Node.define(Lnk1_Node.ORIGIN_LNK1_ID, null, Lnk1_Node.ID, Node_Node.ID, SystemRole_Node.ID);
-        Lnk1_Node.define(Lnk1_Node.DESTINATION_LNK1_ID, null, Lnk1_Node.ID, Node_Node.ID, SystemRole_Node.ID);
+        Lnk1_Node.define(Lnk1_Node.ORIGIN_LNK1_ID, null, Lnk1_Node.ID, Node_Node.ID, System_Role.ID);
+        Lnk1_Node.define(Lnk1_Node.DESTINATION_LNK1_ID, null, Lnk1_Node.ID, Node_Node.ID, System_Role.ID);
 
-        Lnk1_Node.define(Lnk1_Node.USER_LNK1_ID, null, Metadata_Node.ID, User_Node.ID, SystemRole_Node.ID);
+        Lnk1_Node.define(Lnk1_Node.USER_LNK1_ID, null, Metadata_Node.ID, User_Node.ID, System_Role.ID);
 
         for (String transactionName : db.transactionRegistry.keySet()) {
             Node_Node.define("$n" + transactionName + ".node", Node_Node.ID, JournalEntry_Node.ID);

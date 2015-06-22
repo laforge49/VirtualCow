@@ -8,17 +8,17 @@ import org.agilewiki.console.oodb.nodes.roles.admin.editRoles.EditRolesBlade;
 /**
  * A base role.
  */
-public class AdminRole_Node extends Role_NodeInstance {
-    private static AdminRole_Node adminRole_node;
-    public final static String ID = "$nadminRole.node";
+public class Admin_Role extends Role_NodeInstance {
+    private static Admin_Role admin_role;
+    public final static String ID = "$nadmin.role";
 
-    public static AdminRole_Node get() {
-        return adminRole_node;
+    public static Admin_Role get() {
+        return admin_role;
     }
 
     public static void create()
             throws Exception {
-        adminRole_node = new AdminRole_Node(ID, Role_Node.ID);
+        admin_role = new Admin_Role(ID, Role_Node.ID);
     }
 
     private AdminBlade adminBlade;
@@ -27,7 +27,7 @@ public class AdminRole_Node extends Role_NodeInstance {
     private EditRolesBlade editRolesBlade;
     private RecreateRoleBlade recreateRoleBlade;
 
-    public AdminRole_Node(String nodeId, String factoryId)
+    public Admin_Role(String nodeId, String factoryId)
             throws Exception {
         super(nodeId, factoryId);
         niceRoleName = "Admin";

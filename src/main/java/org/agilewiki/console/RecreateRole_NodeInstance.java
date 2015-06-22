@@ -23,8 +23,8 @@ abstract public class RecreateRole_NodeInstance extends JournalEntry_NodeInstanc
 
     @Override
     public void process(Db db, MapNode tMapNode) {
-        final String thisRoleId = "$n" + role().roleName() + "Role";
-        final String thisRoleNodeId = thisRoleId + ".node";
+        final String thisRoleId = "$n" + role().roleName();
+        final String thisRoleNodeId = thisRoleId + ".role";
 
         Delete.delete(db, thisRoleNodeId);
 

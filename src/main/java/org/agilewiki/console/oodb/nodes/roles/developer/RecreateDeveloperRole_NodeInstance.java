@@ -7,7 +7,7 @@ import org.agilewiki.utils.virtualcow.Db;
 
 public class RecreateDeveloperRole_NodeInstance extends RecreateRole_NodeInstance {
     public final static String NAME = "recreateDeveloperRole";
-    public static DeveloperRole_Node developerRole;
+    public static Developer_Role developerRole;
 
     public RecreateDeveloperRole_NodeInstance() {
     }

@@ -3,11 +3,11 @@ package org.agilewiki.console.oodb.nodes.roles;
 import org.agilewiki.console.oodb.Node;
 import org.agilewiki.console.oodb.nodes.Node_Node;
 import org.agilewiki.console.oodb.nodes.Node_NodeInstance;
-import org.agilewiki.console.oodb.nodes.roles.admin.AdminRole_Node;
-import org.agilewiki.console.oodb.nodes.roles.developer.DeveloperRole_Node;
-import org.agilewiki.console.oodb.nodes.roles.system.SystemRole_Node;
-import org.agilewiki.console.oodb.nodes.roles.user.UserRole_Node;
-import org.agilewiki.console.oodb.nodes.roles.visitor.VisitorRole_Node;
+import org.agilewiki.console.oodb.nodes.roles.admin.Admin_Role;
+import org.agilewiki.console.oodb.nodes.roles.developer.Developer_Role;
+import org.agilewiki.console.oodb.nodes.roles.system.System_Role;
+import org.agilewiki.console.oodb.nodes.roles.user.User_Role;
+import org.agilewiki.console.oodb.nodes.roles.visitor.Visitor_Role;
 
 public class Role_Node extends Node_NodeInstance {
     private static Role_Node role_node;
@@ -19,11 +19,11 @@ public class Role_Node extends Node_NodeInstance {
 
     public static void create() throws Exception {
         role_node = new Role_Node(ID, Node_Node.ID);
-        AdminRole_Node.create();
-        DeveloperRole_Node.create();
-        SystemRole_Node.create();
-        VisitorRole_Node.create();
-        UserRole_Node.create();
+        Admin_Role.create();
+        Developer_Role.create();
+        System_Role.create();
+        Visitor_Role.create();
+        User_Role.create();
     }
 
     public Role_Node(String nodeId, String factoryId) {

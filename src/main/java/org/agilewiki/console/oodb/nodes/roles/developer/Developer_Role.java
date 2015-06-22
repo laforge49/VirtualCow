@@ -8,17 +8,17 @@ import org.agilewiki.console.oodb.nodes.roles.developer.npje.PostBlade;
 /**
  * The developer role.
  */
-public class DeveloperRole_Node extends Role_NodeInstance {
-    private static DeveloperRole_Node developerRole_node;
-    public final static String ID = "$ndeveloperRole.node";
+public class Developer_Role extends Role_NodeInstance {
+    private static Developer_Role developer_role;
+    public final static String ID = "$ndeveloper.role";
 
-    public static DeveloperRole_Node get() {
-        return developerRole_node;
+    public static Developer_Role get() {
+        return developer_role;
     }
 
     public static void create()
             throws Exception {
-        developerRole_node = new DeveloperRole_Node(ID, Role_Node.ID);
+        developer_role = new Developer_Role(ID, Role_Node.ID);
     }
 
     private DeveloperBlade developerBlade;
@@ -49,7 +49,7 @@ public class DeveloperRole_Node extends Role_NodeInstance {
     private NodesBlade rolesNodesBlade;
     private InvLinksBlade invLinksBlade;
 
-    public DeveloperRole_Node(String nodeId, String factoryId)
+    public Developer_Role(String nodeId, String factoryId)
             throws Exception {
         super(nodeId, factoryId);
         niceRoleName = "Developer";

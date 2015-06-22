@@ -3,9 +3,9 @@ package org.agilewiki.console;
 import org.agilewiki.console.oodb.nodes.Key_Node;
 import org.agilewiki.console.oodb.nodes.User_Node;
 import org.agilewiki.console.oodb.nodes.roles.Role;
-import org.agilewiki.console.oodb.nodes.roles.admin.AdminRole_Node;
-import org.agilewiki.console.oodb.nodes.roles.developer.DeveloperRole_Node;
-import org.agilewiki.console.oodb.nodes.roles.user.UserRole_Node;
+import org.agilewiki.console.oodb.nodes.roles.admin.Admin_Role;
+import org.agilewiki.console.oodb.nodes.roles.developer.Developer_Role;
+import org.agilewiki.console.oodb.nodes.roles.user.User_Role;
 import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.ids.composites.SecondaryId;
@@ -160,9 +160,9 @@ public class User {
                 userId,
                 emailId,
                 passwordHash,
-                UserRole_Node.get().roleName(),
-                DeveloperRole_Node.get().roleName(),
-                AdminRole_Node.get().roleName());
+                User_Role.get().roleName(),
+                Developer_Role.get().roleName(),
+                Admin_Role.get().roleName());
         if (error == null)
             return true;
         servletConfig.getServletContext().log(error);

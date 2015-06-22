@@ -7,19 +7,19 @@ import org.agilewiki.console.oodb.nodes.roles.Role_NodeInstance;
 /**
  * System role represents the general infrastructure.
  */
-public class SystemRole_Node extends Role_NodeInstance {
-    private static SystemRole_Node systemRole_node;
-    public final static String ID = "$nsystemRole.node";
+public class System_Role extends Role_NodeInstance {
+    private static System_Role system_role;
+    public final static String ID = "$nsystem.role";
 
-    public static SystemRole_Node get() {
-        return systemRole_node;
+    public static System_Role get() {
+        return system_role;
     }
 
     public static void create() {
-        systemRole_node = new SystemRole_Node(ID, Role_Node.ID);
+        system_role = new System_Role(ID, Role_Node.ID);
     }
 
-    public SystemRole_Node(String nodeId, String factoryId) {
+    public System_Role(String nodeId, String factoryId) {
         super(nodeId, factoryId);
         niceRoleName = "System";
         RecreateSystemRole_Node.create();

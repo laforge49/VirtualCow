@@ -10,21 +10,21 @@ import org.agilewiki.console.oodb.nodes.roles.visitor.newUser.ValidatedBlade;
 /**
  * Default role when the user is not logged in.
  */
-public class VisitorRole_Node extends Role_NodeInstance {
-    private static VisitorRole_Node visitorRole_node;
-    public final static String ID = "$nvisitorRole.node";
+public class Visitor_Role extends Role_NodeInstance {
+    private static Visitor_Role visitor_role;
+    public final static String ID = "$nvisitor.role";
 
-    public static VisitorRole_Node get() {
-        return visitorRole_node;
+    public static Visitor_Role get() {
+        return visitor_role;
     }
 
     public static void create() throws Exception {
-        visitorRole_node = new VisitorRole_Node(ID, Role_Node.ID);
+        visitor_role = new Visitor_Role(ID, Role_Node.ID);
     }
 
     private WelcomeBlade welcomeBlade;
 
-    public VisitorRole_Node(String nodeId, String factoryId)
+    public Visitor_Role(String nodeId, String factoryId)
             throws Exception {
         super(nodeId, factoryId);
         niceRoleName = "Visitor";
