@@ -74,14 +74,6 @@ abstract public class RecreateRole_NodeInstance extends JournalEntry_NodeInstanc
         Node_Node.define(USER_NODE_ID, NODE_NODE_ID, NODE_NODE_ID);
         Node_Node.define(JOURNALENTRY_NODE_ID, NODE_NODE_ID, NODE_NODE_ID);
 
-        SecondaryId.createSecondaryId(db, TARGET_LNK1_ID, SecondaryId.secondaryId(NODETYPE_ID, LNK1_NODE_ID));
-        SecondaryId.createSecondaryId(db, OFROLE_LNK1_ID, SecondaryId.secondaryId(NODETYPE_ID, LNK1_NODE_ID));
-        SecondaryId.createSecondaryId(db, OFROLE_LNK1_ID, SecondaryId.secondaryId(INVDEPENDENCY_ID, OFROLE_ID));
-        SecondaryId.createSecondaryId(db, ORIGIN_LNK1_ID, SecondaryId.secondaryId(NODETYPE_ID, LNK1_NODE_ID));
-        SecondaryId.createSecondaryId(db, DESTINATION_LNK1_ID, SecondaryId.secondaryId(NODETYPE_ID, LNK1_NODE_ID));
-
-        SecondaryId.createSecondaryId(db, USER_LNK1_ID, SecondaryId.secondaryId(NODETYPE_ID, LNK1_NODE_ID));
-
         SecondaryId.createSecondaryId(db, thisRoleNodeId, SecondaryId.secondaryId(NODETYPE_ID, ROLE_NODE_ID));
     }
 }
