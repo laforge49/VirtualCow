@@ -6,8 +6,8 @@ import org.agilewiki.console.oodb.nodes.Node_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.admin.AdminRole_Node;
 import org.agilewiki.console.oodb.nodes.roles.developer.DeveloperRole_Node;
 import org.agilewiki.console.oodb.nodes.roles.system.SystemRole_Node;
-import org.agilewiki.console.oodb.nodes.roles.visitor.VisitorRole_Node;
 import org.agilewiki.console.oodb.nodes.roles.user.UserRole_Node;
+import org.agilewiki.console.oodb.nodes.roles.visitor.VisitorRole_Node;
 
 public class Role_Node extends Node_NodeInstance {
     private static Role_Node role_node;

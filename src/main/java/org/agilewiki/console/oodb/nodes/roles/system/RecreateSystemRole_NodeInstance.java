@@ -4,8 +4,6 @@ import org.agilewiki.console.RecreateRole_NodeInstance;
 import org.agilewiki.console.oodb.nodes.*;
 import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.console.oodb.nodes.roles.Role_Node;
-import org.agilewiki.utils.ids.composites.Link1Id;
-import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 

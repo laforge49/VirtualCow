@@ -1,6 +1,5 @@
 package org.agilewiki.console.oodb.nodes;
 
-import org.agilewiki.console.RecreateRole_NodeInstance;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.oodb.Node;
 import org.agilewiki.utils.ids.composites.Link1Id;

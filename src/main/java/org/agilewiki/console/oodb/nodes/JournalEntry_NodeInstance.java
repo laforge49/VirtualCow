@@ -1,6 +1,5 @@
 package org.agilewiki.console.oodb.nodes;
 
-import org.agilewiki.console.RecreateRole_NodeInstance;
 import org.agilewiki.console.User;
 import org.agilewiki.console.oodb.NodeBase;
 import org.agilewiki.utils.ids.NameId;
