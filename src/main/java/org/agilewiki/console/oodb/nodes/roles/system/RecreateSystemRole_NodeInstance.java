@@ -1,9 +1,12 @@
 package org.agilewiki.console.oodb.nodes.roles.system;
 
 import org.agilewiki.console.RecreateRole_NodeInstance;
+import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.oodb.nodes.*;
 import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.console.oodb.nodes.roles.Role_Node;
+import org.agilewiki.utils.ids.composites.Link1Id;
+import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
@@ -48,6 +51,13 @@ public class RecreateSystemRole_NodeInstance extends RecreateRole_NodeInstance {
             Node_Node.define("$n" + transactionName + ".node", Node_Node.ID, JournalEntry_Node.ID);
         }
 
+        Link1Id.createLink1(db,
+                User_Node.ID,
+                Lnk1_Node.OFROLE_ID,
+                System_Role.ID);
+
         Attribute_Node.define("$npassword", User_Node.ID);
+        Attribute_Node.define("$nsubject", User_Node.ID);
+        Attribute_Node.define("$nsubject", Attribute_Node.ID);
     }
 }

@@ -13,7 +13,8 @@ import java.util.ArrayDeque;
  */
 public class Delete {
     public static void delete(Db db, String id) {
-        ArrayDeque<String> ids = deleter(db, id);
+        ArrayDeque<String> ids = new ArrayDeque<String>();
+        deleter(db, ids, id);
         while (!ids.isEmpty()) {
             id = ids.removeLast();
             for (String secondaryType : SecondaryId.typeIdIterable(db, id)) {
@@ -24,8 +25,7 @@ public class Delete {
         }
     }
 
-    private static ArrayDeque<String> deleter(Db db, String id) {
-        ArrayDeque<String> ids = new ArrayDeque<String>();
+    private static void deleter(Db db, ArrayDeque<String> ids, String id) {
         ids.addLast(id);
         db.clearMap(id);
         for (String lnkTyp : Link1Id.link1LabelIdIterable(db, id)) {
@@ -39,7 +39,7 @@ public class Delete {
                         lnkTyp + ".lnk1",
                         SecondaryId.secondaryId(Key_Node.INVDEPENDENCY_ID, lnkTyp),
                         db.getTimestamp())) {
-                    deleter(db, oId);
+                    deleter(db, ids, oId);
                 }
                 Link1Id.removeLink1(db, oId, lnkTyp, id);
             }
@@ -49,6 +49,5 @@ public class Delete {
                 Link2Id.removeLink2(db, id, lnkTyp, tId);
             }
         }
-        return ids;
     }
 }
