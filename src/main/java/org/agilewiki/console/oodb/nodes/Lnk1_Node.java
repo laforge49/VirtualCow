@@ -47,10 +47,6 @@ public class Lnk1_Node extends Metadata_Node {
                 nodeId,
                 Lnk1_Node.DESTINATION_ID,
                 destinationType);
-        Link1Id.createLink1(SimpleSimon.simpleSimon.db,
-                nodeId,
-                Lnk1_Node.OFROLE_ID,
-                ofRole);
     }
 
     public Lnk1_Node(String nodeId, String factoryId) {

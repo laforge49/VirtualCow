@@ -32,16 +32,19 @@ public class Developer_Role extends Role_NodeInstance {
     private SecondaryKeysBlade nodeTypeBlade;
     private SecondaryKeysBlade superTypeBlade;
     private SecondaryKeysBlade invDependentBlade;
+    private SecondaryKeysBlade attributeNameBlade;
     private Lnk1OriginsBlade targetOriginsBlade;
     private Lnk1OriginsBlade originOriginsBlade;
     private Lnk1OriginsBlade destinationOriginsBlade;
     private Lnk1OriginsBlade ofRoleOriginsBlade;
     private Lnk1OriginsBlade userOriginsBlade;
+    private Lnk1OriginsBlade attributeOfOriginsBlade;
     private Lnk1DestinationsBlade targetDestinationsBlade;
     private Lnk1DestinationsBlade originDestinationsBlade;
     private Lnk1DestinationsBlade destinationDestinationsBlade;
     private Lnk1DestinationsBlade ofRoleDestinationsBlade;
     private Lnk1DestinationsBlade userDestinationsBlade;
+    private Lnk1DestinationsBlade attributeOfDestinationsBlade;
     private NodesBlade nodesBlade;
     private NodesBlade nodesNodesBlade;
     private NodesBlade keysNodesBlade;
@@ -64,12 +67,14 @@ public class Developer_Role extends Role_NodeInstance {
         originOriginsBlade = new Lnk1OriginsBlade(this, "originOrigins", "Origin Link Origins", "origin");
         destinationOriginsBlade = new Lnk1OriginsBlade(this, "destinationOrigins", "Destination Link Origins", "destination");
         ofRoleOriginsBlade = new Lnk1OriginsBlade(this, "ofRoleOrigins", "Of Role Link Origins", "ofRole");
+        attributeOfOriginsBlade = new Lnk1OriginsBlade(this, "attributeOfOrigins", "Attribute of Link Origins", "attributeOf");
 
         userDestinationsBlade = new Lnk1DestinationsBlade(this, "userDestinations", "User Link Destinations", "user");
         targetDestinationsBlade = new Lnk1DestinationsBlade(this, "targetDestinations", "Target Link Destinations", "target");
         originDestinationsBlade = new Lnk1DestinationsBlade(this, "originDestinations", "Origin Link Destinations", "origin");
         destinationDestinationsBlade = new Lnk1DestinationsBlade(this, "destinationDestinations", "Destination Link Destinations", "destination");
         ofRoleDestinationsBlade = new Lnk1DestinationsBlade(this, "ofRoleDestinations", "Of Role Link Destinations", "ofRole");
+        attributeOfDestinationsBlade = new Lnk1DestinationsBlade(this, "attributeOfDestinations", "Attribute of Link Destinations", "attributeOf");
 
         subjectsBlade = new SecondaryKeysBlade(this, "subjectValues", "Subjects", "subject");
         emailAddressesBlade = new SecondaryKeysBlade(this, "emailValues", "Email Addresses", "email");
@@ -77,6 +82,7 @@ public class Developer_Role extends Role_NodeInstance {
         nodeTypeBlade = new SecondaryKeysBlade(this, "nodeTypeValues", "Node Types", "nodeType");
         superTypeBlade = new SecondaryKeysBlade(this, "superTypeValues", "Super Types", "superType");
         invDependentBlade = new SecondaryKeysBlade(this, "invDependencyValues", "Inverse Dependent Links", "invDependency");
+        attributeNameBlade = new SecondaryKeysBlade(this, "attributeNameValues", "Attribute Names", "attributeName");
 
         nodesBlade = new NodesBlade(this, "nodes");
         nodesNodesBlade = new NodesBlade(this, "nodesNodes", "NodeTypes", "$D$nnodeType$nnode.node");
