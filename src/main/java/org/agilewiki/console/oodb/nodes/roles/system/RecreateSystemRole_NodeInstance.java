@@ -1,10 +1,27 @@
 package org.agilewiki.console.oodb.nodes.roles.system;
 
+import org.agilewiki.console.NameIds;
 import org.agilewiki.console.RecreateRole_NodeInstance;
 import org.agilewiki.console.SimpleSimon;
+import org.agilewiki.console.User;
 import org.agilewiki.console.oodb.nodes.*;
 import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.console.oodb.nodes.roles.Role_Node;
+import org.agilewiki.console.oodb.nodes.roles.admin.RecreateAdminRole_Node;
+import org.agilewiki.console.oodb.nodes.roles.admin.editRoles.UpdateRoles_Node;
+import org.agilewiki.console.oodb.nodes.roles.developer.RecreateDeveloperRole_Node;
+import org.agilewiki.console.oodb.nodes.roles.developer.npje.Npje_Node;
+import org.agilewiki.console.oodb.nodes.roles.user.RecreateUserRole_Node;
+import org.agilewiki.console.oodb.nodes.roles.user.changePassword.ChangePassword_Node;
+import org.agilewiki.console.oodb.nodes.roles.user.delete.Delete_Node;
+import org.agilewiki.console.oodb.nodes.roles.user.logout.Logout_Node;
+import org.agilewiki.console.oodb.nodes.roles.user.newEmailAddress.NewEmailAddress_Node;
+import org.agilewiki.console.oodb.nodes.roles.visitor.RecreateVisitorRole_Node;
+import org.agilewiki.console.oodb.nodes.roles.visitor.forgotPassword.ForgotPassword_Node;
+import org.agilewiki.console.oodb.nodes.roles.visitor.login.BadUserAddress_Node;
+import org.agilewiki.console.oodb.nodes.roles.visitor.login.BadUserPassword_Node;
+import org.agilewiki.console.oodb.nodes.roles.visitor.login.Login_Node;
+import org.agilewiki.console.oodb.nodes.roles.visitor.newUser.NewUser_Node;
 import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.collections.MapNode;
@@ -47,17 +64,64 @@ public class RecreateSystemRole_NodeInstance extends RecreateRole_NodeInstance {
 
         Lnk1_Node.define(Lnk1_Node.USER_LNK1_ID, null, Metadata_Node.ID, User_Node.ID, System_Role.ID);
 
-        for (String transactionName : db.transactionRegistry.keySet()) {
-            Node_Node.define("$n" + transactionName + ".node", Node_Node.ID, JournalEntry_Node.ID);
-        }
-
         Link1Id.createLink1(db,
                 User_Node.ID,
                 Lnk1_Node.OFROLE_ID,
                 System_Role.ID);
 
-        Attribute_Node.define("$npassword", User_Node.ID);
-        Attribute_Node.define("$nsubject", User_Node.ID);
+        Node_Node.define(Metadata_Node.ID, Node_Node.ID, null);
+
+        Node_Node.define(Node_Node.ID, Node_Node.ID, Metadata_Node.ID);
+
+        Node_Node.define(Key_Node.ID, Node_Node.ID, Metadata_Node.ID);
+
+        Node_Node.define(Lnk1_Node.ID, Node_Node.ID, Metadata_Node.ID);
+
+        Node_Node.define(Role_Node.ID, Node_Node.ID, Node_Node.ID);
+
+        Node_Node.define(Attribute_Node.ID, Node_Node.ID, Node_Node.ID);
         Attribute_Node.define("$nsubject", Attribute_Node.ID);
+
+        Node_Node.define(User_Node.ID, Node_Node.ID, Node_Node.ID);
+        Attribute_Node.define(User.PASSWORD_KEY, User_Node.ID);
+        Attribute_Node.define(NameIds.SUBJECT, User_Node.ID);
+
+        Node_Node.define(JournalEntry_Node.ID, Node_Node.ID, Node_Node.ID);
+
+        Node_Node.define(BadUserAddress_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+
+        Node_Node.define(BadUserPassword_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+
+        Node_Node.define(ChangePassword_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+
+        Node_Node.define(Delete_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+
+        Node_Node.define(ForgotPassword_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+
+        Node_Node.define(Login_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+
+        Node_Node.define(Logout_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+
+        Node_Node.define(NewEmailAddress_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+
+        Node_Node.define(NewUser_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+
+        Node_Node.define(Npje_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+
+        Node_Node.define(RecreateAdminRole_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+
+        Node_Node.define(RecreateDeveloperRole_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+
+        Node_Node.define(RecreateSystemRole_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+
+        Node_Node.define(RecreateUserRole_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+
+        Node_Node.define(RecreateVisitorRole_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+
+        Node_Node.define(ServletStart_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+
+        Node_Node.define(ServletStop_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+
+        Node_Node.define(UpdateRoles_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
     }
 }

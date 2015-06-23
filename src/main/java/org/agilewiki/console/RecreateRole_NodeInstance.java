@@ -28,17 +28,6 @@ abstract public class RecreateRole_NodeInstance extends JournalEntry_NodeInstanc
 
         Delete.delete(db, thisRoleNodeId);
 
-        Node_Node.define(Metadata_Node.ID, Node_Node.ID, null);
-
-        Node_Node.define(Node_Node.ID, Node_Node.ID, Metadata_Node.ID);
-        Node_Node.define(Key_Node.ID, Node_Node.ID, Metadata_Node.ID);
-        Node_Node.define(Lnk1_Node.ID, Node_Node.ID, Metadata_Node.ID);
-
-        Node_Node.define(Role_Node.ID, Node_Node.ID, Node_Node.ID);
-        Node_Node.define(Attribute_Node.ID, Node_Node.ID, Node_Node.ID);
-        Node_Node.define(User_Node.ID, Node_Node.ID, Node_Node.ID);
-        Node_Node.define(JournalEntry_Node.ID, Node_Node.ID, Node_Node.ID);
-
         SecondaryId.createSecondaryId(db, thisRoleNodeId, SecondaryId.secondaryId(Key_Node.NODETYPE_ID, Role_Node.ID));
     }
 }
