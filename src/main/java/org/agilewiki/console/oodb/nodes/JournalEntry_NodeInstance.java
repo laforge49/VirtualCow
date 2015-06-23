@@ -15,11 +15,11 @@ import org.agilewiki.utils.virtualcow.Transaction;
 public class JournalEntry_NodeInstance extends NodeBase implements Transaction {
 
     public JournalEntry_NodeInstance() {
-        super(null, null);
+        super(null);
     }
 
-    public JournalEntry_NodeInstance(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public JournalEntry_NodeInstance(String nodeId) {
+        super(nodeId);
     }
 
     @Override

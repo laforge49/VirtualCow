@@ -11,6 +11,4 @@ public interface Node {
     }
 
     String getNodeId();
-
-    String getFactoryId();
 }

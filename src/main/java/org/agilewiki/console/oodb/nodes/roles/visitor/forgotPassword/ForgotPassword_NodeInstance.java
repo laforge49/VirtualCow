@@ -11,8 +11,8 @@ public class ForgotPassword_NodeInstance extends JournalEntry_NodeInstance {
     public ForgotPassword_NodeInstance() {
     }
 
-    public ForgotPassword_NodeInstance(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public ForgotPassword_NodeInstance(String nodeId) {
+        super(nodeId);
     }
 
     @Override

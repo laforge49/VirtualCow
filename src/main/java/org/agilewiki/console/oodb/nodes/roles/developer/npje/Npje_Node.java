@@ -12,15 +12,15 @@ public class Npje_Node extends JournalEntry_Node {
     }
 
     public static void create() {
-        npje_node = new Npje_Node(ID, JournalEntry_Node.ID);
+        npje_node = new Npje_Node(ID);
     }
 
-    public Npje_Node(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public Npje_Node(String nodeId) {
+        super(nodeId);
     }
 
     @Override
-    public Node createNode(String nodeId, String factoryId) {
-        return new Npje_NodeInstance(nodeId, factoryId);
+    public Node createNode(String nodeId) {
+        return new Npje_NodeInstance(nodeId);
     }
 }

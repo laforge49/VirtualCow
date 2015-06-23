@@ -12,15 +12,15 @@ public class BadUserAddress_Node extends JournalEntry_Node {
     }
 
     public static void create() {
-        badUserAddress_node = new BadUserAddress_Node(ID, JournalEntry_Node.ID);
+        badUserAddress_node = new BadUserAddress_Node(ID);
     }
 
-    public BadUserAddress_Node(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public BadUserAddress_Node(String nodeId) {
+        super(nodeId);
     }
 
     @Override
-    public Node createNode(String nodeId, String factoryId) {
-        return new BadUserAddress_NodeInstance(nodeId, factoryId);
+    public Node createNode(String nodeId) {
+        return new BadUserAddress_NodeInstance(nodeId);
     }
 }

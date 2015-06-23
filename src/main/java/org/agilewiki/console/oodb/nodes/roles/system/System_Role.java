@@ -16,11 +16,11 @@ public class System_Role extends Role_NodeInstance {
     }
 
     public static void create() {
-        system_role = new System_Role(ID, Role_Node.ID);
+        system_role = new System_Role(ID);
     }
 
-    public System_Role(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public System_Role(String nodeId) {
+        super(nodeId);
         niceRoleName = "System";
         RecreateSystemRole_Node.create();
         simpleSimon.db.registerTransaction(RecreateSystemRole_NodeInstance.NAME, RecreateSystemRole_NodeInstance.class);

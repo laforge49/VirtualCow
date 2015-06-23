@@ -12,18 +12,18 @@ public class Metadata_Node extends Node_NodeInstance {
 
     public static void create()
             throws Exception {
-        metaData_Node = new Metadata_Node(ID, Node_Node.ID);
+        metaData_Node = new Metadata_Node(ID);
         Node_Node.create();
         Lnk1_Node.create();
         Key_Node.create();
     }
 
-    public Metadata_Node(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public Metadata_Node(String nodeId) {
+        super(nodeId);
     }
 
     @Override
-    public Node createNode(String nodeId, String factoryId) {
+    public Node createNode(String nodeId) {
         throw new UnsupportedOperationException();
     }
 }

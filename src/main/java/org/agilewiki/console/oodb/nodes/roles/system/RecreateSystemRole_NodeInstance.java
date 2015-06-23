@@ -31,8 +31,8 @@ public class RecreateSystemRole_NodeInstance extends RecreateRole_NodeInstance {
     public RecreateSystemRole_NodeInstance() {
     }
 
-    public RecreateSystemRole_NodeInstance(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public RecreateSystemRole_NodeInstance(String nodeId) {
+        super(nodeId);
     }
 
     @Override

@@ -13,8 +13,8 @@ public class Logout_NodeInstance extends JournalEntry_NodeInstance {
     public Logout_NodeInstance() {
     }
 
-    public Logout_NodeInstance(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public Logout_NodeInstance(String nodeId) {
+        super(nodeId);
     }
 
     @Override

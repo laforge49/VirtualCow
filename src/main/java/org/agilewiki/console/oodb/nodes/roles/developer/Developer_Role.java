@@ -18,7 +18,7 @@ public class Developer_Role extends Role_NodeInstance {
 
     public static void create()
             throws Exception {
-        developer_role = new Developer_Role(ID, Role_Node.ID);
+        developer_role = new Developer_Role(ID);
     }
 
     private DeveloperBlade developerBlade;
@@ -52,9 +52,9 @@ public class Developer_Role extends Role_NodeInstance {
     private NodesBlade rolesNodesBlade;
     private InvLinksBlade invLinksBlade;
 
-    public Developer_Role(String nodeId, String factoryId)
+    public Developer_Role(String nodeId)
             throws Exception {
-        super(nodeId, factoryId);
+        super(nodeId);
         niceRoleName = "Developer";
         developerBlade = new DeveloperBlade(this, "developer");
         postBlade = new PostBlade(this, "post");

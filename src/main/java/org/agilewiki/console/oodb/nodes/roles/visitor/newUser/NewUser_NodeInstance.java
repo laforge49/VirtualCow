@@ -17,8 +17,8 @@ public class NewUser_NodeInstance extends JournalEntry_NodeInstance {
     public NewUser_NodeInstance() {
     }
 
-    public NewUser_NodeInstance(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public NewUser_NodeInstance(String nodeId) {
+        super(nodeId);
     }
 
     @Override

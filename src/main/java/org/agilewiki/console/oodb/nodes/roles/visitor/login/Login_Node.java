@@ -12,15 +12,15 @@ public class Login_Node extends JournalEntry_Node {
     }
 
     public static void create() {
-        login_node = new Login_Node(ID, JournalEntry_Node.ID);
+        login_node = new Login_Node(ID);
     }
 
-    public Login_Node(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public Login_Node(String nodeId) {
+        super(nodeId);
     }
 
     @Override
-    public Node createNode(String nodeId, String factoryId) {
-        return new Login_NodeInstance(nodeId, factoryId);
+    public Node createNode(String nodeId) {
+        return new Login_NodeInstance(nodeId);
     }
 }

@@ -12,15 +12,15 @@ public class BadUserPassword_Node extends JournalEntry_Node {
     }
 
     public static void create() {
-        badUserPassword_node = new BadUserPassword_Node(ID, JournalEntry_Node.ID);
+        badUserPassword_node = new BadUserPassword_Node(ID);
     }
 
-    public BadUserPassword_Node(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public BadUserPassword_Node(String nodeId) {
+        super(nodeId);
     }
 
     @Override
-    public Node createNode(String nodeId, String factoryId) {
-        return new BadUserPassword_NodeInstance(nodeId, factoryId);
+    public Node createNode(String nodeId) {
+        return new BadUserPassword_NodeInstance(nodeId);
     }
 }

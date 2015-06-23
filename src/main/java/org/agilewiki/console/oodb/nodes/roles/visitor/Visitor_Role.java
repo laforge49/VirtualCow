@@ -19,14 +19,14 @@ public class Visitor_Role extends Role_NodeInstance {
     }
 
     public static void create() throws Exception {
-        visitor_role = new Visitor_Role(ID, Role_Node.ID);
+        visitor_role = new Visitor_Role(ID);
     }
 
     private WelcomeBlade welcomeBlade;
 
-    public Visitor_Role(String nodeId, String factoryId)
+    public Visitor_Role(String nodeId)
             throws Exception {
-        super(nodeId, factoryId);
+        super(nodeId);
         niceRoleName = "Visitor";
         welcomeBlade = new WelcomeBlade(this, "welcome");
         ForgotPasswordBlade forgotPasswordBlade = new ForgotPasswordBlade(this, "forgotPassword");

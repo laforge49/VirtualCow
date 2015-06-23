@@ -16,8 +16,8 @@ public class Npje_NodeInstance extends JournalEntry_NodeInstance {
     public Npje_NodeInstance() {
     }
 
-    public Npje_NodeInstance(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public Npje_NodeInstance(String nodeId) {
+        super(nodeId);
     }
 
     @Override

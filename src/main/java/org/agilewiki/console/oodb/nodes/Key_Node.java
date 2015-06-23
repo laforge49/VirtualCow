@@ -29,7 +29,7 @@ public class Key_Node extends Metadata_Node {
     }
 
     public static void create() {
-        key_node = new Key_Node(ID, Node_Node.ID);
+        key_node = new Key_Node(ID);
     }
 
     public static void define(String nodeId, String targetType, String roleId) {
@@ -40,12 +40,12 @@ public class Key_Node extends Metadata_Node {
                 targetType);
     }
 
-    public Key_Node(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public Key_Node(String nodeId) {
+        super(nodeId);
     }
 
     @Override
-    public Node createNode(String nodeId, String factoryId) {
-        return new Key_NodeInstance(nodeId, factoryId);
+    public Node createNode(String nodeId) {
+        return new Key_NodeInstance(nodeId);
     }
 }

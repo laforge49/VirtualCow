@@ -38,7 +38,7 @@ public class OODb {
             public Node load(String nodeId) throws Exception {
                 String factoryId = SecondaryIds.nodeTypeId(db, nodeId, FactoryRegistry.MAX_TIMESTAMP);
                 NodeFactory nodeFactory = getNodeFactory(factoryId);
-                return nodeFactory.createNode(nodeId, factoryId);
+                return nodeFactory.createNode(nodeId);
             }
         });
         nodeCache = cache.asMap();

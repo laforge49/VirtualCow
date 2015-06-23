@@ -16,8 +16,8 @@ abstract public class RecreateRole_NodeInstance extends JournalEntry_NodeInstanc
     public RecreateRole_NodeInstance() {
     }
 
-    public RecreateRole_NodeInstance(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public RecreateRole_NodeInstance(String nodeId) {
+        super(nodeId);
     }
 
     abstract public Role role();

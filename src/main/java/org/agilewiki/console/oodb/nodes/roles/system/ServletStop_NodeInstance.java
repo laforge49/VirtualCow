@@ -13,8 +13,8 @@ public class ServletStop_NodeInstance extends JournalEntry_NodeInstance {
     public ServletStop_NodeInstance() {
     }
 
-    public ServletStop_NodeInstance(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public ServletStop_NodeInstance(String nodeId) {
+        super(nodeId);
     }
 
     public static String update(Db db)

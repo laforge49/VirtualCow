@@ -29,7 +29,7 @@ public class Lnk1_Node extends Metadata_Node {
     }
 
     public static void create() {
-        lnk1_node = new Lnk1_Node(ID, Node_Node.ID);
+        lnk1_node = new Lnk1_Node(ID);
     }
 
     public static void define(String nodeId, String invDependency, String originType, String destinationType, String ofRole) {
@@ -49,12 +49,12 @@ public class Lnk1_Node extends Metadata_Node {
                 destinationType);
     }
 
-    public Lnk1_Node(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public Lnk1_Node(String nodeId) {
+        super(nodeId);
     }
 
     @Override
-    public Node createNode(String nodeId, String factoryId) {
+    public Node createNode(String nodeId) {
         throw new UnsupportedOperationException();
     }
 }

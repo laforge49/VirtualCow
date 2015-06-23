@@ -18,7 +18,7 @@ public class Role_Node extends Node_NodeInstance {
     }
 
     public static void create() throws Exception {
-        role_node = new Role_Node(ID, Node_Node.ID);
+        role_node = new Role_Node(ID);
         Admin_Role.create();
         Developer_Role.create();
         System_Role.create();
@@ -26,12 +26,12 @@ public class Role_Node extends Node_NodeInstance {
         User_Role.create();
     }
 
-    public Role_Node(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public Role_Node(String nodeId) {
+        super(nodeId);
     }
 
     @Override
-    public Node createNode(String nodeId, String factoryId) {
-        return new Role_NodeInstance(nodeId, factoryId);
+    public Node createNode(String nodeId) {
+        return new Role_NodeInstance(nodeId);
     }
 }

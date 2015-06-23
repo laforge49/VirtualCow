@@ -12,15 +12,15 @@ public class ChangePassword_Node extends JournalEntry_Node {
     }
 
     public static void create() {
-        changePassword_node = new ChangePassword_Node(ID, JournalEntry_Node.ID);
+        changePassword_node = new ChangePassword_Node(ID);
     }
 
-    public ChangePassword_Node(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public ChangePassword_Node(String nodeId) {
+        super(nodeId);
     }
 
     @Override
-    public Node createNode(String nodeId, String factoryId) {
-        return new ChangePassword_NodeInstance(nodeId, factoryId);
+    public Node createNode(String nodeId) {
+        return new ChangePassword_NodeInstance(nodeId);
     }
 }

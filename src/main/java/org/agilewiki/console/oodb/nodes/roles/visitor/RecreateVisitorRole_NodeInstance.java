@@ -12,8 +12,8 @@ public class RecreateVisitorRole_NodeInstance extends RecreateRole_NodeInstance 
     public RecreateVisitorRole_NodeInstance() {
     }
 
-    public RecreateVisitorRole_NodeInstance(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public RecreateVisitorRole_NodeInstance(String nodeId) {
+        super(nodeId);
     }
 
     @Override
@@ -24,8 +24,5 @@ public class RecreateVisitorRole_NodeInstance extends RecreateRole_NodeInstance 
     @Override
     public void process(Db db, MapNode tMapNode) {
         super.process(db, tMapNode);
-
-        //JournalEntry_Node.define("$nbadUserAddress.node", VisitorRole_Node.ID);
-        //JournalEntry_Node.define("$nbadUserPassword.node", VisitorRole_Node.ID);
     }
 }

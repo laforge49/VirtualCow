@@ -12,8 +12,8 @@ public class ServletStart_NodeInstance extends JournalEntry_NodeInstance {
     public ServletStart_NodeInstance() {
     }
 
-    public ServletStart_NodeInstance(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public ServletStart_NodeInstance(String nodeId) {
+        super(nodeId);
     }
 
     public static String update(Db db)

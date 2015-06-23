@@ -11,15 +11,15 @@ public class JournalEntry_Node extends Node_NodeInstance {
     }
 
     public static void create() {
-        journalEntry_node = new JournalEntry_Node(ID, Node_Node.ID);
+        journalEntry_node = new JournalEntry_Node(ID);
     }
 
-    public JournalEntry_Node(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public JournalEntry_Node(String nodeId) {
+        super(nodeId);
     }
 
     @Override
-    public Node createNode(String nodeId, String factoryId) {
-        return new JournalEntry_NodeInstance(nodeId, factoryId);
+    public Node createNode(String nodeId) {
+        return new JournalEntry_NodeInstance(nodeId);
     }
 }

@@ -21,7 +21,7 @@ public class User_Role extends Role_NodeInstance {
 
     public static void create()
             throws Exception {
-        user_role = new User_Role(ID, Role_Node.ID);
+        user_role = new User_Role(ID);
     }
 
     private UserBlade userBlade;
@@ -31,9 +31,9 @@ public class User_Role extends Role_NodeInstance {
     private LogoutBlade logoutBlade;
     private NewEmailAddressBlade newEmailAddressBlade;
 
-    public User_Role(String nodeId, String factoryId)
+    public User_Role(String nodeId)
             throws Exception {
-        super(nodeId, factoryId);
+        super(nodeId);
         niceRoleName = "User";
         logoutBlade = new LogoutBlade(this, "logout");
         deleteAccountBlade = new DeleteAccountBlade(this, "deleteAccount");

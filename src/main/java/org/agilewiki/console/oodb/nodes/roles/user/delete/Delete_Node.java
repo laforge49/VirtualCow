@@ -12,15 +12,15 @@ public class Delete_Node extends JournalEntry_Node {
     }
 
     public static void create() {
-        delete_node = new Delete_Node(ID, JournalEntry_Node.ID);
+        delete_node = new Delete_Node(ID);
     }
 
-    public Delete_Node(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public Delete_Node(String nodeId) {
+        super(nodeId);
     }
 
     @Override
-    public Node createNode(String nodeId, String factoryId) {
-        return new Delete_NodeInstance(nodeId, factoryId);
+    public Node createNode(String nodeId) {
+        return new Delete_NodeInstance(nodeId);
     }
 }

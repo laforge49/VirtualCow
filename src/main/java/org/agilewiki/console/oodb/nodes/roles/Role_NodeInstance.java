@@ -17,8 +17,8 @@ public class Role_NodeInstance extends NodeBase implements Role {
     public final Map<String, RequestBlade> requests = new HashMap<String, RequestBlade>();
     public final Map<String, PostRequestBlade> posts = new HashMap<String, PostRequestBlade>();
 
-    public Role_NodeInstance(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public Role_NodeInstance(String nodeId) {
+        super(nodeId);
         this.simpleSimon = SimpleSimon.simpleSimon;
         simpleSimon.roles.put(roleName(), this);
     }

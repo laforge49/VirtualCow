@@ -12,15 +12,15 @@ public class RecreateAdminRole_Node extends JournalEntry_Node {
     }
 
     public static void create() {
-        recreateAdminRole_Node = new RecreateAdminRole_Node(ID, JournalEntry_Node.ID);
+        recreateAdminRole_Node = new RecreateAdminRole_Node(ID);
     }
 
-    public RecreateAdminRole_Node(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public RecreateAdminRole_Node(String nodeId) {
+        super(nodeId);
     }
 
     @Override
-    public Node createNode(String nodeId, String factoryId) {
-        return new RecreateAdminRole_NodeInstance(nodeId, factoryId);
+    public Node createNode(String nodeId) {
+        return new RecreateAdminRole_NodeInstance(nodeId);
     }
 }

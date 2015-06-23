@@ -15,8 +15,8 @@ public class Delete_NodeInstance extends JournalEntry_NodeInstance {
     public Delete_NodeInstance() {
     }
 
-    public Delete_NodeInstance(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public Delete_NodeInstance(String nodeId) {
+        super(nodeId);
     }
 
     @Override

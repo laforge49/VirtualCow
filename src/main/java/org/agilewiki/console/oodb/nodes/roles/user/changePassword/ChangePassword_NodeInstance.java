@@ -14,8 +14,8 @@ public class ChangePassword_NodeInstance extends JournalEntry_NodeInstance {
     public ChangePassword_NodeInstance() {
     }
 
-    public ChangePassword_NodeInstance(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public ChangePassword_NodeInstance(String nodeId) {
+        super(nodeId);
     }
 
     @Override

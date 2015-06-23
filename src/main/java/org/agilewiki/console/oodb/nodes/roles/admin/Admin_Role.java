@@ -18,7 +18,7 @@ public class Admin_Role extends Role_NodeInstance {
 
     public static void create()
             throws Exception {
-        admin_role = new Admin_Role(ID, Role_Node.ID);
+        admin_role = new Admin_Role(ID);
     }
 
     private AdminBlade adminBlade;
@@ -27,9 +27,9 @@ public class Admin_Role extends Role_NodeInstance {
     private EditRolesBlade editRolesBlade;
     private RecreateRoleBlade recreateRoleBlade;
 
-    public Admin_Role(String nodeId, String factoryId)
+    public Admin_Role(String nodeId)
             throws Exception {
-        super(nodeId, factoryId);
+        super(nodeId);
         niceRoleName = "Admin";
         adminBlade = new AdminBlade(this, "admin");
         emailAddressesBlade = new EmailAddressesBlade(this, "emailAddresses");

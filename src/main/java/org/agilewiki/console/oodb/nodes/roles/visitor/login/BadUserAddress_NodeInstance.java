@@ -13,8 +13,8 @@ public class BadUserAddress_NodeInstance extends JournalEntry_NodeInstance {
     public BadUserAddress_NodeInstance() {
     }
 
-    public BadUserAddress_NodeInstance(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public BadUserAddress_NodeInstance(String nodeId) {
+        super(nodeId);
     }
 
     @Override

@@ -16,8 +16,8 @@ public class NewEmailAddress_NodeInstance extends JournalEntry_NodeInstance {
     public NewEmailAddress_NodeInstance() {
     }
 
-    public NewEmailAddress_NodeInstance(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public NewEmailAddress_NodeInstance(String nodeId) {
+        super(nodeId);
     }
 
     @Override

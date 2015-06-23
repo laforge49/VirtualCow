@@ -16,7 +16,7 @@ public class Node_Node extends Metadata_Node {
 
     public static void create()
             throws Exception {
-        node_node = new Node_Node(ID, ID);
+        node_node = new Node_Node(ID);
         JournalEntry_Node.create();
         Role_Node.create();
         User_Node.create();
@@ -42,12 +42,12 @@ public class Node_Node extends Metadata_Node {
         }
     }
 
-    public Node_Node(String nodeId, String factoryIdb) {
-        super(nodeId, factoryIdb);
+    public Node_Node(String nodeId) {
+        super(nodeId);
     }
 
     @Override
-    public Node createNode(String nodeId, String factoryId) {
+    public Node createNode(String nodeId) {
         throw new UnsupportedOperationException();
     }
 }

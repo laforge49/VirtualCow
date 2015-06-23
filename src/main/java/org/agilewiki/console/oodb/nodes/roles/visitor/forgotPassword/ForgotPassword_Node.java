@@ -12,15 +12,15 @@ public class ForgotPassword_Node extends JournalEntry_Node {
     }
 
     public static void create() {
-        forgotPassword_node = new ForgotPassword_Node(ID, JournalEntry_Node.ID);
+        forgotPassword_node = new ForgotPassword_Node(ID);
     }
 
-    public ForgotPassword_Node(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public ForgotPassword_Node(String nodeId) {
+        super(nodeId);
     }
 
     @Override
-    public Node createNode(String nodeId, String factoryId) {
-        return new ForgotPassword_NodeInstance(nodeId, factoryId);
+    public Node createNode(String nodeId) {
+        return new ForgotPassword_NodeInstance(nodeId);
     }
 }

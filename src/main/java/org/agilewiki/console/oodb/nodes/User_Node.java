@@ -11,15 +11,15 @@ public class User_Node extends Node_NodeInstance {
     }
 
     public static void create() {
-        user_node = new User_Node(ID, Node_Node.ID);
+        user_node = new User_Node(ID);
     }
 
-    public User_Node(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public User_Node(String nodeId) {
+        super(nodeId);
     }
 
     @Override
-    public Node createNode(String nodeId, String factoryId) {
-        return new User_NodeInstance(nodeId, factoryId);
+    public Node createNode(String nodeId) {
+        return new User_NodeInstance(nodeId);
     }
 }

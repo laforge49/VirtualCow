@@ -12,15 +12,15 @@ public class NewEmailAddress_Node extends JournalEntry_Node {
     }
 
     public static void create() {
-        newEmailAddress_node = new NewEmailAddress_Node(ID, JournalEntry_Node.ID);
+        newEmailAddress_node = new NewEmailAddress_Node(ID);
     }
 
-    public NewEmailAddress_Node(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public NewEmailAddress_Node(String nodeId) {
+        super(nodeId);
     }
 
     @Override
-    public Node createNode(String nodeId, String factoryId) {
-        return new NewEmailAddress_NodeInstance(nodeId, factoryId);
+    public Node createNode(String nodeId) {
+        return new NewEmailAddress_NodeInstance(nodeId);
     }
 }

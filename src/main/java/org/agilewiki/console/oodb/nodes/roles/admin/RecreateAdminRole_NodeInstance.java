@@ -12,8 +12,8 @@ public class RecreateAdminRole_NodeInstance extends RecreateRole_NodeInstance {
     public RecreateAdminRole_NodeInstance() {
     }
 
-    public RecreateAdminRole_NodeInstance(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public RecreateAdminRole_NodeInstance(String nodeId) {
+        super(nodeId);
     }
 
     @Override

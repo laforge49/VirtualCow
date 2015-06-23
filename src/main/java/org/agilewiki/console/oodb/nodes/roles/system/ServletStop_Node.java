@@ -12,15 +12,15 @@ public class ServletStop_Node extends JournalEntry_Node {
     }
 
     public static void create() {
-        servletStop_node = new ServletStop_Node(ID, JournalEntry_Node.ID);
+        servletStop_node = new ServletStop_Node(ID);
     }
 
-    public ServletStop_Node(String nodeId, String factoryId) {
-        super(nodeId, factoryId);
+    public ServletStop_Node(String nodeId) {
+        super(nodeId);
     }
 
     @Override
-    public Node createNode(String nodeId, String factoryId) {
-        return new ServletStop_NodeInstance(nodeId, factoryId);
+    public Node createNode(String nodeId) {
+        return new ServletStop_NodeInstance(nodeId);
     }
 }
