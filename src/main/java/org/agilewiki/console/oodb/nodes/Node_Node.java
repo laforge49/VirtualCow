@@ -1,10 +1,9 @@
 package org.agilewiki.console.oodb.nodes;
 
-import org.agilewiki.console.NameIds;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.oodb.Node;
 import org.agilewiki.console.oodb.nodes.roles.Role_Node;
-import org.agilewiki.console.oodb.nodes.roles.visitor.login.BadUserAddress_Node;
+import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 
 public class Node_Node extends Metadata_Node {
@@ -23,7 +22,7 @@ public class Node_Node extends Metadata_Node {
         User_Node.create();
     }
 
-    public static void define(String nodeId, String nodeType, String superType, String... attributes) {
+    public static void define(String nodeId, String nodeType, String superType, String roleId, String... attributes) {
         if (nodeType != null) {
             SecondaryId.createSecondaryId(SimpleSimon.simpleSimon.db,
                     nodeId,
@@ -34,6 +33,10 @@ public class Node_Node extends Metadata_Node {
                     nodeId,
                     SecondaryId.secondaryId(Key_Node.SUPERTYPE_ID, superType));
         }
+        Link1Id.createLink1(SimpleSimon.simpleSimon.db,
+                nodeId,
+                Lnk1_Node.OFROLE_ID,
+                roleId);
         for (String attributeName : attributes) {
             Attribute_Node.define(attributeName, nodeId);
         }

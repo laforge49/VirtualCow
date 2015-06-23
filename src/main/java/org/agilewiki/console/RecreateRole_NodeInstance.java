@@ -1,6 +1,7 @@
 package org.agilewiki.console;
 
-import org.agilewiki.console.oodb.nodes.*;
+import org.agilewiki.console.oodb.nodes.JournalEntry_NodeInstance;
+import org.agilewiki.console.oodb.nodes.Key_Node;
 import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.console.oodb.nodes.roles.Role_Node;
 import org.agilewiki.utils.ids.composites.SecondaryId;

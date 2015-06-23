@@ -33,7 +33,7 @@ public class Lnk1_Node extends Metadata_Node {
     }
 
     public static void define(String nodeId, String invDependency, String originType, String destinationType, String ofRole) {
-        Node_Node.define(nodeId, ID, null);
+        Node_Node.define(nodeId, ID, null, ofRole);
         if (invDependency != null) {
             SecondaryId.createSecondaryId(SimpleSimon.simpleSimon.db,
                     nodeId,
@@ -47,12 +47,10 @@ public class Lnk1_Node extends Metadata_Node {
                 nodeId,
                 Lnk1_Node.DESTINATION_ID,
                 destinationType);
-        if (ofRole != null) {
-            Link1Id.createLink1(SimpleSimon.simpleSimon.db,
-                    nodeId,
-                    Lnk1_Node.OFROLE_ID,
-                    ofRole);
-        }
+        Link1Id.createLink1(SimpleSimon.simpleSimon.db,
+                nodeId,
+                Lnk1_Node.OFROLE_ID,
+                ofRole);
     }
 
     public Lnk1_Node(String nodeId, String factoryId) {
