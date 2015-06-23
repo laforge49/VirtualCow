@@ -22,8 +22,8 @@ public class UpdateRoles_NodeInstance extends JournalEntry_NodeInstance {
 
     @Override
     public void process(Db db, MapNode mapNode) {
-        String nodeId = mapNode.get("nodeId").toString();
-        ListNode ln = mapNode.getList("addRoles");
+        String nodeId = mapNode.get(NameIds.NODE_ID).toString();
+        ListNode ln = mapNode.getList(NameIds.ADDROLES_ID);
         if (ln != null) {
             List<String> add = ln.flatList();
             for (String userRole : add) {
@@ -32,7 +32,7 @@ public class UpdateRoles_NodeInstance extends JournalEntry_NodeInstance {
                 SecondaryIds.createSecondaryId(db, nodeId, roleTypeSecondaryId);
             }
         }
-        ln = mapNode.getList("removeRoles");
+        ln = mapNode.getList(NameIds.REMOVEROLES_ID);
         if (ln != null) {
             List<String> remove = ln.flatList();
             for (String userRole : remove) {

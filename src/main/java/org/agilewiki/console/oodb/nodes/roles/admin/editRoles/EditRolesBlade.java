@@ -1,5 +1,6 @@
 package org.agilewiki.console.oodb.nodes.roles.admin.editRoles;
 
+import org.agilewiki.console.NameIds;
 import org.agilewiki.console.PostRequestBlade;
 import org.agilewiki.console.User;
 import org.agilewiki.console.oodb.nodes.roles.Role;
@@ -106,7 +107,7 @@ public class EditRolesBlade extends PostRequestBlade {
                     try {
                         mn = db.dbFactoryRegistry.nilMap;
                         mn = mn.add(User.USER_KEY, userId);
-                        mn = mn.add("nodeId", nodeId);
+                        mn = mn.add(NameIds.NODE_ID, nodeId);
                         for (String role : simpleSimon.roles.keySet()) {
                             if (!roleName.equals("visitor") && !roleName.equals("system")) {
                                 boolean o = false;
@@ -122,10 +123,10 @@ public class EditRolesBlade extends PostRequestBlade {
                                     o = true;
                                 }
                                 if (o && !n) {
-                                    mn = mn.add("removeRoles", role);
+                                    mn = mn.add(NameIds.REMOVEROLES_ID, role);
                                 }
                                 if (!o && n) {
-                                    mn = mn.add("addRoles", role);
+                                    mn = mn.add(NameIds.ADDROLES_ID, role);
                                 }
                             }
                         }

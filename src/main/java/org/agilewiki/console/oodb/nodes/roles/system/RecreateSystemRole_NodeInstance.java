@@ -79,49 +79,64 @@ public class RecreateSystemRole_NodeInstance extends RecreateRole_NodeInstance {
 
         Node_Node.define(Role_Node.ID, Node_Node.ID, Node_Node.ID);
 
-        Node_Node.define(Attribute_Node.ID, Node_Node.ID, Node_Node.ID);
-        Attribute_Node.define("$nsubject", Attribute_Node.ID);
+        Node_Node.define(Attribute_Node.ID, Node_Node.ID, Node_Node.ID,
+                NameIds.SUBJECT);
 
-        Node_Node.define(User_Node.ID, Node_Node.ID, Node_Node.ID);
-        Attribute_Node.define(User.PASSWORD_KEY, User_Node.ID);
-        Attribute_Node.define(NameIds.SUBJECT, User_Node.ID);
+        Node_Node.define(User_Node.ID, Node_Node.ID, Node_Node.ID,
+                NameIds.SUBJECT, User.PASSWORD_KEY);
 
         Node_Node.define(JournalEntry_Node.ID, Node_Node.ID, Node_Node.ID);
 
-        Node_Node.define(BadUserAddress_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+        Node_Node.define(BadUserAddress_Node.ID, Node_Node.ID, JournalEntry_Node.ID,
+                NameIds.SUBJECT, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT);
 
-        Node_Node.define(BadUserPassword_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+        Node_Node.define(BadUserPassword_Node.ID, Node_Node.ID, JournalEntry_Node.ID,
+                NameIds.SUBJECT);
 
-        Node_Node.define(ChangePassword_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+        Node_Node.define(ChangePassword_Node.ID, Node_Node.ID, JournalEntry_Node.ID,
+                User.USER_KEY, User.PASSWORD_KEY);
 
-        Node_Node.define(Delete_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+        Node_Node.define(Delete_Node.ID, Node_Node.ID, JournalEntry_Node.ID, NameIds.AN_ID,
+                User.USER_KEY);
 
-        Node_Node.define(ForgotPassword_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+        Node_Node.define(ForgotPassword_Node.ID, Node_Node.ID, JournalEntry_Node.ID,
+                User.USER_KEY, User.PASSWORD_KEY);
 
-        Node_Node.define(Login_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+        Node_Node.define(Login_Node.ID, Node_Node.ID, JournalEntry_Node.ID,
+                User.USER_KEY, NameIds.SUBJECT);
 
-        Node_Node.define(Logout_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+        Node_Node.define(Logout_Node.ID, Node_Node.ID, JournalEntry_Node.ID,
+                User.USER_KEY, NameIds.SUBJECT);
 
-        Node_Node.define(NewEmailAddress_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+        Node_Node.define(NewEmailAddress_Node.ID, Node_Node.ID, JournalEntry_Node.ID,
+                User.USER_KEY, User.EMAIL_ID);
 
-        Node_Node.define(NewUser_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+        Node_Node.define(NewUser_Node.ID, Node_Node.ID, JournalEntry_Node.ID,
+                User.USER_KEY, User.EMAIL_ID, User.PASSWORD_KEY, User.ROLE_ID);
 
-        Node_Node.define(Npje_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+        Node_Node.define(Npje_Node.ID, Node_Node.ID, JournalEntry_Node.ID,
+                User.USER_KEY, NameIds.SUBJECT, NameIds.BODY);
 
-        Node_Node.define(RecreateAdminRole_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+        Node_Node.define(RecreateAdminRole_Node.ID, Node_Node.ID, JournalEntry_Node.ID,
+                User.USER_KEY);
 
-        Node_Node.define(RecreateDeveloperRole_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+        Node_Node.define(RecreateDeveloperRole_Node.ID, Node_Node.ID, JournalEntry_Node.ID,
+                User.USER_KEY);
 
-        Node_Node.define(RecreateSystemRole_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+        Node_Node.define(RecreateSystemRole_Node.ID, Node_Node.ID, JournalEntry_Node.ID,
+                User.USER_KEY);
 
-        Node_Node.define(RecreateUserRole_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+        Node_Node.define(RecreateUserRole_Node.ID, Node_Node.ID, JournalEntry_Node.ID,
+                User.USER_KEY);
 
-        Node_Node.define(RecreateVisitorRole_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+        Node_Node.define(RecreateVisitorRole_Node.ID, Node_Node.ID, JournalEntry_Node.ID,
+                User.USER_KEY);
 
         Node_Node.define(ServletStart_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
 
         Node_Node.define(ServletStop_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
 
-        Node_Node.define(UpdateRoles_Node.ID, Node_Node.ID, JournalEntry_Node.ID);
+        Node_Node.define(UpdateRoles_Node.ID, Node_Node.ID, JournalEntry_Node.ID,
+                User.USER_KEY, NameIds.NODE_ID, NameIds.ADDROLES_ID, NameIds.REMOVEROLES_ID);
     }
 }
