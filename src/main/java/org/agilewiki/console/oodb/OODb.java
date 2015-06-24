@@ -63,16 +63,11 @@ public class OODb {
         return (NodeFactory) fetchNode(factoryId);
     }
 
-    public NodeFactory getNodeFactoryIfPresent(String factoryId) {
-        return (NodeFactory) fetchNodeIfPresent(factoryId);
-    }
-
     public Node fetchNode(String nodeId) {
+        char x = nodeId.charAt(1);
+        if (x != 'n' && x != 'r' && x != 't')
+            return null;
         return nodeCache.getUnchecked(nodeId);
-    }
-
-    public Node fetchNodeIfPresent(String nodeId) {
-        return nodeCache.getIfPresent(nodeId);
     }
 
     public void addNode(String nodeId, Node node) {
