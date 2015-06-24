@@ -68,6 +68,7 @@ public class OODb {
             return null;
         Node node = nodeCache.getUnchecked(nodeId);
         if (node instanceof NullNode) {
+            dropNode(nodeId);
             return null;
         }
         return node;
