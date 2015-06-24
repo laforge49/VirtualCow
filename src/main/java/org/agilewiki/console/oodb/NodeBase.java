@@ -2,6 +2,8 @@ package org.agilewiki.console.oodb;
 
 import org.agilewiki.utils.virtualcow.Db;
 
+import java.util.List;
+
 /**
  * Base class for Node.
  */
@@ -62,5 +64,15 @@ public class NodeBase implements Node {
     public void set(String key, Object value) {
         innerReference.set(key, value);
         ooDb.updated(this);
+    }
+
+    @Override
+    public Object get(String key) {
+        return getNodeData().get(key);
+    }
+
+    @Override
+    public List getFlatList(String key) {
+        return getNodeData().getFlatList(key);
     }
 }

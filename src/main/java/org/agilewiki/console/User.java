@@ -48,11 +48,12 @@ public class User {
     }
 
     public static boolean hasRole(Db db, String userId, String role) {
+        OODb ooDb = SimpleSimon.simpleSimon.ooDb;
         while (true) {
             try {
                 String inv = SecondaryIds.secondaryInv(userId, ROLE_ID);
                 String roleId = NameId.generate(role);
-                return db.get(inv, roleId, FactoryRegistry.MAX_TIMESTAMP) != null;
+                return ooDb.get(inv, roleId, FactoryRegistry.MAX_TIMESTAMP) != null;
             } catch (UnexpectedChecksumException uce) {
             }
         }
@@ -108,9 +109,10 @@ public class User {
     }
 
     public static String passwordDigest(Db db, String userId, long timestamp) {
+        OODb ooDb = SimpleSimon.simpleSimon.ooDb;
         while (true) {
             try {
-                return (String) db.get(userId, PASSWORD_KEY, timestamp);
+                return (String) ooDb.get(userId, PASSWORD_KEY, timestamp);
             } catch (UnexpectedChecksumException uce) {
             }
         }

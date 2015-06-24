@@ -12,16 +12,14 @@ import org.agilewiki.jactor2.core.messages.impl.AsyncRequestImpl;
 import org.agilewiki.utils.immutable.BaseRegistry;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.MapNode;
+import org.agilewiki.utils.immutable.collections.VersionedListNode;
 import org.agilewiki.utils.virtualcow.Db;
 
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 
@@ -50,8 +48,9 @@ public class OODb {
             @Override
             public Node load(String nodeId) throws Exception {
                 String factoryId = SecondaryIds.nodeTypeId(db, nodeId, FactoryRegistry.MAX_TIMESTAMP);
-                if (factoryId == null)
-                    return null;
+                if (factoryId == null) {
+                    return NullNode.singleton;
+                }
                 NodeFactory nodeFactory = getNodeFactory(factoryId);
                 return nodeFactory.createNode(nodeId);
             }
@@ -67,7 +66,11 @@ public class OODb {
         char x = nodeId.charAt(1);
         if (x != 'n' && x != 'r' && x != 't')
             return null;
-        return nodeCache.getUnchecked(nodeId);
+        Node node = nodeCache.getUnchecked(nodeId);
+        if (node instanceof NullNode) {
+            return null;
+        }
+        return node;
     }
 
     public void addNode(String nodeId, Node node) {
@@ -106,6 +109,32 @@ public class OODb {
             db.set(nodeId, key, value);
         else
             node.set(key, value);
+    }
+
+    public Object get(String nodeId, String key, long timestamp) {
+        if (timestamp != FactoryRegistry.MAX_TIMESTAMP)
+            return db.get(nodeId, key, timestamp);
+        Node node = fetchNode(nodeId);
+        if (node == null)
+            return db.get(nodeId, key, timestamp);
+        return node.get(key);
+    }
+
+    public List getFlatList(String nodeId, String key, long timestamp) {
+        if (timestamp != FactoryRegistry.MAX_TIMESTAMP) {
+            VersionedListNode vln = db.versionedListNode(nodeId, key);
+            if (vln == null)
+                return new ArrayList();
+            return vln.flatList(timestamp);
+        }
+        Node node = fetchNode(nodeId);
+        if (node == null) {
+            VersionedListNode vln = db.versionedListNode(nodeId, key);
+            if (vln == null)
+                return new ArrayList();
+            return vln.flatList(timestamp);
+        }
+        return node.getFlatList(key);
     }
 
     public BladeBase.AReq<String> update(String transactionName, MapNode tMapNode) {

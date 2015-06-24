@@ -3,6 +3,8 @@ package org.agilewiki.console.oodb;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.utils.virtualcow.Db;
 
+import java.util.List;
+
 /**
  * A durable object.
  */
@@ -26,4 +28,8 @@ public interface Node {
     void clearMap();
 
     void set(String key, Object value);
+
+    Object get(String key);
+
+    List getFlatList(String key);
 }
