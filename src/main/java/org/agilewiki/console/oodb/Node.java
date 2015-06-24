@@ -11,4 +11,6 @@ public interface Node {
     }
 
     String getNodeId();
+
+    void endTransaction();
 }

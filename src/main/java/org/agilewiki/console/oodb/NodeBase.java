@@ -16,4 +16,9 @@ public class NodeBase implements Node {
     public String getNodeId() {
         return nodeId;
     }
+
+    @Override
+    public void endTransaction() {
+
+    }
 }
