@@ -1,7 +1,6 @@
 package org.agilewiki.console.oodb.nodes.roles.developer;
 
 import org.agilewiki.console.*;
-import org.agilewiki.console.oodb.Node;
 import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.utils.ids.composites.Journal;
 import org.agilewiki.utils.ids.composites.Link1Id;
@@ -15,6 +14,7 @@ import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 import javax.servlet.AsyncContext;
 import javax.servlet.ServletException;
 import java.util.List;
+import java.util.NavigableMap;
 
 /**
  * Request for a journal entry.
@@ -139,35 +139,32 @@ public class NodeBlade extends RequestBlade {
                             }
                         }
 
-                        ListAccessor la = ma.listAccessor(nodeId);
-                        if (la != null) {
-                            VersionedMapNode vmn = (VersionedMapNode) la.get(0);
-                            if (vmn != null && !vmn.isEmpty(longTimestamp)) {
-                                MapAccessor vma = vmn.mapAccessor(longTimestamp);
-                                sb.append("<strong>Attributes:</strong><br />");
-                                for (ListAccessor vla : vma) {
-                                    int sz = vla.size();
-                                    for (int i = 0; i < sz; ++i) {
-                                        String s = ((String) vla.key()).substring(2) + "[" + i + "] = ";
-                                        sb.append("&nbsp;&nbsp;&nbsp;&nbsp;" + s);
-                                        String value = vla.get(i).toString();
-                                        if (!value.startsWith("$") || !SecondaryIds.isNode(db, value, longTimestamp)) {
-                                            sb.append(SimpleSimon.encode(value, s.length() + 4,
-                                                    SimpleSimon.ENCODE_MULTIPLE_LINES)); //body text
-                                        } else {
-                                            sb.append("<a href=\"?from=node&to=node&nodeId=");
-                                            sb.append(value);
-                                            if (timestamp != null) {
-                                                sb.append("&timestamp=");
-                                                sb.append(timestamp);
-                                            }
-                                            sb.append(setRole);
-                                            sb.append("#rupa\">");
-                                            sb.append(value.substring(2));
-                                            sb.append("</a>");
+                        NavigableMap<Comparable, List> atts = ooDb.getFlatMap(nodeId, longTimestamp);
+                        if (!atts.isEmpty()) {
+                            sb.append("<strong>Attributes:</strong><br />");
+                            for (Comparable key : atts.keySet()) {
+                                List l = atts.get(key);
+                                int sz = l.size();
+                                for (int i = 0; i < sz; ++i) {
+                                    String s = ((String) key).substring(2) + "[" + i + "] = ";
+                                    sb.append("&nbsp;&nbsp;&nbsp;&nbsp;" + s);
+                                    String value = l.get(i).toString();
+                                    if (!value.startsWith("$") || !SecondaryIds.isNode(db, value, longTimestamp)) {
+                                        sb.append(SimpleSimon.encode(value, s.length() + 4,
+                                                SimpleSimon.ENCODE_MULTIPLE_LINES)); //body text
+                                    } else {
+                                        sb.append("<a href=\"?from=node&to=node&nodeId=");
+                                        sb.append(value);
+                                        if (timestamp != null) {
+                                            sb.append("&timestamp=");
+                                            sb.append(timestamp);
                                         }
-                                        sb.append("<br />");
+                                        sb.append(setRole);
+                                        sb.append("#rupa\">");
+                                        sb.append(value.substring(2));
+                                        sb.append("</a>");
                                     }
+                                    sb.append("<br />");
                                 }
                             }
                         }
