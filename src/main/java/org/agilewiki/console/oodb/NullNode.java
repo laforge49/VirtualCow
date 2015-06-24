@@ -1,6 +1,7 @@
 package org.agilewiki.console.oodb;
 
 import java.util.List;
+import java.util.NavigableMap;
 
 public class NullNode implements Node {
     public final static NullNode singleton = new NullNode();
@@ -44,6 +45,11 @@ public class NullNode implements Node {
 
     @Override
     public List getFlatList(String key) {
+        return null;
+    }
+
+    @Override
+    public NavigableMap<Comparable, List> getFlatMap() {
         return null;
     }
 }

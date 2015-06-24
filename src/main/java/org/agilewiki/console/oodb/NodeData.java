@@ -47,4 +47,8 @@ public class NodeData {
             return new ArrayList();
         return new ArrayList(l);
     }
+
+    public NavigableMap<Comparable, List> getFlatMap() {
+        return new TreeMap<>(atts);
+    }
 }

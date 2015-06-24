@@ -13,6 +13,7 @@ import org.agilewiki.utils.immutable.BaseRegistry;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.immutable.collections.VersionedListNode;
+import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
 import java.nio.ByteBuffer;
@@ -21,6 +22,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -136,6 +138,25 @@ public class OODb {
             return vln.flatList(timestamp);
         }
         return node.getFlatList(key);
+    }
+
+    public NavigableMap<Comparable, List> getFlatMap(String nodeId, long timestamp) {
+        if (timestamp != FactoryRegistry.MAX_TIMESTAMP) {
+            VersionedMapNode vmn = db.get(nodeId);
+            if (vmn == null)
+                return new TreeMap<>();
+            else
+                return vmn.flatMap(FactoryRegistry.MAX_TIMESTAMP);
+        }
+        Node node = fetchNode(nodeId);
+        if (node == null) {
+            VersionedMapNode vmn = db.get(nodeId);
+            if (vmn == null)
+                return new TreeMap<>();
+            else
+                return vmn.flatMap(FactoryRegistry.MAX_TIMESTAMP);
+        }
+        return node.getFlatMap();
     }
 
     public BladeBase.AReq<String> update(String transactionName, MapNode tMapNode) {

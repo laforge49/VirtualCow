@@ -4,6 +4,7 @@ import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.utils.virtualcow.Db;
 
 import java.util.List;
+import java.util.NavigableMap;
 
 /**
  * A durable object.
@@ -32,4 +33,6 @@ public interface Node {
     Object get(String key);
 
     List getFlatList(String key);
+
+    NavigableMap<Comparable, List> getFlatMap();
 }

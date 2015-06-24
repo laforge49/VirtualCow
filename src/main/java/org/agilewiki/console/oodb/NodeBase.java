@@ -3,6 +3,7 @@ package org.agilewiki.console.oodb;
 import org.agilewiki.utils.virtualcow.Db;
 
 import java.util.List;
+import java.util.NavigableMap;
 
 /**
  * Base class for Node.
@@ -74,5 +75,10 @@ public class NodeBase implements Node {
     @Override
     public List getFlatList(String key) {
         return getNodeData().getFlatList(key);
+    }
+
+    @Override
+    public NavigableMap<Comparable, List> getFlatMap() {
+        return getNodeData().getFlatMap();
     }
 }
