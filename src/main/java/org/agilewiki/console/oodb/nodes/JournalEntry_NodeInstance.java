@@ -28,13 +28,13 @@ public class JournalEntry_NodeInstance extends NodeBase implements Transaction {
         String secondaryId = SecondaryId.secondaryId(Key_Node.NODETYPE_ID,
                 NameId.generate(transactionName + ".node"));
         SecondaryId.createSecondaryId(db, db.getJEName(), secondaryId);
-        nodeId = db.getJEName();
+        setNodeId(db.getJEName());
         String userId = (String) tMapNode.get(User.USER_KEY);
         if (userId != null) {
-            Link1Id.createLink1(db, nodeId, User.USER_KEY, userId);
+            Link1Id.createLink1(db, getNodeId(), User.USER_KEY, userId);
         }
         process(db, tMapNode);
-        getOODb().addNode(nodeId, this);
+        getOODb().addNode(getNodeId(), this);
     }
 
     public void process(Db db, MapNode tMapNode) {

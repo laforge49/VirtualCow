@@ -23,13 +23,14 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Object Oriented Database, without state caching.
  */
 public class OODb {
     public final Db db;
-    private Map<String, Node> nodeCache;
+    private LoadingCache<String, Node> nodeCache;
     private Map<String, NodeFactory> nodeFactories = new ConcurrentHashMap<String, NodeFactory>(16, 0.75f, 1);
     private Map<String, Node> updatedNodes;
     private final DbUpdater dbUpdater;
@@ -53,15 +54,23 @@ public class OODb {
                 return nodeFactory.createNode(nodeId);
             }
         });
-        nodeCache = cache.asMap();
+        nodeCache = cache;
     }
 
-    public NodeFactory getNodeFactory(String factoryId) {
+    public NodeFactory getNodeFactory(String factoryId) throws ExecutionException {
         return (NodeFactory) fetchNode(factoryId);
     }
 
-    public Node fetchNode(String nodeId) {
+    public NodeFactory getNodeFactoryIfPresent(String factoryId) {
+        return (NodeFactory) fetchNodeIfPresent(factoryId);
+    }
+
+    public Node fetchNode(String nodeId) throws ExecutionException {
         return nodeCache.get(nodeId);
+    }
+
+    public Node fetchNodeIfPresent(String nodeId) {
+        return nodeCache.getIfPresent(nodeId);
     }
 
     public void addNode(String nodeId, Node node) {
@@ -69,7 +78,7 @@ public class OODb {
     }
 
     public void dropNode(String nodeId) {
-        nodeCache.remove(nodeId);
+        nodeCache.invalidate(nodeId);
     }
 
     public void startTransaction() {

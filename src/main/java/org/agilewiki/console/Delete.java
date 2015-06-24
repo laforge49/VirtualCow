@@ -1,5 +1,7 @@
 package org.agilewiki.console;
 
+import org.agilewiki.console.oodb.Node;
+import org.agilewiki.console.oodb.OODb;
 import org.agilewiki.console.oodb.nodes.Key_Node;
 import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.ids.composites.Link2Id;
@@ -22,6 +24,9 @@ public class Delete {
                     SecondaryId.removeSecondaryId(db, id, secondaryId);
                 }
             }
+            Node node = SimpleSimon.simpleSimon.ooDb.fetchNodeIfPresent(id);
+            if (node != null)
+            node.delete();
         }
     }
 

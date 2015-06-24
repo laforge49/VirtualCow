@@ -76,7 +76,8 @@ public class NewAccountBlade extends PostRequestBlade {
                     body = "<p>An attempt was made to open another account with your email address.</p>" +
                             "<p>--Virtual Cow</p>";
                 }
-                asyncRequestImpl.send(mailOut.sendEmail(servletContext, emailAddress, subject, body, null),
+                AReq<Boolean> mout = mailOut.sendEmail(servletContext, emailAddress, subject, body, null);
+                asyncRequestImpl.send(mout,
                         new AsyncResponseProcessor<Boolean>() {
                             @Override
                             public void processAsyncResponse(Boolean _response) throws Exception {

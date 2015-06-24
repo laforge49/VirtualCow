@@ -97,13 +97,13 @@ public class SimpleSimon extends HttpServlet {
             ooDb = new OODb(100000, 10000L);
             db = ooDb.db;
 
+            mailOut = new MailOut();
+
             try {
                 Metadata_Node.create();
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-
-            mailOut = new MailOut();
 
             ServletStart_Node.create();
             db.registerTransaction(ServletStart_NodeInstance.NAME, ServletStart_NodeInstance.class);
