@@ -19,6 +19,6 @@ public class ForgotPassword_NodeInstance extends JournalEntry_NodeInstance {
     public void process(Db db, MapNode mapNode) {
         String userId = (String) mapNode.get(User.USER_KEY);
         String passwordHash = (String) mapNode.get(User.PASSWORD_KEY);
-        db.set(userId, User.PASSWORD_KEY, passwordHash);
+        ooDb.set(userId, User.PASSWORD_KEY, passwordHash);
     }
 }

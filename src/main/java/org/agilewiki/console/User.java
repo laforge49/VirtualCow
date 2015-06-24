@@ -1,5 +1,6 @@
 package org.agilewiki.console;
 
+import org.agilewiki.console.oodb.OODb;
 import org.agilewiki.console.oodb.nodes.Key_Node;
 import org.agilewiki.console.oodb.nodes.User_Node;
 import org.agilewiki.console.oodb.nodes.roles.Role;
@@ -174,12 +175,13 @@ public class User {
                                     String emailId,
                                     String passwordHash,
                                     String... userRoles) {
+        OODb ooDb = SimpleSimon.simpleSimon.ooDb;
         String emailSecondaryId = SecondaryIds.secondaryId(EMAIL_ID, emailId);
         for (String uId : SecondaryIds.vmnIdIterable(db, emailSecondaryId, db.getTimestamp())) {
             return "duplicate email: " + ValueId.value(emailId);
         }
-        db.set(userId, "$nsubject", emailId);
-        db.set(userId, PASSWORD_KEY, passwordHash);
+        ooDb.set(userId, "$nsubject", emailId);
+        ooDb.set(userId, PASSWORD_KEY, passwordHash);
         SecondaryIds.createSecondaryId(db, userId, emailSecondaryId);
         SecondaryIds.createSecondaryId(db, userId,
                 SecondaryId.secondaryId(Key_Node.NODETYPE_ID, User_Node.ID));

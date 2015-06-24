@@ -1,5 +1,7 @@
 package org.agilewiki.console.oodb;
 
+import org.agilewiki.utils.virtualcow.Db;
+
 /**
  * Base class for Node.
  */
@@ -7,18 +9,19 @@ public class NodeBase implements Node {
     private String nodeId;
     private NodeData innerReference = null;
     private NodeData outerReference = null;
-    private boolean deleted;
+    public final OODb ooDb;
 
     public NodeBase(String nodeId) {
         this.nodeId = nodeId;
+        ooDb = getOODb();
         if (nodeId != null) {
-            getOODb().addNode(nodeId, this);
+            ooDb.addNode(nodeId, this);
             initialize();
         }
     }
 
     private void initialize() {
-        innerReference = new NodeData(nodeId);
+        innerReference = new NodeData(getDb(), nodeId);
         outerReference = innerReference;
     }
 
@@ -45,16 +48,19 @@ public class NodeBase implements Node {
     }
 
     @Override
-    public void delete() {
-        getDb().checkPrivilege();
-        deleted = true;
+    public void endTransaction() {
+        outerReference = innerReference;
     }
 
     @Override
-    public void endTransaction() {
-        if (deleted) {
-            getOODb().dropNode(nodeId);
-        }
-        outerReference = innerReference;
+    public void clearMap() {
+        innerReference.clearMap();
+        ooDb.updated(this);
+    }
+
+    @Override
+    public void set(String key, Object value) {
+        innerReference.set(key, value);
+        ooDb.updated(this);
     }
 }

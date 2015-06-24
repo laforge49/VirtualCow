@@ -50,6 +50,8 @@ public class OODb {
             @Override
             public Node load(String nodeId) throws Exception {
                 String factoryId = SecondaryIds.nodeTypeId(db, nodeId, FactoryRegistry.MAX_TIMESTAMP);
+                if (factoryId == null)
+                    return null;
                 NodeFactory nodeFactory = getNodeFactory(factoryId);
                 return nodeFactory.createNode(nodeId);
             }
@@ -65,8 +67,8 @@ public class OODb {
         return (NodeFactory) fetchNodeIfPresent(factoryId);
     }
 
-    public Node fetchNode(String nodeId) throws ExecutionException {
-        return nodeCache.get(nodeId);
+    public Node fetchNode(String nodeId) {
+        return nodeCache.getUnchecked(nodeId);
     }
 
     public Node fetchNodeIfPresent(String nodeId) {
@@ -93,6 +95,22 @@ public class OODb {
         for (Node node : updatedNodes.values()) {
             node.endTransaction();
         }
+    }
+
+    public void clearMap(String nodeId) {
+        Node node = fetchNode(nodeId);
+        if (node == null)
+            db.clearMap(nodeId);
+        else
+            node.clearMap();
+    }
+
+    public void set(String nodeId, String key, Object value) {
+        Node node = fetchNode(nodeId);
+        if (node == null)
+            db.set(nodeId, key, value);
+        else
+            node.set(key, value);
     }
 
     public BladeBase.AReq<String> update(String transactionName, MapNode tMapNode) {

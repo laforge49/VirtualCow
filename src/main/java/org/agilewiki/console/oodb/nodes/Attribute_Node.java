@@ -20,7 +20,7 @@ public class Attribute_Node extends Node_NodeInstance {
 
     public static void define(String attributeNameId, String nodeId) {
         String attributeId = RandomIds.randomId.generate();
-        SimpleSimon.simpleSimon.db.set(attributeId, "$nsubject", attributeNameId);
+        SimpleSimon.simpleSimon.ooDb.set(attributeId, "$nsubject", attributeNameId);
         SecondaryId.createSecondaryId(SimpleSimon.simpleSimon.db,
                 attributeId,
                 SecondaryId.secondaryId(Key_Node.NODETYPE_ID, ID));

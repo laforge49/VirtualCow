@@ -21,7 +21,9 @@ public interface Node {
 
     void setNodeData(NodeData nodeData);
 
-    void delete();
-
     void endTransaction();
+
+    void clearMap();
+
+    void set(String key, Object value);
 }
