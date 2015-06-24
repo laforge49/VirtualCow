@@ -97,7 +97,7 @@ public class ValidatedBlade extends PostRequestBlade {
                         User_Role.get().roleName());
                 mn = mn.add(User.ROLE_ID,
                         Developer_Role.get().roleName());
-                asyncRequestImpl.send(db.update(NewUser_NodeInstance.NAME, mn),
+                asyncRequestImpl.send(ooDb.update(NewUser_NodeInstance.NAME, mn),
                         new AsyncResponseProcessor<String>() {
                             @Override
                             public void processAsyncResponse(String _response) throws Exception {

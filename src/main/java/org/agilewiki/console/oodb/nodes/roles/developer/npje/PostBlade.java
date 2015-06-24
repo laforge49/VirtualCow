@@ -58,7 +58,7 @@ public class PostBlade extends PostRequestBlade {
                 mn = mn.add(NameIds.REMOTE_ADDR, request.getRemoteAddr());
                 mn = mn.add(NameIds.REMOTE_PORT, request.getRemotePort());
 
-                asyncRequestImpl.send(db.update(Npje_NodeInstance.NAME, mn), new AsyncResponseProcessor<String>() {
+                asyncRequestImpl.send(ooDb.update(Npje_NodeInstance.NAME, mn), new AsyncResponseProcessor<String>() {
                     @Override
                     public void processAsyncResponse(String _response) throws Exception {
                         map.put("subject", "");

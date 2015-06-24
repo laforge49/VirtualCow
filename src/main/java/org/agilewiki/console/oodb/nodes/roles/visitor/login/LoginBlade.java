@@ -67,7 +67,7 @@ public class LoginBlade extends PostRequestBlade {
                     mn = mn.add(NameIds.REMOTE_HOST, request.getRemoteHost());
                     mn = mn.add(NameIds.REMOTE_ADDR, request.getRemoteAddr());
                     mn = mn.add(NameIds.REMOTE_PORT, request.getRemotePort());
-                    asyncRequestImpl.send(db.update(BadUserAddress_NodeInstance.NAME, mn),
+                    asyncRequestImpl.send(ooDb.update(BadUserAddress_NodeInstance.NAME, mn),
                             new AsyncResponseProcessor<String>() {
                                 @Override
                                 public void processAsyncResponse(String _response) throws Exception {
@@ -85,7 +85,7 @@ public class LoginBlade extends PostRequestBlade {
                     mn = mn.add(NameIds.REMOTE_HOST, request.getRemoteHost());
                     mn = mn.add(NameIds.REMOTE_ADDR, request.getRemoteAddr());
                     mn = mn.add(NameIds.REMOTE_PORT, request.getRemotePort());
-                    asyncRequestImpl.send(db.update(BadUserPassword_NodeInstance.NAME, mn),
+                    asyncRequestImpl.send(ooDb.update(BadUserPassword_NodeInstance.NAME, mn),
                             new AsyncResponseProcessor<String>() {
                                 @Override
                                 public void processAsyncResponse(String _response) throws Exception {
@@ -116,7 +116,7 @@ public class LoginBlade extends PostRequestBlade {
                 mn = mn.add(NameIds.REMOTE_HOST, request.getRemoteHost());
                 mn = mn.add(NameIds.REMOTE_ADDR, request.getRemoteAddr());
                 mn = mn.add(NameIds.REMOTE_PORT, request.getRemotePort());
-                asyncRequestImpl.send(db.update(Login_NodeInstance.NAME, mn),
+                asyncRequestImpl.send(ooDb.update(Login_NodeInstance.NAME, mn),
                         new AsyncResponseProcessor<String>() {
                             @Override
                             public void processAsyncResponse(String _response) throws Exception {

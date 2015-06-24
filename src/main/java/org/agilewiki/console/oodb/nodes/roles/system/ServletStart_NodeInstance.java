@@ -19,7 +19,7 @@ public class ServletStart_NodeInstance extends JournalEntry_NodeInstance {
     public static String update(Db db)
             throws Exception {
         MapNode mn = db.dbFactoryRegistry.nilMap;
-        return db.update(NAME, mn).call();
+        return SimpleSimon.simpleSimon.ooDb.update(NAME, mn).call();
     }
 
     @Override

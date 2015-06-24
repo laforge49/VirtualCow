@@ -83,7 +83,7 @@ public class RecreateRoleBlade extends PostRequestBlade {
                 mn = mn.add(NameIds.REMOTE_HOST, request.getRemoteHost());
                 mn = mn.add(NameIds.REMOTE_ADDR, request.getRemoteAddr());
                 mn = mn.add(NameIds.REMOTE_PORT, request.getRemotePort());
-                asyncRequestImpl.send(db.update(sRole.initializeTransactionName(), mn),
+                asyncRequestImpl.send(ooDb.update(sRole.initializeTransactionName(), mn),
                         new AsyncResponseProcessor<String>() {
                             @Override
                             public void processAsyncResponse(String _response) throws Exception {

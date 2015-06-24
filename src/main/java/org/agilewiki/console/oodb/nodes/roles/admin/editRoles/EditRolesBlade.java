@@ -134,7 +134,7 @@ public class EditRolesBlade extends PostRequestBlade {
                     } catch (UnexpectedChecksumException uce) {
                     }
                 }
-                asyncRequestImpl.send(db.update(UpdateRoles_NodeInstance.NAME, mn), new AsyncResponseProcessor<String>() {
+                asyncRequestImpl.send(ooDb.update(UpdateRoles_NodeInstance.NAME, mn), new AsyncResponseProcessor<String>() {
                     @Override
                     public void processAsyncResponse(String _response) throws Exception {
                         String email = User.email(db, nodeId, longTimestamp);

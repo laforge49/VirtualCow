@@ -41,7 +41,7 @@ public class LogoutBlade extends PostRequestBlade {
                 MapNode mn = db.dbFactoryRegistry.nilMap;
                 mn = mn.add(NameIds.SUBJECT, email);
                 mn = mn.add(User.USER_KEY, userId);
-                asyncRequestImpl.send(db.update(Logout_NodeInstance.NAME, mn), new AsyncResponseProcessor<String>() {
+                asyncRequestImpl.send(ooDb.update(Logout_NodeInstance.NAME, mn), new AsyncResponseProcessor<String>() {
                     @Override
                     public void processAsyncResponse(String _response) throws Exception {
                         Cookie[] cookies = request.getCookies();

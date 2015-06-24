@@ -79,7 +79,7 @@ public class NewEmailAddressBlade extends PostRequestBlade {
                 MapNode mn = db.dbFactoryRegistry.nilMap;
                 mn = mn.add(User.USER_KEY, userId);
                 mn = mn.add(User.EMAIL_ID, emailAddress);
-                asyncRequestImpl.send(db.update(NewEmailAddress_NodeInstance.NAME, mn),
+                asyncRequestImpl.send(ooDb.update(NewEmailAddress_NodeInstance.NAME, mn),
                         new AsyncResponseProcessor<String>() {
                             @Override
                             public void processAsyncResponse(String _response) throws Exception {

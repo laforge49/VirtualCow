@@ -58,7 +58,7 @@ public class DeleteAccountBlade extends PostRequestBlade {
                 MapNode mn = db.dbFactoryRegistry.nilMap;
                 mn = mn.add(NameIds.AN_ID, userId);
                 mn = mn.add(NameIds.SUBJECT, email);
-                asyncRequestImpl.send(db.update(Delete_NodeInstance.NAME, mn),
+                asyncRequestImpl.send(ooDb.update(Delete_NodeInstance.NAME, mn),
                         new AsyncResponseProcessor<String>() {
                             @Override
                             public void processAsyncResponse(String _response) throws Exception {
