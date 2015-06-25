@@ -30,9 +30,10 @@ public class NodeData {
             String secondaryInv = SecondaryId.secondaryInv(nodeId, keyId);
             for (String valueId : db.keysIterable(secondaryInv, FactoryRegistry.MAX_TIMESTAMP)) {
                 if (SecondaryId.hasSecondaryId(db, nodeId, keyId, valueId, FactoryRegistry.MAX_TIMESTAMP)) {
-                    Set values = keys.get(keyId);
+                    ConcurrentSkipListSet values = keys.get(keyId);
                     if (values == null) {
                         values = new ConcurrentSkipListSet<>();
+                        keys.put(keyId, values);
                     }
                     values.add(valueId);
                 }

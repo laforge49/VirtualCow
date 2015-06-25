@@ -30,7 +30,7 @@ public class Delete {
                     Link1Id.removeLink1(db, oId, lnkTyp, id);
                 }
             }
-            for (String secondaryType : SecondaryId.typeIdIterable(db, id)) {
+            for (String secondaryType : ooDb.keyIdIterable(id)) {
                 for (String secondaryId : SecondaryId.secondaryIdIterable(db, id, secondaryType, db.getTimestamp())) {
                     ooDb.removeSecondaryId(id, secondaryId);
                 }

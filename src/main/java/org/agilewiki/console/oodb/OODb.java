@@ -186,7 +186,7 @@ public class OODb {
             node.removeSecondaryId(secondaryId);
     }
 
-    public Iterable<String> keyIdIteratable(String nodeId) {
+    public Iterable<String> keyIdIterable(String nodeId) {
         Node node = fetchNode(nodeId);
         if (node == null) {
             return SecondaryId.typeIdIterable(db, nodeId);

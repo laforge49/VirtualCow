@@ -355,7 +355,7 @@ public class NodeBlade extends RequestBlade {
                             sb.append(setRole + "\"><strong>Node Journal</strong></a><br />");
                         }
                         sb.append("<strong>Secondary Keys:</strong><br />");
-                        for (String typeId : SecondaryId.typeIdIterable(db, nodeId)) {
+                        for (String typeId : ooDb.keyIdIterable(nodeId)) {
                             String secondaryInv = SecondaryId.secondaryInv(nodeId, typeId);
                             VersionedMapNode vmn = db.get(secondaryInv);
                             if (vmn != null && !vmn.isEmpty(longTimestamp)) {
