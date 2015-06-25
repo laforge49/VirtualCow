@@ -63,10 +63,12 @@ public class Lnk1OriginsBlade extends RequestBlade {
                                 startingAt = idPeekABoo.getPosition();
                                 break;
                             }
+                            String kindId = SecondaryIds.kindId(db, nodeId, longTimestamp);
+                            if (kindId == null)
+                                continue;
                             --limit;
                             MapAccessor ma = db.mapAccessor();
 
-                            String kindId = SecondaryIds.kindId(db, nodeId, longTimestamp);
                             sb.append(kindId.substring(2));
 
                             sb.append(' ');

@@ -88,8 +88,8 @@ public class RecreateSystemRole_NodeInstance extends RecreateRole_NodeInstance {
         Node_Node.define(ChangePassword_Node.ID, Node_Node.ID, JournalEntry_Node.ID, System_Role.ID,
                 User.USER_KEY, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT, User.PASSWORD_KEY);
 
-        Node_Node.define(Delete_Node.ID, Node_Node.ID, JournalEntry_Node.ID, NameIds.AN_ID, System_Role.ID,
-                User.USER_KEY, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT);
+        Node_Node.define(Delete_Node.ID, Node_Node.ID, JournalEntry_Node.ID, System_Role.ID,
+                User.USER_KEY, NameIds.AN_ID, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT);
 
         Node_Node.define(ForgotPassword_Node.ID, Node_Node.ID, JournalEntry_Node.ID, System_Role.ID,
                 User.USER_KEY, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT, User.PASSWORD_KEY);

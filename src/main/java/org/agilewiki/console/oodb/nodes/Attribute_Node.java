@@ -3,6 +3,7 @@ package org.agilewiki.console.oodb.nodes;
 import org.agilewiki.console.RandomIds;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.oodb.Node;
+import org.agilewiki.console.oodb.OODb;
 import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 
@@ -19,13 +20,12 @@ public class Attribute_Node extends Node_NodeInstance {
     }
 
     public static void define(String attributeNameId, String nodeId) {
+        OODb ooDb = SimpleSimon.simpleSimon.ooDb;
         String attributeId = RandomIds.randomId.generate();
-        SimpleSimon.simpleSimon.ooDb.set(attributeId, "$nsubject", attributeNameId);
-        SecondaryId.createSecondaryId(SimpleSimon.simpleSimon.db,
-                attributeId,
+        ooDb.set(attributeId, "$nsubject", attributeNameId + " - " + nodeId);
+        ooDb.createSecondaryId(attributeId,
                 SecondaryId.secondaryId(Key_Node.NODETYPE_ID, ID));
-        SecondaryId.createSecondaryId(SimpleSimon.simpleSimon.db,
-                attributeId,
+        ooDb.createSecondaryId(attributeId,
                 SecondaryId.secondaryId(Key_Node.ATTRIBUTENAME_ID, attributeNameId));
         Link1Id.createLink1(SimpleSimon.simpleSimon.db,
                 attributeId, Lnk1_Node.ATTRIBUTEOF_ID,

@@ -24,7 +24,7 @@ public class Logout_NodeInstance extends JournalEntry_NodeInstance {
         if (subject != null) {
             String subjectVId = ValueId.generate(subject.toLowerCase());
             String subjectSID = SecondaryId.secondaryId(NameIds.SUBJECT, subjectVId);
-            SecondaryId.createSecondaryId(db, jeName, subjectSID);
+            ooDb.createSecondaryId(jeName, subjectSID);
         }
     }
 }

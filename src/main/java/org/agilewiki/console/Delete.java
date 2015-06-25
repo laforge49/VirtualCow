@@ -19,9 +19,25 @@ public class Delete {
         deleter(ooDb, db, ids, id);
         while (!ids.isEmpty()) {
             id = ids.removeLast();
+            ooDb.clearMap(id);
+            for (String lnkTyp : Link1Id.link1LabelIdIterable(db, id)) {
+                for (String tId : Link1Id.link1IdIterable(db, id, lnkTyp, db.getTimestamp())) {
+                    Link1Id.removeLink1(db, id, lnkTyp, tId);
+                }
+            }
+            for (String lnkTyp : Link1Id.link1LabelInvIterable(db, id)) {
+                for (String oId : Link1Id.link1InvIterable(db, id, lnkTyp, db.getTimestamp())) {
+                    Link1Id.removeLink1(db, oId, lnkTyp, id);
+                }
+            }
             for (String secondaryType : SecondaryId.typeIdIterable(db, id)) {
                 for (String secondaryId : SecondaryId.secondaryIdIterable(db, id, secondaryType, db.getTimestamp())) {
                     ooDb.removeSecondaryId(id, secondaryId);
+                }
+            }
+            for (String lnkTyp : Link2Id.link2LabelIdIterable(db, id)) {
+                for (String tId : Link2Id.link2IdIterable(db, id, lnkTyp, db.getTimestamp())) {
+                    Link2Id.removeLink2(db, id, lnkTyp, tId);
                 }
             }
         }
@@ -29,12 +45,6 @@ public class Delete {
 
     private static void deleter(OODb ooDb, Db db, ArrayDeque<String> ids, String id) {
         ids.addLast(id);
-        ooDb.clearMap(id);
-        for (String lnkTyp : Link1Id.link1LabelIdIterable(db, id)) {
-            for (String tId : Link1Id.link1IdIterable(db, id, lnkTyp, db.getTimestamp())) {
-                Link1Id.removeLink1(db, id, lnkTyp, tId);
-            }
-        }
         for (String lnkTyp : Link1Id.link1LabelInvIterable(db, id)) {
             for (String oId : Link1Id.link1InvIterable(db, id, lnkTyp, db.getTimestamp())) {
                 if (SecondaryId.hasSecondaryId(db,
@@ -43,12 +53,6 @@ public class Delete {
                         db.getTimestamp())) {
                     deleter(ooDb, db, ids, oId);
                 }
-                Link1Id.removeLink1(db, oId, lnkTyp, id);
-            }
-        }
-        for (String lnkTyp : Link2Id.link2LabelIdIterable(db, id)) {
-            for (String tId : Link2Id.link2IdIterable(db, id, lnkTyp, db.getTimestamp())) {
-                Link2Id.removeLink2(db, id, lnkTyp, tId);
             }
         }
     }

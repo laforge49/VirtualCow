@@ -2,6 +2,7 @@ package org.agilewiki.console.oodb.nodes;
 
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.oodb.Node;
+import org.agilewiki.console.oodb.OODb;
 import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 
@@ -33,10 +34,10 @@ public class Lnk1_Node extends Metadata_Node {
     }
 
     public static void define(String nodeId, String invDependency, String originType, String destinationType, String ofRole) {
+        OODb ooDb = SimpleSimon.simpleSimon.ooDb;
         Node_Node.define(nodeId, ID, null, ofRole);
         if (invDependency != null) {
-            SecondaryId.createSecondaryId(SimpleSimon.simpleSimon.db,
-                    nodeId,
+            ooDb.createSecondaryId(nodeId,
                     SecondaryId.secondaryId(Key_Node.INVDEPENDENCY_ID, invDependency));
         }
         Link1Id.createLink1(SimpleSimon.simpleSimon.db,

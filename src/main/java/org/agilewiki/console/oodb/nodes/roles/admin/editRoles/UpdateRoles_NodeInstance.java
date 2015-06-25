@@ -29,7 +29,7 @@ public class UpdateRoles_NodeInstance extends JournalEntry_NodeInstance {
             for (String userRole : add) {
                 String roleTypeSecondaryId =
                         SecondaryIds.secondaryId(User.ROLE_ID, NameIds.generate(userRole));
-                SecondaryIds.createSecondaryId(db, nodeId, roleTypeSecondaryId);
+                ooDb.createSecondaryId(nodeId, roleTypeSecondaryId);
             }
         }
         ln = mapNode.getList(NameIds.REMOVEROLES_ID);

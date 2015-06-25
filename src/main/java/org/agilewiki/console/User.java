@@ -184,13 +184,13 @@ public class User {
         }
         ooDb.set(userId, "$nsubject", emailId);
         ooDb.set(userId, PASSWORD_KEY, passwordHash);
-        SecondaryIds.createSecondaryId(db, userId, emailSecondaryId);
-        SecondaryIds.createSecondaryId(db, userId,
+        ooDb.createSecondaryId(userId, emailSecondaryId);
+        ooDb.createSecondaryId(userId,
                 SecondaryId.secondaryId(Key_Node.NODETYPE_ID, User_Node.ID));
         for (String userRole : userRoles) {
             String userTypeSecondaryId =
                     SecondaryIds.secondaryId(ROLE_ID, NameIds.generate(userRole));
-            SecondaryIds.createSecondaryId(db, userId, userTypeSecondaryId);
+            ooDb.createSecondaryId(userId, userTypeSecondaryId);
         }
         return null;
     }

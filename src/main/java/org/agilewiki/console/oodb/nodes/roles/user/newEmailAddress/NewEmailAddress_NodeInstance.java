@@ -30,6 +30,6 @@ public class NewEmailAddress_NodeInstance extends JournalEntry_NodeInstance {
 
         String emailAddressId = ValueId.generate((String) mapNode.get(User.EMAIL_ID));
         String secondaryId = SecondaryId.secondaryId(User.EMAIL_ID, emailAddressId);
-        SecondaryId.createSecondaryId(db, userId, secondaryId);
+        ooDb.createSecondaryId(userId, secondaryId);
     }
 }
