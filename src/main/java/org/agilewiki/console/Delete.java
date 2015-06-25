@@ -22,7 +22,7 @@ public class Delete {
             id = ids.removeLast();
             for (String secondaryType : SecondaryId.typeIdIterable(db, id)) {
                 for (String secondaryId : SecondaryId.secondaryIdIterable(db, id, secondaryType, db.getTimestamp())) {
-                    SecondaryId.removeSecondaryId(db, id, secondaryId);
+                    ooDb.removeSecondaryId(id, secondaryId);
                 }
             }
         }

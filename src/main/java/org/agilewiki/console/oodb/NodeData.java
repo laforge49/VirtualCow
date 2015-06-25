@@ -1,5 +1,6 @@
 package org.agilewiki.console.oodb;
 
+import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.Db;
@@ -35,6 +36,10 @@ public class NodeData {
             atts.put(key, l);
         }
         l.add(value);
+    }
+
+    public void removeSecondaryId(String secondaryId) {
+        SecondaryId.removeSecondaryId(db, nodeId, secondaryId);
     }
 
     public Object get(String key) {

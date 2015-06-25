@@ -1,5 +1,6 @@
 package org.agilewiki.console.oodb;
 
+import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.virtualcow.Db;
 
 import java.util.List;
@@ -65,6 +66,11 @@ public class NodeBase implements Node {
     public void set(String key, Object value) {
         innerReference.set(key, value);
         ooDb.updated(this);
+    }
+
+    @Override
+    public void removeSecondaryId(String secondaryId) {
+        innerReference.removeSecondaryId(secondaryId);
     }
 
     @Override

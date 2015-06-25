@@ -20,6 +20,7 @@ public class Node_Node extends Metadata_Node {
         JournalEntry_Node.create();
         Role_Node.create();
         User_Node.create();
+        Attribute_Node.create();
     }
 
     public static void define(String nodeId, String nodeType, String superType, String roleId, String... attributes) {
@@ -48,6 +49,6 @@ public class Node_Node extends Metadata_Node {
 
     @Override
     public Node createNode(String nodeId) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(nodeId);
     }
 }

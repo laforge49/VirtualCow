@@ -55,6 +55,6 @@ public class Lnk1_Node extends Metadata_Node {
 
     @Override
     public Node createNode(String nodeId) {
-        throw new UnsupportedOperationException();
+        return new Lnk1_NodeInstance(nodeId);
     }
 }

@@ -30,6 +30,8 @@ public interface Node {
 
     void set(String key, Object value);
 
+    void removeSecondaryId(String secondaryId);
+
     Object get(String key);
 
     List getFlatList(String key);

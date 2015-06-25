@@ -39,6 +39,11 @@ public class NullNode implements Node {
     }
 
     @Override
+    public void removeSecondaryId(String secondaryId) {
+
+    }
+
+    @Override
     public Object get(String key) {
         return null;
     }

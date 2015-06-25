@@ -9,6 +9,7 @@ import org.agilewiki.jactor2.core.blades.NonBlockingBladeBase;
 import org.agilewiki.jactor2.core.impl.Plant;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.jactor2.core.messages.impl.AsyncRequestImpl;
+import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.BaseRegistry;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.MapNode;
@@ -54,7 +55,12 @@ public class OODb {
                     return NullNode.singleton;
                 }
                 NodeFactory nodeFactory = getNodeFactory(factoryId);
-                return nodeFactory.createNode(nodeId);
+                if (nodeFactory == null)
+                    return NullNode.singleton;
+                Node node = nodeFactory.createNode(nodeId);
+                if (node == null)
+                    return NullNode.singleton;
+                return node;
             }
         });
         nodeCache = cache;
@@ -112,6 +118,15 @@ public class OODb {
             db.set(nodeId, key, value);
         else
             node.set(key, value);
+    }
+
+    public void removeSecondaryId(String nodeId, String secondaryId) {
+        /*
+        Node node = fetchNode(nodeId);
+        if (node == null)*/
+            SecondaryId.removeSecondaryId(db, nodeId, secondaryId);
+ /*       else
+            node.removeSecondaryId(secondaryId);*/
     }
 
     public Object get(String nodeId, String key, long timestamp) {
