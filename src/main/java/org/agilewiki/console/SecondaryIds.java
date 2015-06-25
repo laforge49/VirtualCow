@@ -28,7 +28,7 @@ public class SecondaryIds extends SecondaryId {
     public static boolean nodeIsA(Db db, String nodeId, String metaNodeId, long longTimestamp) {
         if (nodeId.equals(metaNodeId))
             return true;
-        for (String mnId : SecondaryId.secondaryIdIterable(db, nodeId, Key_Node.NODETYPE_ID, longTimestamp)) {
+        for (String mnId : SimpleSimon.simpleSimon.ooDb.secondaryIdIterable(nodeId, Key_Node.NODETYPE_ID, longTimestamp)) {
             if (nodeIsA(db, mnId, metaNodeId, longTimestamp))
                 return true;
         }

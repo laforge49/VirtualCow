@@ -46,4 +46,6 @@ public interface Node {
     Iterable<String> keyIdIteratable();
 
     Iterable<String> keyValueIdIterable(String keyId);
+
+    Iterable<String> secondaryIdIterable(String keyId);
 }

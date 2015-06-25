@@ -371,10 +371,9 @@ public class NodeBlade extends RequestBlade {
                                 sb.append(typeId.substring(2));
                                 sb.append("</a><br />");
 
-                                for (String secondaryId :
-                                        SecondaryId.secondaryIdIterable(db, nodeId, typeId, longTimestamp)) {
+                                for (String value :
+                                        ooDb.keyValueIdIterable(nodeId, typeId, longTimestamp)) {
                                     sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value = ");
-                                    String value = SecondaryId.secondaryIdValue(secondaryId);
                                     if (!SecondaryIds.isNode(db, value, longTimestamp)) {
                                         sb.append(value.substring(2));
                                     } else {

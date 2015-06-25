@@ -31,7 +31,7 @@ public class Delete {
                 }
             }
             for (String secondaryType : ooDb.keyIdIterable(id)) {
-                for (String secondaryId : SecondaryId.secondaryIdIterable(db, id, secondaryType, db.getTimestamp())) {
+                for (String secondaryId : ooDb.secondaryIdIterable(id, secondaryType, db.getTimestamp())) {
                     ooDb.removeSecondaryId(id, secondaryId);
                 }
             }

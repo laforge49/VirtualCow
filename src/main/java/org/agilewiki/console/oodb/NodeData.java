@@ -138,4 +138,29 @@ public class NodeData {
             }
         };
     }
+
+    Iterator<String> secondaryIdIterator(String keyId) {
+        Iterator<String> kvii = keyValueIdIterator(keyId);
+        return new Iterator<String>() {
+            @Override
+            public boolean hasNext() {
+                return kvii.hasNext();
+            }
+
+            @Override
+            public String next() {
+                return SecondaryId.secondaryId(keyId, kvii.next());
+            }
+        };
+    }
+
+    public Iterable<String> secondaryIdIterable(String keyId) {
+        return new Iterable<String>() {
+
+            @Override
+            public Iterator<String> iterator() {
+                return secondaryIdIterator(keyId);
+            }
+        };
+    }
 }

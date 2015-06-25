@@ -195,13 +195,24 @@ public class OODb {
 
     public Iterable<String> keyValueIdIterable(String nodeId, String keyId, long timestamp) {
         if (timestamp != FactoryRegistry.MAX_TIMESTAMP) {
+            return db.keysIterable(SecondaryId.secondaryInv(nodeId, keyId), timestamp);
+        }
+        Node node = fetchNode(nodeId);
+        if (node == null) {
+            return db.keysIterable(SecondaryId.secondaryInv(nodeId, keyId), timestamp);
+        }
+        return node.keyValueIdIterable(keyId);
+    }
+
+    public Iterable<String> secondaryIdIterable(String nodeId, String keyId, long timestamp) {
+        if (timestamp != FactoryRegistry.MAX_TIMESTAMP) {
             return SecondaryId.secondaryIdIterable(db, nodeId, keyId, timestamp);
         }
         Node node = fetchNode(nodeId);
         if (node == null) {
             return SecondaryId.secondaryIdIterable(db, nodeId, keyId, timestamp);
         }
-        return node.keyValueIdIterable(keyId);
+        return node.secondaryIdIterable(keyId);
     }
 
     public BladeBase.AReq<String> update(String transactionName, MapNode tMapNode) {
