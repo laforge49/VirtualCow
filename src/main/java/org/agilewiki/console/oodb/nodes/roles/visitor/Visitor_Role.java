@@ -1,7 +1,6 @@
 package org.agilewiki.console.oodb.nodes.roles.visitor;
 
 import org.agilewiki.console.RequestBlade;
-import org.agilewiki.console.oodb.nodes.roles.Role_Node;
 import org.agilewiki.console.oodb.nodes.roles.Role_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.visitor.forgotPassword.ForgotPasswordBlade;
 import org.agilewiki.console.oodb.nodes.roles.visitor.login.LoginBlade;

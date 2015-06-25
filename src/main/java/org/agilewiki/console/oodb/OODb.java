@@ -23,7 +23,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -120,13 +119,16 @@ public class OODb {
             node.set(key, value);
     }
 
+    public void createSecondaryId(String nodeId, String secondaryId) {
+        SecondaryId.createSecondaryId(db, nodeId, secondaryId);
+    }
+
     public void removeSecondaryId(String nodeId, String secondaryId) {
-        /*
         Node node = fetchNode(nodeId);
-        if (node == null)*/
+        if (node == null)
             SecondaryId.removeSecondaryId(db, nodeId, secondaryId);
- /*       else
-            node.removeSecondaryId(secondaryId);*/
+        else
+            node.removeSecondaryId(secondaryId);
     }
 
     public Object get(String nodeId, String key, long timestamp) {
@@ -179,7 +181,8 @@ public class OODb {
     }
 
     private class DbUpdater extends NonBlockingBladeBase {
-        public DbUpdater() throws Exception {}
+        public DbUpdater() throws Exception {
+        }
 
         public AReq<String> update(String transactionName, MapNode tMapNode) {
             tMapNode = tMapNode.add(Db.transactionNameId, transactionName);

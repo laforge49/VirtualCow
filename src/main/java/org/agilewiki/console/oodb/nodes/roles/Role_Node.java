@@ -1,7 +1,6 @@
 package org.agilewiki.console.oodb.nodes.roles;
 
 import org.agilewiki.console.oodb.Node;
-import org.agilewiki.console.oodb.nodes.Node_Node;
 import org.agilewiki.console.oodb.nodes.Node_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.admin.Admin_Role;
 import org.agilewiki.console.oodb.nodes.roles.developer.Developer_Role;

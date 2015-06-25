@@ -6,7 +6,8 @@ import java.util.NavigableMap;
 public class NullNode implements Node {
     public final static NullNode singleton = new NullNode();
 
-    private NullNode() {}
+    private NullNode() {
+    }
 
     @Override
     public String getNodeId() {

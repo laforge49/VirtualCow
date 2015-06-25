@@ -1,7 +1,6 @@
 package org.agilewiki.console.oodb.nodes.roles.admin;
 
 import org.agilewiki.console.RequestBlade;
-import org.agilewiki.console.oodb.nodes.roles.Role_Node;
 import org.agilewiki.console.oodb.nodes.roles.Role_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.admin.editRoles.EditRolesBlade;
 
