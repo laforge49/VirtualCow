@@ -54,21 +54,39 @@ public class NodeBase implements Node {
     }
 
     @Override
+    public void reset() {
+        innerReference = outerReference;
+    }
+
+    private void prep() {
+        if (innerReference == outerReference) {
+            innerReference = new NodeData(innerReference);
+            ooDb.updated(this);
+        }
+    }
+
+    @Override
     public void clearMap() {
+        prep();
         innerReference.clearMap();
-        ooDb.updated(this);
     }
 
     @Override
     public void set(String key, Object value) {
+        prep();
         innerReference.set(key, value);
-        ooDb.updated(this);
+    }
+
+    @Override
+    public void createSecondaryId(String secondaryId) {
+        prep();
+        innerReference.createSecondaryId(secondaryId);
     }
 
     @Override
     public void removeSecondaryId(String secondaryId) {
+        prep();
         innerReference.removeSecondaryId(secondaryId);
-        ooDb.updated(this);
     }
 
     @Override

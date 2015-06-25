@@ -8,6 +8,7 @@ import org.agilewiki.jactor2.core.blades.BladeBase;
 import org.agilewiki.jactor2.core.blades.NonBlockingBladeBase;
 import org.agilewiki.jactor2.core.impl.Plant;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
+import org.agilewiki.jactor2.core.messages.ExceptionHandler;
 import org.agilewiki.jactor2.core.messages.impl.AsyncRequestImpl;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.BaseRegistry;
@@ -31,7 +32,6 @@ import java.util.concurrent.ExecutionException;
 public class OODb {
     public final Db db;
     private LoadingCache<String, Node> nodeCache;
-    private Map<String, NodeFactory> nodeFactories = new ConcurrentHashMap<String, NodeFactory>(16, 0.75f, 1);
     private Map<String, Node> updatedNodes;
     private final DbUpdater dbUpdater;
 
@@ -103,6 +103,12 @@ public class OODb {
         }
     }
 
+    public void reset() {
+        for (Node node : updatedNodes.values()) {
+            node.reset();
+        }
+    }
+
     public void clearMap(String nodeId) {
         Node node = fetchNode(nodeId);
         if (node == null)
@@ -120,7 +126,11 @@ public class OODb {
     }
 
     public void createSecondaryId(String nodeId, String secondaryId) {
-        SecondaryId.createSecondaryId(db, nodeId, secondaryId);
+        Node node = fetchNode(nodeId);
+        if (node == null)
+            SecondaryId.createSecondaryId(db, nodeId, secondaryId);
+        else
+            node.createSecondaryId(secondaryId);
     }
 
     public void removeSecondaryId(String nodeId, String secondaryId) {
@@ -194,6 +204,13 @@ public class OODb {
                 @Override
                 protected void processAsyncOperation(AsyncRequestImpl _asyncRequestImpl,
                                                      AsyncResponseProcessor<String> _asyncResponseProcessor) {
+                    _asyncRequestImpl.setExceptionHandler(new ExceptionHandler() {
+                        @Override
+                        public Object processException(Exception e) throws Exception {
+                            reset();
+                            return super.processException(e);
+                        }
+                    });
                     startTransaction();
                     _asyncRequestImpl.send(db.update(tByteBuffer), new AsyncResponseProcessor<String>() {
                         @Override

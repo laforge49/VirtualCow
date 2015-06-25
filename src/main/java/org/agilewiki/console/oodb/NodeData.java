@@ -5,25 +5,56 @@ import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NavigableMap;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 public class NodeData {
     public final Db db;
     public final String nodeId;
-    private final NavigableMap<Comparable, List> atts;
+    private ConcurrentSkipListMap<Comparable, List> atts;
+    private ConcurrentSkipListMap<String, ConcurrentSkipListSet> keys;
 
     public NodeData(Db db, String nodeId) {
         this.db = db;
         this.nodeId = nodeId;
-        VersionedMapNode vmn = db.get(nodeId);
-        if (vmn == null)
+
+        VersionedMapNode avmn = db.get(nodeId);
+        if (avmn == null)
             atts = new ConcurrentSkipListMap<>();
         else
-            atts = vmn.flatMap(FactoryRegistry.MAX_TIMESTAMP);
+            atts = new ConcurrentSkipListMap<>(avmn.flatMap(FactoryRegistry.MAX_TIMESTAMP));
+
+        keys = new ConcurrentSkipListMap<>();
+        for (String keyId : SecondaryId.typeIdIterable(db, nodeId)) {
+            String secondaryInv = SecondaryId.secondaryInv(nodeId, keyId);
+            for (String valueId : db.keysIterable(secondaryInv, FactoryRegistry.MAX_TIMESTAMP)) {
+                if (SecondaryId.hasSecondaryId(db, nodeId, keyId, valueId, FactoryRegistry.MAX_TIMESTAMP)) {
+                    Set values = keys.get(keyId);
+                    if (values == null) {
+                        values = new ConcurrentSkipListSet<>();
+                    }
+                    values.add(valueId);
+                }
+            }
+        }
+    }
+
+    public NodeData(NodeData old) {
+        db = old.db;
+        nodeId = old.nodeId;
+
+        atts = new ConcurrentSkipListMap<>();
+        for (Comparable attId : old.atts.keySet()) {
+            List l = old.atts.get(attId);
+            atts.put(attId, new ArrayList<>(l));
+        }
+
+        keys = new ConcurrentSkipListMap<>();
+        for (String keyId : old.keys.keySet()) {
+            ConcurrentSkipListSet s = old.keys.get(keyId);
+            keys.put(keyId, new ConcurrentSkipListSet<>(s));
+        }
     }
 
     public void clearMap() {
@@ -41,8 +72,26 @@ public class NodeData {
         l.add(value);
     }
 
+    public void createSecondaryId(String secondaryId) {
+        SecondaryId.createSecondaryId(db, nodeId, secondaryId);
+        String keyType = SecondaryId.secondaryIdType(secondaryId);
+        ConcurrentSkipListSet s = keys.get(keyType);
+        if (s == null) {
+            s = new ConcurrentSkipListSet();
+            keys.put(keyType, s);
+        }
+        String keyValue = SecondaryId.secondaryIdValue(secondaryId);
+        s.add(keyValue);
+    }
+
     public void removeSecondaryId(String secondaryId) {
         SecondaryId.removeSecondaryId(db, nodeId, secondaryId);
+        String keyType = SecondaryId.secondaryIdType(secondaryId);
+        ConcurrentSkipListSet s = keys.get(keyType);
+        if (s == null)
+            return;
+        String keyValue = SecondaryId.secondaryIdValue(secondaryId);
+        s.remove(keyValue);
     }
 
     public Object get(String key) {

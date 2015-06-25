@@ -26,9 +26,13 @@ public interface Node {
 
     void endTransaction();
 
+    void reset();
+
     void clearMap();
 
     void set(String key, Object value);
+
+    void createSecondaryId(String secondaryId);
 
     void removeSecondaryId(String secondaryId);
 

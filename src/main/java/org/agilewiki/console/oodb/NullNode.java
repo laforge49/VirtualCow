@@ -30,12 +30,22 @@ public class NullNode implements Node {
     }
 
     @Override
+    public void reset() {
+
+    }
+
+    @Override
     public void clearMap() {
 
     }
 
     @Override
     public void set(String key, Object value) {
+
+    }
+
+    @Override
+    public void createSecondaryId(String secondaryId) {
 
     }
 

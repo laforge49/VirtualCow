@@ -149,7 +149,7 @@ public class NodeBlade extends RequestBlade {
                                     String s = ((String) key).substring(2) + "[" + i + "] = ";
                                     sb.append("&nbsp;&nbsp;&nbsp;&nbsp;" + s);
                                     String value = l.get(i).toString();
-                                    if (!value.startsWith("$") || !SecondaryIds.isNode(db, value, longTimestamp)) {
+                                    if (!value.startsWith("$") || value.substring(1).indexOf('$') > -1 || !SecondaryIds.isNode(db, value, longTimestamp)) {
                                         sb.append(SimpleSimon.encode(value, s.length() + 4,
                                                 SimpleSimon.ENCODE_MULTIPLE_LINES)); //body text
                                     } else {
