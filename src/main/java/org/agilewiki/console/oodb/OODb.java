@@ -23,7 +23,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -192,6 +191,17 @@ public class OODb {
             return SecondaryId.typeIdIterable(db, nodeId);
         }
         return node.keyIdIteratable();
+    }
+
+    public Iterable<String> keyValueIdIterable(String nodeId, String keyId, long timestamp) {
+        if (timestamp != FactoryRegistry.MAX_TIMESTAMP) {
+            return SecondaryId.secondaryIdIterable(db, nodeId, keyId, timestamp);
+        }
+        Node node = fetchNode(nodeId);
+        if (node == null) {
+            return SecondaryId.secondaryIdIterable(db, nodeId, keyId, timestamp);
+        }
+        return node.keyValueIdIterable(keyId);
     }
 
     public BladeBase.AReq<String> update(String transactionName, MapNode tMapNode) {

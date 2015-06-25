@@ -110,7 +110,7 @@ public class NodeData {
         s.remove(keyValue);
     }
 
-    public Iterator<String> keyIdIterator() {
+    Iterator<String> keyIdIterator() {
         return keys.keySet().iterator();
     }
 
@@ -119,6 +119,22 @@ public class NodeData {
             @Override
             public Iterator<String> iterator() {
                 return keyIdIterator();
+            }
+        };
+    }
+
+    Iterator<String> keyValueIdIterator(String keyId) {
+        ConcurrentSkipListSet s = keys.get(keyId);
+        if (s == null)
+            s = new ConcurrentSkipListSet();
+        return s.iterator();
+    }
+
+    public Iterable<String> keyValueIdIterable(String keyId) {
+        return new Iterable<String>() {
+            @Override
+            public Iterator<String> iterator() {
+                return keyValueIdIterator(keyId);
             }
         };
     }

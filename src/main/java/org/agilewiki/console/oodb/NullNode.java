@@ -74,4 +74,9 @@ public class NullNode implements Node {
     public Iterable<String> keyIdIteratable() {
         return null;
     }
+
+    @Override
+    public Iterable<String> keyValueIdIterable(String keyId) {
+        return null;
+    }
 }

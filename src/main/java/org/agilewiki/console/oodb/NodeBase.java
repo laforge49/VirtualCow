@@ -1,6 +1,5 @@
 package org.agilewiki.console.oodb;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.NavigableMap;
 
@@ -108,5 +107,10 @@ public class NodeBase implements Node {
     @Override
     public Iterable<String> keyIdIteratable() {
         return getNodeData().keyIdIteratable();
+    }
+
+    @Override
+    public Iterable<String> keyValueIdIterable(String keyId) {
+        return getNodeData().keyValueIdIterable(keyId);
     }
 }
