@@ -3,6 +3,7 @@ package org.agilewiki.console.oodb;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.utils.virtualcow.Db;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.NavigableMap;
 
@@ -32,13 +33,15 @@ public interface Node {
 
     void set(String key, Object value);
 
-    void createSecondaryId(String secondaryId);
-
-    void removeSecondaryId(String secondaryId);
-
     Object get(String key);
 
     List getFlatList(String key);
 
     NavigableMap<Comparable, List> getFlatMap();
+
+    void createSecondaryId(String secondaryId);
+
+    void removeSecondaryId(String secondaryId);
+
+    Iterable<String> keyIdIteratable();
 }

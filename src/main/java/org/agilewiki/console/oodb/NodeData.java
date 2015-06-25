@@ -72,6 +72,21 @@ public class NodeData {
         l.add(value);
     }
 
+    public Object get(String key) {
+        return atts.get(key).get(0);
+    }
+
+    public List getFlatList(String key) {
+        List l = atts.get(key);
+        if (l == null)
+            return new ArrayList();
+        return new ArrayList(l);
+    }
+
+    public NavigableMap<Comparable, List> getFlatMap() {
+        return new TreeMap<>(atts);
+    }
+
     public void createSecondaryId(String secondaryId) {
         SecondaryId.createSecondaryId(db, nodeId, secondaryId);
         String keyType = SecondaryId.secondaryIdType(secondaryId);
@@ -94,18 +109,16 @@ public class NodeData {
         s.remove(keyValue);
     }
 
-    public Object get(String key) {
-        return atts.get(key).get(0);
+    public Iterator<String> keyIdIterator() {
+        return keys.keySet().iterator();
     }
 
-    public List getFlatList(String key) {
-        List l = atts.get(key);
-        if (l == null)
-            return new ArrayList();
-        return new ArrayList(l);
-    }
-
-    public NavigableMap<Comparable, List> getFlatMap() {
-        return new TreeMap<>(atts);
+    public Iterable<String> keyIdIteratable() {
+        return new Iterable<String>() {
+            @Override
+            public Iterator<String> iterator() {
+                return keyIdIterator();
+            }
+        };
     }
 }

@@ -125,22 +125,6 @@ public class OODb {
             node.set(key, value);
     }
 
-    public void createSecondaryId(String nodeId, String secondaryId) {
-        Node node = fetchNode(nodeId);
-        if (node == null)
-            SecondaryId.createSecondaryId(db, nodeId, secondaryId);
-        else
-            node.createSecondaryId(secondaryId);
-    }
-
-    public void removeSecondaryId(String nodeId, String secondaryId) {
-        Node node = fetchNode(nodeId);
-        if (node == null)
-            SecondaryId.removeSecondaryId(db, nodeId, secondaryId);
-        else
-            node.removeSecondaryId(secondaryId);
-    }
-
     public Object get(String nodeId, String key, long timestamp) {
         if (timestamp != FactoryRegistry.MAX_TIMESTAMP)
             return db.get(nodeId, key, timestamp);
@@ -184,6 +168,30 @@ public class OODb {
                 return vmn.flatMap(FactoryRegistry.MAX_TIMESTAMP);
         }
         return node.getFlatMap();
+    }
+
+    public void createSecondaryId(String nodeId, String secondaryId) {
+        Node node = fetchNode(nodeId);
+        if (node == null)
+            SecondaryId.createSecondaryId(db, nodeId, secondaryId);
+        else
+            node.createSecondaryId(secondaryId);
+    }
+
+    public void removeSecondaryId(String nodeId, String secondaryId) {
+        Node node = fetchNode(nodeId);
+        if (node == null)
+            SecondaryId.removeSecondaryId(db, nodeId, secondaryId);
+        else
+            node.removeSecondaryId(secondaryId);
+    }
+
+    public Iterable<String> keyIdIteratable(String nodeId) {
+        Node node = fetchNode(nodeId);
+        if (node == null) {
+            return SecondaryId.typeIdIterable(db, nodeId);
+        }
+        return node.keyIdIteratable();
     }
 
     public BladeBase.AReq<String> update(String transactionName, MapNode tMapNode) {

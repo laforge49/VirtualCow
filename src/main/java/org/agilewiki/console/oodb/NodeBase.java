@@ -1,5 +1,6 @@
 package org.agilewiki.console.oodb;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.NavigableMap;
 
@@ -78,18 +79,6 @@ public class NodeBase implements Node {
     }
 
     @Override
-    public void createSecondaryId(String secondaryId) {
-        prep();
-        innerReference.createSecondaryId(secondaryId);
-    }
-
-    @Override
-    public void removeSecondaryId(String secondaryId) {
-        prep();
-        innerReference.removeSecondaryId(secondaryId);
-    }
-
-    @Override
     public Object get(String key) {
         return getNodeData().get(key);
     }
@@ -102,5 +91,22 @@ public class NodeBase implements Node {
     @Override
     public NavigableMap<Comparable, List> getFlatMap() {
         return getNodeData().getFlatMap();
+    }
+
+    @Override
+    public void createSecondaryId(String secondaryId) {
+        prep();
+        innerReference.createSecondaryId(secondaryId);
+    }
+
+    @Override
+    public void removeSecondaryId(String secondaryId) {
+        prep();
+        innerReference.removeSecondaryId(secondaryId);
+    }
+
+    @Override
+    public Iterable<String> keyIdIteratable() {
+        return getNodeData().keyIdIteratable();
     }
 }
