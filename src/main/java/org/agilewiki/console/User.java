@@ -46,7 +46,7 @@ public class User {
         }
     }
 
-    public static boolean hasRole(Db db, String userId, String role) {
+    public static boolean hasRole(String userId, String role) {
         OODb ooDb = SimpleSimon.simpleSimon.ooDb;
         while (true) {
             try {
@@ -57,7 +57,7 @@ public class User {
         }
     }
 
-    public static String email(Db db, String userId, long timestamp) {
+    public static String email(String userId, long timestamp) {
         while (true) {
             try {
                 return SimpleSimon.simpleSimon.ooDb.getKeyValue(userId, EMAIL_ID, timestamp);
@@ -80,29 +80,16 @@ public class User {
         }
     }
 
-    public static boolean send(Db db, ServletContext servletContext, String userId, String subject, String body) {
-        String email = email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
-        boolean sent = true;
-        try {
-            sent = MailOut.send(email, subject, body);
-        } catch (MessagingException me) {
-            sent = false;
-            servletContext.log("unable to send to " + email, me);
-        }
-        return sent;
-    }
-
-    public static boolean confirmPassword(Db db,
-                                          ServletContext servletContext,
+    public static boolean confirmPassword(ServletContext servletContext,
                                           String userId,
                                           String password) {
-        String passwordDigest = passwordDigest(db, userId, FactoryRegistry.MAX_TIMESTAMP);
+        String passwordDigest = passwordDigest(userId, FactoryRegistry.MAX_TIMESTAMP);
         if (passwordDigest == null)
             return false;
         return passwordDigest.equals(encodePassword(servletContext, userId, password));
     }
 
-    public static String passwordDigest(Db db, String userId, long timestamp) {
+    public static String passwordDigest(String userId, long timestamp) {
         OODb ooDb = SimpleSimon.simpleSimon.ooDb;
         while (true) {
             try {
@@ -136,9 +123,8 @@ public class User {
         return new String(hexChars);
     }
 
-    public static boolean init(SimpleSimon simpleSimon) {
-        Db db = simpleSimon.db;
-        ServletConfig servletConfig = simpleSimon.getServletConfig();
+    public static boolean init() {
+        ServletConfig servletConfig = SimpleSimon.simpleSimon.getServletConfig();
         String adminEmail = servletConfig.getInitParameter("adminEmail");
         String adminPassword = servletConfig.getInitParameter("adminPassword");
         if (adminEmail == null || adminPassword == null) {
@@ -153,8 +139,7 @@ public class User {
             return false;
         }
         String emailId = ValueId.generate(adminEmail);
-        String error = createUser(db,
-                userId,
+        String error = createUser(userId,
                 emailId,
                 passwordHash,
                 User_Role.get().roleName(),
@@ -166,11 +151,11 @@ public class User {
         return false;
     }
 
-    public static String createUser(Db db,
-                                    String userId,
+    public static String createUser(String userId,
                                     String emailId,
                                     String passwordHash,
                                     String... userRoles) {
+        Db db = SimpleSimon.simpleSimon.db;
         OODb ooDb = SimpleSimon.simpleSimon.ooDb;
         String emailSecondaryId = SecondaryId.secondaryId(EMAIL_ID, emailId);
         for (String uId : SecondaryId.vmnIdIterable(db, emailSecondaryId, db.getTimestamp())) {

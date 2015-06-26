@@ -49,12 +49,12 @@ public class DeleteAccountBlade extends PostRequestBlade {
                     finish();
                     return;
                 }
-                if (!User.confirmPassword(db, servletContext, userId, oldPassword)) {
+                if (!User.confirmPassword(servletContext, userId, oldPassword)) {
                     map.put("error", "Incorrect password");
                     finish();
                     return;
                 }
-                String email = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
+                String email = User.email(userId, FactoryRegistry.MAX_TIMESTAMP);
                 MapNode mn = db.dbFactoryRegistry.nilMap;
                 mn = mn.add(NameIds.AN_ID, userId);
                 mn = mn.add(NameIds.SUBJECT, email);

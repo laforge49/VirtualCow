@@ -68,7 +68,7 @@ public class ChangePasswordBlade extends PostRequestBlade {
                     finish();
                     return;
                 }
-                if (!User.confirmPassword(db, servletContext, userId, oldPassword)) {
+                if (!User.confirmPassword(servletContext, userId, oldPassword)) {
                     map.put("error", "Enter your current password in the old password field");
                     finish();
                     return;
@@ -83,13 +83,13 @@ public class ChangePasswordBlade extends PostRequestBlade {
                                 long expTime = System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 3; // 3 days
                                 String token = null;
                                 try {
-                                    token = Tokens.generate(db, User.passwordDigest(db, userId, FactoryRegistry.MAX_TIMESTAMP), expTime);
+                                    token = Tokens.generate(db, User.passwordDigest(userId, FactoryRegistry.MAX_TIMESTAMP), expTime);
                                 } catch (NoSuchAlgorithmException e) {
                                 }
                                 Cookie loginCookie = new Cookie("userId", userId + "|" + token);
                                 loginCookie.setMaxAge(60 * 60 * 24 * 3); //3 days
                                 response.addCookie(loginCookie);
-                                String email = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
+                                String email = User.email(userId, FactoryRegistry.MAX_TIMESTAMP);
                                 asyncRequestImpl.send(mailOut.sendEmail(servletContext,
                                                 email,
                                                 "Password Change Notification",

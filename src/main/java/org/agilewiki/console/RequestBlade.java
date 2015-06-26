@@ -79,7 +79,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
             this.page = page;
             this.userId = userId;
             if (userId != null) {
-                myEmail = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
+                myEmail = User.email(userId, FactoryRegistry.MAX_TIMESTAMP);
             }
             this.role = role;
         }

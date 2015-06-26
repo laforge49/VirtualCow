@@ -24,6 +24,6 @@ public class ServletStart_NodeInstance extends JournalEntry_NodeInstance {
 
     @Override
     public void process(Db db, MapNode tMapNode) {
-        User.init(SimpleSimon.simpleSimon);
+        User.init();
     }
 }

@@ -45,7 +45,7 @@ public class ChangeEmailAddressBlade extends PostRequestBlade {
                 if (emailAddress != null)
                     map.put("emailAddress", SimpleSimon.encode(emailAddress, 0, SimpleSimon.ENCODE_FIELD)); //field
                 String error = null;
-                String oldEmailAddress = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
+                String oldEmailAddress = User.email(userId, FactoryRegistry.MAX_TIMESTAMP);
                 if (emailAddress == null || emailAddress.length() == 0) {
                     error = "Enter your new email address.";
                 } else if (emailAddress.equals(oldEmailAddress)) {

@@ -25,7 +25,7 @@ public class Tokens {
         String userId = idToken.substring(0, i);
         String token = idToken.substring(i + 1);
         try {
-            if (validate(db, User.passwordDigest(db, userId, FactoryRegistry.MAX_TIMESTAMP), token)) {
+            if (validate(db, User.passwordDigest(userId, FactoryRegistry.MAX_TIMESTAMP), token)) {
                 return userId;
             } else {
                 return null;

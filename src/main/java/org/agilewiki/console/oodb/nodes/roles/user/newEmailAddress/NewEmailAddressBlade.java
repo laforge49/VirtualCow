@@ -60,7 +60,7 @@ public class NewEmailAddressBlade extends PostRequestBlade {
                     finish();
                     return;
                 }
-                if (!User.confirmPassword(db, servletContext, userId, password)) {
+                if (!User.confirmPassword(servletContext, userId, password)) {
                     map.put("error", "Password does not match.");
                     finish();
                     return;
@@ -75,7 +75,7 @@ public class NewEmailAddressBlade extends PostRequestBlade {
                     finish();
                     return;
                 }
-                String oldEmailAddress = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
+                String oldEmailAddress = User.email(userId, FactoryRegistry.MAX_TIMESTAMP);
                 MapNode mn = db.dbFactoryRegistry.nilMap;
                 mn = mn.add(User.USER_KEY, userId);
                 mn = mn.add(User.EMAIL_ID, emailAddress);
@@ -83,7 +83,7 @@ public class NewEmailAddressBlade extends PostRequestBlade {
                         new AsyncResponseProcessor<String>() {
                             @Override
                             public void processAsyncResponse(String _response) throws Exception {
-                                myEmail = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
+                                myEmail = User.email(userId, FactoryRegistry.MAX_TIMESTAMP);
                                 map.put("myEmail", myEmail);
                                 map.put("success", "The email address for your account has been updated.");
                                 println();

@@ -37,7 +37,7 @@ public class LogoutBlade extends PostRequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                String email = User.email(db, userId, FactoryRegistry.MAX_TIMESTAMP);
+                String email = User.email(userId, FactoryRegistry.MAX_TIMESTAMP);
                 MapNode mn = db.dbFactoryRegistry.nilMap;
                 mn = mn.add(NameIds.SUBJECT, email);
                 mn = mn.add(User.USER_KEY, userId);

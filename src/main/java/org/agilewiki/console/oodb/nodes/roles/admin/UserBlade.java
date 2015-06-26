@@ -36,7 +36,7 @@ public class UserBlade extends RequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                String email = User.email(db, nodeId, longTimestamp);
+                String email = User.email(nodeId, longTimestamp);
                 map.put("email", email);
                 StringBuilder sb;
                 while (true) {

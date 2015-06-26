@@ -78,7 +78,7 @@ public class LoginBlade extends PostRequestBlade {
                             });
                     return;
                 }
-                if (!User.confirmPassword(db, servletContext, userId, password)) {
+                if (!User.confirmPassword(servletContext, userId, password)) {
                     MapNode mn = db.dbFactoryRegistry.nilMap;
                     mn = mn.add(NameIds.SUBJECT, emailAddress);
                     mn = mn.add(User.USER_KEY, userId);
@@ -99,7 +99,7 @@ public class LoginBlade extends PostRequestBlade {
                 long expTime = System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 3; // 3 days
                 String token = null;
                 try {
-                    token = Tokens.generate(db, User.passwordDigest(db, userId, FactoryRegistry.MAX_TIMESTAMP), expTime);
+                    token = Tokens.generate(db, User.passwordDigest(userId, FactoryRegistry.MAX_TIMESTAMP), expTime);
                 } catch (NoSuchAlgorithmException e) {
                     servletContext.log("no such algorithm: SHA-256");
                     map.put("error", SimpleSimon.encode("Unable to create your account at this time. Please try again later.",

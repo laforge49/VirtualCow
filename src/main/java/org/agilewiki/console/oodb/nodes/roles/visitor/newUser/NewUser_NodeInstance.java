@@ -29,6 +29,6 @@ public class NewUser_NodeInstance extends JournalEntry_NodeInstance {
         ListNode list = mapNode.getList(User.ROLE_ID);
         List<String> flatList = list.flatList();
         String[] roles = new String[]{};
-        User.createUser(db, userId, emailId, passwordHash, flatList.toArray(roles));
+        User.createUser(userId, emailId, passwordHash, flatList.toArray(roles));
     }
 }

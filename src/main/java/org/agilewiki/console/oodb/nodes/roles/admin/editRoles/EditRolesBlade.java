@@ -41,7 +41,7 @@ public class EditRolesBlade extends PostRequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                String email = User.email(db, nodeId, longTimestamp);
+                String email = User.email(nodeId, longTimestamp);
                 String userLink = "<a href=\"?from=" + page +
                         "&to=user" +
                         "&nodeId=" + nodeId +
@@ -134,7 +134,7 @@ public class EditRolesBlade extends PostRequestBlade {
                 asyncRequestImpl.send(ooDb.update(UpdateRoles_NodeInstance.NAME, mn), new AsyncResponseProcessor<String>() {
                     @Override
                     public void processAsyncResponse(String _response) throws Exception {
-                        String email = User.email(db, nodeId, longTimestamp);
+                        String email = User.email(nodeId, longTimestamp);
                         String userLink = "<a href=\"?from=" + page +
                                 "&to=user" +
                                 "&nodeId=" + nodeId +
