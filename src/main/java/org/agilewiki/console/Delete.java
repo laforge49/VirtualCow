@@ -47,9 +47,9 @@ public class Delete {
         ids.addLast(id);
         for (String lnkTyp : Link1Id.link1LabelInvIterable(db, id)) {
             for (String oId : Link1Id.link1InvIterable(db, id, lnkTyp, db.getTimestamp())) {
-                if (SecondaryId.hasSecondaryId(db,
-                        lnkTyp + ".lnk1",
-                        SecondaryId.secondaryId(Key_Node.INVDEPENDENCY_ID, lnkTyp),
+                if (ooDb.hasKeyValue(lnkTyp + ".lnk1",
+                        Key_Node.INVDEPENDENCY_ID,
+                        lnkTyp,
                         db.getTimestamp())) {
                     deleter(ooDb, db, ids, oId);
                 }

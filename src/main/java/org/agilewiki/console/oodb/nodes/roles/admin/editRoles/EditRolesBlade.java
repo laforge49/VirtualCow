@@ -63,10 +63,9 @@ public class EditRolesBlade extends PostRequestBlade {
                                 sb.append("\" value=\"");
                                 sb.append(roleName);
                                 sb.append("\"");
-                                if (SecondaryId.hasSecondaryId(
-                                        db,
-                                        nodeId,
-                                        SecondaryId.secondaryId(User.ROLE_ID, NameId.generate(roleName)),
+                                if (ooDb.hasKeyValue(nodeId,
+                                        User.ROLE_ID,
+                                        NameId.generate(roleName),
                                         longTimestamp))
                                     sb.append(" checked");
                                 sb.append(">");
@@ -115,10 +114,9 @@ public class EditRolesBlade extends PostRequestBlade {
                                 if (request.getParameter("role-" + role) != null) {
                                     n = true;
                                 }
-                                if (SecondaryId.hasSecondaryId(
-                                        db,
-                                        nodeId,
-                                        SecondaryId.secondaryId(User.ROLE_ID, NameId.generate(role)),
+                                if (ooDb.hasKeyValue(nodeId,
+                                        User.ROLE_ID,
+                                        NameId.generate(role),
                                         longTimestamp)) {
                                     o = true;
                                 }
@@ -158,10 +156,9 @@ public class EditRolesBlade extends PostRequestBlade {
                                         sb.append("\" value=\"");
                                         sb.append(roleName);
                                         sb.append("\"");
-                                        if (SecondaryId.hasSecondaryId(
-                                                db,
-                                                nodeId,
-                                                SecondaryId.secondaryId(User.ROLE_ID, NameId.generate(roleName)),
+                                        if (ooDb.hasKeyValue(nodeId,
+                                                User.ROLE_ID,
+                                                NameId.generate(roleName),
                                                 longTimestamp))
                                             sb.append(" checked");
                                         sb.append(">");

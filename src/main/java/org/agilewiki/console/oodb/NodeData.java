@@ -130,6 +130,13 @@ public class NodeData {
         return keyValueIdIterator.next();
     }
 
+    public boolean hasKeyValue(String keyId, String value) {
+        NavigableSet<String> s = keys.get(keyId);
+        if (s == null)
+            return false;
+        return s.contains(value);
+    }
+
     Iterator<String> keyValueIdIterator(String keyId) {
         ConcurrentSkipListSet s = keys.get(keyId);
         if (s == null)
