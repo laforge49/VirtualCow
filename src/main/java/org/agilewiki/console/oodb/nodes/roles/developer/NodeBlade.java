@@ -1,6 +1,9 @@
 package org.agilewiki.console.oodb.nodes.roles.developer;
 
-import org.agilewiki.console.*;
+import org.agilewiki.console.NameIds;
+import org.agilewiki.console.RequestBlade;
+import org.agilewiki.console.SimpleSimon;
+import org.agilewiki.console.TimestampIds;
 import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.utils.ids.composites.Journal;
 import org.agilewiki.utils.ids.composites.Link1Id;
@@ -59,7 +62,7 @@ public class NodeBlade extends RequestBlade {
                     jeTimestamp = TimestampIds.value(nodeId);
                     time = SimpleSimon.niceTime(nodeId);
                 }
-                String kindId = SecondaryIds.kindId(db, nodeId, longTimestamp);
+                String kindId = ooDb.kindId(nodeId, longTimestamp);
                 String nodeTypeHref = "<a href=\"?from=node&to=node&nodeId=" + kindId + setRole;
                 if (timestamp != null) {
                     nodeTypeHref += "&timestamp=" + timestamp;
@@ -183,7 +186,7 @@ public class NodeBlade extends RequestBlade {
                                 }
                                 if (isNode) {
                                     sb.append("&nbsp;&nbsp;&nbsp;&nbsp;");
-                                    String kId = SecondaryIds.kindId(db, nId, longTimestamp);
+                                    String kId = ooDb.kindId(nId, longTimestamp);
                                     sb.append("<a href=\"?from=");
                                     sb.append(page);
                                     sb.append("&to=node&nodeId=");

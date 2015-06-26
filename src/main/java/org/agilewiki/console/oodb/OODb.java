@@ -3,8 +3,6 @@ package org.agilewiki.console.oodb;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import org.agilewiki.console.SecondaryIds;
-import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.oodb.nodes.Key_Node;
 import org.agilewiki.jactor2.core.blades.BladeBase;
 import org.agilewiki.jactor2.core.blades.NonBlockingBladeBase;
@@ -225,6 +223,13 @@ public class OODb {
 
     public boolean isNode(String id, long longTimestamp) {
         return getKeyValue(id, Key_Node.NODETYPE_ID, longTimestamp) != null;
+    }
+
+    public String kindId(String nodeId, long longTimestamp) {
+        String kind = getKeyValue(nodeId, Key_Node.SUPERTYPE_ID, longTimestamp);
+        if (kind == null)
+            kind = getKeyValue(nodeId, Key_Node.NODETYPE_ID, longTimestamp);
+        return kind;
     }
 
     public Iterable<String> keyValueIdIterable(String nodeId, String keyId, long timestamp) {

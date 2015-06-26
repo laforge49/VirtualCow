@@ -3,7 +3,6 @@ package org.agilewiki.console.oodb;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.utils.virtualcow.Db;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.NavigableMap;
 

@@ -2,7 +2,6 @@ package org.agilewiki.console.oodb.nodes.roles.developer;
 
 import org.agilewiki.console.NameIds;
 import org.agilewiki.console.RequestBlade;
-import org.agilewiki.console.SecondaryIds;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.utils.ids.NameId;
@@ -101,7 +100,7 @@ public class SecondaryKeysBlade extends RequestBlade {
                                 sb.append(line);
                                 sb.append(" -> ");
 
-                                String kindId = SecondaryIds.kindId(db, nodeId, longTimestamp);
+                                String kindId = ooDb.kindId(nodeId, longTimestamp);
                                 sb.append(kindId.substring(2));
 
                                 sb.append(' ');

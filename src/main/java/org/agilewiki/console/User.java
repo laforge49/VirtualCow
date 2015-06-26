@@ -50,7 +50,7 @@ public class User {
         OODb ooDb = SimpleSimon.simpleSimon.ooDb;
         while (true) {
             try {
-                String inv = SecondaryIds.secondaryInv(userId, ROLE_ID);
+                String inv = SecondaryId.secondaryInv(userId, ROLE_ID);
                 String roleId = NameId.generate(role);
                 return ooDb.get(inv, roleId, FactoryRegistry.MAX_TIMESTAMP) != null;
             } catch (UnexpectedChecksumException uce) {
@@ -71,7 +71,7 @@ public class User {
         while (true) {
             try {
                 String emailId = ValueId.generate(email);
-                String emailSecondaryId = SecondaryIds.secondaryId(EMAIL_ID, emailId);
+                String emailSecondaryId = SecondaryId.secondaryId(EMAIL_ID, emailId);
                 for (String userId : SecondaryId.vmnIdIterable(db, emailSecondaryId, timestamp)) {
                     return userId;
                 }
@@ -173,8 +173,8 @@ public class User {
                                     String passwordHash,
                                     String... userRoles) {
         OODb ooDb = SimpleSimon.simpleSimon.ooDb;
-        String emailSecondaryId = SecondaryIds.secondaryId(EMAIL_ID, emailId);
-        for (String uId : SecondaryIds.vmnIdIterable(db, emailSecondaryId, db.getTimestamp())) {
+        String emailSecondaryId = SecondaryId.secondaryId(EMAIL_ID, emailId);
+        for (String uId : SecondaryId.vmnIdIterable(db, emailSecondaryId, db.getTimestamp())) {
             return "duplicate email: " + ValueId.value(emailId);
         }
         ooDb.set(userId, "$nsubject", emailId);
@@ -184,7 +184,7 @@ public class User {
                 SecondaryId.secondaryId(Key_Node.NODETYPE_ID, User_Node.ID));
         for (String userRole : userRoles) {
             String userTypeSecondaryId =
-                    SecondaryIds.secondaryId(ROLE_ID, NameIds.generate(userRole));
+                    SecondaryId.secondaryId(ROLE_ID, NameIds.generate(userRole));
             ooDb.createSecondaryId(userId, userTypeSecondaryId);
         }
         return null;
