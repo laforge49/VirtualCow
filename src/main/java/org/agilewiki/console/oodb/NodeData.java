@@ -15,6 +15,7 @@ public class NodeData {
     public final String nodeId;
     private ConcurrentSkipListMap<Comparable, List> atts;
     private ConcurrentSkipListMap<String, ConcurrentSkipListSet> keys;
+    private ConcurrentSkipListMap<String, ConcurrentSkipListSet> lnk1s;
 
     public NodeData(Db db, String nodeId) {
         this.db = db;
@@ -40,6 +41,20 @@ public class NodeData {
                 }
             }
         }
+
+        lnk1s = new ConcurrentSkipListMap<>();
+        for (String labelId : Link1Id.link1LabelIdIterable(db, nodeId)) {
+            for (String destinationId : Link1Id.link1IdIterable(db, nodeId, labelId, FactoryRegistry.MAX_TIMESTAMP)) {
+                if (Link1Id.hasLink1(db, nodeId, labelId, destinationId, FactoryRegistry.MAX_TIMESTAMP)) {
+                    ConcurrentSkipListSet destinations = lnk1s.get(labelId);
+                    if (destinations == null) {
+                        destinations = new ConcurrentSkipListSet();
+                        lnk1s.put(labelId, destinations);
+                    }
+                    destinations.add(destinationId);
+                }
+            }
+        }
     }
 
     public NodeData(NodeData old) {
@@ -56,6 +71,12 @@ public class NodeData {
         for (String keyId : old.keys.keySet()) {
             ConcurrentSkipListSet s = old.keys.get(keyId);
             keys.put(keyId, new ConcurrentSkipListSet<>(s));
+        }
+
+        lnk1s = new ConcurrentSkipListMap<>();
+        for (String label1Id : old.lnk1s.keySet()) {
+            ConcurrentSkipListSet s = old.lnk1s.get(label1Id);
+            lnk1s.put(label1Id, new ConcurrentSkipListSet<>(s));
         }
     }
 
