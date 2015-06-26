@@ -35,8 +35,7 @@ public class User {
         while (true) {
             try {
                 List<Role> roles = new ArrayList<Role>();
-                String inv = SecondaryIds.secondaryInv(userId, ROLE_ID);
-                for (String roleId : simpleSimon.db.keysIterable(inv, FactoryRegistry.MAX_TIMESTAMP)) {
+                for (String roleId : simpleSimon.ooDb.keyValueIdIterable(userId, ROLE_ID, FactoryRegistry.MAX_TIMESTAMP)) {
                     Role role = simpleSimon.roles.get(NameId.name(roleId));
                     if (role != null)
                         roles.add(role);
@@ -62,11 +61,7 @@ public class User {
     public static String email(Db db, String userId, long timestamp) {
         while (true) {
             try {
-                String emailSecondaryInv = SecondaryIds.secondaryInv(userId, EMAIL_ID);
-                for (String emailId : db.keysIterable(emailSecondaryInv, timestamp)) {
-                    return ValueId.value(emailId);
-                }
-                return null;
+                return SimpleSimon.simpleSimon.ooDb.getKeyValue(userId, EMAIL_ID, timestamp);
             } catch (UnexpectedChecksumException uce) {
             }
         }

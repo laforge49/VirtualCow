@@ -46,30 +46,11 @@ public class SecondaryIds extends SecondaryId {
     }
 
     public static String nodeTypeId(Db db, String nodeId, long longTimestamp) {
-        String metaNodeId = null;
-        for (String mnId : db.keysIterable(secondaryInv(nodeId, Key_Node.NODETYPE_ID), longTimestamp)) {
-            if (metaNodeId == null || nodeIsA(db, mnId, metaNodeId, longTimestamp))
-                metaNodeId = mnId;
-        }
-        return metaNodeId;
-    }
-
-    public static String nodeTypeId(Db db, String nodeId, List<String> metaIds, long longTimestamp) {
-        String metaNodeId = null;
-        for (String mnId : metaIds) {
-            if (nodeIsA(db, nodeId, mnId, longTimestamp)) {
-                if (metaNodeId == null || nodeIsA(db, mnId, metaNodeId, longTimestamp))
-                    metaNodeId = mnId;
-            }
-        }
-        return metaNodeId;
+        return SimpleSimon.simpleSimon.ooDb.getKeyValue(nodeId, Key_Node.NODETYPE_ID, longTimestamp);
     }
 
     public static String superTypeId(Db db, String nodeId, long longTimestamp) {
-        for (String mnId : db.keysIterable(secondaryInv(nodeId, Key_Node.SUPERTYPE_ID), longTimestamp)) {
-            return mnId;
-        }
-        return null;
+        return SimpleSimon.simpleSimon.ooDb.getKeyValue(nodeId, Key_Node.SUPERTYPE_ID, longTimestamp);
     }
 
     public static String kindId(Db db, String nodeId, long longTimestamp) {

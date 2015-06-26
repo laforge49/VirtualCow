@@ -76,6 +76,11 @@ public class NullNode implements Node {
     }
 
     @Override
+    public String getKeyValue(String keyId) {
+        return null;
+    }
+
+    @Override
     public Iterable<String> keyValueIdIterable(String keyId) {
         return null;
     }

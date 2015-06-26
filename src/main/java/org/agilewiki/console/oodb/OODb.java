@@ -4,6 +4,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import org.agilewiki.console.SecondaryIds;
+import org.agilewiki.console.oodb.nodes.Key_Node;
 import org.agilewiki.jactor2.core.blades.BladeBase;
 import org.agilewiki.jactor2.core.blades.NonBlockingBladeBase;
 import org.agilewiki.jactor2.core.impl.Plant;
@@ -48,7 +49,7 @@ public class OODb {
                 softValues().build(new CacheLoader<String, Node>() {
             @Override
             public Node load(String nodeId) throws Exception {
-                String factoryId = SecondaryIds.nodeTypeId(db, nodeId, FactoryRegistry.MAX_TIMESTAMP);
+                String factoryId = nodeTypeId(nodeId);
                 if (factoryId == null) {
                     return NullNode.singleton;
                 }
@@ -62,6 +63,14 @@ public class OODb {
             }
         });
         nodeCache = cache;
+    }
+
+    String nodeTypeId(String nodeId) {
+        for (String mnId : db.keysIterable(SecondaryId.secondaryInv(nodeId, Key_Node.NODETYPE_ID),
+                FactoryRegistry.MAX_TIMESTAMP)) {
+            return mnId;
+        }
+        return null;
     }
 
     public NodeFactory getNodeFactory(String factoryId) throws ExecutionException {
@@ -191,6 +200,23 @@ public class OODb {
             return SecondaryId.typeIdIterable(db, nodeId);
         }
         return node.keyIdIteratable();
+    }
+
+    public String getKeyValue(String nodeId, String keyId, long timestamp) {
+        if (timestamp != FactoryRegistry.MAX_TIMESTAMP) {
+            for (String value : db.keysIterable(SecondaryId.secondaryInv(nodeId, keyId), timestamp)) {
+                return value;
+            }
+            return null;
+        }
+        Node node = fetchNode(nodeId);
+        if (node == null) {
+            for (String value : db.keysIterable(SecondaryId.secondaryInv(nodeId, keyId), timestamp)) {
+                return value;
+            }
+            return null;
+        }
+        return node.getKeyValue(keyId);
     }
 
     public Iterable<String> keyValueIdIterable(String nodeId, String keyId, long timestamp) {

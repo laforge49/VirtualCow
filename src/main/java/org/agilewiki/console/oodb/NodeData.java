@@ -123,6 +123,13 @@ public class NodeData {
         };
     }
 
+    public String getKeyValue(String keyId) {
+        Iterator<String> keyValueIdIterator = keyValueIdIterator(keyId);
+        if (!keyValueIdIterator.hasNext())
+            return null;
+        return keyValueIdIterator.next();
+    }
+
     Iterator<String> keyValueIdIterator(String keyId) {
         ConcurrentSkipListSet s = keys.get(keyId);
         if (s == null)
