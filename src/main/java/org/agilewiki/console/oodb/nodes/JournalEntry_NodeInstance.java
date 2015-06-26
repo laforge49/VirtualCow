@@ -31,7 +31,7 @@ public class JournalEntry_NodeInstance extends NodeBase implements Transaction {
         setNodeId(db.getJEName());
         String userId = (String) tMapNode.get(User.USER_KEY);
         if (userId != null) {
-            Link1Id.createLink1(db, getNodeId(), User.USER_KEY, userId);
+            ooDb.createLnk1(getNodeId(), User.USER_KEY, userId);
         }
         process(db, tMapNode);
         getOODb().addNode(getNodeId(), this);

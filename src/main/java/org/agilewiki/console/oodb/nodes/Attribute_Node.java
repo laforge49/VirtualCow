@@ -27,8 +27,7 @@ public class Attribute_Node extends Node_NodeInstance {
                 SecondaryId.secondaryId(Key_Node.NODETYPE_ID, ID));
         ooDb.createSecondaryId(attributeId,
                 SecondaryId.secondaryId(Key_Node.ATTRIBUTENAME_ID, attributeNameId));
-        Link1Id.createLink1(SimpleSimon.simpleSimon.db,
-                attributeId, Lnk1_Node.ATTRIBUTEOF_ID,
+        ooDb.createLnk1(attributeId, Lnk1_Node.ATTRIBUTEOF_ID,
                 nodeId);
     }
 

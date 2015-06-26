@@ -34,8 +34,7 @@ public class Key_Node extends Metadata_Node {
 
     public static void define(String nodeId, String targetType, String roleId) {
         Node_Node.define(nodeId, ID, null, roleId);
-        Link1Id.createLink1(SimpleSimon.simpleSimon.db,
-                nodeId,
+        SimpleSimon.simpleSimon.ooDb.createLnk1(nodeId,
                 Lnk1_Node.TARGET_ID,
                 targetType);
     }

@@ -98,4 +98,14 @@ public class NullNode implements Node {
     public Iterable<String> secondaryIdIterable(String keyId) {
         return null;
     }
+
+    @Override
+    public void createLnk1(String labelId, String destinationNodeId) {
+
+    }
+
+    @Override
+    public void removeLnk1(String labelId, String destinationNodeId) {
+
+    }
 }

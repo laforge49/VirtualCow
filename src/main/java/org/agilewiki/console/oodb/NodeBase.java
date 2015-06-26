@@ -133,4 +133,16 @@ public class NodeBase implements Node {
     public Iterable<String> secondaryIdIterable(String keyId) {
         return getNodeData().secondaryIdIterable(keyId);
     }
+
+    @Override
+    public void createLnk1(String labelId, String destinationNodeId) {
+        prep();
+        innerReference.createLnk1(labelId, destinationNodeId);
+    }
+
+    @Override
+    public void removeLnk1(String labelId, String destinationNodeId) {
+        prep();
+        innerReference.removeLnk1(labelId, destinationNodeId);
+    }
 }

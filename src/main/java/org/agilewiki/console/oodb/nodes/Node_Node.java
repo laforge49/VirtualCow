@@ -34,8 +34,7 @@ public class Node_Node extends Metadata_Node {
             ooDb.createSecondaryId(nodeId,
                     SecondaryId.secondaryId(Key_Node.SUPERTYPE_ID, superType));
         }
-        Link1Id.createLink1(SimpleSimon.simpleSimon.db,
-                nodeId,
+        ooDb.createLnk1(nodeId,
                 Lnk1_Node.OFROLE_ID,
                 roleId);
         for (String attributeName : attributes) {

@@ -1,5 +1,6 @@
 package org.agilewiki.console.oodb;
 
+import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.VersionedMapNode;
@@ -180,5 +181,13 @@ public class NodeData {
                 return secondaryIdIterator(keyId);
             }
         };
+    }
+
+    public void createLnk1(String labelId, String destinationNodeId) {
+        Link1Id.createLink1(db, nodeId, labelId, destinationNodeId);
+    }
+
+    public void removeLnk1(String labelId, String destinationNodeId) {
+        Link1Id.removeLink1(db, nodeId, labelId, destinationNodeId);
     }
 }

@@ -53,4 +53,8 @@ public interface Node {
     Iterable<String> keyValueIdIterable(String keyId);
 
     Iterable<String> secondaryIdIterable(String keyId);
+
+    void createLnk1(String labelId, String destinationNodeId);
+
+    void removeLnk1(String labelId, String destinationNodeId);
 }

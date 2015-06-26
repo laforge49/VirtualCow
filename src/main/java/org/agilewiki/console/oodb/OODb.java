@@ -10,6 +10,7 @@ import org.agilewiki.jactor2.core.impl.Plant;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.jactor2.core.messages.ExceptionHandler;
 import org.agilewiki.jactor2.core.messages.impl.AsyncRequestImpl;
+import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.BaseRegistry;
 import org.agilewiki.utils.immutable.FactoryRegistry;
@@ -274,6 +275,22 @@ public class OODb {
             return SecondaryId.secondaryIdIterable(db, nodeId, keyId, timestamp);
         }
         return node.secondaryIdIterable(keyId);
+    }
+
+    public void createLnk1(String originNodeId, String labelId, String destinationNodeId) {
+        Node node = fetchNode(originNodeId);
+        if (node == null)
+            Link1Id.createLink1(db, originNodeId, labelId, destinationNodeId);
+        else
+            node.createLnk1(labelId, destinationNodeId);
+    }
+
+    public void removeLnk1(String originNodeId, String labelId, String destinationNodeId) {
+        Node node = fetchNode(originNodeId);
+        if (node == null)
+            Link1Id.removeLink1(db, originNodeId, labelId, destinationNodeId);
+        else
+            node.removeLnk1(labelId, destinationNodeId);
     }
 
     public BladeBase.AReq<String> update(String transactionName, MapNode tMapNode) {

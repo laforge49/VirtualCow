@@ -40,12 +40,10 @@ public class Lnk1_Node extends Metadata_Node {
             ooDb.createSecondaryId(nodeId,
                     SecondaryId.secondaryId(Key_Node.INVDEPENDENCY_ID, invDependency));
         }
-        Link1Id.createLink1(SimpleSimon.simpleSimon.db,
-                nodeId,
+        ooDb.createLnk1(nodeId,
                 Lnk1_Node.ORIGIN_ID,
                 originType);
-        Link1Id.createLink1(SimpleSimon.simpleSimon.db,
-                nodeId,
+        ooDb.createLnk1(nodeId,
                 Lnk1_Node.DESTINATION_ID,
                 destinationType);
     }

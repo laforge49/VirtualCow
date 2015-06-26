@@ -21,12 +21,12 @@ public class Delete {
             ooDb.clearMap(id);
             for (String lnkTyp : Link1Id.link1LabelIdIterable(db, id)) {
                 for (String tId : Link1Id.link1IdIterable(db, id, lnkTyp, db.getTimestamp())) {
-                    Link1Id.removeLink1(db, id, lnkTyp, tId);
+                    ooDb.removeLnk1(id, lnkTyp, tId);
                 }
             }
             for (String lnkTyp : Link1Id.link1LabelInvIterable(db, id)) {
                 for (String oId : Link1Id.link1InvIterable(db, id, lnkTyp, db.getTimestamp())) {
-                    Link1Id.removeLink1(db, oId, lnkTyp, id);
+                    ooDb.removeLnk1(oId, lnkTyp, id);
                 }
             }
             for (String secondaryType : ooDb.keyIdIterable(id)) {
