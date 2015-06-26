@@ -50,7 +50,7 @@ public class NodeBlade extends RequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                if (!SecondaryIds.isNode(db, nodeId, longTimestamp)) {
+                if (!ooDb.isNode(nodeId, longTimestamp)) {
                     throw new ServletException("not a node");
                 }
                 String time = null;
@@ -149,7 +149,7 @@ public class NodeBlade extends RequestBlade {
                                     String s = ((String) key).substring(2) + "[" + i + "] = ";
                                     sb.append("&nbsp;&nbsp;&nbsp;&nbsp;" + s);
                                     String value = l.get(i).toString();
-                                    if (!value.startsWith("$") || value.substring(1).indexOf('$') > -1 || !SecondaryIds.isNode(db, value, longTimestamp)) {
+                                    if (!value.startsWith("$") || value.substring(1).indexOf('$') > -1 || !ooDb.isNode(value, longTimestamp)) {
                                         sb.append(SimpleSimon.encode(value, s.length() + 4,
                                                 SimpleSimon.ENCODE_MULTIPLE_LINES)); //body text
                                     } else {
@@ -172,12 +172,12 @@ public class NodeBlade extends RequestBlade {
                             sb.append("<strong>Modifies:</strong><br />");
                             for (String nId : Journal.modifies(db, nodeId, longTimestamp)) {
                                 String onId = nId;
-                                boolean isNode = SecondaryIds.isNode(db, nId, longTimestamp);
-                                if (!isNode && SecondaryIds.isNode(db, nId + ".lnk1", longTimestamp)) {
+                                boolean isNode = ooDb.isNode(nId, longTimestamp);
+                                if (!isNode && ooDb.isNode(nId + ".lnk1", longTimestamp)) {
                                     isNode = true;
                                     nId = nId + ".lnk1";
                                 }
-                                if (!isNode && SecondaryIds.isNode(db, nId + ".key", longTimestamp)) {
+                                if (!isNode && ooDb.isNode(nId + ".key", longTimestamp)) {
                                     isNode = true;
                                     nId = nId + ".key";
                                 }
@@ -248,8 +248,8 @@ public class NodeBlade extends RequestBlade {
                                             sb.append(" Value: ");
                                             String value = icla.key().toString();
                                             String valueId = value;
-                                            boolean isN = SecondaryIds.isNode(db, value, longTimestamp);
-                                            if (!isN && SecondaryIds.isNode(db, value + ".lnk1", longTimestamp)) {
+                                            boolean isN = ooDb.isNode(value, longTimestamp);
+                                            if (!isN && ooDb.isNode(value + ".lnk1", longTimestamp)) {
                                                 valueId = value + ".lnk1";
                                                 isN = true;
                                             }
@@ -374,7 +374,7 @@ public class NodeBlade extends RequestBlade {
                                 for (String value :
                                         ooDb.keyValueIdIterable(nodeId, typeId, longTimestamp)) {
                                     sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value = ");
-                                    if (!SecondaryIds.isNode(db, value, longTimestamp)) {
+                                    if (!ooDb.isNode(value, longTimestamp)) {
                                         sb.append(value.substring(2));
                                     } else {
                                         sb.append("<a href=\"?from=node&to=node&nodeId=");

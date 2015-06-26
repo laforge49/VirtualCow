@@ -13,10 +13,6 @@ import java.util.List;
  * Adds methods to SecondaryId.
  */
 public class SecondaryIds extends SecondaryId {
-    public static boolean isNode(Db db, String id, long longTimestamp) {
-        return SimpleSimon.simpleSimon.ooDb.fetchNode(id) != null;
-    }
-
     public static String nodeTypeId(Db db, String nodeId, long longTimestamp) {
         return SimpleSimon.simpleSimon.ooDb.getKeyValue(nodeId, Key_Node.NODETYPE_ID, longTimestamp);
     }

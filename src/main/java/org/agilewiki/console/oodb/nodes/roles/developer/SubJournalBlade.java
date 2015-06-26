@@ -47,13 +47,13 @@ public class SubJournalBlade extends RequestBlade {
                 subJournal = request.getParameter("subJournal");
                 String what = null;
                 String href = null;
-                if (SecondaryIds.isNode(db, subJournal, longTimestamp)) {
+                if (ooDb.isNode(subJournal, longTimestamp)) {
                     what = "";
                     href = subJournal;
-                } else if (SecondaryIds.isNode(db, subJournal + ".lnk1", longTimestamp)) {
+                } else if (ooDb.isNode(subJournal + ".lnk1", longTimestamp)) {
                     what = "label ";
                     href = subJournal + ".lnk1";
-                } else if (SecondaryIds.isNode(db, subJournal + ".key", longTimestamp)) {
+                } else if (ooDb.isNode(subJournal + ".key", longTimestamp)) {
                     what = "key ";
                     href = subJournal + ".key";
                 }

@@ -4,6 +4,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import org.agilewiki.console.SecondaryIds;
+import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.oodb.nodes.Key_Node;
 import org.agilewiki.jactor2.core.blades.BladeBase;
 import org.agilewiki.jactor2.core.blades.NonBlockingBladeBase;
@@ -211,12 +212,19 @@ public class OODb {
         }
         Node node = fetchNode(nodeId);
         if (node == null) {
+            if (Key_Node.NODETYPE_ID.equals(keyId)) {
+                return null;
+            }
             for (String value : db.keysIterable(SecondaryId.secondaryInv(nodeId, keyId), timestamp)) {
                 return value;
             }
             return null;
         }
         return node.getKeyValue(keyId);
+    }
+
+    public boolean isNode(String id, long longTimestamp) {
+        return getKeyValue(id, Key_Node.NODETYPE_ID, longTimestamp) != null;
     }
 
     public Iterable<String> keyValueIdIterable(String nodeId, String keyId, long timestamp) {
