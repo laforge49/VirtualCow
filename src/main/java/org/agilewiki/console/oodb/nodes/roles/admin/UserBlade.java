@@ -4,7 +4,6 @@ import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.User;
 import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.utils.ids.NameId;
-import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
 import javax.servlet.AsyncContext;
