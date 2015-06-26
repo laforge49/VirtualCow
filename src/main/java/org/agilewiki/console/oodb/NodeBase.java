@@ -115,6 +115,11 @@ public class NodeBase implements Node {
     }
 
     @Override
+    public boolean hasKey(String keyId) {
+        return getNodeData().hasKey(keyId);
+    }
+
+    @Override
     public boolean hasKeyValue(String keyId, String value) {
         return getNodeData().hasKeyValue(keyId, value);
     }

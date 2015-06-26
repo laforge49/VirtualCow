@@ -46,6 +46,8 @@ public interface Node {
 
     String getKeyValue(String keyId);
 
+    boolean hasKey(String keyId);
+
     boolean hasKeyValue(String keyId, String value);
 
     Iterable<String> keyValueIdIterable(String keyId);

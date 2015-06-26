@@ -232,6 +232,17 @@ public class OODb {
         return kind;
     }
 
+    public boolean hasKey(String nodeId, String keyId, long timestamp) {
+        if (timestamp != FactoryRegistry.MAX_TIMESTAMP) {
+            return db.keysIterable(SecondaryId.secondaryInv(nodeId, keyId), db.getTimestamp()).hasNext();
+        }
+        Node node = fetchNode(nodeId);
+        if (node == null) {
+            return db.keysIterable(SecondaryId.secondaryInv(nodeId, keyId), db.getTimestamp()).hasNext();
+        }
+        return node.hasKey(keyId);
+    }
+
     public boolean hasKeyValue(String nodeId, String keyId, String value, long timestamp) {
         if (timestamp != FactoryRegistry.MAX_TIMESTAMP) {
             return SecondaryId.hasSecondaryId(db, nodeId, keyId, timestamp);

@@ -80,6 +80,11 @@ public class NullNode implements Node {
     }
 
     @Override
+    public boolean hasKey(String keyId) {
+        return false;
+    }
+
+    @Override
     public boolean hasKeyValue(String keyId, String value) {
         return false;
     }

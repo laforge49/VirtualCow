@@ -50,9 +50,8 @@ public class User {
         OODb ooDb = SimpleSimon.simpleSimon.ooDb;
         while (true) {
             try {
-                String inv = SecondaryId.secondaryInv(userId, ROLE_ID);
                 String roleId = NameId.generate(role);
-                return ooDb.get(inv, roleId, FactoryRegistry.MAX_TIMESTAMP) != null;
+                return ooDb.hasKeyValue(userId, ROLE_ID, roleId, FactoryRegistry.MAX_TIMESTAMP);
             } catch (UnexpectedChecksumException uce) {
             }
         }

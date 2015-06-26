@@ -130,6 +130,10 @@ public class NodeData {
         return keyValueIdIterator.next();
     }
 
+    public boolean hasKey(String keyId) {
+        return keys.containsKey(keyId);
+    }
+
     public boolean hasKeyValue(String keyId, String value) {
         NavigableSet<String> s = keys.get(keyId);
         if (s == null)

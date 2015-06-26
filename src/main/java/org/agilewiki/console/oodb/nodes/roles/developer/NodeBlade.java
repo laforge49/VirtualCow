@@ -359,9 +359,7 @@ public class NodeBlade extends RequestBlade {
                         }
                         sb.append("<strong>Secondary Keys:</strong><br />");
                         for (String typeId : ooDb.keyIdIterable(nodeId)) {
-                            String secondaryInv = SecondaryId.secondaryInv(nodeId, typeId);
-                            VersionedMapNode vmn = db.get(secondaryInv);
-                            if (vmn != null && !vmn.isEmpty(longTimestamp)) {
+                            if (ooDb.hasKey(nodeId, typeId, longTimestamp)) {
                                 sb.append("&nbsp;&nbsp;&nbsp;&nbsp;key: <a href=\"?from=node&to=node&nodeId=");
                                 sb.append(typeId);
                                 sb.append(".key");
