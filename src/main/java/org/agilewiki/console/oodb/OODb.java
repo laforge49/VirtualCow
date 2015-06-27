@@ -186,12 +186,12 @@ public class OODb {
             node.createSecondaryId(secondaryId);
     }
 
-    public void removeSecondaryId(String nodeId, String secondaryId) {
+    public void removeSecondaryId(String nodeId, String keyId, String valueId) {
         Node node = fetchNode(nodeId);
         if (node == null)
-            SecondaryId.removeSecondaryId(db, nodeId, secondaryId);
+            SecondaryId.removeSecondaryId(db, nodeId, SecondaryId.secondaryId(keyId, valueId));
         else
-            node.removeSecondaryId(secondaryId);
+            node.removeSecondaryId(keyId, valueId);
     }
 
     public Iterable<String> keyIdIterable(String nodeId) {
@@ -246,11 +246,11 @@ public class OODb {
 
     public boolean hasKeyValue(String nodeId, String keyId, String value, long timestamp) {
         if (timestamp != FactoryRegistry.MAX_TIMESTAMP) {
-            return SecondaryId.hasSecondaryId(db, nodeId, keyId, timestamp);
+            return SecondaryId.hasSecondaryId(db, nodeId, keyId, value, timestamp);
         }
         Node node = fetchNode(nodeId);
         if (node == null) {
-            return SecondaryId.hasSecondaryId(db, nodeId, keyId, timestamp);
+            return SecondaryId.hasSecondaryId(db, nodeId, keyId, value, timestamp);
         }
         return node.hasKeyValue(keyId, value);
     }
@@ -264,17 +264,6 @@ public class OODb {
             return db.keysIterable(SecondaryId.secondaryInv(nodeId, keyId), timestamp);
         }
         return node.keyValueIdIterable(keyId);
-    }
-
-    public Iterable<String> secondaryIdIterable(String nodeId, String keyId, long timestamp) {
-        if (timestamp != FactoryRegistry.MAX_TIMESTAMP) {
-            return SecondaryId.secondaryIdIterable(db, nodeId, keyId, timestamp);
-        }
-        Node node = fetchNode(nodeId);
-        if (node == null) {
-            return SecondaryId.secondaryIdIterable(db, nodeId, keyId, timestamp);
-        }
-        return node.secondaryIdIterable(keyId);
     }
 
     public void createLnk1(String originNodeId, String labelId, String destinationNodeId) {
@@ -294,11 +283,44 @@ public class OODb {
     }
 
     public Iterable<String> label1IdIterable(String nodeId) {
-        return Link1Id.link1LabelIdIterable(db, nodeId);
+        Node node = fetchNode(nodeId);
+        if (node == null) {
+            return Link1Id.link1LabelIdIterable(db, nodeId);
+        }
+        return node.label1IdIterable();
     }
 
-    public Iterable<String> destination1IdIterable(String nodeId, String label1Id, long timestamp) {
-        return Link1Id.link1IdIterable(db, nodeId, label1Id, timestamp);
+    public boolean hasLabel1(String nodeId, String label1Id, long timestamp) {
+        if (timestamp != FactoryRegistry.MAX_TIMESTAMP) {
+            return db.keysIterable(Link1Id.link1Id(nodeId, label1Id), timestamp).hasNext();
+        }
+        Node node = fetchNode(nodeId);
+        if (node == null) {
+            return db.keysIterable(Link1Id.link1Id(nodeId, label1Id), timestamp).hasNext();
+        }
+        return node.hasLabel1(label1Id);
+    }
+
+    public boolean hasDestination(String nodeId, String label1Id, String destinationId, long timestamp) {
+        if (timestamp != FactoryRegistry.MAX_TIMESTAMP) {
+            return Link1Id.hasLink1(db, nodeId, label1Id, destinationId, timestamp);
+        }
+        Node node = fetchNode(nodeId);
+        if (node == null) {
+            return Link1Id.hasLink1(db, nodeId, label1Id, destinationId, timestamp);
+        }
+        return node.hasDestination(label1Id, destinationId);
+    }
+
+    public Iterable<String> destinationIdIterable(String nodeId, String label1Id, long timestamp) {
+        if (timestamp != FactoryRegistry.MAX_TIMESTAMP) {
+            return Link1Id.link1IdIterable(db, nodeId, label1Id, timestamp);
+        }
+        Node node = fetchNode(nodeId);
+        if (node == null) {
+            return Link1Id.link1IdIterable(db, nodeId, label1Id, timestamp);
+        }
+        return node.destinationIdIterable(label1Id);
     }
 
     public BladeBase.AReq<String> update(String transactionName, MapNode tMapNode) {

@@ -25,8 +25,7 @@ public class NewEmailAddress_NodeInstance extends JournalEntry_NodeInstance {
         String userId = (String) mapNode.get(User.USER_KEY);
 
         String oldEmailAddressId = ValueId.generate(User.email(userId, db.getTimestamp()));
-        String oldSecondaryId = SecondaryId.secondaryId(User.EMAIL_ID, oldEmailAddressId);
-        ooDb.removeSecondaryId(userId, oldSecondaryId);
+        ooDb.removeSecondaryId(userId, User.EMAIL_ID, oldEmailAddressId);
 
         String emailAddressId = ValueId.generate((String) mapNode.get(User.EMAIL_ID));
         String secondaryId = SecondaryId.secondaryId(User.EMAIL_ID, emailAddressId);

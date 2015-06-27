@@ -20,7 +20,7 @@ public class Delete {
             id = ids.removeLast();
             ooDb.clearMap(id);
             for (String lnkTyp : ooDb.label1IdIterable(id)) {
-                for (String tId : ooDb.destination1IdIterable(id, lnkTyp, db.getTimestamp())) {
+                for (String tId : ooDb.destinationIdIterable(id, lnkTyp, db.getTimestamp())) {
                     ooDb.removeLnk1(id, lnkTyp, tId);
                 }
             }
@@ -29,9 +29,9 @@ public class Delete {
                     ooDb.removeLnk1(oId, lnkTyp, id);
                 }
             }
-            for (String secondaryType : ooDb.keyIdIterable(id)) {
-                for (String secondaryId : ooDb.secondaryIdIterable(id, secondaryType, db.getTimestamp())) {
-                    ooDb.removeSecondaryId(id, secondaryId);
+            for (String keyId : ooDb.keyIdIterable(id)) {
+                for (String valueId : ooDb.keyValueIdIterable(id, keyId, db.getTimestamp())) {
+                    ooDb.removeSecondaryId(id, keyId, valueId);
                 }
             }
             for (String lnkTyp : Link2Id.link2LabelIdIterable(db, id)) {

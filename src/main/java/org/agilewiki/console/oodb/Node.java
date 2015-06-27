@@ -40,7 +40,7 @@ public interface Node {
 
     void createSecondaryId(String secondaryId);
 
-    void removeSecondaryId(String secondaryId);
+    void removeSecondaryId(String keyId, String valueId);
 
     Iterable<String> keyIdIterable();
 
@@ -52,9 +52,15 @@ public interface Node {
 
     Iterable<String> keyValueIdIterable(String keyId);
 
-    Iterable<String> secondaryIdIterable(String keyId);
-
     void createLnk1(String labelId, String destinationNodeId);
 
     void removeLnk1(String labelId, String destinationNodeId);
+
+    Iterable<String> label1IdIterable();
+
+    boolean hasLabel1(String label1Id);
+
+    boolean hasDestination(String label1Id, String destinationId);
+
+    Iterable<String> destinationIdIterable(String label1Id);
 }

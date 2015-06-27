@@ -65,7 +65,7 @@ public class NullNode implements Node {
     }
 
     @Override
-    public void removeSecondaryId(String secondaryId) {
+    public void removeSecondaryId(String keyId, String valueId) {
 
     }
 
@@ -95,11 +95,6 @@ public class NullNode implements Node {
     }
 
     @Override
-    public Iterable<String> secondaryIdIterable(String keyId) {
-        return null;
-    }
-
-    @Override
     public void createLnk1(String labelId, String destinationNodeId) {
 
     }
@@ -107,5 +102,25 @@ public class NullNode implements Node {
     @Override
     public void removeLnk1(String labelId, String destinationNodeId) {
 
+    }
+
+    @Override
+    public Iterable<String> label1IdIterable() {
+        return null;
+    }
+
+    @Override
+    public boolean hasLabel1(String label1Id) {
+        return false;
+    }
+
+    @Override
+    public boolean hasDestination(String label1Id, String destinationId) {
+        return false;
+    }
+
+    @Override
+    public Iterable<String> destinationIdIterable(String label1Id) {
+        return null;
     }
 }

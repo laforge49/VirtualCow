@@ -99,9 +99,9 @@ public class NodeBase implements Node {
     }
 
     @Override
-    public void removeSecondaryId(String secondaryId) {
+    public void removeSecondaryId(String keyId, String valueId) {
         prep();
-        innerReference.removeSecondaryId(secondaryId);
+        innerReference.removeSecondaryId(keyId, valueId);
     }
 
     @Override
@@ -130,11 +130,6 @@ public class NodeBase implements Node {
     }
 
     @Override
-    public Iterable<String> secondaryIdIterable(String keyId) {
-        return getNodeData().secondaryIdIterable(keyId);
-    }
-
-    @Override
     public void createLnk1(String labelId, String destinationNodeId) {
         prep();
         innerReference.createLnk1(labelId, destinationNodeId);
@@ -144,5 +139,25 @@ public class NodeBase implements Node {
     public void removeLnk1(String labelId, String destinationNodeId) {
         prep();
         innerReference.removeLnk1(labelId, destinationNodeId);
+    }
+
+    @Override
+    public Iterable<String> label1IdIterable() {
+        return getNodeData().label1IdIterable();
+    }
+
+    @Override
+    public boolean hasLabel1(String label1Id) {
+        return getNodeData().hasLabel1(label1Id);
+    }
+
+    @Override
+    public boolean hasDestination(String label1Id, String destinationId) {
+        return getNodeData().hasDestination(label1Id, destinationId);
+    }
+
+    @Override
+    public Iterable<String> destinationIdIterable(String label1Id) {
+        return getNodeData().destinationIdIterable(label1Id);
     }
 }

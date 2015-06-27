@@ -36,9 +36,7 @@ public class UpdateRoles_NodeInstance extends JournalEntry_NodeInstance {
         if (ln != null) {
             List<String> remove = ln.flatList();
             for (String userRole : remove) {
-                String roleTypeSecondaryId =
-                        SecondaryId.secondaryId(User.ROLE_ID, NameIds.generate(userRole));
-                ooDb.removeSecondaryId(nodeId, roleTypeSecondaryId);
+                ooDb.removeSecondaryId(nodeId, User.ROLE_ID, NameIds.generate(userRole));
             }
         }
     }

@@ -122,14 +122,12 @@ public class NodeData {
         s.add(keyValue);
     }
 
-    public void removeSecondaryId(String secondaryId) {
-        SecondaryId.removeSecondaryId(db, nodeId, secondaryId);
-        String keyType = SecondaryId.secondaryIdType(secondaryId);
-        ConcurrentSkipListSet s = keys.get(keyType);
+    public void removeSecondaryId(String keyId, String valueId) {
+        SecondaryId.removeSecondaryId(db, nodeId, SecondaryId.secondaryId(keyId, valueId));
+        ConcurrentSkipListSet s = keys.get(keyId);
         if (s == null)
             return;
-        String keyValue = SecondaryId.secondaryIdValue(secondaryId);
-        s.remove(keyValue);
+        s.remove(valueId);
     }
 
     public Iterable<String> keyIdIterable() {
@@ -175,31 +173,6 @@ public class NodeData {
         };
     }
 
-    Iterator<String> secondaryIdIterator(String keyId) {
-        Iterator<String> kvii = keyValueIdIterator(keyId);
-        return new Iterator<String>() {
-            @Override
-            public boolean hasNext() {
-                return kvii.hasNext();
-            }
-
-            @Override
-            public String next() {
-                return SecondaryId.secondaryId(keyId, kvii.next());
-            }
-        };
-    }
-
-    public Iterable<String> secondaryIdIterable(String keyId) {
-        return new Iterable<String>() {
-
-            @Override
-            public Iterator<String> iterator() {
-                return secondaryIdIterator(keyId);
-            }
-        };
-    }
-
     public void createLnk1(String labelId, String destinationNodeId) {
         Link1Id.createLink1(db, nodeId, labelId, destinationNodeId);
     }
@@ -217,7 +190,18 @@ public class NodeData {
         };
     }
 
-    Iterable<String> destination1IdIterable(String label1Id) {
+    public boolean hasLabel1(String label1Id) {
+        return lnk1s.containsKey(label1Id);
+    }
+
+    public boolean hasDestination(String label1Id, String destinationId) {
+        NavigableSet<String> s = lnk1s.get(label1Id);
+        if (s == null)
+            return false;
+        return s.contains(destinationId);
+    }
+
+    Iterable<String> destinationIdIterable(String label1Id) {
         return new Iterable<String>() {
             @Override
             public Iterator<String> iterator() {
