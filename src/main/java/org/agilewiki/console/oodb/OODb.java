@@ -14,10 +14,12 @@ import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.BaseRegistry;
 import org.agilewiki.utils.immutable.FactoryRegistry;
+import org.agilewiki.utils.immutable.collections.ListNode;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.immutable.collections.VersionedListNode;
 import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.Db;
+import org.agilewiki.utils.virtualcow.DbFactoryRegistry;
 
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
@@ -34,6 +36,11 @@ public class OODb {
     private LoadingCache<String, Node> nodeCache;
     private Map<String, Node> updatedNodes;
     private final DbUpdater dbUpdater;
+    private final DbFactoryRegistry dbFactoryRegistry;
+    public final VersionedListNode versionedNilList;
+    public final VersionedMapNode versionedNilMap;
+    public final ListNode nilList;
+    public final MapNode nilMap;
 
     public OODb(int maxRootBlockSize, long maxNodeCacheSize)
             throws Exception {
@@ -45,6 +52,13 @@ public class OODb {
             db.open();
         else
             db.open(true);
+
+        dbFactoryRegistry = db.dbFactoryRegistry;
+        versionedNilList = dbFactoryRegistry.versionedNilList;
+        versionedNilMap = dbFactoryRegistry.versionedNilMap;
+        nilList = dbFactoryRegistry.nilList;
+        nilMap = dbFactoryRegistry.nilMap;
+
         final LoadingCache<String, Node> cache = CacheBuilder.newBuilder().concurrencyLevel(1).
                 softValues().build(new CacheLoader<String, Node>() {
             @Override
@@ -63,6 +77,26 @@ public class OODb {
             }
         });
         nodeCache = cache;
+    }
+
+    public void close() {
+        db.close();
+    }
+
+    public void registerTransaction(String transactionName, Class transactionClass) {
+        db.registerTransaction(transactionName, transactionClass);
+    }
+
+    public NodeData newNodeData(String nodeId) {
+        return new NodeData(db, nodeId);
+    }
+
+    public boolean isPrivileged() {
+        return db.isPrivileged();
+    }
+
+    public void checkPrivilege() {
+        db.checkPrivilege();
     }
 
     String nodeTypeId(String nodeId) {

@@ -22,7 +22,7 @@ public class System_Role extends Role_NodeInstance {
         super(nodeId);
         niceRoleName = "System";
         RecreateSystemRole_Node.create();
-        simpleSimon.db.registerTransaction(RecreateSystemRole_NodeInstance.NAME, RecreateSystemRole_NodeInstance.class);
+        ooDb.registerTransaction(RecreateSystemRole_NodeInstance.NAME, RecreateSystemRole_NodeInstance.class);
         RecreateSystemRole_NodeInstance.systemRole = this;
     }
 

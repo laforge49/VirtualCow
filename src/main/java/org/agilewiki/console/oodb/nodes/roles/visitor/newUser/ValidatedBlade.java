@@ -18,7 +18,7 @@ public class ValidatedBlade extends PostRequestBlade {
     public ValidatedBlade(Role role, String page) throws Exception {
         super(role, page);
         NewUser_Node.create();
-        db.registerTransaction(NewUser_NodeInstance.NAME, NewUser_NodeInstance.class);
+        ooDb.registerTransaction(NewUser_NodeInstance.NAME, NewUser_NodeInstance.class);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class ValidatedBlade extends PostRequestBlade {
                 }
                 boolean go = true;
                 try {
-                    go = Tokens.validate(db, email, key);
+                    go = Tokens.validate(email, key);
                 } catch (NoSuchAlgorithmException e) {
                     servletContext.log("no such algorithm: SHA-256");
                     go = false;

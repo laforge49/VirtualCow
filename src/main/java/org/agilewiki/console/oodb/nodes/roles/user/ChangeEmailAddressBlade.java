@@ -83,7 +83,7 @@ public class ChangeEmailAddressBlade extends PostRequestBlade {
                     long expTime = System.currentTimeMillis() + 1000 * 60 * 60 * 24; // 1 day
                     String token = null;
                     try {
-                        token = Tokens.generate(db, userId + emailAddress, expTime);
+                        token = Tokens.generate(userId + emailAddress, expTime);
                     } catch (NoSuchAlgorithmException e) {
                     }
                     if (token == null) {

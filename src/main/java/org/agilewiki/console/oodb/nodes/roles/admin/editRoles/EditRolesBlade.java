@@ -18,7 +18,7 @@ public class EditRolesBlade extends PostRequestBlade {
     public EditRolesBlade(Role role, String page) throws Exception {
         super(role, page);
         UpdateRoles_Node.create();
-        db.registerTransaction(UpdateRoles_NodeInstance.NAME, UpdateRoles_NodeInstance.class);
+        ooDb.registerTransaction(UpdateRoles_NodeInstance.NAME, UpdateRoles_NodeInstance.class);
     }
 
     @Override

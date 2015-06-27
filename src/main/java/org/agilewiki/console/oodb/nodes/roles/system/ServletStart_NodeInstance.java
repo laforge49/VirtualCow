@@ -2,6 +2,7 @@ package org.agilewiki.console.oodb.nodes.roles.system;
 
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.User;
+import org.agilewiki.console.oodb.OODb;
 import org.agilewiki.console.oodb.nodes.JournalEntry_NodeInstance;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
@@ -16,9 +17,9 @@ public class ServletStart_NodeInstance extends JournalEntry_NodeInstance {
         super(nodeId);
     }
 
-    public static String update(Db db)
+    public static String update(OODb ooDb)
             throws Exception {
-        MapNode mn = db.dbFactoryRegistry.nilMap;
+        MapNode mn = ooDb.nilMap;
         return SimpleSimon.simpleSimon.ooDb.update(NAME, mn).call();
     }
 

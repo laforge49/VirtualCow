@@ -62,7 +62,7 @@ public class ForgotBlade extends PostRequestBlade {
                 String subject = null;
                 String body = null;
                 try {
-                    String token = Tokens.generate(db, emailAddress,
+                    String token = Tokens.generate(emailAddress,
                             1000 * 60 * 60 * 24 + System.currentTimeMillis()); //1 day validity
                     subject = "Forgot Password";
                     body = "<p>To change your password, please click " +

@@ -22,7 +22,7 @@ public class NodeBase implements Node {
     }
 
     private void initialize() {
-        innerReference = new NodeData(getDb(), nodeId);
+        innerReference = ooDb.newNodeData(nodeId);
         outerReference = innerReference;
     }
 
@@ -37,14 +37,14 @@ public class NodeBase implements Node {
     }
 
     public NodeData getNodeData() {
-        if (getDb().isPrivileged())
+        if (ooDb.isPrivileged())
             return innerReference;
         return outerReference;
     }
 
     @Override
     public void setNodeData(NodeData nodeData) {
-        getDb().checkPrivilege();
+        ooDb.checkPrivilege();
         innerReference = nodeData;
     }
 

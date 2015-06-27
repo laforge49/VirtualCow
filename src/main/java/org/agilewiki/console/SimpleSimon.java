@@ -106,12 +106,12 @@ public class SimpleSimon extends HttpServlet {
             }
 
             ServletStart_Node.create();
-            db.registerTransaction(ServletStart_NodeInstance.NAME, ServletStart_NodeInstance.class);
+            ooDb.registerTransaction(ServletStart_NodeInstance.NAME, ServletStart_NodeInstance.class);
 
             ServletStop_Node.create();
-            db.registerTransaction(ServletStop_NodeInstance.NAME, ServletStop_NodeInstance.class);
+            ooDb.registerTransaction(ServletStop_NodeInstance.NAME, ServletStop_NodeInstance.class);
 
-            ServletStart_NodeInstance.update(db);
+            ServletStart_NodeInstance.update(ooDb);
         } catch (Exception ex) {
             destroy();
         }
@@ -119,10 +119,10 @@ public class SimpleSimon extends HttpServlet {
 
     public void destroy() {
         try {
-            ServletStop_NodeInstance.update(db);
+            ServletStop_NodeInstance.update(ooDb);
         } catch (Exception e) {
         }
-        db.close();
+        ooDb.close();
     }
 
     public void doGet(HttpServletRequest request,
@@ -141,7 +141,7 @@ public class SimpleSimon extends HttpServlet {
 
         String userId = null;
         if (userIdToken != null)
-            userId = Tokens.parse(db, userIdToken);
+            userId = Tokens.parse(userIdToken);
         if (userId == null) {
             Visitor_Role.get().dispatchGetRequest(request, null);
         } else {
@@ -171,7 +171,7 @@ public class SimpleSimon extends HttpServlet {
             }
         String userId = null;
         if (userIdToken != null)
-            userId = Tokens.parse(db, userIdToken);
+            userId = Tokens.parse(userIdToken);
 
         if (userId == null) {
             Visitor_Role.get().dispatchPostRequest(request, response, null);

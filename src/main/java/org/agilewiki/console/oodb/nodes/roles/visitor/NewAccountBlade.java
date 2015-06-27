@@ -56,7 +56,7 @@ public class NewAccountBlade extends PostRequestBlade {
                 String body = null;
                 if (userId == null) {
                     try {
-                        String token = Tokens.generate(db, emailAddress,
+                        String token = Tokens.generate(emailAddress,
                                 1000 * 60 * 60 * 24 + System.currentTimeMillis()); //1 day validity
                         subject = "Address Validation Request";
                         body = "<p>To validate your email address and begin opening an account, please click " +

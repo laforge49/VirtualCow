@@ -18,7 +18,7 @@ public class LogoutBlade extends PostRequestBlade {
     public LogoutBlade(Role role, String page) throws Exception {
         super(role, page);
         Logout_Node.create();
-        db.registerTransaction(Logout_NodeInstance.NAME, Logout_NodeInstance.class);
+        ooDb.registerTransaction(Logout_NodeInstance.NAME, Logout_NodeInstance.class);
     }
 
     @Override

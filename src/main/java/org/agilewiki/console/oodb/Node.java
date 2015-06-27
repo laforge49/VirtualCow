@@ -14,10 +14,6 @@ public interface Node {
         return SimpleSimon.simpleSimon.ooDb;
     }
 
-    default Db getDb() {
-        return getOODb().db;
-    }
-
     String getNodeId();
 
     NodeData getNodeData();

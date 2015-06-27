@@ -17,11 +17,11 @@ public class LoginBlade extends PostRequestBlade {
     public LoginBlade(Role role, String page) throws Exception {
         super(role, page);
         Login_Node.create();
-        db.registerTransaction(Login_NodeInstance.NAME, Login_NodeInstance.class);
+        ooDb.registerTransaction(Login_NodeInstance.NAME, Login_NodeInstance.class);
         BadUserAddress_Node.create();
-        db.registerTransaction(BadUserAddress_NodeInstance.NAME, BadUserAddress_NodeInstance.class);
+        ooDb.registerTransaction(BadUserAddress_NodeInstance.NAME, BadUserAddress_NodeInstance.class);
         BadUserPassword_Node.create();
-        db.registerTransaction(BadUserPassword_NodeInstance.NAME, BadUserPassword_NodeInstance.class);
+        ooDb.registerTransaction(BadUserPassword_NodeInstance.NAME, BadUserPassword_NodeInstance.class);
     }
 
     @Override
@@ -99,7 +99,7 @@ public class LoginBlade extends PostRequestBlade {
                 long expTime = System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 3; // 3 days
                 String token = null;
                 try {
-                    token = Tokens.generate(db, User.passwordDigest(userId, FactoryRegistry.MAX_TIMESTAMP), expTime);
+                    token = Tokens.generate(User.passwordDigest(userId, FactoryRegistry.MAX_TIMESTAMP), expTime);
                 } catch (NoSuchAlgorithmException e) {
                     servletContext.log("no such algorithm: SHA-256");
                     map.put("error", SimpleSimon.encode("Unable to create your account at this time. Please try again later.",

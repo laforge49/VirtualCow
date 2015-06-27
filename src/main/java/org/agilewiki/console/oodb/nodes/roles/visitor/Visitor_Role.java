@@ -37,7 +37,7 @@ public class Visitor_Role extends Role_NodeInstance {
         ContactBlade contactBlade = new ContactBlade(this, "contact");
 
         RecreateVisitorRole_Node.create();
-        simpleSimon.db.registerTransaction(RecreateVisitorRole_NodeInstance.NAME, RecreateVisitorRole_NodeInstance.class);
+        ooDb.registerTransaction(RecreateVisitorRole_NodeInstance.NAME, RecreateVisitorRole_NodeInstance.class);
         RecreateVisitorRole_NodeInstance.visitorRole = this;
     }
 

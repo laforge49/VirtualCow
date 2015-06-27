@@ -10,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
  * Security tokens.
  */
 public class Tokens {
-    public static String generate(Db db, String identifier, long expTime)
+    public static String generate(String identifier, long expTime)
             throws NoSuchAlgorithmException {
         String expirationTime = Long.toHexString(expTime);
         MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -18,14 +18,14 @@ public class Tokens {
         return expirationTime + "|" + digest;
     }
 
-    public static String parse(Db db, String idToken) {
+    public static String parse(String idToken) {
         int i = idToken.indexOf("|");
         if (i == -1)
             return null;
         String userId = idToken.substring(0, i);
         String token = idToken.substring(i + 1);
         try {
-            if (validate(db, User.passwordDigest(userId, FactoryRegistry.MAX_TIMESTAMP), token)) {
+            if (validate(User.passwordDigest(userId, FactoryRegistry.MAX_TIMESTAMP), token)) {
                 return userId;
             } else {
                 return null;
@@ -35,7 +35,7 @@ public class Tokens {
         }
     }
 
-    public static boolean validate(Db db, String identifier, String token)
+    public static boolean validate(String identifier, String token)
             throws NoSuchAlgorithmException {
         int i = token.indexOf("|");
         if (i == -1)
@@ -51,7 +51,7 @@ public class Tokens {
         if (time > expTime) {
             return false;
         }
-        String t = generate(db, identifier, expTime);
+        String t = generate(identifier, expTime);
         return t.equals(token);
     }
 }

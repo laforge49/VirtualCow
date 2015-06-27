@@ -20,7 +20,7 @@ public class ChangePasswordBlade extends PostRequestBlade {
     public ChangePasswordBlade(Role role, String page) throws Exception {
         super(role, page);
         ChangePassword_Node.create();
-        db.registerTransaction(ChangePassword_NodeInstance.NAME, ChangePassword_NodeInstance.class);
+        ooDb.registerTransaction(ChangePassword_NodeInstance.NAME, ChangePassword_NodeInstance.class);
     }
 
     @Override
@@ -83,7 +83,7 @@ public class ChangePasswordBlade extends PostRequestBlade {
                                 long expTime = System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 3; // 3 days
                                 String token = null;
                                 try {
-                                    token = Tokens.generate(db, User.passwordDigest(userId, FactoryRegistry.MAX_TIMESTAMP), expTime);
+                                    token = Tokens.generate(User.passwordDigest(userId, FactoryRegistry.MAX_TIMESTAMP), expTime);
                                 } catch (NoSuchAlgorithmException e) {
                                 }
                                 Cookie loginCookie = new Cookie("userId", userId + "|" + token);

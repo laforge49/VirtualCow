@@ -20,7 +20,7 @@ public class ForgotPasswordBlade extends PostRequestBlade {
     public ForgotPasswordBlade(Role role, String page) throws Exception {
         super(role, page);
         ForgotPassword_Node.create();
-        db.registerTransaction(ForgotPassword_NodeInstance.NAME, ForgotPassword_NodeInstance.class);
+        ooDb.registerTransaction(ForgotPassword_NodeInstance.NAME, ForgotPassword_NodeInstance.class);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class ForgotPasswordBlade extends PostRequestBlade {
                 }
                 boolean go = true;
                 try {
-                    go = Tokens.validate(db, email, key);
+                    go = Tokens.validate(email, key);
                 } catch (NoSuchAlgorithmException e) {
                     servletContext.log("no such algorithm: SHA-256");
                     go = false;

@@ -20,7 +20,7 @@ public class NewEmailAddressBlade extends PostRequestBlade {
     public NewEmailAddressBlade(Role role, String page) throws Exception {
         super(role, page);
         NewEmailAddress_Node.create();
-        db.registerTransaction(NewEmailAddress_NodeInstance.NAME, NewEmailAddress_NodeInstance.class);
+        ooDb.registerTransaction(NewEmailAddress_NodeInstance.NAME, NewEmailAddress_NodeInstance.class);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class NewEmailAddressBlade extends PostRequestBlade {
                 }
                 Boolean go = false;
                 try {
-                    go = Tokens.validate(db, userId + emailAddress, token);
+                    go = Tokens.validate(userId + emailAddress, token);
                 } catch (NoSuchAlgorithmException e) {
                 }
                 if (!go) {

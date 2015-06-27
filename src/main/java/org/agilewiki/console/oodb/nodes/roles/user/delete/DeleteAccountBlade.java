@@ -18,7 +18,7 @@ public class DeleteAccountBlade extends PostRequestBlade {
     public DeleteAccountBlade(Role role, String page) throws Exception {
         super(role, page);
         Delete_Node.create();
-        db.registerTransaction(Delete_NodeInstance.NAME, Delete_NodeInstance.class);
+        ooDb.registerTransaction(Delete_NodeInstance.NAME, Delete_NodeInstance.class);
     }
 
     @Override

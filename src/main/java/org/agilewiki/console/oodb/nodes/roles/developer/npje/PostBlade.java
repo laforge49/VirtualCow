@@ -17,7 +17,7 @@ public class PostBlade extends PostRequestBlade {
     public PostBlade(Role role, String page) throws Exception {
         super(role, page);
         Npje_Node.create();
-        db.registerTransaction(Npje_NodeInstance.NAME, Npje_NodeInstance.class);
+        ooDb.registerTransaction(Npje_NodeInstance.NAME, Npje_NodeInstance.class);
     }
 
     @Override
