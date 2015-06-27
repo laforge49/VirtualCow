@@ -52,7 +52,7 @@ public class ForgotBlade extends PostRequestBlade {
                     finish();
                     return;
                 }
-                String userId = User.userId(db, emailAddress, FactoryRegistry.MAX_TIMESTAMP);
+                String userId = User.userId(emailAddress, FactoryRegistry.MAX_TIMESTAMP);
                 String msg = "An email has been sent to verify your address. Please check your inbox.";
                 if (userId == null) {
                     map.put("success3", SimpleSimon.encode(msg, 0, SimpleSimon.ENCODE_FIELD)); //field

@@ -23,12 +23,9 @@ public class Attribute_Node extends Node_NodeInstance {
         OODb ooDb = SimpleSimon.simpleSimon.ooDb;
         String attributeId = RandomIds.randomId.generate();
         ooDb.set(attributeId, "$nsubject", attributeNameId + " - " + nodeId);
-        ooDb.createSecondaryId(attributeId,
-                SecondaryId.secondaryId(Key_Node.NODETYPE_ID, ID));
-        ooDb.createSecondaryId(attributeId,
-                SecondaryId.secondaryId(Key_Node.ATTRIBUTENAME_ID, attributeNameId));
-        ooDb.createLnk1(attributeId, Lnk1_Node.ATTRIBUTEOF_ID,
-                nodeId);
+        ooDb.createSecondaryId(attributeId, Key_Node.NODETYPE_ID, ID);
+        ooDb.createSecondaryId(attributeId, Key_Node.ATTRIBUTENAME_ID, attributeNameId);
+        ooDb.createLnk1(attributeId, Lnk1_Node.ATTRIBUTEOF_ID, nodeId);
     }
 
     public Attribute_Node(String nodeId) {

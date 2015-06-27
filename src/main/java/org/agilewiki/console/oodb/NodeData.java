@@ -110,16 +110,14 @@ public class NodeData {
         return new TreeMap<>(atts);
     }
 
-    public void createSecondaryId(String secondaryId) {
-        SecondaryId.createSecondaryId(db, nodeId, secondaryId);
-        String keyType = SecondaryId.secondaryIdType(secondaryId);
-        ConcurrentSkipListSet s = keys.get(keyType);
+    public void createSecondaryId(String keyId, String valueId) {
+        SecondaryId.createSecondaryId(db, nodeId, SecondaryId.secondaryId(keyId, valueId));
+        ConcurrentSkipListSet s = keys.get(keyId);
         if (s == null) {
             s = new ConcurrentSkipListSet();
-            keys.put(keyType, s);
+            keys.put(keyId, s);
         }
-        String keyValue = SecondaryId.secondaryIdValue(secondaryId);
-        s.add(keyValue);
+        s.add(valueId);
     }
 
     public void removeSecondaryId(String keyId, String valueId) {
@@ -150,11 +148,11 @@ public class NodeData {
         return keys.containsKey(keyId);
     }
 
-    public boolean hasKeyValue(String keyId, String value) {
+    public boolean hasKeyValue(String keyId, String valueId) {
         NavigableSet<String> s = keys.get(keyId);
         if (s == null)
             return false;
-        return s.contains(value);
+        return s.contains(valueId);
     }
 
     Iterator<String> keyValueIdIterator(String keyId) {

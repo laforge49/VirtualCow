@@ -93,9 +93,9 @@ public class NodeBase implements Node {
     }
 
     @Override
-    public void createSecondaryId(String secondaryId) {
+    public void createSecondaryId(String keyId, String valueId) {
         prep();
-        innerReference.createSecondaryId(secondaryId);
+        innerReference.createSecondaryId(keyId, valueId);
     }
 
     @Override
@@ -120,8 +120,8 @@ public class NodeBase implements Node {
     }
 
     @Override
-    public boolean hasKeyValue(String keyId, String value) {
-        return getNodeData().hasKeyValue(keyId, value);
+    public boolean hasKeyValue(String keyId, String valueId) {
+        return getNodeData().hasKeyValue(keyId, valueId);
     }
 
     @Override

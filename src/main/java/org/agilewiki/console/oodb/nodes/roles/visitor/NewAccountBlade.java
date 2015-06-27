@@ -51,7 +51,7 @@ public class NewAccountBlade extends PostRequestBlade {
                     map.put("error2", SimpleSimon.encode(error, 0, SimpleSimon.ENCODE_FIELD)); //field
                     finish();
                 }
-                String userId = User.userId(db, emailAddress, FactoryRegistry.MAX_TIMESTAMP);
+                String userId = User.userId(emailAddress, FactoryRegistry.MAX_TIMESTAMP);
                 String subject = null;
                 String body = null;
                 if (userId == null) {

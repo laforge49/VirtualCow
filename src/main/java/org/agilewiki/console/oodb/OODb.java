@@ -212,12 +212,12 @@ public class OODb {
         return node.getFlatMap();
     }
 
-    public void createSecondaryId(String nodeId, String secondaryId) {
+    public void createSecondaryId(String nodeId, String keyId, String valueId) {
         Node node = fetchNode(nodeId);
         if (node == null)
-            SecondaryId.createSecondaryId(db, nodeId, secondaryId);
+            SecondaryId.createSecondaryId(db, nodeId, SecondaryId.secondaryId(keyId, valueId));
         else
-            node.createSecondaryId(secondaryId);
+            node.createSecondaryId(keyId, valueId);
     }
 
     public void removeSecondaryId(String nodeId, String keyId, String valueId) {
@@ -256,6 +256,13 @@ public class OODb {
         return node.getKeyValue(keyId);
     }
 
+    public String getKeyTarget(String keyId, String valueId, long timestamp) {
+        for (String targetId : db.keysIterable(SecondaryId.secondaryId(keyId, valueId), timestamp)) {
+            return targetId;
+        }
+        return null;
+    }
+
     public boolean isNode(String id, long longTimestamp) {
         return getKeyValue(id, Key_Node.NODETYPE_ID, longTimestamp) != null;
     }
@@ -278,15 +285,22 @@ public class OODb {
         return node.hasKey(keyId);
     }
 
-    public boolean hasKeyValue(String nodeId, String keyId, String value, long timestamp) {
+    public boolean hasKeyValue(String nodeId, String keyId, String valueId, long timestamp) {
         if (timestamp != FactoryRegistry.MAX_TIMESTAMP) {
-            return SecondaryId.hasSecondaryId(db, nodeId, keyId, value, timestamp);
+            return SecondaryId.hasSecondaryId(db, nodeId, keyId, valueId, timestamp);
         }
         Node node = fetchNode(nodeId);
         if (node == null) {
-            return SecondaryId.hasSecondaryId(db, nodeId, keyId, value, timestamp);
+            return SecondaryId.hasSecondaryId(db, nodeId, keyId, valueId, timestamp);
         }
-        return node.hasKeyValue(keyId, value);
+        return node.hasKeyValue(keyId, valueId);
+    }
+
+    public boolean hasKeyTarget(String keyId, String valueId, long timestamp) {
+        for (String targetId : db.keysIterable(SecondaryId.secondaryId(keyId, valueId), timestamp)) {
+            return true;
+        }
+        return false;
     }
 
     public Iterable<String> keyValueIdIterable(String nodeId, String keyId, long timestamp) {
@@ -298,6 +312,10 @@ public class OODb {
             return db.keysIterable(SecondaryId.secondaryInv(nodeId, keyId), timestamp);
         }
         return node.keyValueIdIterable(keyId);
+    }
+
+    public Iterable<String> keyTargetIdIterable(String keyId, String valueId, long timestamp) {
+        return db.keysIterable(SecondaryId.secondaryId(keyId, valueId), timestamp);
     }
 
     public void createLnk1(String originNodeId, String labelId, String destinationNodeId) {

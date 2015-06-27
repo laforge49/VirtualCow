@@ -78,7 +78,7 @@ public class ForgotPasswordBlade extends PostRequestBlade {
                     finish();
                     return;
                 }
-                String userId = User.userId(db, email, FactoryRegistry.MAX_TIMESTAMP);
+                String userId = User.userId(email, FactoryRegistry.MAX_TIMESTAMP);
                 if (userId == null) {
                     String error = "Unable to change your password at this time. Please try again later.";
                     map.put("error", SimpleSimon.encode(error, 0, SimpleSimon.ENCODE_FIELD)); //field

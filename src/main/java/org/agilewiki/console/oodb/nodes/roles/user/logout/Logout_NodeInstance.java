@@ -23,8 +23,7 @@ public class Logout_NodeInstance extends JournalEntry_NodeInstance {
         String subject = (String) mapNode.get(NameIds.SUBJECT);
         if (subject != null) {
             String subjectVId = ValueId.generate(subject.toLowerCase());
-            String subjectSID = SecondaryId.secondaryId(NameIds.SUBJECT, subjectVId);
-            ooDb.createSecondaryId(jeName, subjectSID);
+            ooDb.createSecondaryId(jeName, NameIds.SUBJECT, subjectVId);
         }
     }
 }

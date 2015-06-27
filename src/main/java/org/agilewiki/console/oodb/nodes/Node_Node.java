@@ -27,12 +27,10 @@ public class Node_Node extends Metadata_Node {
     public static void define(String nodeId, String nodeType, String superType, String roleId, String... attributes) {
         OODb ooDb = SimpleSimon.simpleSimon.ooDb;
         if (nodeType != null) {
-            ooDb.createSecondaryId(nodeId,
-                    SecondaryId.secondaryId(Key_Node.NODETYPE_ID, nodeType));
+            ooDb.createSecondaryId(nodeId, Key_Node.NODETYPE_ID, nodeType);
         }
         if (superType != null) {
-            ooDb.createSecondaryId(nodeId,
-                    SecondaryId.secondaryId(Key_Node.SUPERTYPE_ID, superType));
+            ooDb.createSecondaryId(nodeId, Key_Node.SUPERTYPE_ID, superType);
         }
         ooDb.createLnk1(nodeId,
                 Lnk1_Node.OFROLE_ID,

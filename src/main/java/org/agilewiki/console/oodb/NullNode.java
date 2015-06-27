@@ -60,7 +60,7 @@ public class NullNode implements Node {
     }
 
     @Override
-    public void createSecondaryId(String secondaryId) {
+    public void createSecondaryId(String keyId, String valueId) {
 
     }
 
@@ -85,7 +85,7 @@ public class NullNode implements Node {
     }
 
     @Override
-    public boolean hasKeyValue(String keyId, String value) {
+    public boolean hasKeyValue(String keyId, String valueId) {
         return false;
     }
 

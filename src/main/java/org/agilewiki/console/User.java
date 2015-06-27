@@ -66,15 +66,11 @@ public class User {
         }
     }
 
-    public static String userId(Db db, String email, long timestamp) {
+    public static String userId(String email, long timestamp) {
         while (true) {
             try {
                 String emailId = ValueId.generate(email);
-                String emailSecondaryId = SecondaryId.secondaryId(EMAIL_ID, emailId);
-                for (String userId : SecondaryId.vmnIdIterable(db, emailSecondaryId, timestamp)) {
-                    return userId;
-                }
-                return null;
+                return SimpleSimon.simpleSimon.ooDb.getKeyTarget(EMAIL_ID, emailId, timestamp);
             } catch (UnexpectedChecksumException uce) {
             }
         }
@@ -157,19 +153,15 @@ public class User {
                                     String... userRoles) {
         Db db = SimpleSimon.simpleSimon.db;
         OODb ooDb = SimpleSimon.simpleSimon.ooDb;
-        String emailSecondaryId = SecondaryId.secondaryId(EMAIL_ID, emailId);
-        for (String uId : SecondaryId.vmnIdIterable(db, emailSecondaryId, db.getTimestamp())) {
+        if (ooDb.hasKeyTarget(EMAIL_ID, emailId, db.getTimestamp())) {
             return "duplicate email: " + ValueId.value(emailId);
         }
         ooDb.set(userId, "$nsubject", emailId);
         ooDb.set(userId, PASSWORD_KEY, passwordHash);
-        ooDb.createSecondaryId(userId, emailSecondaryId);
-        ooDb.createSecondaryId(userId,
-                SecondaryId.secondaryId(Key_Node.NODETYPE_ID, User_Node.ID));
+        ooDb.createSecondaryId(userId, EMAIL_ID, emailId);
+        ooDb.createSecondaryId(userId, Key_Node.NODETYPE_ID, User_Node.ID);
         for (String userRole : userRoles) {
-            String userTypeSecondaryId =
-                    SecondaryId.secondaryId(ROLE_ID, NameIds.generate(userRole));
-            ooDb.createSecondaryId(userId, userTypeSecondaryId);
+            ooDb.createSecondaryId(userId, ROLE_ID, NameIds.generate(userRole));
         }
         return null;
     }

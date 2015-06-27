@@ -60,7 +60,7 @@ public class LoginBlade extends PostRequestBlade {
                     finish();
                     return;
                 }
-                String userId = User.userId(db, emailAddress, FactoryRegistry.MAX_TIMESTAMP);
+                String userId = User.userId(emailAddress, FactoryRegistry.MAX_TIMESTAMP);
                 if (userId == null) {
                     MapNode mn = db.dbFactoryRegistry.nilMap;
                     mn = mn.add(NameIds.SUBJECT, emailAddress);

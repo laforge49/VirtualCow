@@ -34,7 +34,7 @@ public interface Node {
 
     NavigableMap<Comparable, List> getFlatMap();
 
-    void createSecondaryId(String secondaryId);
+    void createSecondaryId(String keyId, String valueId);
 
     void removeSecondaryId(String keyId, String valueId);
 
@@ -44,7 +44,7 @@ public interface Node {
 
     boolean hasKey(String keyId);
 
-    boolean hasKeyValue(String keyId, String value);
+    boolean hasKeyValue(String keyId, String valueId);
 
     Iterable<String> keyValueIdIterable(String keyId);
 

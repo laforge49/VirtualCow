@@ -37,8 +37,7 @@ public class Lnk1_Node extends Metadata_Node {
         OODb ooDb = SimpleSimon.simpleSimon.ooDb;
         Node_Node.define(nodeId, ID, null, ofRole);
         if (invDependency != null) {
-            ooDb.createSecondaryId(nodeId,
-                    SecondaryId.secondaryId(Key_Node.INVDEPENDENCY_ID, invDependency));
+            ooDb.createSecondaryId(nodeId, Key_Node.INVDEPENDENCY_ID, invDependency);
         }
         ooDb.createLnk1(nodeId,
                 Lnk1_Node.ORIGIN_ID,

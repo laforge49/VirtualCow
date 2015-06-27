@@ -58,7 +58,7 @@ public class ChangeEmailAddressBlade extends PostRequestBlade {
                 }
                 String subject = null;
                 String body = null;
-                String userId2 = User.userId(db, emailAddress, FactoryRegistry.MAX_TIMESTAMP);
+                String userId2 = User.userId(emailAddress, FactoryRegistry.MAX_TIMESTAMP);
                 if (userId2 != null) {
                     subject = "Notification of attempt to reassign email address";
                     body = "<p>There was an attempt made to change the email of an account " +
