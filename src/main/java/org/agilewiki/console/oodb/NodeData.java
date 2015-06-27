@@ -132,15 +132,11 @@ public class NodeData {
         s.remove(keyValue);
     }
 
-    Iterator<String> keyIdIterator() {
-        return keys.keySet().iterator();
-    }
-
-    public Iterable<String> keyIdIteratable() {
+    public Iterable<String> keyIdIterable() {
         return new Iterable<String>() {
             @Override
             public Iterator<String> iterator() {
-                return keyIdIterator();
+                return keys.keySet().iterator();
             }
         };
     }
@@ -210,5 +206,26 @@ public class NodeData {
 
     public void removeLnk1(String labelId, String destinationNodeId) {
         Link1Id.removeLink1(db, nodeId, labelId, destinationNodeId);
+    }
+
+    public Iterable<String> label1IdIterable() {
+        return new Iterable<String>() {
+            @Override
+            public Iterator<String> iterator() {
+                return lnk1s.keySet().iterator();
+            }
+        };
+    }
+
+    Iterable<String> destination1IdIterable(String label1Id) {
+        return new Iterable<String>() {
+            @Override
+            public Iterator<String> iterator() {
+                ConcurrentSkipListSet s = lnk1s.get(label1Id);
+                if (s == null)
+                    s = new ConcurrentSkipListSet();
+                return s.iterator();
+            }
+        };
     }
 }

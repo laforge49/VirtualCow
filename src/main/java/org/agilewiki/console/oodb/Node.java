@@ -42,7 +42,7 @@ public interface Node {
 
     void removeSecondaryId(String secondaryId);
 
-    Iterable<String> keyIdIteratable();
+    Iterable<String> keyIdIterable();
 
     String getKeyValue(String keyId);
 

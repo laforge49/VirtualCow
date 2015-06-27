@@ -199,7 +199,7 @@ public class OODb {
         if (node == null) {
             return SecondaryId.typeIdIterable(db, nodeId);
         }
-        return node.keyIdIteratable();
+        return node.keyIdIterable();
     }
 
     public String getKeyValue(String nodeId, String keyId, long timestamp) {
@@ -291,6 +291,14 @@ public class OODb {
             Link1Id.removeLink1(db, originNodeId, labelId, destinationNodeId);
         else
             node.removeLnk1(labelId, destinationNodeId);
+    }
+
+    public Iterable<String> label1IdIterable(String nodeId) {
+        return Link1Id.link1LabelIdIterable(db, nodeId);
+    }
+
+    public Iterable<String> destination1IdIterable(String nodeId, String label1Id, long timestamp) {
+        return Link1Id.link1IdIterable(db, nodeId, label1Id, timestamp);
     }
 
     public BladeBase.AReq<String> update(String transactionName, MapNode tMapNode) {

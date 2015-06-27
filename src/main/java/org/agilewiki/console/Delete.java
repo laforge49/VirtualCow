@@ -19,8 +19,8 @@ public class Delete {
         while (!ids.isEmpty()) {
             id = ids.removeLast();
             ooDb.clearMap(id);
-            for (String lnkTyp : Link1Id.link1LabelIdIterable(db, id)) {
-                for (String tId : Link1Id.link1IdIterable(db, id, lnkTyp, db.getTimestamp())) {
+            for (String lnkTyp : ooDb.label1IdIterable(id)) {
+                for (String tId : ooDb.destination1IdIterable(id, lnkTyp, db.getTimestamp())) {
                     ooDb.removeLnk1(id, lnkTyp, tId);
                 }
             }

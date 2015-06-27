@@ -105,8 +105,8 @@ public class NodeBase implements Node {
     }
 
     @Override
-    public Iterable<String> keyIdIteratable() {
-        return getNodeData().keyIdIteratable();
+    public Iterable<String> keyIdIterable() {
+        return getNodeData().keyIdIterable();
     }
 
     @Override

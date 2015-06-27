@@ -394,7 +394,7 @@ public class NodeBlade extends RequestBlade {
                             }
                         }
                         sb.append("<strong>Links:</strong><br />");
-                        for (String typeId : Link1Id.link1LabelIdIterable(db, nodeId)) {
+                        for (String typeId : ooDb.label1IdIterable(nodeId)) {
                             String link1Id = Link1Id.link1Id(nodeId, typeId);
                             VersionedMapNode vmn = db.get(link1Id);
                             if (vmn != null && !vmn.isEmpty(longTimestamp)) {
@@ -410,7 +410,7 @@ public class NodeBlade extends RequestBlade {
                                 sb.append(typeId.substring(2));
                                 sb.append("</a><br />");
 
-                                for (String targetId : Link1Id.link1IdIterable(db, nodeId, typeId, longTimestamp)) {
+                                for (String targetId : ooDb.destination1IdIterable(nodeId, typeId, longTimestamp)) {
                                     sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
                                     sb.append("<a href=\"?from=node&to=node&nodeId=");
                                     sb.append(targetId);
