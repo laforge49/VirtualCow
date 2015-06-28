@@ -67,7 +67,7 @@ public class User {
         while (true) {
             try {
                 String emailId = ValueId.generate(email);
-                return SimpleSimon.simpleSimon.ooDb.getKeyTarget(EMAIL_ID, emailId, timestamp);
+                return SimpleSimon.simpleSimon.ooDb.getKeyTargetId(EMAIL_ID, emailId, timestamp);
             } catch (UnexpectedChecksumException uce) {
             }
         }
@@ -149,7 +149,7 @@ public class User {
                                     String passwordHash,
                                     String... userRoles) {
         OODb ooDb = SimpleSimon.simpleSimon.ooDb;
-        if (ooDb.keyHasTarget(EMAIL_ID, emailId, ooDb.getTimestamp())) {
+        if (ooDb.keyHasTargetId(EMAIL_ID, emailId, ooDb.getTimestamp())) {
             return "duplicate email: " + ValueId.value(emailId);
         }
         ooDb.set(userId, "$nsubject", emailId);

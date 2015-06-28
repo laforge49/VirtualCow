@@ -1,7 +1,6 @@
 package org.agilewiki.console;
 
 import org.agilewiki.utils.immutable.FactoryRegistry;
-import org.agilewiki.utils.virtualcow.Db;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

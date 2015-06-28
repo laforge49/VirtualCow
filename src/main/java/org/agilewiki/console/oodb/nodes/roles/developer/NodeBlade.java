@@ -394,7 +394,7 @@ public class NodeBlade extends RequestBlade {
                         }
                         sb.append("<strong>Links:</strong><br />");
                         for (String typeId : ooDb.originLabelIdIterable(nodeId)) {
-                            if (ooDb.hasLabel1(nodeId, typeId,longTimestamp)) {
+                            if (ooDb.hasLabel1(nodeId, typeId, longTimestamp)) {
                                 sb.append("&nbsp;&nbsp;&nbsp;&nbsp;label: <a href=\"?from=node&to=node&nodeId=");
                                 sb.append(typeId);
                                 sb.append(".lnk1");

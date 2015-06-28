@@ -3,13 +3,10 @@ package org.agilewiki.console.oodb.nodes.roles.developer;
 import org.agilewiki.console.NameIds;
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.SimpleSimon;
+import org.agilewiki.console.oodb.nodes.Key_Node;
 import org.agilewiki.console.oodb.nodes.roles.Role;
-import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.composites.SecondaryId;
-import org.agilewiki.utils.immutable.collections.ListAccessor;
-import org.agilewiki.utils.immutable.collections.MapAccessor;
 import org.agilewiki.utils.immutable.collections.PeekABoo;
-import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
 import javax.servlet.AsyncContext;
@@ -47,7 +44,6 @@ public class SecondaryKeysBlade extends RequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                String prefix = SecondaryId.SECONDARY_ID + NameIds.generate(secondaryType);
                 String startingAt = request.getParameter("startingAt");
                 boolean hasMore = false;
                 StringBuilder sb;
@@ -56,31 +52,20 @@ public class SecondaryKeysBlade extends RequestBlade {
                         hasMore = false;
                         int limit = 25;
                         sb = new StringBuilder();
-                        PeekABoo<String> idPeekABoo = db.idsIterable(prefix, longTimestamp);
+                        String keyId = NameIds.generate(secondaryType);
+                        PeekABoo<String> idPeekABoo = ooDb.keyValueIdIterable(keyId, longTimestamp);
                         if (startingAt != null)
                             idPeekABoo.setPosition(startingAt);
-                        for (String id : idPeekABoo) {
+                        for (String valueId : idPeekABoo) {
                             if (limit == 0) {
                                 hasMore = true;
-                                startingAt = id;
+                                startingAt = valueId;
                                 break;
                             }
                             --limit;
-                            String secondaryId = SecondaryId.secondaryId(NameId.generate(secondaryType), id);
-                            MapAccessor ma = db.mapAccessor();
-                            ListAccessor la = ma.listAccessor(secondaryId);
-                            String nodeId = null;
-                            if (la != null) {
-                                VersionedMapNode vmn = (VersionedMapNode) la.get(0);
-                                if (vmn != null) {
-                                    String first = (String) vmn.firstKey(longTimestamp);
-                                    String last = (String) vmn.lastKey(longTimestamp);
-                                    if (first.equals(last)) {
-                                        nodeId = first;
-                                    }
-                                }
-                            }
-                            String line = id.substring(2);
+                            String secondaryId = SecondaryId.secondaryId(keyId, valueId);
+                            String nodeId = ooDb.getOnlyKeyTargetId(Key_Node.EMAIL_ID, valueId, longTimestamp);
+                            String line = valueId.substring(2);
                             if (line.length() > 60)
                                 line = line.substring(0, 60);
                             line = SimpleSimon.encode(line, 0, SimpleSimon.ENCODE_SINGLE_LINE); //line text

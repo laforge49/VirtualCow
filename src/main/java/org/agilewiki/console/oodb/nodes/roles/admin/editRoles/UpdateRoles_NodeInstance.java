@@ -3,7 +3,6 @@ package org.agilewiki.console.oodb.nodes.roles.admin.editRoles;
 import org.agilewiki.console.NameIds;
 import org.agilewiki.console.User;
 import org.agilewiki.console.oodb.nodes.JournalEntry_NodeInstance;
-import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.collections.ListNode;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;

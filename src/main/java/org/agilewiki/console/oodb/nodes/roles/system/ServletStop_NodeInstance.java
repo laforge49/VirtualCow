@@ -1,6 +1,5 @@
 package org.agilewiki.console.oodb.nodes.roles.system;
 
-import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.oodb.OODb;
 import org.agilewiki.console.oodb.nodes.JournalEntry_NodeInstance;
 import org.agilewiki.utils.immutable.collections.MapNode;

@@ -2,7 +2,6 @@ package org.agilewiki.console.oodb.nodes;
 
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.oodb.Node;
-import org.agilewiki.utils.ids.composites.Link1Id;
 
 public class Key_Node extends Metadata_Node {
     private static Key_Node key_node;

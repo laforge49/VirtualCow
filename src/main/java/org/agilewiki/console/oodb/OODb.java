@@ -320,15 +320,25 @@ public class OODb {
         return db.idsIterable(prefix, timestamp);
     }
 
-    public boolean keyHasTarget(String keyId, String valueId, long timestamp) {
+    public boolean keyHasTargetId(String keyId, String valueId, long timestamp) {
         return db.keysIterable(SecondaryId.secondaryId(keyId, valueId), timestamp).hasNext();
     }
 
-    public String getKeyTarget(String keyId, String valueId, long timestamp) {
-        for (String targetId : db.keysIterable(SecondaryId.secondaryId(keyId, valueId), timestamp)) {
+    public String getKeyTargetId(String keyId, String valueId, long timestamp) {
+        for (String targetId : keyTargetIdIterable(keyId, valueId, timestamp)) {
             return targetId;
         }
         return null;
+    }
+
+    public String getOnlyKeyTargetId(String keyId, String valueId, long timestamp) {
+        PeekABoo<String> peekABoo = keyTargetIdIterable(keyId, valueId, timestamp);
+        if (!peekABoo.hasNext())
+            return null;
+        String targetId = peekABoo.next();
+        if (peekABoo.hasNext())
+            return null;
+        return targetId;
     }
 
     //

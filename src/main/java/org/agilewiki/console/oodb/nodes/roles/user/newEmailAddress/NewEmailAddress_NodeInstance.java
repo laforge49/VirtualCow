@@ -3,7 +3,6 @@ package org.agilewiki.console.oodb.nodes.roles.user.newEmailAddress;
 import org.agilewiki.console.User;
 import org.agilewiki.console.oodb.nodes.JournalEntry_NodeInstance;
 import org.agilewiki.utils.ids.ValueId;
-import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 

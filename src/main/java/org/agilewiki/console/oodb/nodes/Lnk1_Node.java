@@ -3,8 +3,6 @@ package org.agilewiki.console.oodb.nodes;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.oodb.Node;
 import org.agilewiki.console.oodb.OODb;
-import org.agilewiki.utils.ids.composites.Link1Id;
-import org.agilewiki.utils.ids.composites.SecondaryId;
 
 public class Lnk1_Node extends Metadata_Node {
     private static Lnk1_Node lnk1_node;

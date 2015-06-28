@@ -4,8 +4,6 @@ import org.agilewiki.console.RandomIds;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.oodb.Node;
 import org.agilewiki.console.oodb.OODb;
-import org.agilewiki.utils.ids.composites.Link1Id;
-import org.agilewiki.utils.ids.composites.SecondaryId;
 
 public class Attribute_Node extends Node_NodeInstance {
     private static Attribute_Node attribute_node;

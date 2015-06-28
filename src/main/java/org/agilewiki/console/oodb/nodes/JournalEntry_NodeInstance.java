@@ -3,8 +3,6 @@ package org.agilewiki.console.oodb.nodes;
 import org.agilewiki.console.User;
 import org.agilewiki.console.oodb.NodeBase;
 import org.agilewiki.utils.ids.NameId;
-import org.agilewiki.utils.ids.composites.Link1Id;
-import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 import org.agilewiki.utils.virtualcow.Transaction;

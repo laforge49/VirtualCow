@@ -48,7 +48,7 @@ public class EmailAddressesBlade extends RequestBlade {
                                 break;
                             }
                             --limit;
-                            String nodeId = ooDb.getKeyTarget(Key_Node.EMAIL_ID, valueId, longTimestamp);
+                            String nodeId = ooDb.getKeyTargetId(Key_Node.EMAIL_ID, valueId, longTimestamp);
                             sb.append("<a href=\"?from=secondaryKeys&to=user&nodeId=");
                             sb.append(nodeId);
                             if (timestamp != null) {
