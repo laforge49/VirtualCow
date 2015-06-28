@@ -315,6 +315,11 @@ public class OODb {
         return db.keysIterable(SecondaryId.secondaryId(keyId, valueId), timestamp);
     }
 
+    public PeekABoo<String> keyValueIdIterable(String keyId, long timestamp) {
+        String prefix = SecondaryId.SECONDARY_ID + keyId;
+        return db.idsIterable(prefix, timestamp);
+    }
+
     public boolean keyHasTarget(String keyId, String valueId, long timestamp) {
         return db.keysIterable(SecondaryId.secondaryId(keyId, valueId), timestamp).hasNext();
     }

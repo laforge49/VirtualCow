@@ -1,17 +1,11 @@
 package org.agilewiki.console.oodb.nodes.roles.admin;
 
-import org.agilewiki.console.NameIds;
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.oodb.nodes.Key_Node;
 import org.agilewiki.console.oodb.nodes.roles.Role;
-import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.ValueId;
-import org.agilewiki.utils.ids.composites.SecondaryId;
-import org.agilewiki.utils.immutable.collections.ListAccessor;
-import org.agilewiki.utils.immutable.collections.MapAccessor;
 import org.agilewiki.utils.immutable.collections.PeekABoo;
-import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
 import javax.servlet.AsyncContext;
@@ -35,7 +29,6 @@ public class EmailAddressesBlade extends RequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                String prefix = SecondaryId.SECONDARY_ID + Key_Node.EMAIL_ID;
                 String startingAt = request.getParameter("startingAt");
                 if (startingAt == null)
                     startingAt = "";
@@ -46,37 +39,26 @@ public class EmailAddressesBlade extends RequestBlade {
                         hasMore = false;
                         int limit = 25;
                         sb = new StringBuilder();
-                        PeekABoo<String> idPeekABoo = db.idsIterable(prefix, longTimestamp).iterator();
+                        PeekABoo<String> idPeekABoo = ooDb.keyValueIdIterable(Key_Node.EMAIL_ID, longTimestamp);
                         idPeekABoo.setPosition(startingAt);
-                        for (String id : idPeekABoo) {
+                        for (String valueId : idPeekABoo) {
                             if (limit == 0) {
                                 hasMore = true;
-                                startingAt = ValueId.value(id);
+                                startingAt = valueId;
                                 break;
                             }
                             --limit;
-                            String secondaryId = SecondaryId.secondaryId(Key_Node.EMAIL_ID, id);
-                            MapAccessor ma = db.mapAccessor();
-                            ListAccessor la = ma.listAccessor(secondaryId);
-                            String nodeId = null;
-                            if (la != null) {
-                                VersionedMapNode vmn = (VersionedMapNode) la.get(0);
-                                if (vmn != null) {
-                                    nodeId = (String) vmn.firstKey(longTimestamp);
-                                }
+                            String nodeId = ooDb.getKeyTarget(Key_Node.EMAIL_ID, valueId, longTimestamp);
+                            sb.append("<a href=\"?from=secondaryKeys&to=user&nodeId=");
+                            sb.append(nodeId);
+                            if (timestamp != null) {
+                                sb.append("&timestamp=");
+                                sb.append(timestamp);
                             }
-                            if (nodeId != null) {
-                                sb.append("<a href=\"?from=secondaryKeys&to=user&nodeId=");
-                                sb.append(nodeId);
-                                if (timestamp != null) {
-                                    sb.append("&timestamp=");
-                                    sb.append(timestamp);
-                                }
-                                sb.append(setRole + "#rupa\">");
-                                sb.append(ValueId.value(id));
-                                sb.append("</a>");
-                                sb.append("<br />");
-                            }
+                            sb.append(setRole + "#rupa\">");
+                            sb.append(ValueId.value(valueId));
+                            sb.append("</a>");
+                            sb.append("<br />");
                         }
                         break;
                     } catch (UnexpectedChecksumException uce) {
