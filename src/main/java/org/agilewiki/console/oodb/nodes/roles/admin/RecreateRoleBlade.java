@@ -77,7 +77,7 @@ public class RecreateRoleBlade extends PostRequestBlade {
                     return;
                 }
 
-                MapNode mn = db.dbFactoryRegistry.nilMap;
+                MapNode mn = ooDb.nilMap;
                 if (userId != null)
                     mn = mn.add(User.USER_KEY, userId);
                 mn = mn.add(NameIds.REMOTE_HOST, request.getRemoteHost());

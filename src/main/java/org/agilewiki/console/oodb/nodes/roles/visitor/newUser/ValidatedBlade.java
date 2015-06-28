@@ -88,7 +88,7 @@ public class ValidatedBlade extends PostRequestBlade {
                     finish();
                     return;
                 }
-                MapNode mn = db.dbFactoryRegistry.nilMap;
+                MapNode mn = ooDb.nilMap;
                 mn = mn.add(User.USER_KEY, userId);
                 String emailId = ValueId.generate(email);
                 mn = mn.add(User.EMAIL_ID, emailId);

@@ -47,7 +47,7 @@ public class PostBlade extends PostRequestBlade {
                 map.put("body", SimpleSimon.encode(body, 0, SimpleSimon.ENCODE_FIELD)); //text area
                 if (subject.length() > 0)
                     map.put("subject", SimpleSimon.encode(subject, 0, SimpleSimon.ENCODE_FIELD)); //field
-                MapNode mn = db.dbFactoryRegistry.nilMap;
+                MapNode mn = ooDb.nilMap;
                 if (subject.length() > 0)
                     mn = mn.add(NameIds.SUBJECT, subject);
                 if (body.length() > 0)

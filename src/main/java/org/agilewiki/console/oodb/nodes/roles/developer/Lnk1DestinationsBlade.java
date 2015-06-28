@@ -53,7 +53,7 @@ public class Lnk1DestinationsBlade extends RequestBlade {
                         hasMore = false;
                         int limit = 25;
                         sb = new StringBuilder();
-                        PeekABoo<String> idPeekABoo = Link1Id.label1InvIterable(db, labelId, longTimestamp);
+                        PeekABoo<String> idPeekABoo = ooDb.destinationIdIterable(labelId, longTimestamp);
                         if (startingAt != null)
                             idPeekABoo.setPosition(startingAt);
                         for (String nodeId : idPeekABoo) {
@@ -63,7 +63,6 @@ public class Lnk1DestinationsBlade extends RequestBlade {
                                 break;
                             }
                             --limit;
-                            MapAccessor ma = db.mapAccessor();
                             String kindId = ooDb.kindId(nodeId, longTimestamp);
 
                             sb.append(kindId.substring(2));

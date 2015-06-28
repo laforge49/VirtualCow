@@ -76,7 +76,7 @@ public class NewEmailAddressBlade extends PostRequestBlade {
                     return;
                 }
                 String oldEmailAddress = User.email(userId, FactoryRegistry.MAX_TIMESTAMP);
-                MapNode mn = db.dbFactoryRegistry.nilMap;
+                MapNode mn = ooDb.nilMap;
                 mn = mn.add(User.USER_KEY, userId);
                 mn = mn.add(User.EMAIL_ID, emailAddress);
                 asyncRequestImpl.send(ooDb.update(NewEmailAddress_NodeInstance.NAME, mn),

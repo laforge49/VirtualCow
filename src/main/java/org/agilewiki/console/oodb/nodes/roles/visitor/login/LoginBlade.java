@@ -62,7 +62,7 @@ public class LoginBlade extends PostRequestBlade {
                 }
                 String userId = User.userId(emailAddress, FactoryRegistry.MAX_TIMESTAMP);
                 if (userId == null) {
-                    MapNode mn = db.dbFactoryRegistry.nilMap;
+                    MapNode mn = ooDb.nilMap;
                     mn = mn.add(NameIds.SUBJECT, emailAddress);
                     mn = mn.add(NameIds.REMOTE_HOST, request.getRemoteHost());
                     mn = mn.add(NameIds.REMOTE_ADDR, request.getRemoteAddr());
@@ -79,7 +79,7 @@ public class LoginBlade extends PostRequestBlade {
                     return;
                 }
                 if (!User.confirmPassword(servletContext, userId, password)) {
-                    MapNode mn = db.dbFactoryRegistry.nilMap;
+                    MapNode mn = ooDb.nilMap;
                     mn = mn.add(NameIds.SUBJECT, emailAddress);
                     mn = mn.add(User.USER_KEY, userId);
                     mn = mn.add(NameIds.REMOTE_HOST, request.getRemoteHost());
@@ -110,7 +110,7 @@ public class LoginBlade extends PostRequestBlade {
                 Cookie loginCookie = new Cookie("userId", userId + "|" + token);
                 loginCookie.setMaxAge(60 * 60 * 24 * 3); //3 days
                 response.addCookie(loginCookie);
-                MapNode mn = db.dbFactoryRegistry.nilMap;
+                MapNode mn = ooDb.nilMap;
                 mn = mn.add(NameIds.SUBJECT, emailAddress);
                 mn = mn.add(User.USER_KEY, userId);
                 mn = mn.add(NameIds.REMOTE_HOST, request.getRemoteHost());

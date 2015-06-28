@@ -78,7 +78,7 @@ public class SubJournalBlade extends RequestBlade {
                         hasMore = false;
                         sb = new StringBuilder();
                         int limit = 25;
-                        PeekABoo<String> peekABoo = Journal.journal(db, subJournal, longTimestamp);
+                        PeekABoo<String> peekABoo = ooDb.journal(subJournal, longTimestamp);
                         peekABoo.setPosition(TimestampIds.generate(startingAt));
                         for (String jeId : peekABoo) {
                             if (jeId == null)

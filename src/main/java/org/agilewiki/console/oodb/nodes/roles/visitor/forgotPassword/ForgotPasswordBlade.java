@@ -85,7 +85,7 @@ public class ForgotPasswordBlade extends PostRequestBlade {
                     finish();
                     return;
                 }
-                MapNode mn = db.dbFactoryRegistry.nilMap;
+                MapNode mn = ooDb.nilMap;
                 mn = mn.add(User.USER_KEY, userId);
                 mn = mn.add(User.PASSWORD_KEY, User.encodePassword(servletContext, userId, newPassword));
                 asyncRequestImpl.send(ooDb.update(ForgotPassword_NodeInstance.NAME, mn),

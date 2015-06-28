@@ -55,7 +55,7 @@ public class DeleteAccountBlade extends PostRequestBlade {
                     return;
                 }
                 String email = User.email(userId, FactoryRegistry.MAX_TIMESTAMP);
-                MapNode mn = db.dbFactoryRegistry.nilMap;
+                MapNode mn = ooDb.nilMap;
                 mn = mn.add(NameIds.AN_ID, userId);
                 mn = mn.add(NameIds.SUBJECT, email);
                 asyncRequestImpl.send(ooDb.update(Delete_NodeInstance.NAME, mn),

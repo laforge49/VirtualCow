@@ -90,7 +90,7 @@ public class NodeBlade extends RequestBlade {
                                 }
                             } else if (nodeId.endsWith(".lnk1")) {
                                 String label = nodeId.substring(0, nodeId.length() - 5);
-                                PeekABoo<String> idPeekABoo = Link1Id.label1IdIterable(db, label, longTimestamp);
+                                PeekABoo<String> idPeekABoo = ooDb.originIdIterable(label, longTimestamp);
                                 if (idPeekABoo.hasNext()) {
                                     sb.append("<a href=\"?from=node&to=");
                                     sb.append(nodeId.substring(2).replace(".lnk1", "Origins"));
@@ -102,7 +102,7 @@ public class NodeBlade extends RequestBlade {
                                     sb.append("#rupa\"><strong>Origins</strong></a>, ");
                                 } else
                                     sb.append("Origins, ");
-                                idPeekABoo = Link1Id.label1InvIterable(db, label, longTimestamp);
+                                idPeekABoo = ooDb.destinationIdIterable(label, longTimestamp);
                                 if (idPeekABoo.hasNext()) {
                                     sb.append("<a href=\"?from=node&to=");
                                     sb.append(nodeId.substring(2).replace(".lnk1", "Destinations"));
@@ -173,7 +173,7 @@ public class NodeBlade extends RequestBlade {
                         }
                         if (time != null) {
                             sb.append("<strong>Modifies:</strong><br />");
-                            for (String nId : Journal.modifies(db, nodeId, longTimestamp)) {
+                            for (String nId : ooDb.modifies(nodeId, longTimestamp)) {
                                 String onId = nId;
                                 boolean isNode = ooDb.isNode(nId, longTimestamp);
                                 if (!isNode && ooDb.isNode(nId + ".lnk1", longTimestamp)) {

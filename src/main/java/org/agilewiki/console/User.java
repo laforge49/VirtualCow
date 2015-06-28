@@ -9,12 +9,10 @@ import org.agilewiki.console.oodb.nodes.roles.developer.Developer_Role;
 import org.agilewiki.console.oodb.nodes.roles.user.User_Role;
 import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.ValueId;
-import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.virtualcow.Db;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
-import javax.mail.MessagingException;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import java.security.MessageDigest;
@@ -151,9 +149,8 @@ public class User {
                                     String emailId,
                                     String passwordHash,
                                     String... userRoles) {
-        Db db = SimpleSimon.simpleSimon.db;
         OODb ooDb = SimpleSimon.simpleSimon.ooDb;
-        if (ooDb.hasKeyTarget(EMAIL_ID, emailId, db.getTimestamp())) {
+        if (ooDb.hasTarget(EMAIL_ID, emailId, ooDb.getTimestamp())) {
             return "duplicate email: " + ValueId.value(emailId);
         }
         ooDb.set(userId, "$nsubject", emailId);

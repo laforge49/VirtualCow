@@ -103,7 +103,7 @@ public class EditRolesBlade extends PostRequestBlade {
                 MapNode mn;
                 while (true) {
                     try {
-                        mn = db.dbFactoryRegistry.nilMap;
+                        mn = ooDb.nilMap;
                         mn = mn.add(User.USER_KEY, userId);
                         mn = mn.add(NameIds.NODE_ID, nodeId);
                         for (String role : simpleSimon.roles.keySet()) {

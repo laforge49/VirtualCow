@@ -10,14 +10,12 @@ import org.agilewiki.jactor2.core.impl.Plant;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.jactor2.core.messages.ExceptionHandler;
 import org.agilewiki.jactor2.core.messages.impl.AsyncRequestImpl;
+import org.agilewiki.utils.ids.composites.Journal;
 import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.BaseRegistry;
 import org.agilewiki.utils.immutable.FactoryRegistry;
-import org.agilewiki.utils.immutable.collections.ListNode;
-import org.agilewiki.utils.immutable.collections.MapNode;
-import org.agilewiki.utils.immutable.collections.VersionedListNode;
-import org.agilewiki.utils.immutable.collections.VersionedMapNode;
+import org.agilewiki.utils.immutable.collections.*;
 import org.agilewiki.utils.virtualcow.Db;
 import org.agilewiki.utils.virtualcow.DbFactoryRegistry;
 
@@ -89,6 +87,10 @@ public class OODb {
 
     public NodeData newNodeData(String nodeId) {
         return new NodeData(db, nodeId);
+    }
+
+    public long getTimestamp() {
+        return db.getTimestamp();
     }
 
     public boolean isPrivileged() {
@@ -296,7 +298,7 @@ public class OODb {
         return node.hasKeyValue(keyId, valueId);
     }
 
-    public boolean hasKeyTarget(String keyId, String valueId, long timestamp) {
+    public boolean hasTarget(String keyId, String valueId, long timestamp) {
         for (String targetId : db.keysIterable(SecondaryId.secondaryId(keyId, valueId), timestamp)) {
             return true;
         }
@@ -373,6 +375,22 @@ public class OODb {
             return Link1Id.link1IdIterable(db, nodeId, label1Id, timestamp);
         }
         return node.destinationIdIterable(label1Id);
+    }
+
+    public PeekABoo<String> originIdIterable(String label1Id, long timestamp) {
+        return Link1Id.label1IdIterable(db, label1Id, timestamp);
+    }
+
+    public PeekABoo<String> destinationIdIterable(String label1Id, long timestamp) {
+        return Link1Id.label1InvIterable(db, label1Id, timestamp);
+    }
+
+    public PeekABoo<String> modifies(String timestampId, long longTimestamp) {
+        return db.keysIterable(Journal.modifiesId(timestampId), longTimestamp);
+    }
+
+    public PeekABoo<String> journal(String id, long longTimestamp) {
+        return db.keysIterable(Journal.journalId(id), longTimestamp);
     }
 
     public BladeBase.AReq<String> update(String transactionName, MapNode tMapNode) {
