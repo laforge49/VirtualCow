@@ -5,7 +5,6 @@ import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.TimestampIds;
 import org.agilewiki.console.oodb.nodes.roles.Role;
-import org.agilewiki.utils.ids.composites.Journal;
 import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.collections.ListAccessor;
@@ -394,7 +393,7 @@ public class NodeBlade extends RequestBlade {
                             }
                         }
                         sb.append("<strong>Links:</strong><br />");
-                        for (String typeId : ooDb.label1IdIterable(nodeId)) {
+                        for (String typeId : ooDb.originLableIdIterable(nodeId)) {
                             if (ooDb.hasLabel1(nodeId, typeId,longTimestamp)) {
                                 sb.append("&nbsp;&nbsp;&nbsp;&nbsp;label: <a href=\"?from=node&to=node&nodeId=");
                                 sb.append(typeId);
@@ -457,8 +456,8 @@ public class NodeBlade extends RequestBlade {
                             }
                         }
                         sb.append("<strong>Inverted Links:</strong><br />");
-                        for (String typeId : Link1Id.link1LabelInvIterable(db, nodeId)) {
-                            PeekABoo<String> peekABoo = Link1Id.link1InvIterable(db, nodeId, typeId, longTimestamp);
+                        for (String typeId : ooDb.targetLabelInvIterable(nodeId)) {
+                            PeekABoo<String> peekABoo = ooDb.originIdIterable(nodeId, typeId, longTimestamp);
                             if (peekABoo.hasNext()) {
                                 sb.append("&nbsp;&nbsp;&nbsp;&nbsp;label: ");
                                 sb.append("<a href=\"?from=node&to=invLinks&nodeId=");

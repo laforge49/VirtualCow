@@ -336,12 +336,16 @@ public class OODb {
             node.removeLnk1(labelId, destinationNodeId);
     }
 
-    public Iterable<String> label1IdIterable(String nodeId) {
+    public Iterable<String> originLableIdIterable(String nodeId) {
         Node node = fetchNode(nodeId);
         if (node == null) {
             return Link1Id.link1LabelIdIterable(db, nodeId);
         }
         return node.label1IdIterable();
+    }
+
+    public Iterable<String> targetLabelInvIterable(String nodeId) {
+        return Link1Id.link1LabelInvIterable(db, nodeId);
     }
 
     public boolean hasLabel1(String nodeId, String label1Id, long timestamp) {
@@ -368,21 +372,25 @@ public class OODb {
 
     public Iterable<String> destinationIdIterable(String nodeId, String label1Id, long timestamp) {
         if (timestamp != FactoryRegistry.MAX_TIMESTAMP) {
-            return Link1Id.link1IdIterable(db, nodeId, label1Id, timestamp);
+            return db.keysIterable(Link1Id.link1Id(nodeId, label1Id), timestamp);
         }
         Node node = fetchNode(nodeId);
         if (node == null) {
-            return Link1Id.link1IdIterable(db, nodeId, label1Id, timestamp);
+            return db.keysIterable(Link1Id.link1Id(nodeId, label1Id), timestamp);
         }
         return node.destinationIdIterable(label1Id);
     }
 
-    public PeekABoo<String> originIdIterable(String label1Id, long timestamp) {
-        return Link1Id.label1IdIterable(db, label1Id, timestamp);
-    }
-
     public PeekABoo<String> destinationIdIterable(String label1Id, long timestamp) {
         return Link1Id.label1InvIterable(db, label1Id, timestamp);
+    }
+
+    public PeekABoo<String> originIdIterable(String nodeId, String label1Id, long timestamp) {
+        return db.keysIterable(Link1Id.link1Inv(nodeId, label1Id), timestamp);
+    }
+
+    public PeekABoo<String> originIdIterable(String label1Id, long timestamp) {
+        return Link1Id.label1IdIterable(db, label1Id, timestamp);
     }
 
     public PeekABoo<String> modifies(String timestampId, long longTimestamp) {

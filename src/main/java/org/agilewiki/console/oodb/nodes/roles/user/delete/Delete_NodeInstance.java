@@ -22,6 +22,6 @@ public class Delete_NodeInstance extends JournalEntry_NodeInstance {
     @Override
     public void process(Db db, MapNode mapNode) {
         String id = (String) mapNode.get(NameIds.AN_ID);
-        Delete.delete(db, id);
+        Delete.delete(id);
     }
 }

@@ -60,7 +60,7 @@ public class InvLinksBlade extends RequestBlade {
                         int limit = 25;
                         sb = new StringBuilder();
                         MapAccessor ma = db.mapAccessor();
-                        PeekABoo<String> peekABoo = Link1Id.link1InvIterable(db, targetId, labelId, longTimestamp);
+                        PeekABoo<String> peekABoo = ooDb.originIdIterable(targetId, labelId, longTimestamp);
                         peekABoo.setPosition(startingAt);
                         for (String nodeId : peekABoo) {
                             --limit;

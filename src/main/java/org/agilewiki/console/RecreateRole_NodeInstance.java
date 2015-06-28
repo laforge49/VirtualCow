@@ -27,7 +27,7 @@ abstract public class RecreateRole_NodeInstance extends JournalEntry_NodeInstanc
         final String thisRoleId = "$n" + role().roleName();
         final String thisRoleNodeId = thisRoleId + ".role";
 
-        Delete.delete(db, thisRoleNodeId);
+        Delete.delete(thisRoleNodeId);
 
         ooDb.createSecondaryId(thisRoleNodeId, Key_Node.NODETYPE_ID, Role_Node.ID);
     }
