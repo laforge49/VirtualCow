@@ -4,15 +4,10 @@ import org.agilewiki.console.NameIds;
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.oodb.nodes.roles.Role;
-import org.agilewiki.utils.ids.composites.Link1Id;
-import org.agilewiki.utils.immutable.collections.ListAccessor;
-import org.agilewiki.utils.immutable.collections.MapAccessor;
 import org.agilewiki.utils.immutable.collections.PeekABoo;
-import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
 import javax.servlet.AsyncContext;
-import java.util.List;
 
 /**
  * Inverted bi-directional links.
@@ -48,7 +43,6 @@ public class InvLinksBlade extends RequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                String link1Inv = Link1Id.link1Inv(targetId, labelId);
                 String startingAt = request.getParameter("startingAt");
                 if (startingAt == null)
                     startingAt = "";
@@ -59,7 +53,6 @@ public class InvLinksBlade extends RequestBlade {
                         hasMore = false;
                         int limit = 25;
                         sb = new StringBuilder();
-                        MapAccessor ma = db.mapAccessor();
                         PeekABoo<String> peekABoo = ooDb.originIdIterable(targetId, labelId, longTimestamp);
                         peekABoo.setPosition(startingAt);
                         for (String nodeId : peekABoo) {
@@ -87,48 +80,43 @@ public class InvLinksBlade extends RequestBlade {
                                 sb.append("</a>");
                             }
 
-                            ListAccessor nla = ma.listAccessor(nodeId);
-                            if (nla != null) {
-                                VersionedMapNode nvmn = (VersionedMapNode) nla.get(0);
-                                if (nodeId.startsWith("$t")) {
-                                    String transactionName = nvmn.getList(NameIds.TRANSACTION_NAME).flatList(longTimestamp).get(0).toString();
+                            if (nodeId.startsWith("$t")) {
+                                String transactionName = (String) ooDb.get(nodeId, NameIds.TRANSACTION_NAME, longTimestamp);
+                                if (transactionName != null) {
                                     sb.append(transactionName + ".node");
-
                                     sb.append(' ');
-
-                                    sb.append("<a href=\"?from=nodes&to=node&nodeId=");
-                                    sb.append(nodeId);
-                                    if (timestamp != null) {
-                                        sb.append("&timestamp=");
-                                        sb.append(timestamp);
-                                    }
-                                    sb.append(setRole + "\">");
-                                    sb.append(SimpleSimon.niceTime(nodeId));
-                                    sb.append("</a>");
                                 }
-                                StringBuilder lb = new StringBuilder();
-                                List subjectList = nvmn.getList(NameIds.SUBJECT).flatList(longTimestamp);
-                                if (subjectList.size() > 0) {
-                                    lb.append(' ');
-                                    String subject = subjectList.get(0).toString();
-                                    lb.append(subject);
+
+                                sb.append("<a href=\"?from=nodes&to=node&nodeId=");
+                                sb.append(nodeId);
+                                if (timestamp != null) {
+                                    sb.append("&timestamp=");
+                                    sb.append(timestamp);
+                                }
+                                sb.append(setRole + "\">");
+                                sb.append(SimpleSimon.niceTime(nodeId));
+                                sb.append("</a>");
+                            }
+                            StringBuilder lb = new StringBuilder();
+                            String subject = (String) ooDb.get(nodeId, NameIds.SUBJECT, longTimestamp);
+                            if (subject != null) {
+                                lb.append(' ');
+                                lb.append(subject);
+                                lb.append(" | ");
+                            }
+                            String body = (String) ooDb.get(nodeId, NameIds.BODY, longTimestamp);
+                            if (body != null) {
+                                if (subject == null) {
                                     lb.append(" | ");
                                 }
-                                List bodyList = nvmn.getList(NameIds.BODY).flatList(longTimestamp);
-                                if (bodyList.size() > 0) {
-                                    if (subjectList.size() == 0) {
-                                        lb.append(" | ");
-                                    }
-                                    String body = bodyList.get(0).toString();
-                                    lb.append(body);
-                                }
-                                String line = lb.toString();
-                                line = line.replace("\r", "");
-                                if (line.length() > 60)
-                                    line = line.substring(0, 60);
-                                line = SimpleSimon.encode(line, 0, SimpleSimon.ENCODE_SINGLE_LINE); //line text
-                                sb.append(line);
+                                lb.append(body);
                             }
+                            String line = lb.toString();
+                            line = line.replace("\r", "");
+                            if (line.length() > 60)
+                                line = line.substring(0, 60);
+                            line = SimpleSimon.encode(line, 0, SimpleSimon.ENCODE_SINGLE_LINE); //line text
+                            sb.append(line);
                             sb.append("<br />");
                         }
                         break;
