@@ -10,6 +10,7 @@ import org.agilewiki.jactor2.core.impl.Plant;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.jactor2.core.messages.ExceptionHandler;
 import org.agilewiki.jactor2.core.messages.impl.AsyncRequestImpl;
+import org.agilewiki.utils.ids.Timestamp;
 import org.agilewiki.utils.ids.composites.Journal;
 import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.ids.composites.SecondaryId;
@@ -399,6 +400,10 @@ public class OODb {
 
     public PeekABoo<String> journal(String id, long longTimestamp) {
         return db.keysIterable(Journal.journalId(id), longTimestamp);
+    }
+
+    public PeekABoo<String> journal(long longTimestamp) {
+        return db.idsIterable(Timestamp.PREFIX, longTimestamp);
     }
 
     public BladeBase.AReq<String> update(String transactionName, MapNode tMapNode) {

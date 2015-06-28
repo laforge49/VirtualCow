@@ -20,7 +20,6 @@ import java.util.List;
  */
 public class FullJournalBlade extends RequestBlade {
     String niceName;
-    String prefix = Timestamp.PREFIX;
 
     public FullJournalBlade(Role role, String page, String niceName) throws Exception {
         super(role, page);
@@ -56,7 +55,7 @@ public class FullJournalBlade extends RequestBlade {
                         int limit = 25;
                         hasMore = false;
                         sb = new StringBuilder();
-                        PeekABoo<String> idPeekABoo = db.idsIterable(prefix, longTimestamp).iterator();
+                        PeekABoo<String> idPeekABoo = ooDb.journal(longTimestamp);
                         idPeekABoo.setPosition(startingAt);
                         for (String next : idPeekABoo) {
                             String tsId = TimestampIds.generate(next);
@@ -66,12 +65,8 @@ public class FullJournalBlade extends RequestBlade {
                                 break;
                             }
                             --limit;
-                            MapAccessor ma = db.mapAccessor();
-                            ListAccessor la = ma.listAccessor(tsId);
-                            VersionedMapNode vmn = (VersionedMapNode) la.get(0);
-                            String jeId = TimestampIds.generate(next);
 
-                            sb.append("<a href=\"?from=journal&to=node&nodeId=" + jeId);
+                            sb.append("<a href=\"?from=journal&to=node&nodeId=" + tsId);
                             if (timestamp != null) {
                                 sb.append("&timestamp=" + timestamp);
                             }
@@ -79,23 +74,21 @@ public class FullJournalBlade extends RequestBlade {
 
                             sb.append(' ');
 
-                            String transactionId = vmn.getList(NameIds.TRANSACTION_NAME).flatList(longTimestamp).get(0).toString() + ".node";
+                            String transactionId = (String) ooDb.get(tsId, NameIds.TRANSACTION_NAME, longTimestamp);
                             sb.append(transactionId);
 
                             StringBuilder lb = new StringBuilder();
-                            List subjectList = vmn.getList(NameIds.SUBJECT).flatList(longTimestamp);
-                            if (subjectList.size() > 0) {
+                            String subject = (String) ooDb.get(tsId, NameIds.TRANSACTION_NAME, longTimestamp);
+                            if (subject != null) {
                                 lb.append(' ');
-                                String subject = subjectList.get(0).toString();
                                 lb.append(subject);
                                 lb.append(" | ");
                             }
-                            List bodyList = vmn.getList(NameIds.BODY).flatList(longTimestamp);
-                            if (bodyList.size() > 0) {
-                                if (subjectList.size() == 0) {
+                            String body = (String) ooDb.get(tsId, NameIds.BODY, longTimestamp);
+                            if (body != null) {
+                                if (subject != null) {
                                     lb.append(" | ");
                                 }
-                                String body = bodyList.get(0).toString();
                                 lb.append(body);
                             }
                             String line = lb.toString();
