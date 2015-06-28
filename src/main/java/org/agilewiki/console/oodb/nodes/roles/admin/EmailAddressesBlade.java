@@ -35,7 +35,6 @@ public class EmailAddressesBlade extends RequestBlade {
             protected void process()
                     throws Exception {
                 String secondaryType = "email";
-                String keyPrefix = "$v";
                 String prefix = SecondaryId.SECONDARY_ID + NameIds.generate(secondaryType);
                 String startingAt = request.getParameter("startingAt");
                 if (startingAt == null)
