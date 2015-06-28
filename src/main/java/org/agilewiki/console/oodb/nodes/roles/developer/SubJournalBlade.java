@@ -89,9 +89,6 @@ public class SubJournalBlade extends RequestBlade {
                                 break;
                             }
                             --limit;
-                            MapAccessor ma = db.mapAccessor();
-                            ListAccessor la = ma.listAccessor(jeId);
-                            VersionedMapNode vmn = (VersionedMapNode) la.get(0);
 
                             sb.append("<a href=\"?from=journal&to=node&nodeId=" + jeId);
                             if (timestamp != null) {
@@ -101,23 +98,21 @@ public class SubJournalBlade extends RequestBlade {
 
                             sb.append(' ');
 
-                            String transactionId = vmn.getList(NameIds.TRANSACTION_NAME).flatList(longTimestamp).get(0).toString() + ".node";
-                            sb.append(transactionId);
+                            String transactionName = (String) ooDb.get(jeId, NameIds.TRANSACTION_NAME, longTimestamp);
+                            sb.append(transactionName + ".node");
 
                             StringBuilder lb = new StringBuilder();
-                            List subjectList = vmn.getList(NameIds.SUBJECT).flatList(longTimestamp);
-                            if (subjectList.size() > 0) {
+                            String subject = (String) ooDb.get(jeId, NameIds.SUBJECT, longTimestamp);
+                            if (subject!= null) {
                                 lb.append(' ');
-                                String subject = subjectList.get(0).toString();
                                 lb.append(subject);
                                 lb.append(" | ");
                             }
-                            List bodyList = vmn.getList(NameIds.BODY).flatList(longTimestamp);
-                            if (bodyList.size() > 0) {
-                                if (subjectList.size() == 0) {
+                            String body = (String) ooDb.get(jeId, NameIds.BODY, longTimestamp);
+                            if (body != null) {
+                                if (subject != null) {
                                     lb.append(" | ");
                                 }
-                                String body = bodyList.get(0).toString();
                                 lb.append(body);
                             }
                             String line = lb.toString();
