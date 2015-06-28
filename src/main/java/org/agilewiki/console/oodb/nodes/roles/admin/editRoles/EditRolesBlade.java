@@ -62,7 +62,7 @@ public class EditRolesBlade extends PostRequestBlade {
                                 sb.append("\" value=\"");
                                 sb.append(roleName);
                                 sb.append("\"");
-                                if (ooDb.hasKeyValue(nodeId,
+                                if (ooDb.nodeHasValueId(nodeId,
                                         User.ROLE_ID,
                                         NameId.generate(roleName),
                                         longTimestamp))
@@ -113,7 +113,7 @@ public class EditRolesBlade extends PostRequestBlade {
                                 if (request.getParameter("role-" + role) != null) {
                                     n = true;
                                 }
-                                if (ooDb.hasKeyValue(nodeId,
+                                if (ooDb.nodeHasValueId(nodeId,
                                         User.ROLE_ID,
                                         NameId.generate(role),
                                         longTimestamp)) {
@@ -155,7 +155,7 @@ public class EditRolesBlade extends PostRequestBlade {
                                         sb.append("\" value=\"");
                                         sb.append(roleName);
                                         sb.append("\"");
-                                        if (ooDb.hasKeyValue(nodeId,
+                                        if (ooDb.nodeHasValueId(nodeId,
                                                 User.ROLE_ID,
                                                 NameId.generate(roleName),
                                                 longTimestamp))

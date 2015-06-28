@@ -105,28 +105,28 @@ public class NodeBase implements Node {
     }
 
     @Override
-    public Iterable<String> keyIdIterable() {
-        return getNodeData().keyIdIterable();
+    public Iterable<String> nodeKeyIdIterable() {
+        return getNodeData().nodeKeyIdIterable();
     }
 
     @Override
-    public String getKeyValue(String keyId) {
-        return getNodeData().getKeyValue(keyId);
+    public String getNodeValue(String keyId) {
+        return getNodeData().getNodeValue(keyId);
     }
 
     @Override
-    public boolean hasKey(String keyId) {
-        return getNodeData().hasKey(keyId);
+    public boolean nodeHasKeyId(String keyId) {
+        return getNodeData().nodeHasKeyId(keyId);
     }
 
     @Override
-    public boolean hasKeyValue(String keyId, String valueId) {
-        return getNodeData().hasKeyValue(keyId, valueId);
+    public boolean nodeHasValueId(String keyId, String valueId) {
+        return getNodeData().nodeHasValueId(keyId, valueId);
     }
 
     @Override
-    public Iterable<String> keyValueIdIterable(String keyId) {
-        return getNodeData().keyValueIdIterable(keyId);
+    public Iterable<String> nodeValueIdIterable(String keyId) {
+        return getNodeData().nodeValueIdIterable(keyId);
     }
 
     @Override

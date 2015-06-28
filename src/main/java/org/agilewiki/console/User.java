@@ -10,7 +10,6 @@ import org.agilewiki.console.oodb.nodes.roles.user.User_Role;
 import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.immutable.FactoryRegistry;
-import org.agilewiki.utils.virtualcow.Db;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
 import javax.servlet.ServletConfig;
@@ -33,7 +32,7 @@ public class User {
         while (true) {
             try {
                 List<Role> roles = new ArrayList<Role>();
-                for (String roleId : simpleSimon.ooDb.keyValueIdIterable(userId, ROLE_ID, FactoryRegistry.MAX_TIMESTAMP)) {
+                for (String roleId : simpleSimon.ooDb.nodeValueIdIterable(userId, ROLE_ID, FactoryRegistry.MAX_TIMESTAMP)) {
                     Role role = simpleSimon.roles.get(NameId.name(roleId));
                     if (role != null)
                         roles.add(role);
@@ -49,7 +48,7 @@ public class User {
         while (true) {
             try {
                 String roleId = NameId.generate(role);
-                return ooDb.hasKeyValue(userId, ROLE_ID, roleId, FactoryRegistry.MAX_TIMESTAMP);
+                return ooDb.nodeHasValueId(userId, ROLE_ID, roleId, FactoryRegistry.MAX_TIMESTAMP);
             } catch (UnexpectedChecksumException uce) {
             }
         }
@@ -58,7 +57,7 @@ public class User {
     public static String email(String userId, long timestamp) {
         while (true) {
             try {
-                return SimpleSimon.simpleSimon.ooDb.getKeyValue(userId, EMAIL_ID, timestamp);
+                return SimpleSimon.simpleSimon.ooDb.getNodeValue(userId, EMAIL_ID, timestamp);
             } catch (UnexpectedChecksumException uce) {
             }
         }
@@ -150,7 +149,7 @@ public class User {
                                     String passwordHash,
                                     String... userRoles) {
         OODb ooDb = SimpleSimon.simpleSimon.ooDb;
-        if (ooDb.hasTarget(EMAIL_ID, emailId, ooDb.getTimestamp())) {
+        if (ooDb.keyHasTarget(EMAIL_ID, emailId, ooDb.getTimestamp())) {
             return "duplicate email: " + ValueId.value(emailId);
         }
         ooDb.set(userId, "$nsubject", emailId);

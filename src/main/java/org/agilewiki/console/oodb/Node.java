@@ -38,15 +38,15 @@ public interface Node {
 
     void removeSecondaryId(String keyId, String valueId);
 
-    Iterable<String> keyIdIterable();
+    Iterable<String> nodeKeyIdIterable();
 
-    String getKeyValue(String keyId);
+    String getNodeValue(String keyId);
 
-    boolean hasKey(String keyId);
+    boolean nodeHasKeyId(String keyId);
 
-    boolean hasKeyValue(String keyId, String valueId);
+    boolean nodeHasValueId(String keyId, String valueId);
 
-    Iterable<String> keyValueIdIterable(String keyId);
+    Iterable<String> nodeValueIdIterable(String keyId);
 
     void createLnk1(String labelId, String destinationNodeId);
 

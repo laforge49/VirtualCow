@@ -60,7 +60,7 @@ public class UserBlade extends RequestBlade {
                                 String niceRoleName = simpleSimon.roles.get(roleName).niceRoleName();
                                 sb.append("<tr>");
                                 sb.append("<td>");
-                                if (ooDb.hasKeyValue(nodeId,
+                                if (ooDb.nodeHasValueId(nodeId,
                                         User.ROLE_ID,
                                         NameId.generate(roleName),
                                         longTimestamp))

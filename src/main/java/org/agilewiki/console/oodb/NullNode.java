@@ -70,27 +70,27 @@ public class NullNode implements Node {
     }
 
     @Override
-    public Iterable<String> keyIdIterable() {
+    public Iterable<String> nodeKeyIdIterable() {
         return null;
     }
 
     @Override
-    public String getKeyValue(String keyId) {
+    public String getNodeValue(String keyId) {
         return null;
     }
 
     @Override
-    public boolean hasKey(String keyId) {
+    public boolean nodeHasKeyId(String keyId) {
         return false;
     }
 
     @Override
-    public boolean hasKeyValue(String keyId, String valueId) {
+    public boolean nodeHasValueId(String keyId, String valueId) {
         return false;
     }
 
     @Override
-    public Iterable<String> keyValueIdIterable(String keyId) {
+    public Iterable<String> nodeValueIdIterable(String keyId) {
         return null;
     }
 

@@ -16,7 +16,7 @@ public class Delete {
         while (!ids.isEmpty()) {
             id = ids.removeLast();
             ooDb.clearMap(id);
-            for (String lnkTyp : ooDb.originLableIdIterable(id)) {
+            for (String lnkTyp : ooDb.originLabelIdIterable(id)) {
                 for (String tId : ooDb.destinationIdIterable(id, lnkTyp, ooDb.getTimestamp())) {
                     ooDb.removeLnk1(id, lnkTyp, tId);
                 }
@@ -26,8 +26,8 @@ public class Delete {
                     ooDb.removeLnk1(oId, lnkTyp, id);
                 }
             }
-            for (String keyId : ooDb.keyIdIterable(id)) {
-                for (String valueId : ooDb.keyValueIdIterable(id, keyId, ooDb.getTimestamp())) {
+            for (String keyId : ooDb.nodeKeyIdIterable(id)) {
+                for (String valueId : ooDb.nodeValueIdIterable(id, keyId, ooDb.getTimestamp())) {
                     ooDb.removeSecondaryId(id, keyId, valueId);
                 }
             }
@@ -38,7 +38,7 @@ public class Delete {
         ids.addLast(id);
         for (String lnkTyp : ooDb.targetLabelInvIterable(id)) {
             for (String oId : ooDb.originIdIterable(id, lnkTyp, ooDb.getTimestamp())) {
-                if (ooDb.hasKeyValue(lnkTyp + ".lnk1",
+                if (ooDb.nodeHasValueId(lnkTyp + ".lnk1",
                         Key_Node.INVDEPENDENCY_ID,
                         lnkTyp,
                         ooDb.getTimestamp())) {

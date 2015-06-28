@@ -357,8 +357,8 @@ public class NodeBlade extends RequestBlade {
                             sb.append(setRole + "\"><strong>Node Journal</strong></a><br />");
                         }
                         sb.append("<strong>Secondary Keys:</strong><br />");
-                        for (String typeId : ooDb.keyIdIterable(nodeId)) {
-                            if (ooDb.hasKey(nodeId, typeId, longTimestamp)) {
+                        for (String typeId : ooDb.nodeKeyIdIterable(nodeId)) {
+                            if (ooDb.nodeHasKeyId(nodeId, typeId, longTimestamp)) {
                                 sb.append("&nbsp;&nbsp;&nbsp;&nbsp;key: <a href=\"?from=node&to=node&nodeId=");
                                 sb.append(typeId);
                                 sb.append(".key");
@@ -372,7 +372,7 @@ public class NodeBlade extends RequestBlade {
                                 sb.append("</a><br />");
 
                                 for (String value :
-                                        ooDb.keyValueIdIterable(nodeId, typeId, longTimestamp)) {
+                                        ooDb.nodeValueIdIterable(nodeId, typeId, longTimestamp)) {
                                     sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value = ");
                                     if (!ooDb.isNode(value, longTimestamp)) {
                                         sb.append(value.substring(2));
@@ -393,7 +393,7 @@ public class NodeBlade extends RequestBlade {
                             }
                         }
                         sb.append("<strong>Links:</strong><br />");
-                        for (String typeId : ooDb.originLableIdIterable(nodeId)) {
+                        for (String typeId : ooDb.originLabelIdIterable(nodeId)) {
                             if (ooDb.hasLabel1(nodeId, typeId,longTimestamp)) {
                                 sb.append("&nbsp;&nbsp;&nbsp;&nbsp;label: <a href=\"?from=node&to=node&nodeId=");
                                 sb.append(typeId);

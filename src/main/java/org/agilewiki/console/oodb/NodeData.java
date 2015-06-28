@@ -128,7 +128,7 @@ public class NodeData {
         s.remove(valueId);
     }
 
-    public Iterable<String> keyIdIterable() {
+    public Iterable<String> nodeKeyIdIterable() {
         return new Iterable<String>() {
             @Override
             public Iterator<String> iterator() {
@@ -137,18 +137,18 @@ public class NodeData {
         };
     }
 
-    public String getKeyValue(String keyId) {
+    public String getNodeValue(String keyId) {
         Iterator<String> keyValueIdIterator = keyValueIdIterator(keyId);
         if (!keyValueIdIterator.hasNext())
             return null;
         return keyValueIdIterator.next();
     }
 
-    public boolean hasKey(String keyId) {
+    public boolean nodeHasKeyId(String keyId) {
         return keys.containsKey(keyId);
     }
 
-    public boolean hasKeyValue(String keyId, String valueId) {
+    public boolean nodeHasValueId(String keyId, String valueId) {
         NavigableSet<String> s = keys.get(keyId);
         if (s == null)
             return false;
@@ -162,7 +162,7 @@ public class NodeData {
         return s.iterator();
     }
 
-    public Iterable<String> keyValueIdIterable(String keyId) {
+    public Iterable<String> nodeValueIdIterable(String keyId) {
         return new Iterable<String>() {
             @Override
             public Iterator<String> iterator() {

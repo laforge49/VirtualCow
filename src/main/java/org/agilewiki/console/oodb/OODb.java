@@ -154,6 +154,10 @@ public class OODb {
         }
     }
 
+    //
+    // Attribute API
+    //
+
     public void clearMap(String nodeId) {
         Node node = fetchNode(nodeId);
         if (node == null)
@@ -215,6 +219,10 @@ public class OODb {
         return node.getFlatMap();
     }
 
+    //
+    // Secondary Key API
+    //
+
     public void createSecondaryId(String nodeId, String keyId, String valueId) {
         Node node = fetchNode(nodeId);
         if (node == null)
@@ -231,15 +239,15 @@ public class OODb {
             node.removeSecondaryId(keyId, valueId);
     }
 
-    public Iterable<String> keyIdIterable(String nodeId) {
+    public Iterable<String> nodeKeyIdIterable(String nodeId) {
         Node node = fetchNode(nodeId);
         if (node == null) {
             return SecondaryId.typeIdIterable(db, nodeId);
         }
-        return node.keyIdIterable();
+        return node.nodeKeyIdIterable();
     }
 
-    public String getKeyValue(String nodeId, String keyId, long timestamp) {
+    public String getNodeValue(String nodeId, String keyId, long timestamp) {
         if (timestamp != FactoryRegistry.MAX_TIMESTAMP) {
             for (String value : db.keysIterable(SecondaryId.secondaryInv(nodeId, keyId), timestamp)) {
                 return value;
@@ -256,7 +264,59 @@ public class OODb {
             }
             return null;
         }
-        return node.getKeyValue(keyId);
+        return node.getNodeValue(keyId);
+    }
+
+    public boolean isNode(String id, long longTimestamp) {
+        return getNodeValue(id, Key_Node.NODETYPE_ID, longTimestamp) != null;
+    }
+
+    public String kindId(String nodeId, long longTimestamp) {
+        String kind = getNodeValue(nodeId, Key_Node.SUPERTYPE_ID, longTimestamp);
+        if (kind == null)
+            kind = getNodeValue(nodeId, Key_Node.NODETYPE_ID, longTimestamp);
+        return kind;
+    }
+
+    public boolean nodeHasKeyId(String nodeId, String keyId, long timestamp) {
+        if (timestamp != FactoryRegistry.MAX_TIMESTAMP) {
+            return db.keysIterable(SecondaryId.secondaryInv(nodeId, keyId), db.getTimestamp()).hasNext();
+        }
+        Node node = fetchNode(nodeId);
+        if (node == null) {
+            return db.keysIterable(SecondaryId.secondaryInv(nodeId, keyId), db.getTimestamp()).hasNext();
+        }
+        return node.nodeHasKeyId(keyId);
+    }
+
+    public boolean nodeHasValueId(String nodeId, String keyId, String valueId, long timestamp) {
+        if (timestamp != FactoryRegistry.MAX_TIMESTAMP) {
+            return SecondaryId.hasSecondaryId(db, nodeId, keyId, valueId, timestamp);
+        }
+        Node node = fetchNode(nodeId);
+        if (node == null) {
+            return SecondaryId.hasSecondaryId(db, nodeId, keyId, valueId, timestamp);
+        }
+        return node.nodeHasValueId(keyId, valueId);
+    }
+
+    public Iterable<String> nodeValueIdIterable(String nodeId, String keyId, long timestamp) {
+        if (timestamp != FactoryRegistry.MAX_TIMESTAMP) {
+            return db.keysIterable(SecondaryId.secondaryInv(nodeId, keyId), timestamp);
+        }
+        Node node = fetchNode(nodeId);
+        if (node == null) {
+            return db.keysIterable(SecondaryId.secondaryInv(nodeId, keyId), timestamp);
+        }
+        return node.nodeValueIdIterable(keyId);
+    }
+
+    public PeekABoo<String> keyTargetIdIterable(String keyId, String valueId, long timestamp) {
+        return db.keysIterable(SecondaryId.secondaryId(keyId, valueId), timestamp);
+    }
+
+    public boolean keyHasTarget(String keyId, String valueId, long timestamp) {
+        return db.keysIterable(SecondaryId.secondaryId(keyId, valueId), timestamp).hasNext();
     }
 
     public String getKeyTarget(String keyId, String valueId, long timestamp) {
@@ -266,60 +326,9 @@ public class OODb {
         return null;
     }
 
-    public boolean isNode(String id, long longTimestamp) {
-        return getKeyValue(id, Key_Node.NODETYPE_ID, longTimestamp) != null;
-    }
-
-    public String kindId(String nodeId, long longTimestamp) {
-        String kind = getKeyValue(nodeId, Key_Node.SUPERTYPE_ID, longTimestamp);
-        if (kind == null)
-            kind = getKeyValue(nodeId, Key_Node.NODETYPE_ID, longTimestamp);
-        return kind;
-    }
-
-    public boolean hasKey(String nodeId, String keyId, long timestamp) {
-        if (timestamp != FactoryRegistry.MAX_TIMESTAMP) {
-            return db.keysIterable(SecondaryId.secondaryInv(nodeId, keyId), db.getTimestamp()).hasNext();
-        }
-        Node node = fetchNode(nodeId);
-        if (node == null) {
-            return db.keysIterable(SecondaryId.secondaryInv(nodeId, keyId), db.getTimestamp()).hasNext();
-        }
-        return node.hasKey(keyId);
-    }
-
-    public boolean hasKeyValue(String nodeId, String keyId, String valueId, long timestamp) {
-        if (timestamp != FactoryRegistry.MAX_TIMESTAMP) {
-            return SecondaryId.hasSecondaryId(db, nodeId, keyId, valueId, timestamp);
-        }
-        Node node = fetchNode(nodeId);
-        if (node == null) {
-            return SecondaryId.hasSecondaryId(db, nodeId, keyId, valueId, timestamp);
-        }
-        return node.hasKeyValue(keyId, valueId);
-    }
-
-    public boolean hasTarget(String keyId, String valueId, long timestamp) {
-        for (String targetId : db.keysIterable(SecondaryId.secondaryId(keyId, valueId), timestamp)) {
-            return true;
-        }
-        return false;
-    }
-
-    public Iterable<String> keyValueIdIterable(String nodeId, String keyId, long timestamp) {
-        if (timestamp != FactoryRegistry.MAX_TIMESTAMP) {
-            return db.keysIterable(SecondaryId.secondaryInv(nodeId, keyId), timestamp);
-        }
-        Node node = fetchNode(nodeId);
-        if (node == null) {
-            return db.keysIterable(SecondaryId.secondaryInv(nodeId, keyId), timestamp);
-        }
-        return node.keyValueIdIterable(keyId);
-    }
-
-    public Iterable<String> keyTargetIdIterable(String keyId, String valueId, long timestamp) {
-        return db.keysIterable(SecondaryId.secondaryId(keyId, valueId), timestamp);
-    }
+    //
+    // Lnk1 API
+    //
 
     public void createLnk1(String originNodeId, String labelId, String destinationNodeId) {
         Node node = fetchNode(originNodeId);
@@ -337,7 +346,7 @@ public class OODb {
             node.removeLnk1(labelId, destinationNodeId);
     }
 
-    public Iterable<String> originLableIdIterable(String nodeId) {
+    public Iterable<String> originLabelIdIterable(String nodeId) {
         Node node = fetchNode(nodeId);
         if (node == null) {
             return Link1Id.link1LabelIdIterable(db, nodeId);
@@ -394,6 +403,10 @@ public class OODb {
         return Link1Id.label1IdIterable(db, label1Id, timestamp);
     }
 
+    //
+    // Journal API
+    //
+
     public PeekABoo<String> modifies(String timestampId, long longTimestamp) {
         return db.keysIterable(Journal.modifiesId(timestampId), longTimestamp);
     }
@@ -405,6 +418,8 @@ public class OODb {
     public PeekABoo<String> journal(long longTimestamp) {
         return db.idsIterable(Timestamp.PREFIX, longTimestamp);
     }
+
+    // Database Update Request
 
     public BladeBase.AReq<String> update(String transactionName, MapNode tMapNode) {
         return dbUpdater.update(transactionName, tMapNode);

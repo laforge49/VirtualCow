@@ -3,6 +3,7 @@ package org.agilewiki.console.oodb.nodes.roles.admin;
 import org.agilewiki.console.NameIds;
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.SimpleSimon;
+import org.agilewiki.console.oodb.nodes.Key_Node;
 import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.ValueId;
@@ -34,8 +35,7 @@ public class EmailAddressesBlade extends RequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                String secondaryType = "email";
-                String prefix = SecondaryId.SECONDARY_ID + NameIds.generate(secondaryType);
+                String prefix = SecondaryId.SECONDARY_ID + Key_Node.EMAIL_ID;
                 String startingAt = request.getParameter("startingAt");
                 if (startingAt == null)
                     startingAt = "";
@@ -55,7 +55,7 @@ public class EmailAddressesBlade extends RequestBlade {
                                 break;
                             }
                             --limit;
-                            String secondaryId = SecondaryId.secondaryId(NameId.generate(secondaryType), id);
+                            String secondaryId = SecondaryId.secondaryId(Key_Node.EMAIL_ID, id);
                             MapAccessor ma = db.mapAccessor();
                             ListAccessor la = ma.listAccessor(secondaryId);
                             String nodeId = null;
