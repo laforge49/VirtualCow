@@ -73,7 +73,6 @@ public class NodeBlade extends RequestBlade {
                 while (true) {
                     try {
                         sb = new StringBuilder();
-                        MapAccessor ma = db.mapAccessor();
                         if (nodeId.startsWith("$n")) {
                             if (nodeId.endsWith(".key")) {
                                 if (ooDb.keyHasValueId(nodeId.substring(0, nodeId.length() - 4), longTimestamp)) {
@@ -113,8 +112,7 @@ public class NodeBlade extends RequestBlade {
                                 } else
                                     sb.append("Destinations<br />");
                             } else if (nodeId.endsWith(".node")) {
-                                VersionedMapNode vmn = (VersionedMapNode) ma.get("$D$nsuperType" + nodeId);
-                                if (vmn != null && vmn.firstKey(longTimestamp) != null) {
+                                if (ooDb.keyHasTargetId(Key_Node.SUPERTYPE_ID, nodeId, longTimestamp)) {
                                     sb.append("<a href=\"?from=node&to=nodes&secondaryId=$D$nsuperType");
                                     sb.append(nodeId);
                                     if (timestamp != null) {
@@ -214,20 +212,25 @@ public class NodeBlade extends RequestBlade {
                                 } else if (nId.startsWith(SecondaryId.SECONDARY_INV)) {
                                     sb.append("&nbsp;&nbsp;&nbsp;&nbsp;Target: ");
                                     String vnmId = SecondaryId.secondaryInvVmn(nId);
-                                    sb.append("<a href=\"?from=");
-                                    sb.append(page);
-                                    sb.append("&to=node&nodeId=");
-                                    sb.append(vnmId);
-                                    if (timestamp != null) {
-                                        sb.append("&timestamp=");
-                                        sb.append(timestamp);
+                                    boolean isVN = ooDb.isNode(vnmId, longTimestamp);
+                                    if (isVN) {
+                                        sb.append("<a href=\"?from=");
+                                        sb.append(page);
+                                        sb.append("&to=node&nodeId=");
+                                        sb.append(vnmId);
+                                        if (timestamp != null) {
+                                            sb.append("&timestamp=");
+                                            sb.append(timestamp);
+                                        }
+                                        sb.append(setRole + "#rupa\">");
                                     }
-                                    sb.append(setRole + "#rupa\">");
                                     if (!vnmId.startsWith("$t"))
                                         sb.append(vnmId.substring(2));
                                     else
                                         sb.append(simpleSimon.niceTime(vnmId));
-                                    sb.append("</a>");
+                                    if (isVN) {
+                                        sb.append("</a>");
+                                    }
                                     sb.append(" Key: ");
                                     String keyId = SecondaryId.secondaryInvType(nId);
                                     sb.append("<a href=\"?from=");
@@ -275,20 +278,25 @@ public class NodeBlade extends RequestBlade {
                                 } else if (nId.startsWith(Link1Id.LINK1_ID)) {
                                     sb.append("&nbsp;&nbsp;&nbsp;&nbsp;Origin: ");
                                     String originId = Link1Id.link1IdOrigin(nId);
-                                    sb.append("<a href=\"?from=");
-                                    sb.append(page);
-                                    sb.append("&to=node&nodeId=");
-                                    sb.append(originId);
-                                    if (timestamp != null) {
-                                        sb.append("&timestamp=");
-                                        sb.append(timestamp);
+                                    boolean isON = ooDb.isNode(originId, longTimestamp);
+                                    if (isON) {
+                                        sb.append("<a href=\"?from=");
+                                        sb.append(page);
+                                        sb.append("&to=node&nodeId=");
+                                        sb.append(originId);
+                                        if (timestamp != null) {
+                                            sb.append("&timestamp=");
+                                            sb.append(timestamp);
+                                        }
+                                        sb.append(setRole + "#rupa\">");
                                     }
-                                    sb.append(setRole + "#rupa\">");
                                     if (!originId.startsWith("$t"))
                                         sb.append(originId.substring(2));
                                     else
                                         sb.append(simpleSimon.niceTime(originId));
-                                    sb.append("</a>");
+                                    if (isON) {
+                                        sb.append("</a>");
+                                    }
                                     sb.append(" Label: ");
                                     String labelId = Link1Id.link1IdLabel(nId);
                                     sb.append("<a href=\"?from=");
@@ -308,20 +316,25 @@ public class NodeBlade extends RequestBlade {
                                         for (ListAccessor icla : icma) {
                                             sb.append(" Destination: ");
                                             String destinationId = icla.key().toString();
-                                            sb.append("<a href=\"?from=");
-                                            sb.append(page);
-                                            sb.append("&to=node&nodeId=");
-                                            sb.append(destinationId);
-                                            if (timestamp != null) {
-                                                sb.append("&timestamp=");
-                                                sb.append(timestamp);
+                                            boolean isDN = ooDb.isNode(destinationId, longTimestamp);
+                                            if (isDN) {
+                                                sb.append("<a href=\"?from=");
+                                                sb.append(page);
+                                                sb.append("&to=node&nodeId=");
+                                                sb.append(destinationId);
+                                                if (timestamp != null) {
+                                                    sb.append("&timestamp=");
+                                                    sb.append(timestamp);
+                                                }
+                                                sb.append(setRole + "#rupa\">");
                                             }
-                                            sb.append(setRole + "#rupa\">");
                                             if (!destinationId.startsWith("$t"))
                                                 sb.append(destinationId.substring(2));
                                             else
                                                 sb.append(simpleSimon.niceTime(destinationId));
-                                            sb.append("</a>");
+                                            if (isDN) {
+                                                sb.append("</a>");
+                                            }
                                         }
                                     }
                                     sb.append("<br />");
