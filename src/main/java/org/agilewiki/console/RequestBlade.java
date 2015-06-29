@@ -26,7 +26,6 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
     public final SimpleSimon simpleSimon;
     protected final ServletContext servletContext;
     protected final OODb ooDb;
-    protected final Db db;
     protected final MailOut mailOut;
     public final String page;
 
@@ -36,7 +35,6 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
         this.simpleSimon = role.simpleSimon();
         this.servletContext = simpleSimon.servletContext;
         this.ooDb = simpleSimon.ooDb;
-        this.db = simpleSimon.db;
         this.mailOut = simpleSimon.mailOut;
         this.page = page;
         role.requests().put(page, this);

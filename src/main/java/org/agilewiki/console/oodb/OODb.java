@@ -31,7 +31,7 @@ import java.util.concurrent.ExecutionException;
  * Object Oriented Database, without state caching.
  */
 public class OODb {
-    public final Db db;
+    private final Db db;
     private LoadingCache<String, Node> nodeCache;
     private Map<String, Node> updatedNodes;
     private final DbUpdater dbUpdater;

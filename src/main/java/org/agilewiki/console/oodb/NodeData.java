@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 public class NodeData {
-    public final Db db;
+    private final Db db;
     public final String nodeId;
     private ConcurrentSkipListMap<Comparable, List> atts;
     private ConcurrentSkipListMap<String, ConcurrentSkipListSet> keys;

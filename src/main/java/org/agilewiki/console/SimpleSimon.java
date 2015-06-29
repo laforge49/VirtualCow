@@ -41,7 +41,6 @@ public class SimpleSimon extends HttpServlet {
     public static SimpleSimon simpleSimon;
 
     public OODb ooDb;
-    public Db db;
     protected ServletConfig servletConfig;
     public ServletContext servletContext;
     public MailOut mailOut;
@@ -95,7 +94,6 @@ public class SimpleSimon extends HttpServlet {
             servletContext = servletConfig.getServletContext();
 
             ooDb = new OODb(100000, 10000L);
-            db = ooDb.db;
 
             mailOut = new MailOut();
 
