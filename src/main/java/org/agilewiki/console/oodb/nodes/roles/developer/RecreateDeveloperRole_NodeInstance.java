@@ -12,8 +12,8 @@ public class RecreateDeveloperRole_NodeInstance extends RecreateRole_NodeInstanc
     public RecreateDeveloperRole_NodeInstance() {
     }
 
-    public RecreateDeveloperRole_NodeInstance(String nodeId) {
-        super(nodeId);
+    public RecreateDeveloperRole_NodeInstance(String nodeId, long timestamp) {
+        super(nodeId, timestamp);
     }
 
     @Override

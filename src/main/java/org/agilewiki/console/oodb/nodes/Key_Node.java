@@ -2,6 +2,7 @@ package org.agilewiki.console.oodb.nodes;
 
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.oodb.Node;
+import org.agilewiki.utils.immutable.FactoryRegistry;
 
 public class Key_Node extends Metadata_Node {
     private static Key_Node key_node;
@@ -28,7 +29,7 @@ public class Key_Node extends Metadata_Node {
     }
 
     public static void create() {
-        key_node = new Key_Node(ID);
+        key_node = new Key_Node(ID, FactoryRegistry.MAX_TIMESTAMP);
     }
 
     public static void define(String nodeId, String targetType, String roleId) {
@@ -38,12 +39,12 @@ public class Key_Node extends Metadata_Node {
                 targetType);
     }
 
-    public Key_Node(String nodeId) {
-        super(nodeId);
+    public Key_Node(String nodeId, long timestamp) {
+        super(nodeId, timestamp);
     }
 
     @Override
-    public Node createNode(String nodeId) {
-        return new Key_NodeInstance(nodeId);
+    public Node createNode(String nodeId, long timestamp) {
+        return new Key_NodeInstance(nodeId, timestamp);
     }
 }

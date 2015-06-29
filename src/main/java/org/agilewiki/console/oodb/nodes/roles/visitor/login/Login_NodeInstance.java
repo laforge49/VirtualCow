@@ -12,8 +12,8 @@ public class Login_NodeInstance extends JournalEntry_NodeInstance {
     public Login_NodeInstance() {
     }
 
-    public Login_NodeInstance(String nodeId) {
-        super(nodeId);
+    public Login_NodeInstance(String nodeId, long timestamp) {
+        super(nodeId, timestamp);
     }
 
     @Override

@@ -4,6 +4,7 @@ import org.agilewiki.console.RandomIds;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.oodb.Node;
 import org.agilewiki.console.oodb.OODb;
+import org.agilewiki.utils.immutable.FactoryRegistry;
 
 public class Attribute_Node extends Node_NodeInstance {
     private static Attribute_Node attribute_node;
@@ -14,7 +15,7 @@ public class Attribute_Node extends Node_NodeInstance {
     }
 
     public static void create() {
-        attribute_node = new Attribute_Node(ID);
+        attribute_node = new Attribute_Node(ID, FactoryRegistry.MAX_TIMESTAMP);
     }
 
     public static void define(String attributeNameId, String nodeId) {
@@ -26,12 +27,12 @@ public class Attribute_Node extends Node_NodeInstance {
         ooDb.createLnk1(attributeId, Lnk1_Node.ATTRIBUTEOF_ID, nodeId);
     }
 
-    public Attribute_Node(String nodeId) {
-        super(nodeId);
+    public Attribute_Node(String nodeId, long timestamp) {
+        super(nodeId, timestamp);
     }
 
     @Override
-    public Node createNode(String nodeId) {
-        return new Attribute_NodeInstance(nodeId);
+    public Node createNode(String nodeId, long timestamp) {
+        return new Attribute_NodeInstance(nodeId, timestamp);
     }
 }

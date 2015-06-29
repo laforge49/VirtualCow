@@ -12,8 +12,8 @@ public class RecreateUserRole_NodeInstance extends RecreateRole_NodeInstance {
     public RecreateUserRole_NodeInstance() {
     }
 
-    public RecreateUserRole_NodeInstance(String nodeId) {
-        super(nodeId);
+    public RecreateUserRole_NodeInstance(String nodeId, long timestamp) {
+        super(nodeId, timestamp);
     }
 
     @Override

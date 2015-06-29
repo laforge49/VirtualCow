@@ -12,8 +12,8 @@ public class RecreateVisitorRole_NodeInstance extends RecreateRole_NodeInstance 
     public RecreateVisitorRole_NodeInstance() {
     }
 
-    public RecreateVisitorRole_NodeInstance(String nodeId) {
-        super(nodeId);
+    public RecreateVisitorRole_NodeInstance(String nodeId, long timestamp) {
+        super(nodeId, timestamp);
     }
 
     @Override

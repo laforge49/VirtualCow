@@ -4,6 +4,7 @@ import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.oodb.Node;
 import org.agilewiki.console.oodb.OODb;
 import org.agilewiki.console.oodb.nodes.roles.Role_Node;
+import org.agilewiki.utils.immutable.FactoryRegistry;
 
 public class Node_Node extends Metadata_Node {
     private static Node_Node node_node;
@@ -15,7 +16,7 @@ public class Node_Node extends Metadata_Node {
 
     public static void create()
             throws Exception {
-        node_node = new Node_Node(ID);
+        node_node = new Node_Node(ID, FactoryRegistry.MAX_TIMESTAMP);
         JournalEntry_Node.create();
         Role_Node.create();
         User_Node.create();
@@ -38,12 +39,12 @@ public class Node_Node extends Metadata_Node {
         }
     }
 
-    public Node_Node(String nodeId) {
-        super(nodeId);
+    public Node_Node(String nodeId, long timestamp) {
+        super(nodeId, timestamp);
     }
 
     @Override
-    public Node createNode(String nodeId) {
+    public Node createNode(String nodeId, long timestamp) {
         throw new UnsupportedOperationException(nodeId);
     }
 }

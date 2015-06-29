@@ -3,6 +3,7 @@ package org.agilewiki.console.oodb.nodes.roles.admin;
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.oodb.nodes.roles.Role_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.admin.editRoles.EditRolesBlade;
+import org.agilewiki.utils.immutable.FactoryRegistry;
 
 /**
  * A base role.
@@ -17,7 +18,7 @@ public class Admin_Role extends Role_NodeInstance {
 
     public static void create()
             throws Exception {
-        admin_role = new Admin_Role(ID);
+        admin_role = new Admin_Role(ID, FactoryRegistry.MAX_TIMESTAMP);
     }
 
     private AdminBlade adminBlade;
@@ -26,9 +27,9 @@ public class Admin_Role extends Role_NodeInstance {
     private EditRolesBlade editRolesBlade;
     private RecreateRoleBlade recreateRoleBlade;
 
-    public Admin_Role(String nodeId)
+    public Admin_Role(String nodeId, long timestamp)
             throws Exception {
-        super(nodeId);
+        super(nodeId, timestamp);
         niceRoleName = "Admin";
         adminBlade = new AdminBlade(this, "admin");
         emailAddressesBlade = new EmailAddressesBlade(this, "emailAddresses");

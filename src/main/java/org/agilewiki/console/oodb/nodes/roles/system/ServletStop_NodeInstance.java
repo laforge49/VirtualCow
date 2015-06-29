@@ -14,8 +14,8 @@ public class ServletStop_NodeInstance extends JournalEntry_NodeInstance {
     public ServletStop_NodeInstance() {
     }
 
-    public ServletStop_NodeInstance(String nodeId) {
-        super(nodeId);
+    public ServletStop_NodeInstance(String nodeId, long timestamp) {
+        super(nodeId, timestamp);
     }
 
     public static String update(OODb ooDb)

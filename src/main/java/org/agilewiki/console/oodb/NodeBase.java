@@ -14,9 +14,9 @@ public class NodeBase implements Node {
     private NodeData innerReference = null;
     private NodeData outerReference = null;
 
-    public NodeBase(String nodeId) {
+    public NodeBase(String nodeId, long timestamp) {
         if (nodeId != null) {
-            initialize(nodeId, FactoryRegistry.MAX_TIMESTAMP);
+            initialize(nodeId, timestamp);
             getOoDb().addNode(nodeId, this);
         }
     }

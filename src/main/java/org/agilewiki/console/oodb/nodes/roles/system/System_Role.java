@@ -2,6 +2,7 @@ package org.agilewiki.console.oodb.nodes.roles.system;
 
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.oodb.nodes.roles.Role_NodeInstance;
+import org.agilewiki.utils.immutable.FactoryRegistry;
 
 /**
  * System role represents the general infrastructure.
@@ -15,11 +16,11 @@ public class System_Role extends Role_NodeInstance {
     }
 
     public static void create() {
-        system_role = new System_Role(ID);
+        system_role = new System_Role(ID, FactoryRegistry.MAX_TIMESTAMP);
     }
 
-    public System_Role(String nodeId) {
-        super(nodeId);
+    public System_Role(String nodeId, long timestamp) {
+        super(nodeId, timestamp);
         niceRoleName = "System";
         RecreateSystemRole_Node.create();
         getOoDb().registerTransaction(RecreateSystemRole_NodeInstance.NAME, RecreateSystemRole_NodeInstance.class);

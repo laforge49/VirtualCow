@@ -69,7 +69,7 @@ public class OODb {
                 NodeFactory nodeFactory = getNodeFactory(factoryId);
                 if (nodeFactory == null)
                     return NullNode.singleton;
-                Node node = nodeFactory.createNode(nodeId);
+                Node node = nodeFactory.createNode(nodeId, FactoryRegistry.MAX_TIMESTAMP);
                 if (node == null)
                     return NullNode.singleton;
                 return node;

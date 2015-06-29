@@ -12,8 +12,8 @@ public class BadUserPassword_NodeInstance extends JournalEntry_NodeInstance {
     public BadUserPassword_NodeInstance() {
     }
 
-    public BadUserPassword_NodeInstance(String nodeId) {
-        super(nodeId);
+    public BadUserPassword_NodeInstance(String nodeId, long timestamp) {
+        super(nodeId, timestamp);
     }
 
     @Override

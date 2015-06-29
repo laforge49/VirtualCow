@@ -6,6 +6,7 @@ import org.agilewiki.console.oodb.nodes.roles.user.changePassword.ChangePassword
 import org.agilewiki.console.oodb.nodes.roles.user.delete.DeleteAccountBlade;
 import org.agilewiki.console.oodb.nodes.roles.user.logout.LogoutBlade;
 import org.agilewiki.console.oodb.nodes.roles.user.newEmailAddress.NewEmailAddressBlade;
+import org.agilewiki.utils.immutable.FactoryRegistry;
 
 /**
  * A base role.
@@ -20,7 +21,7 @@ public class User_Role extends Role_NodeInstance {
 
     public static void create()
             throws Exception {
-        user_role = new User_Role(ID);
+        user_role = new User_Role(ID, FactoryRegistry.MAX_TIMESTAMP);
     }
 
     private UserBlade userBlade;
@@ -30,9 +31,9 @@ public class User_Role extends Role_NodeInstance {
     private LogoutBlade logoutBlade;
     private NewEmailAddressBlade newEmailAddressBlade;
 
-    public User_Role(String nodeId)
+    public User_Role(String nodeId, long timestamp)
             throws Exception {
-        super(nodeId);
+        super(nodeId, timestamp);
         niceRoleName = "User";
         logoutBlade = new LogoutBlade(this, "logout");
         deleteAccountBlade = new DeleteAccountBlade(this, "deleteAccount");

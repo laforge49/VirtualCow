@@ -2,6 +2,7 @@ package org.agilewiki.console.oodb.nodes.roles.user.newEmailAddress;
 
 import org.agilewiki.console.oodb.Node;
 import org.agilewiki.console.oodb.nodes.JournalEntry_Node;
+import org.agilewiki.utils.immutable.FactoryRegistry;
 
 public class NewEmailAddress_Node extends JournalEntry_Node {
     private static NewEmailAddress_Node newEmailAddress_node;
@@ -12,15 +13,15 @@ public class NewEmailAddress_Node extends JournalEntry_Node {
     }
 
     public static void create() {
-        newEmailAddress_node = new NewEmailAddress_Node(ID);
+        newEmailAddress_node = new NewEmailAddress_Node(ID, FactoryRegistry.MAX_TIMESTAMP);
     }
 
-    public NewEmailAddress_Node(String nodeId) {
-        super(nodeId);
+    public NewEmailAddress_Node(String nodeId, long timestamp) {
+        super(nodeId, timestamp);
     }
 
     @Override
-    public Node createNode(String nodeId) {
-        return new NewEmailAddress_NodeInstance(nodeId);
+    public Node createNode(String nodeId, long timestamp) {
+        return new NewEmailAddress_NodeInstance(nodeId, timestamp);
     }
 }

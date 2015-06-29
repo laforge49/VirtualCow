@@ -12,8 +12,8 @@ public class Logout_NodeInstance extends JournalEntry_NodeInstance {
     public Logout_NodeInstance() {
     }
 
-    public Logout_NodeInstance(String nodeId) {
-        super(nodeId);
+    public Logout_NodeInstance(String nodeId, long timestamp) {
+        super(nodeId, timestamp);
     }
 
     @Override

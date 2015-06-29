@@ -3,6 +3,7 @@ package org.agilewiki.console.oodb.nodes.roles.developer;
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.oodb.nodes.roles.Role_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.developer.npje.PostBlade;
+import org.agilewiki.utils.immutable.FactoryRegistry;
 
 /**
  * The developer role.
@@ -17,7 +18,7 @@ public class Developer_Role extends Role_NodeInstance {
 
     public static void create()
             throws Exception {
-        developer_role = new Developer_Role(ID);
+        developer_role = new Developer_Role(ID, FactoryRegistry.MAX_TIMESTAMP);
     }
 
     private DeveloperBlade developerBlade;
@@ -51,9 +52,9 @@ public class Developer_Role extends Role_NodeInstance {
     private NodesBlade rolesNodesBlade;
     private InvLinksBlade invLinksBlade;
 
-    public Developer_Role(String nodeId)
+    public Developer_Role(String nodeId, long timestamp)
             throws Exception {
-        super(nodeId);
+        super(nodeId, timestamp);
         niceRoleName = "Developer";
         developerBlade = new DeveloperBlade(this, "developer");
         postBlade = new PostBlade(this, "post");

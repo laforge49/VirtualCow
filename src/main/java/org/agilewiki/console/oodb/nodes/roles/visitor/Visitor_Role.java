@@ -5,6 +5,7 @@ import org.agilewiki.console.oodb.nodes.roles.Role_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.visitor.forgotPassword.ForgotPasswordBlade;
 import org.agilewiki.console.oodb.nodes.roles.visitor.login.LoginBlade;
 import org.agilewiki.console.oodb.nodes.roles.visitor.newUser.ValidatedBlade;
+import org.agilewiki.utils.immutable.FactoryRegistry;
 
 /**
  * Default role when the user is not logged in.
@@ -18,14 +19,14 @@ public class Visitor_Role extends Role_NodeInstance {
     }
 
     public static void create() throws Exception {
-        visitor_role = new Visitor_Role(ID);
+        visitor_role = new Visitor_Role(ID, FactoryRegistry.MAX_TIMESTAMP);
     }
 
     private WelcomeBlade welcomeBlade;
 
-    public Visitor_Role(String nodeId)
+    public Visitor_Role(String nodeId, long timestamp)
             throws Exception {
-        super(nodeId);
+        super(nodeId, timestamp);
         niceRoleName = "Visitor";
         welcomeBlade = new WelcomeBlade(this, "welcome");
         ForgotPasswordBlade forgotPasswordBlade = new ForgotPasswordBlade(this, "forgotPassword");

@@ -3,6 +3,7 @@ package org.agilewiki.console.oodb.nodes;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.oodb.Node;
 import org.agilewiki.console.oodb.OODb;
+import org.agilewiki.utils.immutable.FactoryRegistry;
 
 public class Lnk1_Node extends Metadata_Node {
     private static Lnk1_Node lnk1_node;
@@ -28,7 +29,7 @@ public class Lnk1_Node extends Metadata_Node {
     }
 
     public static void create() {
-        lnk1_node = new Lnk1_Node(ID);
+        lnk1_node = new Lnk1_Node(ID, FactoryRegistry.MAX_TIMESTAMP);
     }
 
     public static void define(String nodeId, String invDependency, String originType, String destinationType, String ofRole) {
@@ -45,12 +46,12 @@ public class Lnk1_Node extends Metadata_Node {
                 destinationType);
     }
 
-    public Lnk1_Node(String nodeId) {
-        super(nodeId);
+    public Lnk1_Node(String nodeId, long timestamp) {
+        super(nodeId, timestamp);
     }
 
     @Override
-    public Node createNode(String nodeId) {
-        return new Lnk1_NodeInstance(nodeId);
+    public Node createNode(String nodeId, long timestamp) {
+        return new Lnk1_NodeInstance(nodeId, timestamp);
     }
 }

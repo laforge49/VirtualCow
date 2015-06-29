@@ -2,6 +2,7 @@ package org.agilewiki.console.oodb.nodes.roles.developer;
 
 import org.agilewiki.console.oodb.Node;
 import org.agilewiki.console.oodb.nodes.JournalEntry_Node;
+import org.agilewiki.utils.immutable.FactoryRegistry;
 
 public class RecreateDeveloperRole_Node extends JournalEntry_Node {
     private static RecreateDeveloperRole_Node recreateDeveloperRole_node;
@@ -12,15 +13,15 @@ public class RecreateDeveloperRole_Node extends JournalEntry_Node {
     }
 
     public static void create() {
-        recreateDeveloperRole_node = new RecreateDeveloperRole_Node(ID);
+        recreateDeveloperRole_node = new RecreateDeveloperRole_Node(ID, FactoryRegistry.MAX_TIMESTAMP);
     }
 
-    public RecreateDeveloperRole_Node(String nodeId) {
-        super(nodeId);
+    public RecreateDeveloperRole_Node(String nodeId, long timestamp) {
+        super(nodeId, timestamp);
     }
 
     @Override
-    public Node createNode(String nodeId) {
-        return new RecreateDeveloperRole_NodeInstance(nodeId);
+    public Node createNode(String nodeId, long timestamp) {
+        return new RecreateDeveloperRole_NodeInstance(nodeId, timestamp);
     }
 }

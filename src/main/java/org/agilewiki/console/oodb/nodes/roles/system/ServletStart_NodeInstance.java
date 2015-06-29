@@ -13,8 +13,8 @@ public class ServletStart_NodeInstance extends JournalEntry_NodeInstance {
     public ServletStart_NodeInstance() {
     }
 
-    public ServletStart_NodeInstance(String nodeId) {
-        super(nodeId);
+    public ServletStart_NodeInstance(String nodeId, long timestamp) {
+        super(nodeId, timestamp);
     }
 
     public static String update(OODb ooDb)

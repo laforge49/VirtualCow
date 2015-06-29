@@ -15,8 +15,8 @@ public class UpdateRoles_NodeInstance extends JournalEntry_NodeInstance {
     public UpdateRoles_NodeInstance() {
     }
 
-    public UpdateRoles_NodeInstance(String nodeId) {
-        super(nodeId);
+    public UpdateRoles_NodeInstance(String nodeId, long timestamp) {
+        super(nodeId, timestamp);
     }
 
     @Override
