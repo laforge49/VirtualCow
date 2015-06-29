@@ -37,7 +37,7 @@ public class Visitor_Role extends Role_NodeInstance {
         ContactBlade contactBlade = new ContactBlade(this, "contact");
 
         RecreateVisitorRole_Node.create();
-        ooDb.registerTransaction(RecreateVisitorRole_NodeInstance.NAME, RecreateVisitorRole_NodeInstance.class);
+        getOoDb().registerTransaction(RecreateVisitorRole_NodeInstance.NAME, RecreateVisitorRole_NodeInstance.class);
         RecreateVisitorRole_NodeInstance.visitorRole = this;
     }
 

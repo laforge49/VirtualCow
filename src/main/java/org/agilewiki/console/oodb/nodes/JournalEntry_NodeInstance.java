@@ -22,16 +22,16 @@ public class JournalEntry_NodeInstance extends NodeBase implements Transaction {
 
     @Override
     public final void transform(Db db, MapNode tMapNode) {
+        initialize(db.getJEName(), db.getTimestamp());
         String transactionName = tMapNode.get(Db.transactionNameId).toString();
-        ooDb.createSecondaryId(db.getJEName(), Key_Node.NODETYPE_ID,
+        getOoDb().createSecondaryId(db.getJEName(), Key_Node.NODETYPE_ID,
                 NameId.generate(transactionName + ".node"));
-        setNodeId(db.getJEName());
         String userId = (String) tMapNode.get(User.USER_KEY);
         if (userId != null) {
-            ooDb.createLnk1(getNodeId(), User.USER_KEY, userId);
+            getOoDb().createLnk1(getNodeId(), User.USER_KEY, userId);
         }
         process(db, tMapNode);
-        getOODb().addNode(getNodeId(), this);
+        getOoDb().addNode(getNodeId(), this);
     }
 
     public void process(Db db, MapNode tMapNode) {

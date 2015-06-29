@@ -26,7 +26,7 @@ public class Npje_NodeInstance extends JournalEntry_NodeInstance {
         if (subject != null) {
             String subjectVId = ValueId.generate(subject.toLowerCase().
                     replaceAll("\r", "").replaceAll("\t", " "));
-            ooDb.createSecondaryId(jeName, NameIds.SUBJECT, subjectVId);
+            getOoDb().createSecondaryId(jeName, NameIds.SUBJECT, subjectVId);
         }
     }
 }

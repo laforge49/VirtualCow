@@ -28,6 +28,6 @@ abstract public class RecreateRole_NodeInstance extends JournalEntry_NodeInstanc
 
         Delete.delete(thisRoleNodeId);
 
-        ooDb.createSecondaryId(thisRoleNodeId, Key_Node.NODETYPE_ID, Role_Node.ID);
+        getOoDb().createSecondaryId(thisRoleNodeId, Key_Node.NODETYPE_ID, Role_Node.ID);
     }
 }

@@ -22,7 +22,7 @@ public class Login_NodeInstance extends JournalEntry_NodeInstance {
         String subject = (String) mapNode.get(NameIds.SUBJECT);
         if (subject != null) {
             String subjectVId = ValueId.generate(subject.toLowerCase());
-            ooDb.createSecondaryId(jeName, NameIds.SUBJECT, subjectVId);
+            getOoDb().createSecondaryId(jeName, NameIds.SUBJECT, subjectVId);
         }
     }
 }

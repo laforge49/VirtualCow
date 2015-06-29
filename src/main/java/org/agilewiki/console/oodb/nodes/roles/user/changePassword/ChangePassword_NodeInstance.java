@@ -22,6 +22,6 @@ public class ChangePassword_NodeInstance extends JournalEntry_NodeInstance {
     public void process(Db db, MapNode mapNode) {
         String userId = (String) mapNode.get(User.USER_KEY);
         String passwordHash = (String) mapNode.get(User.PASSWORD_KEY);
-        ooDb.set(userId, User.PASSWORD_KEY, passwordHash);
+        getOoDb().set(userId, User.PASSWORD_KEY, passwordHash);
     }
 }

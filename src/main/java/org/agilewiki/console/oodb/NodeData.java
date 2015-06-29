@@ -11,27 +11,29 @@ import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 public class NodeData {
-    private final Db db;
     public final String nodeId;
+    public final long timestamp;
+    private final Db db;
     private ConcurrentSkipListMap<Comparable, List> atts;
     private ConcurrentSkipListMap<String, ConcurrentSkipListSet> keys;
     private ConcurrentSkipListMap<String, ConcurrentSkipListSet> lnk1s;
 
-    public NodeData(Db db, String nodeId) {
+    public NodeData(Db db, String nodeId, long timestamp) {
         this.db = db;
         this.nodeId = nodeId;
+        this.timestamp = timestamp;
 
         VersionedMapNode avmn = db.get(nodeId);
         if (avmn == null)
             atts = new ConcurrentSkipListMap<>();
         else
-            atts = new ConcurrentSkipListMap<>(avmn.flatMap(FactoryRegistry.MAX_TIMESTAMP));
+            atts = new ConcurrentSkipListMap<>(avmn.flatMap(timestamp));
 
         keys = new ConcurrentSkipListMap<>();
         for (String keyId : SecondaryId.typeIdIterable(db, nodeId)) {
             String secondaryInv = SecondaryId.secondaryInv(nodeId, keyId);
-            for (String valueId : db.keysIterable(secondaryInv, FactoryRegistry.MAX_TIMESTAMP)) {
-                if (SecondaryId.hasSecondaryId(db, nodeId, keyId, valueId, FactoryRegistry.MAX_TIMESTAMP)) {
+            for (String valueId : db.keysIterable(secondaryInv, timestamp)) {
+                if (SecondaryId.hasSecondaryId(db, nodeId, keyId, valueId, timestamp)) {
                     ConcurrentSkipListSet values = keys.get(keyId);
                     if (values == null) {
                         values = new ConcurrentSkipListSet<>();
@@ -44,8 +46,8 @@ public class NodeData {
 
         lnk1s = new ConcurrentSkipListMap<>();
         for (String labelId : Link1Id.link1LabelIdIterable(db, nodeId)) {
-            for (String destinationId : Link1Id.link1IdIterable(db, nodeId, labelId, FactoryRegistry.MAX_TIMESTAMP)) {
-                if (Link1Id.hasLink1(db, nodeId, labelId, destinationId, FactoryRegistry.MAX_TIMESTAMP)) {
+            for (String destinationId : Link1Id.link1IdIterable(db, nodeId, labelId, timestamp)) {
+                if (Link1Id.hasLink1(db, nodeId, labelId, destinationId, timestamp)) {
                     ConcurrentSkipListSet destinations = lnk1s.get(labelId);
                     if (destinations == null) {
                         destinations = new ConcurrentSkipListSet();
@@ -60,6 +62,7 @@ public class NodeData {
     public NodeData(NodeData old) {
         db = old.db;
         nodeId = old.nodeId;
+        this.timestamp = old.timestamp;
 
         atts = new ConcurrentSkipListMap<>();
         for (Comparable attId : old.atts.keySet()) {

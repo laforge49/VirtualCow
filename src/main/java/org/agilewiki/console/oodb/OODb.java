@@ -86,8 +86,8 @@ public class OODb {
         db.registerTransaction(transactionName, transactionClass);
     }
 
-    public NodeData newNodeData(String nodeId) {
-        return new NodeData(db, nodeId);
+    public NodeData newNodeData(String nodeId, long timestamp) {
+        return new NodeData(db, nodeId, timestamp);
     }
 
     public long getTimestamp() {

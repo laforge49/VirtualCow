@@ -9,7 +9,7 @@ import java.util.NavigableMap;
  * A durable object.
  */
 public interface Node {
-    default OODb getOODb() {
+    default OODb getOoDb() {
         return SimpleSimon.simpleSimon.ooDb;
     }
 
@@ -17,7 +17,7 @@ public interface Node {
 
     NodeData getNodeData();
 
-    void setNodeData(NodeData nodeData);
+    long getTimestamp();
 
     void endTransaction();
 

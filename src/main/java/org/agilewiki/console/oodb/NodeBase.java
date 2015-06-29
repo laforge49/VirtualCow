@@ -1,5 +1,7 @@
 package org.agilewiki.console.oodb;
 
+import org.agilewiki.utils.immutable.FactoryRegistry;
+
 import java.util.List;
 import java.util.NavigableMap;
 
@@ -8,22 +10,15 @@ import java.util.NavigableMap;
  */
 public class NodeBase implements Node {
     private String nodeId;
+    private long timestamp;
     private NodeData innerReference = null;
     private NodeData outerReference = null;
-    public final OODb ooDb;
 
     public NodeBase(String nodeId) {
-        this.nodeId = nodeId;
-        ooDb = getOODb();
         if (nodeId != null) {
-            ooDb.addNode(nodeId, this);
-            initialize();
+            initialize(nodeId, FactoryRegistry.MAX_TIMESTAMP);
+            getOoDb().addNode(nodeId, this);
         }
-    }
-
-    private void initialize() {
-        innerReference = ooDb.newNodeData(nodeId);
-        outerReference = innerReference;
     }
 
     @Override
@@ -31,21 +26,22 @@ public class NodeBase implements Node {
         return nodeId;
     }
 
-    protected void setNodeId(String nodeId) {
+    protected void initialize(String nodeId, long timestamp) {
         this.nodeId = nodeId;
-        initialize();
+        this.timestamp = timestamp;
+        innerReference = getOoDb().newNodeData(nodeId, timestamp);
+        outerReference = innerReference;
     }
 
     public NodeData getNodeData() {
-        if (ooDb.isPrivileged())
+        if (getOoDb().isPrivileged())
             return innerReference;
         return outerReference;
     }
 
     @Override
-    public void setNodeData(NodeData nodeData) {
-        ooDb.checkPrivilege();
-        innerReference = nodeData;
+    public long getTimestamp() {
+        return timestamp;
     }
 
     @Override
@@ -61,7 +57,7 @@ public class NodeBase implements Node {
     private void prep() {
         if (innerReference == outerReference) {
             innerReference = new NodeData(innerReference);
-            ooDb.updated(this);
+            getOoDb().updated(this);
         }
     }
 

@@ -20,8 +20,8 @@ public class NullNode implements Node {
     }
 
     @Override
-    public void setNodeData(NodeData nodeData) {
-
+    public long getTimestamp() {
+        return 0;
     }
 
     @Override

@@ -23,10 +23,10 @@ public class NewEmailAddress_NodeInstance extends JournalEntry_NodeInstance {
     public void process(Db db, MapNode mapNode) {
         String userId = (String) mapNode.get(User.USER_KEY);
 
-        String oldEmailAddressId = ValueId.generate(User.email(userId, ooDb.getTimestamp()));
-        ooDb.removeSecondaryId(userId, User.EMAIL_ID, oldEmailAddressId);
+        String oldEmailAddressId = ValueId.generate(User.email(userId, getOoDb().getTimestamp()));
+        getOoDb().removeSecondaryId(userId, User.EMAIL_ID, oldEmailAddressId);
 
         String emailAddressId = ValueId.generate((String) mapNode.get(User.EMAIL_ID));
-        ooDb.createSecondaryId(userId, User.EMAIL_ID, emailAddressId);
+        getOoDb().createSecondaryId(userId, User.EMAIL_ID, emailAddressId);
     }
 }
