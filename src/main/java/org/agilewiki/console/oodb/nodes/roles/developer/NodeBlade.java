@@ -244,12 +244,9 @@ public class NodeBlade extends RequestBlade {
                                     sb.append(setRole + "#rupa\">");
                                     sb.append(keyId.substring(2));
                                     sb.append("</a>");
-                                    VersionedMapNode icvmn = db.get(nId);
-                                    if (icvmn != null) {
-                                        MapAccessor icma = icvmn.mapAccessor(longTimestamp);
-                                        for (ListAccessor icla : icma) {
+                                    if (isVN) {
+                                        for (String value : ooDb.nodeValueIdIterable(vnmId, keyId, longTimestamp)) {
                                             sb.append(" Value: ");
-                                            String value = icla.key().toString();
                                             String valueId = value;
                                             boolean isN = ooDb.isNode(value, longTimestamp);
                                             if (!isN && ooDb.isNode(value + ".lnk1", longTimestamp)) {
@@ -310,12 +307,9 @@ public class NodeBlade extends RequestBlade {
                                     sb.append(setRole + "#rupa\">");
                                     sb.append(labelId.substring(2));
                                     sb.append("</a>");
-                                    VersionedMapNode icvmn = db.get(nId);
-                                    if (icvmn != null) {
-                                        MapAccessor icma = icvmn.mapAccessor(longTimestamp);
-                                        for (ListAccessor icla : icma) {
+                                    if (isON) {
+                                        for (String destinationId : ooDb.destinationIdIterable(originId, labelId, longTimestamp)) {
                                             sb.append(" Destination: ");
-                                            String destinationId = icla.key().toString();
                                             boolean isDN = ooDb.isNode(destinationId, longTimestamp);
                                             if (isDN) {
                                                 sb.append("<a href=\"?from=");
