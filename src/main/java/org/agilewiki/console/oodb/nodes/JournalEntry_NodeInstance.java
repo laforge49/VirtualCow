@@ -3,6 +3,7 @@ package org.agilewiki.console.oodb.nodes;
 import org.agilewiki.console.User;
 import org.agilewiki.console.oodb.NodeBase;
 import org.agilewiki.utils.ids.NameId;
+import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 import org.agilewiki.utils.virtualcow.Transaction;
@@ -22,7 +23,7 @@ public class JournalEntry_NodeInstance extends NodeBase implements Transaction {
 
     @Override
     public final void transform(Db db, MapNode tMapNode) {
-        initialize(db.getJEName(), db.getTimestamp());
+        initialize(db.getJEName(), FactoryRegistry.MAX_TIMESTAMP);
         String transactionName = tMapNode.get(Db.transactionNameId).toString();
         getOoDb().createSecondaryId(db.getJEName(), Key_Node.NODETYPE_ID,
                 NameId.generate(transactionName + ".node"));

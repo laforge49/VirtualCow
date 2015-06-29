@@ -1,7 +1,5 @@
 package org.agilewiki.console.oodb;
 
-import org.agilewiki.utils.immutable.FactoryRegistry;
-
 import java.util.List;
 import java.util.NavigableMap;
 

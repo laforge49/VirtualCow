@@ -5,14 +5,10 @@ import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.TimestampIds;
 import org.agilewiki.console.oodb.nodes.roles.Role;
-import org.agilewiki.utils.immutable.collections.ListAccessor;
-import org.agilewiki.utils.immutable.collections.MapAccessor;
 import org.agilewiki.utils.immutable.collections.PeekABoo;
-import org.agilewiki.utils.immutable.collections.VersionedMapNode;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
 
 import javax.servlet.AsyncContext;
-import java.util.List;
 
 /**
  * Request the journal.
@@ -103,7 +99,7 @@ public class SubJournalBlade extends RequestBlade {
 
                             StringBuilder lb = new StringBuilder();
                             String subject = (String) ooDb.get(jeId, NameIds.SUBJECT, longTimestamp);
-                            if (subject!= null) {
+                            if (subject != null) {
                                 lb.append(' ');
                                 lb.append(subject);
                                 lb.append(" | ");

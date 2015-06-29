@@ -7,7 +7,6 @@ import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.jactor2.core.messages.ExceptionHandler;
 import org.agilewiki.jactor2.core.messages.impl.AsyncRequestImpl;
 import org.agilewiki.utils.immutable.FactoryRegistry;
-import org.agilewiki.utils.virtualcow.Db;
 
 import javax.servlet.AsyncContext;
 import javax.servlet.ServletContext;
