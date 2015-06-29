@@ -4,6 +4,7 @@ import org.agilewiki.console.NameIds;
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.TimestampIds;
+import org.agilewiki.console.oodb.nodes.Key_Node;
 import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.ids.composites.SecondaryId;
@@ -75,9 +76,7 @@ public class NodeBlade extends RequestBlade {
                         MapAccessor ma = db.mapAccessor();
                         if (nodeId.startsWith("$n")) {
                             if (nodeId.endsWith(".key")) {
-                                String prefix = SecondaryId.SECONDARY_ID + nodeId.substring(0, nodeId.length() - 4);
-                                PeekABoo<String> idPeekABoo = db.idsIterable(prefix, longTimestamp);
-                                if (idPeekABoo.hasNext()) {
+                                if (ooDb.keyHasValueId(nodeId.substring(0, nodeId.length() - 4), longTimestamp)) {
                                     sb.append("<a href=\"?from=node&to=");
                                     sb.append(nodeId.substring(2).replace(".key", "Values"));
                                     if (timestamp != null) {
@@ -126,8 +125,7 @@ public class NodeBlade extends RequestBlade {
                                     sb.append("#rupa\"><strong>Subtypes</strong></a>, ");
                                 } else
                                     sb.append("Subtypes, ");
-                                vmn = (VersionedMapNode) ma.get("$D$nnodeType" + nodeId);
-                                if (vmn != null && vmn.firstKey(longTimestamp) != null) {
+                                if (ooDb.keyHasTargetId(Key_Node.NODETYPE_ID, nodeId, longTimestamp)) {
                                     sb.append("<a href=\"?from=node&to=nodes&secondaryId=$D$nnodeType");
                                     sb.append(nodeId);
                                     if (timestamp != null) {
@@ -418,39 +416,33 @@ public class NodeBlade extends RequestBlade {
                                     sb.append(setRole + "\">");
                                     sb.append(targetId.substring(2));
                                     sb.append("</a>");
-                                    ListAccessor nla = ma.listAccessor(targetId);
-                                    if (nla != null) {
-                                        VersionedMapNode nvmn = (VersionedMapNode) nla.get(0);
-                                        if (targetId.startsWith("$t")) {
-                                            sb.append(" (");
-                                            sb.append(SimpleSimon.niceTime(targetId));
-                                            sb.append(") ");
-                                            String transactionName = nvmn.getList(NameIds.TRANSACTION_NAME).flatList(longTimestamp).get(0).toString();
-                                            sb.append(transactionName);
-                                        }
-                                        StringBuilder lb = new StringBuilder();
-                                        List subjectList = nvmn.getList(NameIds.SUBJECT).flatList(longTimestamp);
-                                        if (subjectList.size() > 0) {
-                                            lb.append(' ');
-                                            String subject = subjectList.get(0).toString();
-                                            lb.append(subject);
+                                    if (targetId.startsWith("$t")) {
+                                        sb.append(" (");
+                                        sb.append(SimpleSimon.niceTime(targetId));
+                                        sb.append(") ");
+                                        String transactionName = (String) ooDb.get(targetId, NameIds.TRANSACTION_NAME, longTimestamp);
+                                        sb.append(transactionName);
+                                    }
+                                    StringBuilder lb = new StringBuilder();
+                                    String subject = (String) ooDb.get(targetId, NameIds.TRANSACTION_NAME, longTimestamp);
+                                    if (subject != null) {
+                                        lb.append(' ');
+                                        lb.append(subject);
+                                        lb.append(" | ");
+                                    }
+                                    String body = (String) ooDb.get(targetId, NameIds.BODY, longTimestamp);
+                                    if (body != null) {
+                                        if (subject != null) {
                                             lb.append(" | ");
                                         }
-                                        List bodyList = nvmn.getList(NameIds.BODY).flatList(longTimestamp);
-                                        if (bodyList.size() > 0) {
-                                            if (subjectList.size() == 0) {
-                                                lb.append(" | ");
-                                            }
-                                            String body = bodyList.get(0).toString();
-                                            lb.append(body);
-                                        }
-                                        String line = lb.toString();
-                                        line = line.replace("\r", "");
-                                        if (line.length() > 60)
-                                            line = line.substring(0, 60);
-                                        line = SimpleSimon.encode(line, 0, SimpleSimon.ENCODE_SINGLE_LINE); //line text
-                                        sb.append(line);
+                                        lb.append(body);
                                     }
+                                    String line = lb.toString();
+                                    line = line.replace("\r", "");
+                                    if (line.length() > 60)
+                                        line = line.substring(0, 60);
+                                    line = SimpleSimon.encode(line, 0, SimpleSimon.ENCODE_SINGLE_LINE); //line text
+                                    sb.append(line);
                                     sb.append("<br />");
                                 }
                             }

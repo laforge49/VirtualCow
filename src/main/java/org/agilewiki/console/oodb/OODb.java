@@ -268,6 +268,9 @@ public class OODb {
     }
 
     public boolean isNode(String id, long longTimestamp) {
+        char x = id.charAt(1);
+        if (x != 'n' && x != 'r' && x != 't')
+            return false;
         return getNodeValue(id, Key_Node.NODETYPE_ID, longTimestamp) != null;
     }
 
@@ -318,6 +321,10 @@ public class OODb {
     public PeekABoo<String> keyValueIdIterable(String keyId, long timestamp) {
         String prefix = SecondaryId.SECONDARY_ID + keyId;
         return db.idsIterable(prefix, timestamp);
+    }
+
+    public boolean keyHasValueId(String keyId, long timestamp) {
+        return keyValueIdIterable(keyId, timestamp).hasNext();
     }
 
     public boolean keyHasTargetId(String keyId, String valueId, long timestamp) {
