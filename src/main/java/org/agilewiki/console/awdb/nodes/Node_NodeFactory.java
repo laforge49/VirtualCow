@@ -1,5 +1,6 @@
 package org.agilewiki.console.awdb.nodes;
 
+import org.agilewiki.console.NameIds;
 import org.agilewiki.console.User_Node;
 import org.agilewiki.console.awdb.AwDb;
 import org.agilewiki.console.awdb.Node;
@@ -25,7 +26,7 @@ public class Node_NodeFactory extends Metadata_NodeFactory {
             awDb.createSecondaryId(nodeId, Key_NodeFactory.SUPERTYPE_ID, superType);
         }
         awDb.createLnk1(nodeId,
-                Lnk1_NodeFactory.OFROLE_ID,
+                NameIds.OFROLE_ID,
                 roleId);
         for (String attributeName : attributes) {
             Attribute_NodeFactory.define(attributeName, nodeId);

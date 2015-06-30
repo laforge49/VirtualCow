@@ -49,17 +49,17 @@ public class RecreateSystemRole_Node extends RecreateRole_Node {
         Key_NodeFactory.define(Key_NodeFactory.ATTRIBUTENAME_KEY_ID, Attribute_NodeFactory.ID, System_Role.ID);
         Key_NodeFactory.define(Key_NodeFactory.INVDEPENDENCY_KEY_ID, Lnk1_NodeFactory.ID, System_Role.ID);
 
-        Key_NodeFactory.define(Key_NodeFactory.EMAIL_KEY_ID, User_Node.ID, System_Role.ID);
-        Key_NodeFactory.define(Key_NodeFactory.ROLE_KEY_ID, User_Node.ID, System_Role.ID);
-        Key_NodeFactory.define(Key_NodeFactory.SUBJECT_KEY_ID, Node_NodeFactory.ID, System_Role.ID);
+        Key_NodeFactory.define(NameIds.EMAIL_KEY_ID, User_Node.ID, System_Role.ID);
+        Key_NodeFactory.define(NameIds.ROLE_KEY_ID, User_Node.ID, System_Role.ID);
+        Key_NodeFactory.define(NameIds.SUBJECT_KEY_ID, Node_NodeFactory.ID, System_Role.ID);
 
         Lnk1_NodeFactory.define(Lnk1_NodeFactory.TARGET_LNK1_ID, null, Node_NodeFactory.ID, Node_NodeFactory.ID, System_Role.ID);
-        Lnk1_NodeFactory.define(Lnk1_NodeFactory.OFROLE_LNK1_ID, Lnk1_NodeFactory.OFROLE_ID, Metadata_NodeFactory.ID, Role_NodeFactory.ID, System_Role.ID);
+        Lnk1_NodeFactory.define(NameIds.OFROLE_LNK1_ID, NameIds.OFROLE_ID, Metadata_NodeFactory.ID, Role_NodeFactory.ID, System_Role.ID);
         Lnk1_NodeFactory.define(Lnk1_NodeFactory.ATTRIBUTEOF_LNK1_ID, Lnk1_NodeFactory.ATTRIBUTEOF_ID, Attribute_NodeFactory.ID, Metadata_NodeFactory.ID, System_Role.ID);
         Lnk1_NodeFactory.define(Lnk1_NodeFactory.ORIGIN_LNK1_ID, null, Lnk1_NodeFactory.ID, Node_NodeFactory.ID, System_Role.ID);
         Lnk1_NodeFactory.define(Lnk1_NodeFactory.DESTINATION_LNK1_ID, null, Lnk1_NodeFactory.ID, Node_NodeFactory.ID, System_Role.ID);
 
-        Lnk1_NodeFactory.define(Lnk1_NodeFactory.USER_LNK1_ID, null, Metadata_NodeFactory.ID, User_Node.ID, System_Role.ID);
+        Lnk1_NodeFactory.define(NameIds.USER_LNK1_ID, null, Metadata_NodeFactory.ID, User_Node.ID, System_Role.ID);
 
         Node_NodeFactory.define(Metadata_NodeFactory.ID, Node_NodeFactory.ID, null, System_Role.ID);
 

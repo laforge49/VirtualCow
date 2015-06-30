@@ -64,7 +64,7 @@ public class SecondaryKeysBlade extends RequestBlade {
                             }
                             --limit;
                             String secondaryId = SecondaryId.secondaryId(keyId, valueId);
-                            String nodeId = awDb.getOnlyKeyTargetId(Key_NodeFactory.EMAIL_ID, valueId, longTimestamp);
+                            String nodeId = awDb.getOnlyKeyTargetId(NameIds.EMAIL_ID, valueId, longTimestamp);
                             String line = valueId.substring(2);
                             if (line.length() > 60)
                                 line = line.substring(0, 60);
