@@ -1,7 +1,6 @@
 package org.agilewiki.console;
 
 import org.agilewiki.console.awdb.Delete;
-import org.agilewiki.console.awdb.nodes.JournalEntry_Node;
 import org.agilewiki.console.awdb.nodes.Key_NodeFactory;
 import org.agilewiki.console.roles.Role;
 import org.agilewiki.console.roles.Role_NodeFactory;
@@ -11,7 +10,7 @@ import org.agilewiki.utils.virtualcow.Db;
 /**
  * Creates the common metadata for a role.
  */
-abstract public class RecreateRole_Node extends JournalEntry_Node {
+abstract public class RecreateRole_Node extends VCJournalEntry_Node {
 
     public RecreateRole_Node() {
     }

@@ -2,7 +2,7 @@ package org.agilewiki.console.roles.user.newEmailAddress;
 
 import org.agilewiki.console.NameIds;
 import org.agilewiki.console.User_NodeInstance;
-import org.agilewiki.console.awdb.nodes.JournalEntry_Node;
+import org.agilewiki.console.VCJournalEntry_Node;
 import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
@@ -10,7 +10,7 @@ import org.agilewiki.utils.virtualcow.Db;
 /**
  * Changes the user's password.
  */
-public class NewEmailAddress_Node extends JournalEntry_Node {
+public class NewEmailAddress_Node extends VCJournalEntry_Node {
     public final static String NAME = "newEmailAddress";
 
     public NewEmailAddress_Node() {

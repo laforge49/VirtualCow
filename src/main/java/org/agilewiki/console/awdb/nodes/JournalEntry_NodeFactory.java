@@ -1,5 +1,6 @@
 package org.agilewiki.console.awdb.nodes;
 
+import org.agilewiki.console.VCJournalEntry_Node;
 import org.agilewiki.console.awdb.AwDb;
 import org.agilewiki.console.awdb.Node;
 import org.agilewiki.utils.immutable.FactoryRegistry;
@@ -17,6 +18,6 @@ public class JournalEntry_NodeFactory extends Node_Node {
 
     @Override
     public Node createNode(String nodeId, long timestamp) {
-        return new JournalEntry_Node(nodeId, timestamp);
+        return new VCJournalEntry_Node(nodeId, timestamp);
     }
 }

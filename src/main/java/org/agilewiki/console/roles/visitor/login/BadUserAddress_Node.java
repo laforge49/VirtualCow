@@ -1,12 +1,12 @@
 package org.agilewiki.console.roles.visitor.login;
 
 import org.agilewiki.console.NameIds;
-import org.agilewiki.console.awdb.nodes.JournalEntry_Node;
+import org.agilewiki.console.VCJournalEntry_Node;
 import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
-public class BadUserAddress_Node extends JournalEntry_Node {
+public class BadUserAddress_Node extends VCJournalEntry_Node {
     public final static String NAME = "badUserAddress";
 
     public BadUserAddress_Node() {

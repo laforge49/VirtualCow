@@ -9,30 +9,30 @@ import org.agilewiki.utils.virtualcow.Db;
 import org.agilewiki.utils.virtualcow.Transaction;
 
 /**
- * Base class for all virtual cow transactions.
+ * Created by Bill on 6/30/2015.
  */
-public class JournalEntry_Node extends NodeBase implements Transaction {
+public class XJournalEntry_Node extends NodeBase implements Transaction {
 
-    public JournalEntry_Node() {
+    public XJournalEntry_Node() {
         super(null, 0L);
     }
 
-    public JournalEntry_Node(String nodeId, long timestamp) {
+    public XJournalEntry_Node(String nodeId, long timestamp) {
         super(nodeId, timestamp);
     }
 
     @Override
     public final void transform(Db db, MapNode tMapNode) {
+        transformInit(db, tMapNode);
+        process(db, tMapNode);
+        getAwDb().addNode(this);
+    }
+
+    public void transformInit(Db db, MapNode tMapNode) {
         initialize(db.getJEName(), FactoryRegistry.MAX_TIMESTAMP);
         String transactionName = tMapNode.get(Db.transactionNameId).toString();
         getAwDb().createSecondaryId(db.getJEName(), Key_NodeFactory.NODETYPE_ID,
                 NameId.generate(transactionName + ".node"));
-        String userId = (String) tMapNode.get(NameIds.USER_KEY);
-        if (userId != null) {
-            getAwDb().createLnk1(getNodeId(), NameIds.USER_KEY, userId);
-        }
-        process(db, tMapNode);
-        getAwDb().addNode(this);
     }
 
     public void process(Db db, MapNode tMapNode) {
