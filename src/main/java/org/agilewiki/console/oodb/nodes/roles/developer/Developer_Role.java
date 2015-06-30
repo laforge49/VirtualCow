@@ -14,7 +14,7 @@ public class Developer_Role extends Role_NodeInstance {
 
     public static void create(OODb ooDb)
             throws Exception {
-        ooDb.addImmutableNode(new Developer_Role(ID, FactoryRegistry.MAX_TIMESTAMP));
+        ooDb.addTimelessNode(new Developer_Role(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     private DeveloperBlade developerBlade;

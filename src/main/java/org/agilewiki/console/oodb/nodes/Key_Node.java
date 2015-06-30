@@ -25,7 +25,7 @@ public class Key_Node extends Metadata_Node {
     final public static String SUBJECT_KEY_ID = "$nsubject.key";
 
     public static void create(OODb ooDb) {
-        ooDb.addImmutableNode(new Key_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
+        ooDb.addTimelessNode(new Key_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     public static void define(String nodeId, String targetType, String roleId) {

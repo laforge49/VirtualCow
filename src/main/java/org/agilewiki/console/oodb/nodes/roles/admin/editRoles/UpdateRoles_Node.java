@@ -9,7 +9,7 @@ public class UpdateRoles_Node extends JournalEntry_Node {
     public final static String ID = "$nupdateRoles.node";
 
     public static void create(OODb ooDb) {
-        ooDb.addImmutableNode(new UpdateRoles_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
+        ooDb.addTimelessNode(new UpdateRoles_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     public UpdateRoles_Node(String nodeId, long timestamp) {

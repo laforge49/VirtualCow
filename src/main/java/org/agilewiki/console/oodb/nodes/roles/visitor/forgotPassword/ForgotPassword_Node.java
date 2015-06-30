@@ -9,7 +9,7 @@ public class ForgotPassword_Node extends JournalEntry_Node {
     public final static String ID = "$nforgotPassword.node";
 
     public static void create(OODb ooDb) {
-        ooDb.addImmutableNode(new ForgotPassword_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
+        ooDb.addTimelessNode(new ForgotPassword_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     public ForgotPassword_Node(String nodeId, long timestamp) {

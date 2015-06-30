@@ -15,7 +15,7 @@ public class Visitor_Role extends Role_NodeInstance {
     public final static String ID = "$nvisitor.role";
 
     public static void create(OODb ooDb) throws Exception {
-        ooDb.addImmutableNode(new Visitor_Role(ID, FactoryRegistry.MAX_TIMESTAMP));
+        ooDb.addTimelessNode(new Visitor_Role(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     private WelcomeBlade welcomeBlade;

@@ -8,7 +8,7 @@ public class User_Node extends Node_NodeInstance {
     public final static String ID = "$nuser.node";
 
     public static void create(OODb ooDb) {
-        ooDb.addImmutableNode(new User_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
+        ooDb.addTimelessNode(new User_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     public User_Node(String nodeId, long timestamp) {

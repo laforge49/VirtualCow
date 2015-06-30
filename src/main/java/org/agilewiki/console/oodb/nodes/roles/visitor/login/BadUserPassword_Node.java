@@ -9,7 +9,7 @@ public class BadUserPassword_Node extends JournalEntry_Node {
     public final static String ID = "$nbadUserPassword.node";
 
     public static void create(OODb ooDb) {
-        ooDb.addImmutableNode(new BadUserPassword_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
+        ooDb.addTimelessNode(new BadUserPassword_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     public BadUserPassword_Node(String nodeId, long timestamp) {

@@ -25,7 +25,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Object Oriented Database, without state caching.
@@ -37,7 +36,7 @@ public class OODb {
     private Map<String, Node> updatedNodes;
     private final DbUpdater dbUpdater;
     private final DbFactoryRegistry dbFactoryRegistry;
-    private final Map<String, Node> immutableNodes = new HashMap<String, Node>();
+    private final Map<String, Node> timelessNodes = new HashMap<String, Node>();
     public final VersionedListNode versionedNilList;
     public final VersionedMapNode versionedNilMap;
     public final ListNode nilList;
@@ -126,7 +125,7 @@ public class OODb {
         char x = nodeId.charAt(1);
         if (x != 'n' && x != 'r' && x != 't')
             return null;
-        Node node = immutableNodes.get(nodeId);
+        Node node = timelessNodes.get(nodeId);
         if (node != null)
             return node;
         if (Timestamp.generate() < timestamp)
@@ -140,8 +139,8 @@ public class OODb {
         return node;
     }
 
-    public void addImmutableNode(Node node) {
-        immutableNodes.put(node.getNodeId(), node);
+    public void addTimelessNode(Node node) {
+        timelessNodes.put(node.getNodeId(), node);
     }
 
     public void addNode(Node node) {

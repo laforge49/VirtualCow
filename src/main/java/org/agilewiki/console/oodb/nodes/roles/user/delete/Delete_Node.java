@@ -9,7 +9,7 @@ public class Delete_Node extends JournalEntry_Node {
     public final static String ID = "$ndelete.node";
 
     public static void create(OODb ooDb) {
-        ooDb.addImmutableNode(new Delete_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
+        ooDb.addTimelessNode(new Delete_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     public Delete_Node(String nodeId, long timestamp) {

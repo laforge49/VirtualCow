@@ -9,7 +9,7 @@ public class NewUser_Node extends JournalEntry_Node {
     public final static String ID = "$nnewUser.node";
 
     public static void create(OODb ooDb) {
-        ooDb.addImmutableNode(new NewUser_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
+        ooDb.addTimelessNode(new NewUser_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     public NewUser_Node(String nodeId, long timestamp) {

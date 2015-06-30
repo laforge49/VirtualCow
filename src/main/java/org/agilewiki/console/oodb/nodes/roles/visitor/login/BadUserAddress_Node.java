@@ -9,7 +9,7 @@ public class BadUserAddress_Node extends JournalEntry_Node {
     public final static String ID = "$nbadUserAddress.node";
 
     public static void create(OODb ooDb) {
-        ooDb.addImmutableNode(new BadUserAddress_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
+        ooDb.addTimelessNode(new BadUserAddress_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     public BadUserAddress_Node(String nodeId, long timestamp) {

@@ -11,7 +11,7 @@ public class Node_Node extends Metadata_Node {
 
     public static void create(OODb ooDb)
             throws Exception {
-        ooDb.addImmutableNode(new Node_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
+        ooDb.addTimelessNode(new Node_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
         JournalEntry_Node.create(ooDb);
         Role_Node.create(ooDb);
         User_Node.create(ooDb);

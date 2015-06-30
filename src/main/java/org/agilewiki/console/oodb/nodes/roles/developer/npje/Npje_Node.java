@@ -9,7 +9,7 @@ public class Npje_Node extends JournalEntry_Node {
     public final static String ID = "$nnpje.node";
 
     public static void create(OODb ooDb) {
-        ooDb.addImmutableNode(new Npje_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
+        ooDb.addTimelessNode(new Npje_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     public Npje_Node(String nodeId, long timestamp) {

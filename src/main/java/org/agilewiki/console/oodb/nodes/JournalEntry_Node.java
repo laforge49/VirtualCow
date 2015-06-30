@@ -8,7 +8,7 @@ public class JournalEntry_Node extends Node_NodeInstance {
     public final static String ID = "$njournalEntry.node";
 
     public static void create(OODb ooDb) {
-        ooDb.addImmutableNode(new JournalEntry_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
+        ooDb.addTimelessNode(new JournalEntry_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     public JournalEntry_Node(String nodeId, long timestamp) {

@@ -10,7 +10,7 @@ public class Attribute_Node extends Node_NodeInstance {
     public final static String ID = "$nattribute.node";
 
     public static void create(OODb ooDb) {
-        ooDb.addImmutableNode(new Attribute_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
+        ooDb.addTimelessNode(new Attribute_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     public static void define(String attributeNameId, String nodeId) {

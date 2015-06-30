@@ -24,7 +24,7 @@ public class Lnk1_Node extends Metadata_Node {
     final public static String USER_LNK1_ID = "$nuser.lnk1";
 
     public static void create(OODb ooDb) {
-        ooDb.addImmutableNode(new Lnk1_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
+        ooDb.addTimelessNode(new Lnk1_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     public static void define(String nodeId, String invDependency, String originType, String destinationType, String ofRole) {

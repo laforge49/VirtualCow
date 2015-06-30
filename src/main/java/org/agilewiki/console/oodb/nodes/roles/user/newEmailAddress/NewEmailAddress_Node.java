@@ -9,7 +9,7 @@ public class NewEmailAddress_Node extends JournalEntry_Node {
     public final static String ID = "$nnewEmailAddress.node";
 
     public static void create(OODb ooDb) {
-        ooDb.addImmutableNode(new NewEmailAddress_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
+        ooDb.addTimelessNode(new NewEmailAddress_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     public NewEmailAddress_Node(String nodeId, long timestamp) {

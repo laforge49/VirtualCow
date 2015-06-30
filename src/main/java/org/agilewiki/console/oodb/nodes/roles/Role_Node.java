@@ -14,7 +14,7 @@ public class Role_Node extends Node_NodeInstance {
     public final static String ID = "$nrole.node";
 
     public static void create(OODb ooDb) throws Exception {
-        ooDb.addImmutableNode(new Role_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
+        ooDb.addTimelessNode(new Role_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
         Admin_Role.create(ooDb);
         Developer_Role.create(ooDb);
         System_Role.create(ooDb);

@@ -9,7 +9,7 @@ public class Metadata_Node extends Node_NodeInstance {
 
     public static void create(OODb ooDb)
             throws Exception {
-        ooDb.addImmutableNode(new Metadata_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
+        ooDb.addTimelessNode(new Metadata_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
         Node_Node.create(ooDb);
         Lnk1_Node.create(ooDb);
         Key_Node.create(ooDb);

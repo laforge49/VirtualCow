@@ -12,7 +12,7 @@ public class System_Role extends Role_NodeInstance {
     public final static String ID = "$nsystem.role";
 
     public static void create(OODb ooDb) {
-        ooDb.addImmutableNode(new System_Role(ID, FactoryRegistry.MAX_TIMESTAMP));
+        ooDb.addTimelessNode(new System_Role(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     public System_Role(String nodeId, long timestamp) {

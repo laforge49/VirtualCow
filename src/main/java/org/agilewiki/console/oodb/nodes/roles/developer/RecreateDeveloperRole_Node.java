@@ -9,7 +9,7 @@ public class RecreateDeveloperRole_Node extends JournalEntry_Node {
     public final static String ID = "$nrecreateDeveloperRole.node";
 
     public static void create(OODb ooDb) {
-        ooDb.addImmutableNode(new RecreateDeveloperRole_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
+        ooDb.addTimelessNode(new RecreateDeveloperRole_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     public RecreateDeveloperRole_Node(String nodeId, long timestamp) {

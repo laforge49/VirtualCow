@@ -9,7 +9,7 @@ public class RecreateVisitorRole_Node extends JournalEntry_Node {
     public final static String ID = "$nrecreateVisitorRole.node";
 
     public static void create(OODb ooDb) {
-        ooDb.addImmutableNode(new RecreateVisitorRole_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
+        ooDb.addTimelessNode(new RecreateVisitorRole_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     public RecreateVisitorRole_Node(String nodeId, long timestamp) {

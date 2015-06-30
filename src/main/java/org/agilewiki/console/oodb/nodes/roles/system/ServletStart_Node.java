@@ -9,7 +9,7 @@ public class ServletStart_Node extends JournalEntry_Node {
     public final static String ID = "$nservletStart.node";
 
     public static void create(OODb ooDb) {
-        ooDb.addImmutableNode(new ServletStart_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
+        ooDb.addTimelessNode(new ServletStart_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     public ServletStart_Node(String nodeId, long timestamp) {

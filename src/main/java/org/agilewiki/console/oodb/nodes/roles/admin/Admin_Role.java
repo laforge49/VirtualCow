@@ -14,7 +14,7 @@ public class Admin_Role extends Role_NodeInstance {
 
     public static void create(OODb ooDb)
             throws Exception {
-        ooDb.addImmutableNode(new Admin_Role(ID, FactoryRegistry.MAX_TIMESTAMP));
+        ooDb.addTimelessNode(new Admin_Role(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     private AdminBlade adminBlade;
