@@ -1,7 +1,6 @@
 package org.agilewiki.console.oodb.nodes.roles.admin.editRoles;
 
 import org.agilewiki.console.NameIds;
-import org.agilewiki.console.User;
 import org.agilewiki.console.oodb.nodes.JournalEntry_NodeInstance;
 import org.agilewiki.utils.immutable.collections.ListNode;
 import org.agilewiki.utils.immutable.collections.MapNode;
@@ -26,14 +25,14 @@ public class UpdateRoles_NodeInstance extends JournalEntry_NodeInstance {
         if (ln != null) {
             List<String> add = ln.flatList();
             for (String userRole : add) {
-                getOoDb().createSecondaryId(nodeId, User.ROLE_ID, NameIds.generate(userRole));
+                getOoDb().createSecondaryId(nodeId, NameIds.ROLE_ID, NameIds.generate(userRole));
             }
         }
         ln = mapNode.getList(NameIds.REMOVEROLES_ID);
         if (ln != null) {
             List<String> remove = ln.flatList();
             for (String userRole : remove) {
-                getOoDb().removeSecondaryId(nodeId, User.ROLE_ID, NameIds.generate(userRole));
+                getOoDb().removeSecondaryId(nodeId, NameIds.ROLE_ID, NameIds.generate(userRole));
             }
         }
     }

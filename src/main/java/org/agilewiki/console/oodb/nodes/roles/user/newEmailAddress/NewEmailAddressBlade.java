@@ -1,9 +1,6 @@
 package org.agilewiki.console.oodb.nodes.roles.user.newEmailAddress;
 
-import org.agilewiki.console.PostRequestBlade;
-import org.agilewiki.console.SimpleSimon;
-import org.agilewiki.console.Tokens;
-import org.agilewiki.console.User;
+import org.agilewiki.console.*;
 import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.utils.immutable.FactoryRegistry;
@@ -77,8 +74,8 @@ public class NewEmailAddressBlade extends PostRequestBlade {
                 }
                 String oldEmailAddress = User.email(userId, FactoryRegistry.MAX_TIMESTAMP);
                 MapNode mn = ooDb.nilMap;
-                mn = mn.add(User.USER_KEY, userId);
-                mn = mn.add(User.EMAIL_ID, emailAddress);
+                mn = mn.add(NameIds.USER_KEY, userId);
+                mn = mn.add(NameIds.EMAIL_ID, emailAddress);
                 asyncRequestImpl.send(ooDb.update(NewEmailAddress_NodeInstance.NAME, mn),
                         new AsyncResponseProcessor<String>() {
                             @Override

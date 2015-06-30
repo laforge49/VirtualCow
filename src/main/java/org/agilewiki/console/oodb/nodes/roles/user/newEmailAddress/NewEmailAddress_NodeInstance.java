@@ -1,5 +1,6 @@
 package org.agilewiki.console.oodb.nodes.roles.user.newEmailAddress;
 
+import org.agilewiki.console.NameIds;
 import org.agilewiki.console.User;
 import org.agilewiki.console.oodb.nodes.JournalEntry_NodeInstance;
 import org.agilewiki.utils.ids.ValueId;
@@ -21,12 +22,12 @@ public class NewEmailAddress_NodeInstance extends JournalEntry_NodeInstance {
 
     @Override
     public void process(Db db, MapNode mapNode) {
-        String userId = (String) mapNode.get(User.USER_KEY);
+        String userId = (String) mapNode.get(NameIds.USER_KEY);
 
         String oldEmailAddressId = ValueId.generate(User.email(userId, getOoDb().getDbTimestamp()));
-        getOoDb().removeSecondaryId(userId, User.EMAIL_ID, oldEmailAddressId);
+        getOoDb().removeSecondaryId(userId, NameIds.EMAIL_ID, oldEmailAddressId);
 
-        String emailAddressId = ValueId.generate((String) mapNode.get(User.EMAIL_ID));
-        getOoDb().createSecondaryId(userId, User.EMAIL_ID, emailAddressId);
+        String emailAddressId = ValueId.generate((String) mapNode.get(NameIds.EMAIL_ID));
+        getOoDb().createSecondaryId(userId, NameIds.EMAIL_ID, emailAddressId);
     }
 }

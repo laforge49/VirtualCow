@@ -16,4 +16,8 @@ public class NameIds extends NameId {
     public final static String NODE_ID = generate("nodeId");
     public final static String REMOVEROLES_ID = generate("removeRoles");
     public final static String ADDROLES_ID = generate("addRoles");
+    public static final String EMAIL_ID = NameId.generate("email");
+    public static final String ROLE_ID = NameId.generate("role");
+    public static final String PASSWORD_KEY = NameId.generate("password");
+    public static final String USER_KEY = NameId.generate("user");
 }

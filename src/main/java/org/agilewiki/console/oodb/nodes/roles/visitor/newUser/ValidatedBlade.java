@@ -1,7 +1,6 @@
 package org.agilewiki.console.oodb.nodes.roles.visitor.newUser;
 
 import org.agilewiki.console.*;
-import org.agilewiki.console.oodb.nodes.User_Node;
 import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.console.oodb.nodes.roles.Role_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.developer.Developer_Role;
@@ -91,12 +90,12 @@ public class ValidatedBlade extends PostRequestBlade {
                     return;
                 }
                 MapNode mn = ooDb.nilMap;
-                mn = mn.add(User.USER_KEY, userId);
+                mn = mn.add(NameIds.USER_KEY, userId);
                 String emailId = ValueId.generate(email);
-                mn = mn.add(User.EMAIL_ID, emailId);
-                mn = mn.add(User.PASSWORD_KEY, passwordHash);
-                mn = mn.add(User.ROLE_ID, Role_NodeInstance.roleName(User_Role.ID));
-                mn = mn.add(User.ROLE_ID, Role_NodeInstance.roleName(Developer_Role.ID));
+                mn = mn.add(NameIds.EMAIL_ID, emailId);
+                mn = mn.add(NameIds.PASSWORD_KEY, passwordHash);
+                mn = mn.add(NameIds.ROLE_ID, Role_NodeInstance.roleName(User_Role.ID));
+                mn = mn.add(NameIds.ROLE_ID, Role_NodeInstance.roleName(Developer_Role.ID));
                 asyncRequestImpl.send(ooDb.update(NewUser_NodeInstance.NAME, mn),
                         new AsyncResponseProcessor<String>() {
                             @Override

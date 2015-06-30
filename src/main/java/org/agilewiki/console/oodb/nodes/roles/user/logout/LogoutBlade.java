@@ -40,7 +40,7 @@ public class LogoutBlade extends PostRequestBlade {
                 String email = User.email(userId, FactoryRegistry.MAX_TIMESTAMP);
                 MapNode mn = ooDb.nilMap;
                 mn = mn.add(NameIds.SUBJECT, email);
-                mn = mn.add(User.USER_KEY, userId);
+                mn = mn.add(NameIds.USER_KEY, userId);
                 asyncRequestImpl.send(ooDb.update(Logout_NodeInstance.NAME, mn), new AsyncResponseProcessor<String>() {
                     @Override
                     public void processAsyncResponse(String _response) throws Exception {

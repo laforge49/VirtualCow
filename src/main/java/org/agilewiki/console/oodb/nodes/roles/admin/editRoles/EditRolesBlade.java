@@ -63,7 +63,7 @@ public class EditRolesBlade extends PostRequestBlade {
                                 sb.append(roleName);
                                 sb.append("\"");
                                 if (ooDb.nodeHasValueId(nodeId,
-                                        User.ROLE_ID,
+                                        NameIds.ROLE_ID,
                                         NameId.generate(roleName),
                                         longTimestamp))
                                     sb.append(" checked");
@@ -104,7 +104,7 @@ public class EditRolesBlade extends PostRequestBlade {
                 while (true) {
                     try {
                         mn = ooDb.nilMap;
-                        mn = mn.add(User.USER_KEY, userId);
+                        mn = mn.add(NameIds.USER_KEY, userId);
                         mn = mn.add(NameIds.NODE_ID, nodeId);
                         for (String role : simpleSimon.roles.keySet()) {
                             if (!roleName.equals("visitor") && !roleName.equals("system")) {
@@ -114,7 +114,7 @@ public class EditRolesBlade extends PostRequestBlade {
                                     n = true;
                                 }
                                 if (ooDb.nodeHasValueId(nodeId,
-                                        User.ROLE_ID,
+                                        NameIds.ROLE_ID,
                                         NameId.generate(role),
                                         longTimestamp)) {
                                     o = true;
@@ -156,7 +156,7 @@ public class EditRolesBlade extends PostRequestBlade {
                                         sb.append(roleName);
                                         sb.append("\"");
                                         if (ooDb.nodeHasValueId(nodeId,
-                                                User.ROLE_ID,
+                                                NameIds.ROLE_ID,
                                                 NameId.generate(roleName),
                                                 longTimestamp))
                                             sb.append(" checked");

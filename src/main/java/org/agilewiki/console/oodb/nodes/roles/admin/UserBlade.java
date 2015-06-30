@@ -1,5 +1,6 @@
 package org.agilewiki.console.oodb.nodes.roles.admin;
 
+import org.agilewiki.console.NameIds;
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.User;
 import org.agilewiki.console.oodb.nodes.roles.Role;
@@ -61,7 +62,7 @@ public class UserBlade extends RequestBlade {
                                 sb.append("<tr>");
                                 sb.append("<td>");
                                 if (ooDb.nodeHasValueId(nodeId,
-                                        User.ROLE_ID,
+                                        NameIds.ROLE_ID,
                                         NameId.generate(roleName),
                                         longTimestamp))
                                     sb.append("&#10004;");

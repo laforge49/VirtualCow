@@ -2,6 +2,7 @@ package org.agilewiki.console;
 
 import org.agilewiki.console.oodb.OODb;
 import org.agilewiki.console.oodb.nodes.Metadata_Node;
+import org.agilewiki.console.oodb.nodes.User_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.console.oodb.nodes.roles.system.ServletStart_Node;
 import org.agilewiki.console.oodb.nodes.roles.system.ServletStart_NodeInstance;
@@ -143,8 +144,9 @@ public class SimpleSimon extends HttpServlet {
         if (userId == null) {
             ((Visitor_Role) ooDb.fetchNode(Visitor_Role.ID, FactoryRegistry.MAX_TIMESTAMP)).dispatchGetRequest(request, null);
         } else {
+            User_NodeInstance user_nodeInstance = (User_NodeInstance) ooDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
             String roleName = request.getParameter("role");
-            if (roleName == null || !User.hasRole(userId, roleName))
+            if (roleName == null || !user_nodeInstance.hasRole(roleName))
                 roleName = "profile";
             Role role = roles.get(roleName);
             if (role == null) {
@@ -174,8 +176,9 @@ public class SimpleSimon extends HttpServlet {
         if (userId == null) {
             ((Visitor_Role) ooDb.fetchNode(Visitor_Role.ID, FactoryRegistry.MAX_TIMESTAMP)).dispatchPostRequest(request, response, null);
         } else {
+            User_NodeInstance user_nodeInstance = (User_NodeInstance) ooDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
             String roleName = request.getParameter("role");
-            if (roleName == null || !User.hasRole(userId, roleName))
+            if (roleName == null || !user_nodeInstance.hasRole(roleName))
                 roleName = "profile";
             Role role = roles.get(roleName);
             if (role == null) {

@@ -1,6 +1,6 @@
 package org.agilewiki.console.oodb.nodes;
 
-import org.agilewiki.console.User;
+import org.agilewiki.console.NameIds;
 import org.agilewiki.console.oodb.NodeBase;
 import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.immutable.FactoryRegistry;
@@ -27,9 +27,9 @@ public class JournalEntry_NodeInstance extends NodeBase implements Transaction {
         String transactionName = tMapNode.get(Db.transactionNameId).toString();
         getOoDb().createSecondaryId(db.getJEName(), Key_Node.NODETYPE_ID,
                 NameId.generate(transactionName + ".node"));
-        String userId = (String) tMapNode.get(User.USER_KEY);
+        String userId = (String) tMapNode.get(NameIds.USER_KEY);
         if (userId != null) {
-            getOoDb().createLnk1(getNodeId(), User.USER_KEY, userId);
+            getOoDb().createLnk1(getNodeId(), NameIds.USER_KEY, userId);
         }
         process(db, tMapNode);
         getOoDb().addNode(this);

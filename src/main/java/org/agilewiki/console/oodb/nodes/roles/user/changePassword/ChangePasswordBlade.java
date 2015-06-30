@@ -1,5 +1,6 @@
 package org.agilewiki.console.oodb.nodes.roles.user.changePassword;
 
+import org.agilewiki.console.NameIds;
 import org.agilewiki.console.PostRequestBlade;
 import org.agilewiki.console.Tokens;
 import org.agilewiki.console.User;
@@ -74,8 +75,8 @@ public class ChangePasswordBlade extends PostRequestBlade {
                     return;
                 }
                 MapNode mn = ooDb.nilMap;
-                mn = mn.add(User.USER_KEY, userId);
-                mn = mn.add(User.PASSWORD_KEY, User.encodePassword(servletContext, userId, newPassword));
+                mn = mn.add(NameIds.USER_KEY, userId);
+                mn = mn.add(NameIds.PASSWORD_KEY, User.encodePassword(servletContext, userId, newPassword));
                 asyncRequestImpl.send(ooDb.update(ChangePassword_NodeInstance.NAME, mn),
                         new AsyncResponseProcessor<String>() {
                             @Override

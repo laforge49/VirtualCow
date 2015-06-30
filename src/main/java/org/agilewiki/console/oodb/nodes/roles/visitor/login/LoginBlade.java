@@ -81,7 +81,7 @@ public class LoginBlade extends PostRequestBlade {
                 if (!User.confirmPassword(servletContext, userId, password)) {
                     MapNode mn = ooDb.nilMap;
                     mn = mn.add(NameIds.SUBJECT, emailAddress);
-                    mn = mn.add(User.USER_KEY, userId);
+                    mn = mn.add(NameIds.USER_KEY, userId);
                     mn = mn.add(NameIds.REMOTE_HOST, request.getRemoteHost());
                     mn = mn.add(NameIds.REMOTE_ADDR, request.getRemoteAddr());
                     mn = mn.add(NameIds.REMOTE_PORT, request.getRemotePort());
@@ -112,7 +112,7 @@ public class LoginBlade extends PostRequestBlade {
                 response.addCookie(loginCookie);
                 MapNode mn = ooDb.nilMap;
                 mn = mn.add(NameIds.SUBJECT, emailAddress);
-                mn = mn.add(User.USER_KEY, userId);
+                mn = mn.add(NameIds.USER_KEY, userId);
                 mn = mn.add(NameIds.REMOTE_HOST, request.getRemoteHost());
                 mn = mn.add(NameIds.REMOTE_ADDR, request.getRemoteAddr());
                 mn = mn.add(NameIds.REMOTE_PORT, request.getRemotePort());

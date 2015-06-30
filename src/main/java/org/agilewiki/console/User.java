@@ -3,12 +3,10 @@ package org.agilewiki.console;
 import org.agilewiki.console.oodb.OODb;
 import org.agilewiki.console.oodb.nodes.Key_Node;
 import org.agilewiki.console.oodb.nodes.User_Node;
-import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.console.oodb.nodes.roles.Role_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.admin.Admin_Role;
 import org.agilewiki.console.oodb.nodes.roles.developer.Developer_Role;
 import org.agilewiki.console.oodb.nodes.roles.user.User_Role;
-import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
@@ -17,48 +15,16 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Define a user.
  */
 public class User {
-    public static final String EMAIL_ID = NameId.generate("email");
-    public static final String ROLE_ID = NameId.generate("role");
-    public static final String PASSWORD_KEY = NameId.generate("password");
-    public static final String USER_KEY = NameId.generate("user");
-
-    public static List<Role> roles(SimpleSimon simpleSimon, String userId) {
-        while (true) {
-            try {
-                List<Role> roles = new ArrayList<Role>();
-                for (String roleId : simpleSimon.ooDb.nodeValueIdIterable(userId, ROLE_ID, FactoryRegistry.MAX_TIMESTAMP)) {
-                    Role role = simpleSimon.roles.get(NameId.name(roleId));
-                    if (role != null)
-                        roles.add(role);
-                }
-                return roles;
-            } catch (UnexpectedChecksumException uce) {
-            }
-        }
-    }
-
-    public static boolean hasRole(String userId, String role) {
-        OODb ooDb = SimpleSimon.simpleSimon.ooDb;
-        while (true) {
-            try {
-                String roleId = NameId.generate(role);
-                return ooDb.nodeHasValueId(userId, ROLE_ID, roleId, FactoryRegistry.MAX_TIMESTAMP);
-            } catch (UnexpectedChecksumException uce) {
-            }
-        }
-    }
 
     public static String email(String userId, long timestamp) {
         while (true) {
             try {
-                return SimpleSimon.simpleSimon.ooDb.getNodeValue(userId, EMAIL_ID, timestamp);
+                return SimpleSimon.simpleSimon.ooDb.getNodeValue(userId, NameIds.EMAIL_ID, timestamp);
             } catch (UnexpectedChecksumException uce) {
             }
         }
@@ -68,7 +34,7 @@ public class User {
         while (true) {
             try {
                 String emailId = ValueId.generate(email);
-                return SimpleSimon.simpleSimon.ooDb.getKeyTargetId(EMAIL_ID, emailId, timestamp);
+                return SimpleSimon.simpleSimon.ooDb.getKeyTargetId(NameIds.EMAIL_ID, emailId, timestamp);
             } catch (UnexpectedChecksumException uce) {
             }
         }
@@ -87,7 +53,7 @@ public class User {
         OODb ooDb = SimpleSimon.simpleSimon.ooDb;
         while (true) {
             try {
-                return (String) ooDb.get(userId, PASSWORD_KEY, timestamp);
+                return (String) ooDb.get(userId, NameIds.PASSWORD_KEY, timestamp);
             } catch (UnexpectedChecksumException uce) {
             }
         }
@@ -150,15 +116,15 @@ public class User {
                                     String passwordHash,
                                     String... userRoles) {
         OODb ooDb = SimpleSimon.simpleSimon.ooDb;
-        if (ooDb.keyHasTargetId(EMAIL_ID, emailId, ooDb.getDbTimestamp())) {
+        if (ooDb.keyHasTargetId(NameIds.EMAIL_ID, emailId, ooDb.getDbTimestamp())) {
             return "duplicate email: " + ValueId.value(emailId);
         }
         ooDb.set(userId, "$nsubject", emailId);
-        ooDb.set(userId, PASSWORD_KEY, passwordHash);
-        ooDb.createSecondaryId(userId, EMAIL_ID, emailId);
+        ooDb.set(userId, NameIds.PASSWORD_KEY, passwordHash);
+        ooDb.createSecondaryId(userId, NameIds.EMAIL_ID, emailId);
         ooDb.createSecondaryId(userId, Key_Node.NODETYPE_ID, User_Node.ID);
         for (String userRole : userRoles) {
-            ooDb.createSecondaryId(userId, ROLE_ID, NameIds.generate(userRole));
+            ooDb.createSecondaryId(userId, NameIds.ROLE_ID, NameIds.generate(userRole));
         }
         return null;
     }

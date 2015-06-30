@@ -131,7 +131,7 @@ public class OODb {
         if (Timestamp.generate() < timestamp)
             timestamp = FactoryRegistry.MAX_TIMESTAMP;
         String timestampId = Timestamp.timestampId(timestamp);
-        node = nodeCache.getUnchecked(nodeId+timestampId);
+        node = nodeCache.getUnchecked(nodeId + timestampId);
         if (node instanceof NullNode) {
             dropNode(nodeId);
             return null;

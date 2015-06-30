@@ -2,7 +2,6 @@ package org.agilewiki.console.oodb.nodes.roles.system;
 
 import org.agilewiki.console.NameIds;
 import org.agilewiki.console.RecreateRole_NodeInstance;
-import org.agilewiki.console.User;
 import org.agilewiki.console.oodb.nodes.*;
 import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.console.oodb.nodes.roles.Role_Node;
@@ -75,7 +74,7 @@ public class RecreateSystemRole_NodeInstance extends RecreateRole_NodeInstance {
                 NameIds.SUBJECT);
 
         Node_Node.define(User_Node.ID, Node_Node.ID, Node_Node.ID, System_Role.ID,
-                NameIds.SUBJECT, User.PASSWORD_KEY);
+                NameIds.SUBJECT, NameIds.PASSWORD_KEY);
 
         Node_Node.define(JournalEntry_Node.ID, Node_Node.ID, Node_Node.ID, System_Role.ID);
 
@@ -86,52 +85,52 @@ public class RecreateSystemRole_NodeInstance extends RecreateRole_NodeInstance {
                 NameIds.SUBJECT, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT);
 
         Node_Node.define(ChangePassword_Node.ID, Node_Node.ID, JournalEntry_Node.ID, System_Role.ID,
-                User.USER_KEY, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT, User.PASSWORD_KEY);
+                NameIds.USER_KEY, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT, NameIds.PASSWORD_KEY);
 
         Node_Node.define(Delete_Node.ID, Node_Node.ID, JournalEntry_Node.ID, System_Role.ID,
-                User.USER_KEY, NameIds.AN_ID, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT);
+                NameIds.USER_KEY, NameIds.AN_ID, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT);
 
         Node_Node.define(ForgotPassword_Node.ID, Node_Node.ID, JournalEntry_Node.ID, System_Role.ID,
-                User.USER_KEY, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT, User.PASSWORD_KEY);
+                NameIds.USER_KEY, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT, NameIds.PASSWORD_KEY);
 
         Node_Node.define(Login_Node.ID, Node_Node.ID, JournalEntry_Node.ID, System_Role.ID,
-                User.USER_KEY, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT, NameIds.SUBJECT);
+                NameIds.USER_KEY, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT, NameIds.SUBJECT);
 
         Node_Node.define(Logout_Node.ID, Node_Node.ID, JournalEntry_Node.ID, System_Role.ID,
-                User.USER_KEY, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT, NameIds.SUBJECT);
+                NameIds.USER_KEY, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT, NameIds.SUBJECT);
 
         Node_Node.define(NewEmailAddress_Node.ID, Node_Node.ID, JournalEntry_Node.ID, System_Role.ID,
-                User.USER_KEY, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT, User.EMAIL_ID);
+                NameIds.USER_KEY, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT, NameIds.EMAIL_ID);
 
         Node_Node.define(NewUser_Node.ID, Node_Node.ID, JournalEntry_Node.ID, System_Role.ID,
-                User.USER_KEY, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT,
-                User.EMAIL_ID, User.PASSWORD_KEY, User.ROLE_ID);
+                NameIds.USER_KEY, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT,
+                NameIds.EMAIL_ID, NameIds.PASSWORD_KEY, NameIds.ROLE_ID);
 
         Node_Node.define(Npje_Node.ID, Node_Node.ID, JournalEntry_Node.ID, System_Role.ID,
-                User.USER_KEY, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT,
+                NameIds.USER_KEY, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT,
                 NameIds.SUBJECT, NameIds.BODY);
 
         Node_Node.define(RecreateAdminRole_Node.ID, Node_Node.ID, JournalEntry_Node.ID, System_Role.ID,
-                User.USER_KEY, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT);
+                NameIds.USER_KEY, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT);
 
         Node_Node.define(RecreateDeveloperRole_Node.ID, Node_Node.ID, JournalEntry_Node.ID, System_Role.ID,
-                User.USER_KEY, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT);
+                NameIds.USER_KEY, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT);
 
         Node_Node.define(RecreateSystemRole_Node.ID, Node_Node.ID, JournalEntry_Node.ID, System_Role.ID,
-                User.USER_KEY, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT);
+                NameIds.USER_KEY, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT);
 
         Node_Node.define(RecreateUserRole_Node.ID, Node_Node.ID, JournalEntry_Node.ID, System_Role.ID,
-                User.USER_KEY, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT);
+                NameIds.USER_KEY, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT);
 
         Node_Node.define(RecreateVisitorRole_Node.ID, Node_Node.ID, JournalEntry_Node.ID, System_Role.ID,
-                User.USER_KEY, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT);
+                NameIds.USER_KEY, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT);
 
         Node_Node.define(ServletStart_Node.ID, Node_Node.ID, JournalEntry_Node.ID, System_Role.ID);
 
         Node_Node.define(ServletStop_Node.ID, Node_Node.ID, JournalEntry_Node.ID, System_Role.ID);
 
         Node_Node.define(UpdateRoles_Node.ID, Node_Node.ID, JournalEntry_Node.ID, System_Role.ID,
-                User.USER_KEY, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT,
+                NameIds.USER_KEY, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT,
                 NameIds.NODE_ID, NameIds.ADDROLES_ID, NameIds.REMOVEROLES_ID);
     }
 }

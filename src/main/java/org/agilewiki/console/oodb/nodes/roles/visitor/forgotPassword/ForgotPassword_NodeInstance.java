@@ -1,6 +1,6 @@
 package org.agilewiki.console.oodb.nodes.roles.visitor.forgotPassword;
 
-import org.agilewiki.console.User;
+import org.agilewiki.console.NameIds;
 import org.agilewiki.console.oodb.nodes.JournalEntry_NodeInstance;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
@@ -17,8 +17,8 @@ public class ForgotPassword_NodeInstance extends JournalEntry_NodeInstance {
 
     @Override
     public void process(Db db, MapNode mapNode) {
-        String userId = (String) mapNode.get(User.USER_KEY);
-        String passwordHash = (String) mapNode.get(User.PASSWORD_KEY);
-        getOoDb().set(userId, User.PASSWORD_KEY, passwordHash);
+        String userId = (String) mapNode.get(NameIds.USER_KEY);
+        String passwordHash = (String) mapNode.get(NameIds.PASSWORD_KEY);
+        getOoDb().set(userId, NameIds.PASSWORD_KEY, passwordHash);
     }
 }

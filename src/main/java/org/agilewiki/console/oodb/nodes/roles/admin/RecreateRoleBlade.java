@@ -3,7 +3,6 @@ package org.agilewiki.console.oodb.nodes.roles.admin;
 import org.agilewiki.console.NameIds;
 import org.agilewiki.console.PostRequestBlade;
 import org.agilewiki.console.SimpleSimon;
-import org.agilewiki.console.User;
 import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.utils.immutable.collections.MapNode;
@@ -79,7 +78,7 @@ public class RecreateRoleBlade extends PostRequestBlade {
 
                 MapNode mn = ooDb.nilMap;
                 if (userId != null)
-                    mn = mn.add(User.USER_KEY, userId);
+                    mn = mn.add(NameIds.USER_KEY, userId);
                 mn = mn.add(NameIds.REMOTE_HOST, request.getRemoteHost());
                 mn = mn.add(NameIds.REMOTE_ADDR, request.getRemoteAddr());
                 mn = mn.add(NameIds.REMOTE_PORT, request.getRemotePort());

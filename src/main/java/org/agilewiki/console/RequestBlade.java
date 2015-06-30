@@ -1,6 +1,7 @@
 package org.agilewiki.console;
 
 import org.agilewiki.console.oodb.OODb;
+import org.agilewiki.console.oodb.nodes.User_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.jactor2.core.blades.NonBlockingBladeBase;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
@@ -141,7 +142,8 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
                 map.put("page", page);
                 map.put("nicePageName", niceName());
                 map.put("myEmail", myEmail);
-                List<Role> roles = User.roles(simpleSimon, userId);
+                User_NodeInstance user_nodeInstance = (User_NodeInstance) ooDb.fetchNode(userId, longTimestamp);
+                List<Role> roles = user_nodeInstance.roles();
                 StringBuilder appMenu = new StringBuilder();
                 appMenu.append("<a>Role &#9660;</a>\n");
                 appMenu.append("<ul class=\"sub-menu\">\n");
