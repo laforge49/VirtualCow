@@ -1,7 +1,7 @@
 package org.agilewiki.console.roles.developer.npje;
 
 import org.agilewiki.console.NameIds;
-import org.agilewiki.console.awdb.nodes.JournalEntry_NodeInstance;
+import org.agilewiki.console.awdb.nodes.JournalEntry_Node;
 import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
@@ -9,13 +9,13 @@ import org.agilewiki.utils.virtualcow.Db;
 /**
  * Non-performing Journal Entry.
  */
-public class Npje_NodeInstance extends JournalEntry_NodeInstance {
+public class Npje_Node extends JournalEntry_Node {
     public final static String NAME = "npje";
 
-    public Npje_NodeInstance() {
+    public Npje_Node() {
     }
 
-    public Npje_NodeInstance(String nodeId, long timestamp) {
+    public Npje_Node(String nodeId, long timestamp) {
         super(nodeId, timestamp);
     }
 
@@ -26,7 +26,7 @@ public class Npje_NodeInstance extends JournalEntry_NodeInstance {
         if (subject != null) {
             String subjectVId = ValueId.generate(subject.toLowerCase().
                     replaceAll("\r", "").replaceAll("\t", " "));
-            getOoDb().createSecondaryId(jeName, NameIds.SUBJECT, subjectVId);
+            getAwDb().createSecondaryId(jeName, NameIds.SUBJECT, subjectVId);
         }
     }
 }

@@ -5,9 +5,9 @@ import org.agilewiki.console.awdb.nodes.Metadata_NodeFactory;
 import org.agilewiki.console.roles.Role;
 import org.agilewiki.console.roles.Role_NodeFactory;
 import org.agilewiki.console.roles.system.ServletStart_NodeFactory;
-import org.agilewiki.console.roles.system.ServletStart_NodeInstance;
+import org.agilewiki.console.roles.system.ServletStart_Node;
 import org.agilewiki.console.roles.system.ServletStop_NodeFactory;
-import org.agilewiki.console.roles.system.ServletStop_NodeInstance;
+import org.agilewiki.console.roles.system.ServletStop_Node;
 import org.agilewiki.console.roles.user.User_Role;
 import org.agilewiki.console.roles.visitor.Visitor_Role;
 import org.agilewiki.utils.ids.Timestamp;
@@ -106,12 +106,12 @@ public class SimpleSimon extends HttpServlet {
             }
 
             ServletStart_NodeFactory.create(awDb);
-            awDb.registerTransaction(ServletStart_NodeInstance.NAME, ServletStart_NodeInstance.class);
+            awDb.registerTransaction(ServletStart_Node.NAME, ServletStart_Node.class);
 
             ServletStop_NodeFactory.create(awDb);
-            awDb.registerTransaction(ServletStop_NodeInstance.NAME, ServletStop_NodeInstance.class);
+            awDb.registerTransaction(ServletStop_Node.NAME, ServletStop_Node.class);
 
-            ServletStart_NodeInstance.update(awDb);
+            ServletStart_Node.update(awDb);
         } catch (Exception ex) {
             destroy();
         }
@@ -119,7 +119,7 @@ public class SimpleSimon extends HttpServlet {
 
     public void destroy() {
         try {
-            ServletStop_NodeInstance.update(awDb);
+            ServletStop_Node.update(awDb);
         } catch (Exception e) {
         }
         awDb.close();

@@ -16,7 +16,7 @@ public class PostBlade extends PostRequestBlade {
     public PostBlade(Role role, String page) throws Exception {
         super(role, page);
         Npje_NodeFactory.create(awDb);
-        awDb.registerTransaction(Npje_NodeInstance.NAME, Npje_NodeInstance.class);
+        awDb.registerTransaction(Npje_Node.NAME, Npje_Node.class);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class PostBlade extends PostRequestBlade {
                 mn = mn.add(NameIds.REMOTE_ADDR, request.getRemoteAddr());
                 mn = mn.add(NameIds.REMOTE_PORT, request.getRemotePort());
 
-                asyncRequestImpl.send(awDb.update(Npje_NodeInstance.NAME, mn), new AsyncResponseProcessor<String>() {
+                asyncRequestImpl.send(awDb.update(Npje_Node.NAME, mn), new AsyncResponseProcessor<String>() {
                     @Override
                     public void processAsyncResponse(String _response) throws Exception {
                         map.put("subject", "");

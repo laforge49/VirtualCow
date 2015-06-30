@@ -27,7 +27,7 @@ public class Lnk1_NodeFactory extends Metadata_NodeFactory {
     }
 
     public static void define(String nodeId, String invDependency, String originType, String destinationType, String ofRole) {
-        AwDb awDb = getOoDb();
+        AwDb awDb = getAwDb();
         Node_NodeFactory.define(nodeId, ID, null, ofRole);
         if (invDependency != null) {
             awDb.createSecondaryId(nodeId, Key_NodeFactory.INVDEPENDENCY_ID, invDependency);
@@ -46,6 +46,6 @@ public class Lnk1_NodeFactory extends Metadata_NodeFactory {
 
     @Override
     public Node createNode(String nodeId, long timestamp) {
-        return new Lnk1_NodeInstance(nodeId, timestamp);
+        return new Lnk1_Node(nodeId, timestamp);
     }
 }

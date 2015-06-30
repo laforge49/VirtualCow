@@ -4,7 +4,7 @@ import org.agilewiki.console.awdb.Node;
 import org.agilewiki.console.awdb.AwDb;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
-public class JournalEntry_NodeFactory extends Node_NodeInstance {
+public class JournalEntry_NodeFactory extends Node_Node {
     public final static String ID = "$njournalEntry.node";
 
     public static void create(AwDb awDb) {
@@ -17,6 +17,6 @@ public class JournalEntry_NodeFactory extends Node_NodeInstance {
 
     @Override
     public Node createNode(String nodeId, long timestamp) {
-        return new JournalEntry_NodeInstance(nodeId, timestamp);
+        return new JournalEntry_Node(nodeId, timestamp);
     }
 }

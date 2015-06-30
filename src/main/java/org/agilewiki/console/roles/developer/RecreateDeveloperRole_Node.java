@@ -1,18 +1,18 @@
 package org.agilewiki.console.roles.developer;
 
-import org.agilewiki.console.RecreateRole_NodeInstance;
+import org.agilewiki.console.RecreateRole_Node;
 import org.agilewiki.console.roles.Role;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
-public class RecreateDeveloperRole_NodeInstance extends RecreateRole_NodeInstance {
+public class RecreateDeveloperRole_Node extends RecreateRole_Node {
     public final static String NAME = "recreateDeveloperRole";
     public static Developer_Role developerRole;
 
-    public RecreateDeveloperRole_NodeInstance() {
+    public RecreateDeveloperRole_Node() {
     }
 
-    public RecreateDeveloperRole_NodeInstance(String nodeId, long timestamp) {
+    public RecreateDeveloperRole_Node(String nodeId, long timestamp) {
         super(nodeId, timestamp);
     }
 

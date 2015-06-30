@@ -18,6 +18,6 @@ public class NewEmailAddress_NodeFactory extends JournalEntry_NodeFactory {
 
     @Override
     public Node createNode(String nodeId, long timestamp) {
-        return new NewEmailAddress_NodeInstance(nodeId, timestamp);
+        return new NewEmailAddress_Node(nodeId, timestamp);
     }
 }

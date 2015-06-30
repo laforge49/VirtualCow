@@ -1,18 +1,18 @@
 package org.agilewiki.console.roles.user.logout;
 
 import org.agilewiki.console.NameIds;
-import org.agilewiki.console.awdb.nodes.JournalEntry_NodeInstance;
+import org.agilewiki.console.awdb.nodes.JournalEntry_Node;
 import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
-public class Logout_NodeInstance extends JournalEntry_NodeInstance {
+public class Logout_Node extends JournalEntry_Node {
     public final static String NAME = "logout";
 
-    public Logout_NodeInstance() {
+    public Logout_Node() {
     }
 
-    public Logout_NodeInstance(String nodeId, long timestamp) {
+    public Logout_Node(String nodeId, long timestamp) {
         super(nodeId, timestamp);
     }
 
@@ -22,7 +22,7 @@ public class Logout_NodeInstance extends JournalEntry_NodeInstance {
         String subject = (String) mapNode.get(NameIds.SUBJECT);
         if (subject != null) {
             String subjectVId = ValueId.generate(subject.toLowerCase());
-            getOoDb().createSecondaryId(jeName, NameIds.SUBJECT, subjectVId);
+            getAwDb().createSecondaryId(jeName, NameIds.SUBJECT, subjectVId);
         }
     }
 }

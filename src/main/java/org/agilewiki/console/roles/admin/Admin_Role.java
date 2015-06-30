@@ -33,14 +33,14 @@ public class Admin_Role extends Role_NodeInstance {
         editRolesBlade = new EditRolesBlade(this, "editRoles");
         recreateRoleBlade = new RecreateRoleBlade(this, "recreateRole");
 
-        RecreateAdminRole_NodeFactory.create(getOoDb());
-        getOoDb().registerTransaction(RecreateAdminRole_NodeInstance.NAME, RecreateAdminRole_NodeInstance.class);
-        RecreateAdminRole_NodeInstance.adminRole = this;
+        RecreateAdminRole_NodeFactory.create(getAwDb());
+        getAwDb().registerTransaction(RecreateAdminRole_Node.NAME, RecreateAdminRole_Node.class);
+        RecreateAdminRole_Node.adminRole = this;
     }
 
     @Override
     public String initializeTransactionName() {
-        return RecreateAdminRole_NodeInstance.NAME;
+        return RecreateAdminRole_Node.NAME;
     }
 
     @Override

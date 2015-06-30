@@ -19,7 +19,7 @@ public class NewEmailAddressBlade extends PostRequestBlade {
     public NewEmailAddressBlade(Role role, String page) throws Exception {
         super(role, page);
         NewEmailAddress_NodeFactory.create(awDb);
-        awDb.registerTransaction(NewEmailAddress_NodeInstance.NAME, NewEmailAddress_NodeInstance.class);
+        awDb.registerTransaction(NewEmailAddress_Node.NAME, NewEmailAddress_Node.class);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class NewEmailAddressBlade extends PostRequestBlade {
                 MapNode mn = awDb.nilMap;
                 mn = mn.add(NameIds.USER_KEY, userId);
                 mn = mn.add(NameIds.EMAIL_ID, emailAddress);
-                asyncRequestImpl.send(awDb.update(NewEmailAddress_NodeInstance.NAME, mn),
+                asyncRequestImpl.send(awDb.update(NewEmailAddress_Node.NAME, mn),
                         new AsyncResponseProcessor<String>() {
                             @Override
                             public void processAsyncResponse(String _response) throws Exception {

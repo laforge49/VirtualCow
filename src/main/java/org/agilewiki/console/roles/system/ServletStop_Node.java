@@ -1,20 +1,20 @@
 package org.agilewiki.console.roles.system;
 
 import org.agilewiki.console.awdb.AwDb;
-import org.agilewiki.console.awdb.nodes.JournalEntry_NodeInstance;
+import org.agilewiki.console.awdb.nodes.JournalEntry_Node;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
 /**
  * Run when the servlet has started.
  */
-public class ServletStop_NodeInstance extends JournalEntry_NodeInstance {
+public class ServletStop_Node extends JournalEntry_Node {
     public final static String NAME = "servletStop";
 
-    public ServletStop_NodeInstance() {
+    public ServletStop_Node() {
     }
 
-    public ServletStop_NodeInstance(String nodeId, long timestamp) {
+    public ServletStop_Node(String nodeId, long timestamp) {
         super(nodeId, timestamp);
     }
 

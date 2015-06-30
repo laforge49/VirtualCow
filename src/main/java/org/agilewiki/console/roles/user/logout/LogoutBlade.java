@@ -16,7 +16,7 @@ public class LogoutBlade extends PostRequestBlade {
     public LogoutBlade(Role role, String page) throws Exception {
         super(role, page);
         Logout_NodeFactory.create(awDb);
-        awDb.registerTransaction(Logout_NodeInstance.NAME, Logout_NodeInstance.class);
+        awDb.registerTransaction(Logout_Node.NAME, Logout_Node.class);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class LogoutBlade extends PostRequestBlade {
                 MapNode mn = awDb.nilMap;
                 mn = mn.add(NameIds.SUBJECT, email);
                 mn = mn.add(NameIds.USER_KEY, userId);
-                asyncRequestImpl.send(awDb.update(Logout_NodeInstance.NAME, mn), new AsyncResponseProcessor<String>() {
+                asyncRequestImpl.send(awDb.update(Logout_Node.NAME, mn), new AsyncResponseProcessor<String>() {
                     @Override
                     public void processAsyncResponse(String _response) throws Exception {
                         Cookie[] cookies = request.getCookies();

@@ -2,20 +2,20 @@ package org.agilewiki.console.roles.user.delete;
 
 import org.agilewiki.console.NameIds;
 import org.agilewiki.console.awdb.Delete;
-import org.agilewiki.console.awdb.nodes.JournalEntry_NodeInstance;
+import org.agilewiki.console.awdb.nodes.JournalEntry_Node;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
 /**
  * Delete a user.
  */
-public class Delete_NodeInstance extends JournalEntry_NodeInstance {
+public class Delete_Node extends JournalEntry_Node {
     public final static String NAME = "delete";
 
-    public Delete_NodeInstance() {
+    public Delete_Node() {
     }
 
-    public Delete_NodeInstance(String nodeId, long timestamp) {
+    public Delete_Node(String nodeId, long timestamp) {
         super(nodeId, timestamp);
     }
 

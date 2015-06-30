@@ -18,6 +18,6 @@ public class RecreateVisitorRole_NodeFactory extends JournalEntry_NodeFactory {
 
     @Override
     public Node createNode(String nodeId, long timestamp) {
-        return new RecreateVisitorRole_NodeInstance(nodeId, timestamp);
+        return new RecreateVisitorRole_Node(nodeId, timestamp);
     }
 }

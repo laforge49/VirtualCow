@@ -17,7 +17,7 @@ public class Node_NodeFactory extends Metadata_NodeFactory {
     }
 
     public static void define(String nodeId, String nodeType, String superType, String roleId, String... attributes) {
-        AwDb awDb = getOoDb();
+        AwDb awDb = getAwDb();
         if (nodeType != null) {
             awDb.createSecondaryId(nodeId, Key_NodeFactory.NODETYPE_ID, nodeType);
         }

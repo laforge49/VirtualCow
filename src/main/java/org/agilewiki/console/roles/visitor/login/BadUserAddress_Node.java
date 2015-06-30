@@ -1,18 +1,18 @@
 package org.agilewiki.console.roles.visitor.login;
 
 import org.agilewiki.console.NameIds;
-import org.agilewiki.console.awdb.nodes.JournalEntry_NodeInstance;
+import org.agilewiki.console.awdb.nodes.JournalEntry_Node;
 import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
-public class BadUserAddress_NodeInstance extends JournalEntry_NodeInstance {
+public class BadUserAddress_Node extends JournalEntry_Node {
     public final static String NAME = "badUserAddress";
 
-    public BadUserAddress_NodeInstance() {
+    public BadUserAddress_Node() {
     }
 
-    public BadUserAddress_NodeInstance(String nodeId, long timestamp) {
+    public BadUserAddress_Node(String nodeId, long timestamp) {
         super(nodeId, timestamp);
     }
 
@@ -22,7 +22,7 @@ public class BadUserAddress_NodeInstance extends JournalEntry_NodeInstance {
         String subject = (String) mapNode.get(NameIds.SUBJECT);
         if (subject != null) {
             String subjectVId = ValueId.generate(subject.toLowerCase());
-            getOoDb().createSecondaryId(jeName, NameIds.SUBJECT, subjectVId);
+            getAwDb().createSecondaryId(jeName, NameIds.SUBJECT, subjectVId);
         }
     }
 }

@@ -19,7 +19,7 @@ public class ValidatedBlade extends PostRequestBlade {
     public ValidatedBlade(Role role, String page) throws Exception {
         super(role, page);
         NewUser_NodeFactory.create(awDb);
-        awDb.registerTransaction(NewUser_NodeInstance.NAME, NewUser_NodeInstance.class);
+        awDb.registerTransaction(NewUser_Node.NAME, NewUser_Node.class);
     }
 
     @Override
@@ -96,7 +96,7 @@ public class ValidatedBlade extends PostRequestBlade {
                 mn = mn.add(NameIds.PASSWORD_KEY, passwordHash);
                 mn = mn.add(NameIds.ROLE_ID, Role_NodeInstance.roleName(User_Role.ID));
                 mn = mn.add(NameIds.ROLE_ID, Role_NodeInstance.roleName(Developer_Role.ID));
-                asyncRequestImpl.send(awDb.update(NewUser_NodeInstance.NAME, mn),
+                asyncRequestImpl.send(awDb.update(NewUser_Node.NAME, mn),
                         new AsyncResponseProcessor<String>() {
                             @Override
                             public void processAsyncResponse(String _response) throws Exception {

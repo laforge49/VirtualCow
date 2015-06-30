@@ -18,7 +18,7 @@ public class EditRolesBlade extends PostRequestBlade {
     public EditRolesBlade(Role role, String page) throws Exception {
         super(role, page);
         UpdateRoles_NodeFactory.create(awDb);
-        awDb.registerTransaction(UpdateRoles_NodeInstance.NAME, UpdateRoles_NodeInstance.class);
+        awDb.registerTransaction(UpdateRoles_Node.NAME, UpdateRoles_Node.class);
     }
 
     @Override
@@ -132,7 +132,7 @@ public class EditRolesBlade extends PostRequestBlade {
                     } catch (UnexpectedChecksumException uce) {
                     }
                 }
-                asyncRequestImpl.send(awDb.update(UpdateRoles_NodeInstance.NAME, mn), new AsyncResponseProcessor<String>() {
+                asyncRequestImpl.send(awDb.update(UpdateRoles_Node.NAME, mn), new AsyncResponseProcessor<String>() {
                     @Override
                     public void processAsyncResponse(String _response) throws Exception {
                         User_NodeInstance user_nodeInstance = (User_NodeInstance) awDb.fetchNode(nodeId, longTimestamp);

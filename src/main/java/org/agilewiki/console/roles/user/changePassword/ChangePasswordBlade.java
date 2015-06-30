@@ -21,7 +21,7 @@ public class ChangePasswordBlade extends PostRequestBlade {
     public ChangePasswordBlade(Role role, String page) throws Exception {
         super(role, page);
         ChangePassword_NodeFactory.create(awDb);
-        awDb.registerTransaction(ChangePassword_NodeInstance.NAME, ChangePassword_NodeInstance.class);
+        awDb.registerTransaction(ChangePassword_Node.NAME, ChangePassword_Node.class);
     }
 
     @Override
@@ -77,7 +77,7 @@ public class ChangePasswordBlade extends PostRequestBlade {
                 MapNode mn = awDb.nilMap;
                 mn = mn.add(NameIds.USER_KEY, userId);
                 mn = mn.add(NameIds.PASSWORD_KEY, User_NodeInstance.encodePassword(servletContext, userId, newPassword));
-                asyncRequestImpl.send(awDb.update(ChangePassword_NodeInstance.NAME, mn),
+                asyncRequestImpl.send(awDb.update(ChangePassword_Node.NAME, mn),
                         new AsyncResponseProcessor<String>() {
                             @Override
                             public void processAsyncResponse(String _response) throws Exception {

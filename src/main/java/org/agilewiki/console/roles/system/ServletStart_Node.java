@@ -3,17 +3,17 @@ package org.agilewiki.console.roles.system;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.User_NodeInstance;
 import org.agilewiki.console.awdb.AwDb;
-import org.agilewiki.console.awdb.nodes.JournalEntry_NodeInstance;
+import org.agilewiki.console.awdb.nodes.JournalEntry_Node;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
-public class ServletStart_NodeInstance extends JournalEntry_NodeInstance {
+public class ServletStart_Node extends JournalEntry_Node {
     public final static String NAME = "servletStart";
 
-    public ServletStart_NodeInstance() {
+    public ServletStart_Node() {
     }
 
-    public ServletStart_NodeInstance(String nodeId, long timestamp) {
+    public ServletStart_Node(String nodeId, long timestamp) {
         super(nodeId, timestamp);
     }
 

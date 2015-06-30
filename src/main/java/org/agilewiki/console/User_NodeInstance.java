@@ -49,7 +49,7 @@ public class User_NodeInstance extends NodeBase {
         while (true) {
             try {
                 String emailId = ValueId.generate(email);
-                return getOoDb().getKeyTargetId(NameIds.EMAIL_ID, emailId, timestamp);
+                return getAwDb().getKeyTargetId(NameIds.EMAIL_ID, emailId, timestamp);
             } catch (UnexpectedChecksumException uce) {
             }
         }

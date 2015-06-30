@@ -29,7 +29,7 @@ public class Key_NodeFactory extends Metadata_NodeFactory {
 
     public static void define(String nodeId, String targetType, String roleId) {
         Node_NodeFactory.define(nodeId, ID, null, roleId);
-        getOoDb().createLnk1(nodeId,
+        getAwDb().createLnk1(nodeId,
                 Lnk1_NodeFactory.TARGET_ID,
                 targetType);
     }
@@ -40,6 +40,6 @@ public class Key_NodeFactory extends Metadata_NodeFactory {
 
     @Override
     public Node createNode(String nodeId, long timestamp) {
-        return new Key_NodeInstance(nodeId, timestamp);
+        return new Key_Node(nodeId, timestamp);
     }
 }

@@ -18,6 +18,6 @@ public class UpdateRoles_NodeFactory extends JournalEntry_NodeFactory {
 
     @Override
     public Node createNode(String nodeId, long timestamp) {
-        return new UpdateRoles_NodeInstance(nodeId, timestamp);
+        return new UpdateRoles_Node(nodeId, timestamp);
     }
 }

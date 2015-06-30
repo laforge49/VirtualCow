@@ -18,6 +18,6 @@ public class Delete_NodeFactory extends JournalEntry_NodeFactory {
 
     @Override
     public Node createNode(String nodeId, long timestamp) {
-        return new Delete_NodeInstance(nodeId, timestamp);
+        return new Delete_Node(nodeId, timestamp);
     }
 }

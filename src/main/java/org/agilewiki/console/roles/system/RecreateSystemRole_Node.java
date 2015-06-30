@@ -1,7 +1,7 @@
 package org.agilewiki.console.roles.system;
 
 import org.agilewiki.console.NameIds;
-import org.agilewiki.console.RecreateRole_NodeInstance;
+import org.agilewiki.console.RecreateRole_Node;
 import org.agilewiki.console.User_Node;
 import org.agilewiki.console.awdb.nodes.*;
 import org.agilewiki.console.roles.Role;
@@ -24,14 +24,14 @@ import org.agilewiki.console.roles.visitor.newUser.NewUser_NodeFactory;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
-public class RecreateSystemRole_NodeInstance extends RecreateRole_NodeInstance {
+public class RecreateSystemRole_Node extends RecreateRole_Node {
     public final static String NAME = "recreateSystemRole";
     public static System_Role systemRole;
 
-    public RecreateSystemRole_NodeInstance() {
+    public RecreateSystemRole_Node() {
     }
 
-    public RecreateSystemRole_NodeInstance(String nodeId, long timestamp) {
+    public RecreateSystemRole_Node(String nodeId, long timestamp) {
         super(nodeId, timestamp);
     }
 

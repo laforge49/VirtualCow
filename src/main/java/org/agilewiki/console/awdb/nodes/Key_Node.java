@@ -2,8 +2,8 @@ package org.agilewiki.console.awdb.nodes;
 
 import org.agilewiki.console.awdb.NodeBase;
 
-public class Attribute_NodeInstance extends NodeBase {
-    public Attribute_NodeInstance(String nodeId, long timestamp) {
+public class Key_Node extends NodeBase {
+    public Key_Node(String nodeId, long timestamp) {
         super(nodeId, timestamp);
     }
 }

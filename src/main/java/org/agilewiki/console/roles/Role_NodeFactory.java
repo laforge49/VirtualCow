@@ -2,7 +2,7 @@ package org.agilewiki.console.roles;
 
 import org.agilewiki.console.awdb.Node;
 import org.agilewiki.console.awdb.AwDb;
-import org.agilewiki.console.awdb.nodes.Node_NodeInstance;
+import org.agilewiki.console.awdb.nodes.Node_Node;
 import org.agilewiki.console.roles.admin.Admin_Role;
 import org.agilewiki.console.roles.developer.Developer_Role;
 import org.agilewiki.console.roles.system.System_Role;
@@ -10,7 +10,7 @@ import org.agilewiki.console.roles.user.User_Role;
 import org.agilewiki.console.roles.visitor.Visitor_Role;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
-public class Role_NodeFactory extends Node_NodeInstance {
+public class Role_NodeFactory extends Node_Node {
     public final static String ID = "$nrole.node";
 
     public static void create(AwDb awDb) throws Exception {

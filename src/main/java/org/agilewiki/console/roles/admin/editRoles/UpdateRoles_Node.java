@@ -1,20 +1,20 @@
 package org.agilewiki.console.roles.admin.editRoles;
 
 import org.agilewiki.console.NameIds;
-import org.agilewiki.console.awdb.nodes.JournalEntry_NodeInstance;
+import org.agilewiki.console.awdb.nodes.JournalEntry_Node;
 import org.agilewiki.utils.immutable.collections.ListNode;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
 import java.util.List;
 
-public class UpdateRoles_NodeInstance extends JournalEntry_NodeInstance {
+public class UpdateRoles_Node extends JournalEntry_Node {
     public final static String NAME = "updateRoles";
 
-    public UpdateRoles_NodeInstance() {
+    public UpdateRoles_Node() {
     }
 
-    public UpdateRoles_NodeInstance(String nodeId, long timestamp) {
+    public UpdateRoles_Node(String nodeId, long timestamp) {
         super(nodeId, timestamp);
     }
 
@@ -25,14 +25,14 @@ public class UpdateRoles_NodeInstance extends JournalEntry_NodeInstance {
         if (ln != null) {
             List<String> add = ln.flatList();
             for (String userRole : add) {
-                getOoDb().createSecondaryId(nodeId, NameIds.ROLE_ID, NameIds.generate(userRole));
+                getAwDb().createSecondaryId(nodeId, NameIds.ROLE_ID, NameIds.generate(userRole));
             }
         }
         ln = mapNode.getList(NameIds.REMOVEROLES_ID);
         if (ln != null) {
             List<String> remove = ln.flatList();
             for (String userRole : remove) {
-                getOoDb().removeSecondaryId(nodeId, NameIds.ROLE_ID, NameIds.generate(userRole));
+                getAwDb().removeSecondaryId(nodeId, NameIds.ROLE_ID, NameIds.generate(userRole));
             }
         }
     }

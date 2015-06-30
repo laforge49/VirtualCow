@@ -18,6 +18,6 @@ public class RecreateSystemRole_NodeFactory extends JournalEntry_NodeFactory {
 
     @Override
     public Node createNode(String nodeId, long timestamp) {
-        return new RecreateSystemRole_NodeInstance(nodeId, timestamp);
+        return new RecreateSystemRole_Node(nodeId, timestamp);
     }
 }

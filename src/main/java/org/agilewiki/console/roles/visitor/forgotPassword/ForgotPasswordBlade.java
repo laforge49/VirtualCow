@@ -17,7 +17,7 @@ public class ForgotPasswordBlade extends PostRequestBlade {
     public ForgotPasswordBlade(Role role, String page) throws Exception {
         super(role, page);
         ForgotPassword_NodeFactory.create(awDb);
-        awDb.registerTransaction(ForgotPassword_NodeInstance.NAME, ForgotPassword_NodeInstance.class);
+        awDb.registerTransaction(ForgotPassword_Node.NAME, ForgotPassword_Node.class);
     }
 
     @Override
@@ -85,7 +85,7 @@ public class ForgotPasswordBlade extends PostRequestBlade {
                 MapNode mn = awDb.nilMap;
                 mn = mn.add(NameIds.USER_KEY, userId);
                 mn = mn.add(NameIds.PASSWORD_KEY, User_NodeInstance.encodePassword(servletContext, userId, newPassword));
-                asyncRequestImpl.send(awDb.update(ForgotPassword_NodeInstance.NAME, mn),
+                asyncRequestImpl.send(awDb.update(ForgotPassword_Node.NAME, mn),
                         new AsyncResponseProcessor<String>() {
                             @Override
                             public void processAsyncResponse(String _response) throws Exception {

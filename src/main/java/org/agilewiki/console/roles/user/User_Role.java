@@ -38,14 +38,14 @@ public class User_Role extends Role_NodeInstance {
         newEmailAddressBlade = new NewEmailAddressBlade(this, "newEmailAddress");
         userBlade = new UserBlade(this, "user");
 
-        RecreateUserRole_NodeFactory.create(getOoDb());
-        getOoDb().registerTransaction(RecreateUserRole_NodeInstance.NAME, RecreateUserRole_NodeInstance.class);
-        RecreateUserRole_NodeInstance.userRole = this;
+        RecreateUserRole_NodeFactory.create(getAwDb());
+        getAwDb().registerTransaction(RecreateUserRole_Node.NAME, RecreateUserRole_Node.class);
+        RecreateUserRole_Node.userRole = this;
     }
 
     @Override
     public String initializeTransactionName() {
-        return RecreateUserRole_NodeInstance.NAME;
+        return RecreateUserRole_Node.NAME;
     }
 
     @Override

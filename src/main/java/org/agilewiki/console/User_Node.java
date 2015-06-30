@@ -2,10 +2,10 @@ package org.agilewiki.console;
 
 import org.agilewiki.console.awdb.Node;
 import org.agilewiki.console.awdb.AwDb;
-import org.agilewiki.console.awdb.nodes.Node_NodeInstance;
+import org.agilewiki.console.awdb.nodes.Node_Node;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
-public class User_Node extends Node_NodeInstance {
+public class User_Node extends Node_Node {
     public final static String ID = "$nuser.node";
 
     public static void create(AwDb awDb) {

@@ -18,6 +18,6 @@ public class ChangePassword_NodeFactory extends JournalEntry_NodeFactory {
 
     @Override
     public Node createNode(String nodeId, long timestamp) {
-        return new ChangePassword_NodeInstance(nodeId, timestamp);
+        return new ChangePassword_Node(nodeId, timestamp);
     }
 }

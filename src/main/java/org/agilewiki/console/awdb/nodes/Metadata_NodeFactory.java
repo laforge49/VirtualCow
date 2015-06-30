@@ -4,7 +4,7 @@ import org.agilewiki.console.awdb.Node;
 import org.agilewiki.console.awdb.AwDb;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
-public class Metadata_NodeFactory extends Node_NodeInstance {
+public class Metadata_NodeFactory extends Node_Node {
     public final static String ID = "$nmetadata.node";
 
     public static void create(AwDb awDb)

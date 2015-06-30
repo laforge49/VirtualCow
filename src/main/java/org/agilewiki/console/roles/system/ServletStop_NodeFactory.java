@@ -18,6 +18,6 @@ public class ServletStop_NodeFactory extends JournalEntry_NodeFactory {
 
     @Override
     public Node createNode(String nodeId, long timestamp) {
-        return new ServletStop_NodeInstance(nodeId, timestamp);
+        return new ServletStop_Node(nodeId, timestamp);
     }
 }

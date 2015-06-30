@@ -14,7 +14,7 @@ public class NodeBase implements Node {
     private NodeData innerReference = null;
     private NodeData outerReference = null;
 
-    public static AwDb getOoDb() {
+    public static AwDb getAwDb() {
         return AwDb.getAwDb();
     }
 
@@ -32,12 +32,12 @@ public class NodeBase implements Node {
     protected void initialize(String nodeId, long timestamp) {
         this.nodeId = nodeId;
         this.timestamp = timestamp;
-        innerReference = getOoDb().newNodeData(nodeId, timestamp);
+        innerReference = getAwDb().newNodeData(nodeId, timestamp);
         outerReference = innerReference;
     }
 
     public NodeData getNodeData() {
-        if (getOoDb().isPrivileged())
+        if (getAwDb().isPrivileged())
             return innerReference;
         return outerReference;
     }
@@ -68,7 +68,7 @@ public class NodeBase implements Node {
         }
         if (innerReference == outerReference) {
             innerReference = new NodeData(innerReference);
-            getOoDb().updated(this);
+            getAwDb().updated(this);
         }
     }
 

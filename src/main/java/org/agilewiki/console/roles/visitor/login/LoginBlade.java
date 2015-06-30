@@ -17,11 +17,11 @@ public class LoginBlade extends PostRequestBlade {
     public LoginBlade(Role role, String page) throws Exception {
         super(role, page);
         Login_NodeFactory.create(awDb);
-        awDb.registerTransaction(Login_NodeInstance.NAME, Login_NodeInstance.class);
+        awDb.registerTransaction(Login_Node.NAME, Login_Node.class);
         BadUserAddress_NodeFactory.create(awDb);
-        awDb.registerTransaction(BadUserAddress_NodeInstance.NAME, BadUserAddress_NodeInstance.class);
+        awDb.registerTransaction(BadUserAddress_Node.NAME, BadUserAddress_Node.class);
         BadUserPassword_NodeFactory.create(awDb);
-        awDb.registerTransaction(BadUserPassword_NodeInstance.NAME, BadUserPassword_NodeInstance.class);
+        awDb.registerTransaction(BadUserPassword_Node.NAME, BadUserPassword_Node.class);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class LoginBlade extends PostRequestBlade {
                     mn = mn.add(NameIds.REMOTE_HOST, request.getRemoteHost());
                     mn = mn.add(NameIds.REMOTE_ADDR, request.getRemoteAddr());
                     mn = mn.add(NameIds.REMOTE_PORT, request.getRemotePort());
-                    asyncRequestImpl.send(awDb.update(BadUserAddress_NodeInstance.NAME, mn),
+                    asyncRequestImpl.send(awDb.update(BadUserAddress_Node.NAME, mn),
                             new AsyncResponseProcessor<String>() {
                                 @Override
                                 public void processAsyncResponse(String _response) throws Exception {
@@ -86,7 +86,7 @@ public class LoginBlade extends PostRequestBlade {
                     mn = mn.add(NameIds.REMOTE_HOST, request.getRemoteHost());
                     mn = mn.add(NameIds.REMOTE_ADDR, request.getRemoteAddr());
                     mn = mn.add(NameIds.REMOTE_PORT, request.getRemotePort());
-                    asyncRequestImpl.send(awDb.update(BadUserPassword_NodeInstance.NAME, mn),
+                    asyncRequestImpl.send(awDb.update(BadUserPassword_Node.NAME, mn),
                             new AsyncResponseProcessor<String>() {
                                 @Override
                                 public void processAsyncResponse(String _response) throws Exception {
@@ -117,7 +117,7 @@ public class LoginBlade extends PostRequestBlade {
                 mn = mn.add(NameIds.REMOTE_HOST, request.getRemoteHost());
                 mn = mn.add(NameIds.REMOTE_ADDR, request.getRemoteAddr());
                 mn = mn.add(NameIds.REMOTE_PORT, request.getRemotePort());
-                asyncRequestImpl.send(awDb.update(Login_NodeInstance.NAME, mn),
+                asyncRequestImpl.send(awDb.update(Login_Node.NAME, mn),
                         new AsyncResponseProcessor<String>() {
                             @Override
                             public void processAsyncResponse(String _response) throws Exception {

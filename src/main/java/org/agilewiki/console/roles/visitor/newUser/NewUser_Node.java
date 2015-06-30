@@ -2,7 +2,7 @@ package org.agilewiki.console.roles.visitor.newUser;
 
 import org.agilewiki.console.NameIds;
 import org.agilewiki.console.User_NodeInstance;
-import org.agilewiki.console.awdb.nodes.JournalEntry_NodeInstance;
+import org.agilewiki.console.awdb.nodes.JournalEntry_Node;
 import org.agilewiki.utils.immutable.collections.ListNode;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
@@ -12,13 +12,13 @@ import java.util.List;
 /**
  * Create a new user.
  */
-public class NewUser_NodeInstance extends JournalEntry_NodeInstance {
+public class NewUser_Node extends JournalEntry_Node {
     public final static String NAME = "newUser";
 
-    public NewUser_NodeInstance() {
+    public NewUser_Node() {
     }
 
-    public NewUser_NodeInstance(String nodeId, long timestamp) {
+    public NewUser_Node(String nodeId, long timestamp) {
         super(nodeId, timestamp);
     }
 

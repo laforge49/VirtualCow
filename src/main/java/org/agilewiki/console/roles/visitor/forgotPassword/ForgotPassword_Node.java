@@ -1,17 +1,17 @@
 package org.agilewiki.console.roles.visitor.forgotPassword;
 
 import org.agilewiki.console.NameIds;
-import org.agilewiki.console.awdb.nodes.JournalEntry_NodeInstance;
+import org.agilewiki.console.awdb.nodes.JournalEntry_Node;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
-public class ForgotPassword_NodeInstance extends JournalEntry_NodeInstance {
+public class ForgotPassword_Node extends JournalEntry_Node {
     public final static String NAME = "forgotPassword";
 
-    public ForgotPassword_NodeInstance() {
+    public ForgotPassword_Node() {
     }
 
-    public ForgotPassword_NodeInstance(String nodeId, long timestamp) {
+    public ForgotPassword_Node(String nodeId, long timestamp) {
         super(nodeId, timestamp);
     }
 
@@ -19,6 +19,6 @@ public class ForgotPassword_NodeInstance extends JournalEntry_NodeInstance {
     public void process(Db db, MapNode mapNode) {
         String userId = (String) mapNode.get(NameIds.USER_KEY);
         String passwordHash = (String) mapNode.get(NameIds.PASSWORD_KEY);
-        getOoDb().set(userId, NameIds.PASSWORD_KEY, passwordHash);
+        getAwDb().set(userId, NameIds.PASSWORD_KEY, passwordHash);
     }
 }
