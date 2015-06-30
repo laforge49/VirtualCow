@@ -32,7 +32,7 @@ public class JournalEntry_NodeInstance extends NodeBase implements Transaction {
             getOoDb().createLnk1(getNodeId(), User.USER_KEY, userId);
         }
         process(db, tMapNode);
-        getOoDb().addNode(getNodeId(), this);
+        getOoDb().addNode(this);
     }
 
     public void process(Db db, MapNode tMapNode) {

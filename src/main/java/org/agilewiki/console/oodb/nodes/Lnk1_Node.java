@@ -6,7 +6,6 @@ import org.agilewiki.console.oodb.OODb;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
 public class Lnk1_Node extends Metadata_Node {
-    private static Lnk1_Node lnk1_node;
     public final static String ID = "$nlnk1.node";
 
     final public static String TARGET_ID = "$ntarget";
@@ -24,12 +23,8 @@ public class Lnk1_Node extends Metadata_Node {
     final public static String USER_ID = "$nuser";
     final public static String USER_LNK1_ID = "$nuser.lnk1";
 
-    public static Lnk1_Node get() {
-        return lnk1_node;
-    }
-
-    public static void create() {
-        lnk1_node = new Lnk1_Node(ID, FactoryRegistry.MAX_TIMESTAMP);
+    public static void create(OODb ooDb) {
+        ooDb.addImmutableNode(new Lnk1_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     public static void define(String nodeId, String invDependency, String originType, String destinationType, String ofRole) {

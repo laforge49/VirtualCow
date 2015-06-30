@@ -17,6 +17,10 @@ public class Role_NodeInstance extends NodeBase implements Role {
     public final Map<String, RequestBlade> requests = new HashMap<String, RequestBlade>();
     public final Map<String, PostRequestBlade> posts = new HashMap<String, PostRequestBlade>();
 
+    public static String roleName(String nodeId) {
+        return nodeId.substring(2, nodeId.length() - 5);
+    }
+
     public Role_NodeInstance(String nodeId, long timestamp) {
         super(nodeId, timestamp);
         this.simpleSimon = SimpleSimon.simpleSimon;
@@ -35,7 +39,7 @@ public class Role_NodeInstance extends NodeBase implements Role {
 
     @Override
     public String roleName() {
-        return getNodeId().substring(2, getNodeId().length() - 5);
+        return roleName(getNodeId());
     }
 
     @Override

@@ -19,7 +19,7 @@ public class ChangePasswordBlade extends PostRequestBlade {
 
     public ChangePasswordBlade(Role role, String page) throws Exception {
         super(role, page);
-        ChangePassword_Node.create();
+        ChangePassword_Node.create(ooDb);
         ooDb.registerTransaction(ChangePassword_NodeInstance.NAME, ChangePassword_NodeInstance.class);
     }
 

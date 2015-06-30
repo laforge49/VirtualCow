@@ -98,7 +98,10 @@ public class NodeData {
     }
 
     public Object get(String key) {
-        return atts.get(key).get(0);
+        List l = atts.get(key);
+        if (l == null)
+            return null;
+        return l.get(0);
     }
 
     public List getFlatList(String key) {

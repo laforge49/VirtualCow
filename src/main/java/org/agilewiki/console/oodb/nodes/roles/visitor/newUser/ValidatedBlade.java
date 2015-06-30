@@ -1,7 +1,9 @@
 package org.agilewiki.console.oodb.nodes.roles.visitor.newUser;
 
 import org.agilewiki.console.*;
+import org.agilewiki.console.oodb.nodes.User_Node;
 import org.agilewiki.console.oodb.nodes.roles.Role;
+import org.agilewiki.console.oodb.nodes.roles.Role_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.developer.Developer_Role;
 import org.agilewiki.console.oodb.nodes.roles.user.User_Role;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
@@ -17,7 +19,7 @@ import java.security.NoSuchAlgorithmException;
 public class ValidatedBlade extends PostRequestBlade {
     public ValidatedBlade(Role role, String page) throws Exception {
         super(role, page);
-        NewUser_Node.create();
+        NewUser_Node.create(ooDb);
         ooDb.registerTransaction(NewUser_NodeInstance.NAME, NewUser_NodeInstance.class);
     }
 
@@ -93,10 +95,8 @@ public class ValidatedBlade extends PostRequestBlade {
                 String emailId = ValueId.generate(email);
                 mn = mn.add(User.EMAIL_ID, emailId);
                 mn = mn.add(User.PASSWORD_KEY, passwordHash);
-                mn = mn.add(User.ROLE_ID,
-                        User_Role.get().roleName());
-                mn = mn.add(User.ROLE_ID,
-                        Developer_Role.get().roleName());
+                mn = mn.add(User.ROLE_ID, Role_NodeInstance.roleName(User_Role.ID));
+                mn = mn.add(User.ROLE_ID, Role_NodeInstance.roleName(Developer_Role.ID));
                 asyncRequestImpl.send(ooDb.update(NewUser_NodeInstance.NAME, mn),
                         new AsyncResponseProcessor<String>() {
                             @Override

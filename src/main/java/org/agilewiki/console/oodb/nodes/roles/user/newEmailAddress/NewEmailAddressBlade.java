@@ -19,7 +19,7 @@ import java.security.NoSuchAlgorithmException;
 public class NewEmailAddressBlade extends PostRequestBlade {
     public NewEmailAddressBlade(Role role, String page) throws Exception {
         super(role, page);
-        NewEmailAddress_Node.create();
+        NewEmailAddress_Node.create(ooDb);
         ooDb.registerTransaction(NewEmailAddress_NodeInstance.NAME, NewEmailAddress_NodeInstance.class);
     }
 

@@ -1,22 +1,18 @@
 package org.agilewiki.console.oodb.nodes;
 
 import org.agilewiki.console.oodb.Node;
+import org.agilewiki.console.oodb.OODb;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
 public class Metadata_Node extends Node_NodeInstance {
-    private static Metadata_Node metaData_Node;
     public final static String ID = "$nmetadata.node";
 
-    public static Metadata_Node get() {
-        return metaData_Node;
-    }
-
-    public static void create()
+    public static void create(OODb ooDb)
             throws Exception {
-        metaData_Node = new Metadata_Node(ID, FactoryRegistry.MAX_TIMESTAMP);
-        Node_Node.create();
-        Lnk1_Node.create();
-        Key_Node.create();
+        ooDb.addImmutableNode(new Metadata_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
+        Node_Node.create(ooDb);
+        Lnk1_Node.create(ooDb);
+        Key_Node.create(ooDb);
     }
 
     public Metadata_Node(String nodeId, long timestamp) {

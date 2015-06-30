@@ -1,6 +1,7 @@
 package org.agilewiki.console.oodb.nodes.roles.admin;
 
 import org.agilewiki.console.RequestBlade;
+import org.agilewiki.console.oodb.OODb;
 import org.agilewiki.console.oodb.nodes.roles.Role_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.admin.editRoles.EditRolesBlade;
 import org.agilewiki.utils.immutable.FactoryRegistry;
@@ -9,16 +10,11 @@ import org.agilewiki.utils.immutable.FactoryRegistry;
  * A base role.
  */
 public class Admin_Role extends Role_NodeInstance {
-    private static Admin_Role admin_role;
     public final static String ID = "$nadmin.role";
 
-    public static Admin_Role get() {
-        return admin_role;
-    }
-
-    public static void create()
+    public static void create(OODb ooDb)
             throws Exception {
-        admin_role = new Admin_Role(ID, FactoryRegistry.MAX_TIMESTAMP);
+        ooDb.addImmutableNode(new Admin_Role(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     private AdminBlade adminBlade;
@@ -37,7 +33,7 @@ public class Admin_Role extends Role_NodeInstance {
         editRolesBlade = new EditRolesBlade(this, "editRoles");
         recreateRoleBlade = new RecreateRoleBlade(this, "recreateRole");
 
-        RecreateAdminRole_Node.create();
+        RecreateAdminRole_Node.create(getOoDb());
         getOoDb().registerTransaction(RecreateAdminRole_NodeInstance.NAME, RecreateAdminRole_NodeInstance.class);
         RecreateAdminRole_NodeInstance.adminRole = this;
     }

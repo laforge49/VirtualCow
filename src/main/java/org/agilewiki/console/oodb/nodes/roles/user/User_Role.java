@@ -1,6 +1,7 @@
 package org.agilewiki.console.oodb.nodes.roles.user;
 
 import org.agilewiki.console.RequestBlade;
+import org.agilewiki.console.oodb.OODb;
 import org.agilewiki.console.oodb.nodes.roles.Role_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.user.changePassword.ChangePasswordBlade;
 import org.agilewiki.console.oodb.nodes.roles.user.delete.DeleteAccountBlade;
@@ -12,16 +13,11 @@ import org.agilewiki.utils.immutable.FactoryRegistry;
  * A base role.
  */
 public class User_Role extends Role_NodeInstance {
-    private static User_Role user_role;
     public final static String ID = "$nuser.role";
 
-    public static User_Role get() {
-        return user_role;
-    }
-
-    public static void create()
+    public static void create(OODb ooDb)
             throws Exception {
-        user_role = new User_Role(ID, FactoryRegistry.MAX_TIMESTAMP);
+        ooDb.addImmutableNode(new User_Role(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     private UserBlade userBlade;
@@ -42,7 +38,7 @@ public class User_Role extends Role_NodeInstance {
         newEmailAddressBlade = new NewEmailAddressBlade(this, "newEmailAddress");
         userBlade = new UserBlade(this, "user");
 
-        RecreateUserRole_Node.create();
+        RecreateUserRole_Node.create(getOoDb());
         getOoDb().registerTransaction(RecreateUserRole_NodeInstance.NAME, RecreateUserRole_NodeInstance.class);
         RecreateUserRole_NodeInstance.userRole = this;
     }

@@ -1,6 +1,7 @@
 package org.agilewiki.console.oodb.nodes.roles.visitor;
 
 import org.agilewiki.console.RequestBlade;
+import org.agilewiki.console.oodb.OODb;
 import org.agilewiki.console.oodb.nodes.roles.Role_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.visitor.forgotPassword.ForgotPasswordBlade;
 import org.agilewiki.console.oodb.nodes.roles.visitor.login.LoginBlade;
@@ -11,15 +12,10 @@ import org.agilewiki.utils.immutable.FactoryRegistry;
  * Default role when the user is not logged in.
  */
 public class Visitor_Role extends Role_NodeInstance {
-    private static Visitor_Role visitor_role;
     public final static String ID = "$nvisitor.role";
 
-    public static Visitor_Role get() {
-        return visitor_role;
-    }
-
-    public static void create() throws Exception {
-        visitor_role = new Visitor_Role(ID, FactoryRegistry.MAX_TIMESTAMP);
+    public static void create(OODb ooDb) throws Exception {
+        ooDb.addImmutableNode(new Visitor_Role(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     private WelcomeBlade welcomeBlade;
@@ -37,7 +33,7 @@ public class Visitor_Role extends Role_NodeInstance {
         AboutBlade aboutBlade = new AboutBlade(this, "about");
         ContactBlade contactBlade = new ContactBlade(this, "contact");
 
-        RecreateVisitorRole_Node.create();
+        RecreateVisitorRole_Node.create(getOoDb());
         getOoDb().registerTransaction(RecreateVisitorRole_NodeInstance.NAME, RecreateVisitorRole_NodeInstance.class);
         RecreateVisitorRole_NodeInstance.visitorRole = this;
     }

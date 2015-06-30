@@ -15,7 +15,6 @@ public class NodeBase implements Node {
     public NodeBase(String nodeId, long timestamp) {
         if (nodeId != null) {
             initialize(nodeId, timestamp);
-            getOoDb().addNode(nodeId, this);
         }
     }
 

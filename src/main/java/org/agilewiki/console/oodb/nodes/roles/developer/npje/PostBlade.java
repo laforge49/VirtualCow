@@ -16,7 +16,7 @@ import javax.servlet.AsyncContext;
 public class PostBlade extends PostRequestBlade {
     public PostBlade(Role role, String page) throws Exception {
         super(role, page);
-        Npje_Node.create();
+        Npje_Node.create(ooDb);
         ooDb.registerTransaction(Npje_NodeInstance.NAME, Npje_NodeInstance.class);
     }
 

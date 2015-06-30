@@ -7,15 +7,10 @@ import org.agilewiki.console.oodb.OODb;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
 public class Attribute_Node extends Node_NodeInstance {
-    private static Attribute_Node attribute_node;
     public final static String ID = "$nattribute.node";
 
-    public static Attribute_Node get() {
-        return attribute_node;
-    }
-
-    public static void create() {
-        attribute_node = new Attribute_Node(ID, FactoryRegistry.MAX_TIMESTAMP);
+    public static void create(OODb ooDb) {
+        ooDb.addImmutableNode(new Attribute_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     public static void define(String attributeNameId, String nodeId) {

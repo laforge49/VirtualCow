@@ -36,6 +36,7 @@ public class OODb {
     private Map<String, Node> updatedNodes;
     private final DbUpdater dbUpdater;
     private final DbFactoryRegistry dbFactoryRegistry;
+    private final Map<String, Node> immutableNodes = new HashMap<String, Node>();
     public final VersionedListNode versionedNilList;
     public final VersionedMapNode versionedNilMap;
     public final ListNode nilList;
@@ -66,7 +67,7 @@ public class OODb {
                 if (factoryId == null) {
                     return NullNode.singleton;
                 }
-                NodeFactory nodeFactory = getNodeFactory(factoryId);
+                NodeFactory nodeFactory = (NodeFactory) fetchNode(factoryId);
                 if (nodeFactory == null)
                     return NullNode.singleton;
                 Node node = nodeFactory.createNode(nodeId, FactoryRegistry.MAX_TIMESTAMP);
@@ -90,7 +91,7 @@ public class OODb {
         return new NodeData(db, nodeId, timestamp);
     }
 
-    public long getTimestamp() {
+    public long getDbTimestamp() {
         return db.getTimestamp();
     }
 
@@ -110,15 +111,14 @@ public class OODb {
         return null;
     }
 
-    public NodeFactory getNodeFactory(String factoryId) throws ExecutionException {
-        return (NodeFactory) fetchNode(factoryId);
-    }
-
     public Node fetchNode(String nodeId) {
         char x = nodeId.charAt(1);
         if (x != 'n' && x != 'r' && x != 't')
             return null;
-        Node node = nodeCache.getUnchecked(nodeId);
+        Node node = immutableNodes.get(nodeId);
+        if (node != null)
+            return node;
+        node = nodeCache.getUnchecked(nodeId);
         if (node instanceof NullNode) {
             dropNode(nodeId);
             return null;
@@ -126,8 +126,12 @@ public class OODb {
         return node;
     }
 
-    public void addNode(String nodeId, Node node) {
-        nodeCache.put(nodeId, node);
+    public void addImmutableNode(Node node) {
+        immutableNodes.put(node.getNodeId(), node);
+    }
+
+    public void addNode(Node node) {
+        nodeCache.put(node.getNodeId(), node);
     }
 
     public void dropNode(String nodeId) {

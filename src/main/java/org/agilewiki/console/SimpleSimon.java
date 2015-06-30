@@ -97,15 +97,15 @@ public class SimpleSimon extends HttpServlet {
             mailOut = new MailOut();
 
             try {
-                Metadata_Node.create();
+                Metadata_Node.create(ooDb);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
 
-            ServletStart_Node.create();
+            ServletStart_Node.create(ooDb);
             ooDb.registerTransaction(ServletStart_NodeInstance.NAME, ServletStart_NodeInstance.class);
 
-            ServletStop_Node.create();
+            ServletStop_Node.create(ooDb);
             ooDb.registerTransaction(ServletStop_NodeInstance.NAME, ServletStop_NodeInstance.class);
 
             ServletStart_NodeInstance.update(ooDb);
@@ -140,14 +140,14 @@ public class SimpleSimon extends HttpServlet {
         if (userIdToken != null)
             userId = Tokens.parse(userIdToken);
         if (userId == null) {
-            Visitor_Role.get().dispatchGetRequest(request, null);
+            ((Visitor_Role) ooDb.fetchNode(Visitor_Role.ID)).dispatchGetRequest(request, null);
         } else {
             String roleName = request.getParameter("role");
             if (roleName == null || !User.hasRole(userId, roleName))
                 roleName = "profile";
             Role role = roles.get(roleName);
             if (role == null) {
-                role = User_Role.get();
+                role = ((User_Role) ooDb.fetchNode(User_Role.ID));
             }
             role.dispatchGetRequest(request, userId);
         }
@@ -171,14 +171,14 @@ public class SimpleSimon extends HttpServlet {
             userId = Tokens.parse(userIdToken);
 
         if (userId == null) {
-            Visitor_Role.get().dispatchPostRequest(request, response, null);
+            ((Visitor_Role) ooDb.fetchNode(Visitor_Role.ID)).dispatchPostRequest(request, response, null);
         } else {
             String roleName = request.getParameter("role");
             if (roleName == null || !User.hasRole(userId, roleName))
                 roleName = "profile";
             Role role = roles.get(roleName);
             if (role == null) {
-                role = User_Role.get();
+                role = ((User_Role) ooDb.fetchNode(User_Role.ID));
             }
             role.dispatchPostRequest(request, response, userId);
         }

@@ -1,6 +1,7 @@
 package org.agilewiki.console.oodb.nodes.roles.developer;
 
 import org.agilewiki.console.RequestBlade;
+import org.agilewiki.console.oodb.OODb;
 import org.agilewiki.console.oodb.nodes.roles.Role_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.developer.npje.PostBlade;
 import org.agilewiki.utils.immutable.FactoryRegistry;
@@ -9,16 +10,11 @@ import org.agilewiki.utils.immutable.FactoryRegistry;
  * The developer role.
  */
 public class Developer_Role extends Role_NodeInstance {
-    private static Developer_Role developer_role;
     public final static String ID = "$ndeveloper.role";
 
-    public static Developer_Role get() {
-        return developer_role;
-    }
-
-    public static void create()
+    public static void create(OODb ooDb)
             throws Exception {
-        developer_role = new Developer_Role(ID, FactoryRegistry.MAX_TIMESTAMP);
+        ooDb.addImmutableNode(new Developer_Role(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     private DeveloperBlade developerBlade;
@@ -91,7 +87,7 @@ public class Developer_Role extends Role_NodeInstance {
         rolesNodesBlade = new NodesBlade(this, "roleNodes", "Role Types", "$D$nnodeType$nrole.node");
         invLinksBlade = new InvLinksBlade(this, "invLinks");
 
-        RecreateDeveloperRole_Node.create();
+        RecreateDeveloperRole_Node.create(getOoDb());
         getOoDb().registerTransaction(RecreateDeveloperRole_NodeInstance.NAME, RecreateDeveloperRole_NodeInstance.class);
         RecreateDeveloperRole_NodeInstance.developerRole = this;
     }

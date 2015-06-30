@@ -7,20 +7,15 @@ import org.agilewiki.console.oodb.nodes.roles.Role_Node;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
 public class Node_Node extends Metadata_Node {
-    private static Node_Node node_node;
     public final static String ID = "$nnode.node";
 
-    public static Node_Node get() {
-        return node_node;
-    }
-
-    public static void create()
+    public static void create(OODb ooDb)
             throws Exception {
-        node_node = new Node_Node(ID, FactoryRegistry.MAX_TIMESTAMP);
-        JournalEntry_Node.create();
-        Role_Node.create();
-        User_Node.create();
-        Attribute_Node.create();
+        ooDb.addImmutableNode(new Node_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
+        JournalEntry_Node.create(ooDb);
+        Role_Node.create(ooDb);
+        User_Node.create(ooDb);
+        Attribute_Node.create(ooDb);
     }
 
     public static void define(String nodeId, String nodeType, String superType, String roleId, String... attributes) {

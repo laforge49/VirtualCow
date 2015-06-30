@@ -1,19 +1,15 @@
 package org.agilewiki.console.oodb.nodes.roles.system;
 
 import org.agilewiki.console.oodb.Node;
+import org.agilewiki.console.oodb.OODb;
 import org.agilewiki.console.oodb.nodes.JournalEntry_Node;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
 public class RecreateSystemRole_Node extends JournalEntry_Node {
-    private static RecreateSystemRole_Node recreateSystemRole_node;
     public final static String ID = "$nrecreateSystemRole.node";
 
-    public static RecreateSystemRole_Node get() {
-        return recreateSystemRole_node;
-    }
-
-    public static void create() {
-        recreateSystemRole_node = new RecreateSystemRole_Node(ID, FactoryRegistry.MAX_TIMESTAMP);
+    public static void create(OODb ooDb) {
+        ooDb.addImmutableNode(new RecreateSystemRole_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     public RecreateSystemRole_Node(String nodeId, long timestamp) {

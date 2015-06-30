@@ -4,6 +4,7 @@ import org.agilewiki.console.oodb.OODb;
 import org.agilewiki.console.oodb.nodes.Key_Node;
 import org.agilewiki.console.oodb.nodes.User_Node;
 import org.agilewiki.console.oodb.nodes.roles.Role;
+import org.agilewiki.console.oodb.nodes.roles.Role_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.admin.Admin_Role;
 import org.agilewiki.console.oodb.nodes.roles.developer.Developer_Role;
 import org.agilewiki.console.oodb.nodes.roles.user.User_Role;
@@ -135,9 +136,9 @@ public class User {
         String error = createUser(userId,
                 emailId,
                 passwordHash,
-                User_Role.get().roleName(),
-                Developer_Role.get().roleName(),
-                Admin_Role.get().roleName());
+                Role_NodeInstance.roleName(User_Role.ID),
+                Role_NodeInstance.roleName(Developer_Role.ID),
+                Role_NodeInstance.roleName(Admin_Role.ID));
         if (error == null)
             return true;
         servletConfig.getServletContext().log(error);
@@ -149,7 +150,7 @@ public class User {
                                     String passwordHash,
                                     String... userRoles) {
         OODb ooDb = SimpleSimon.simpleSimon.ooDb;
-        if (ooDb.keyHasTargetId(EMAIL_ID, emailId, ooDb.getTimestamp())) {
+        if (ooDb.keyHasTargetId(EMAIL_ID, emailId, ooDb.getDbTimestamp())) {
             return "duplicate email: " + ValueId.value(emailId);
         }
         ooDb.set(userId, "$nsubject", emailId);

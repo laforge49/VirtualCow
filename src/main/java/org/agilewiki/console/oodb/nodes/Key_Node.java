@@ -2,10 +2,10 @@ package org.agilewiki.console.oodb.nodes;
 
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.oodb.Node;
+import org.agilewiki.console.oodb.OODb;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
 public class Key_Node extends Metadata_Node {
-    private static Key_Node key_node;
     public final static String ID = "$nkey.node";
 
     final public static String NODETYPE_ID = "$nnodeType";
@@ -24,12 +24,8 @@ public class Key_Node extends Metadata_Node {
     final public static String SUBJECT_ID = "$nsubject";
     final public static String SUBJECT_KEY_ID = "$nsubject.key";
 
-    public static Key_Node get() {
-        return key_node;
-    }
-
-    public static void create() {
-        key_node = new Key_Node(ID, FactoryRegistry.MAX_TIMESTAMP);
+    public static void create(OODb ooDb) {
+        ooDb.addImmutableNode(new Key_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     public static void define(String nodeId, String targetType, String roleId) {

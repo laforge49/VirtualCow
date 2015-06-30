@@ -1,19 +1,15 @@
 package org.agilewiki.console.oodb.nodes.roles.system;
 
 import org.agilewiki.console.oodb.Node;
+import org.agilewiki.console.oodb.OODb;
 import org.agilewiki.console.oodb.nodes.JournalEntry_Node;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
 public class ServletStop_Node extends JournalEntry_Node {
-    private static ServletStop_Node servletStop_node;
     public final static String ID = "$nservletStop.node";
 
-    public static ServletStop_Node get() {
-        return servletStop_node;
-    }
-
-    public static void create() {
-        servletStop_node = new ServletStop_Node(ID, FactoryRegistry.MAX_TIMESTAMP);
+    public static void create(OODb ooDb) {
+        ooDb.addImmutableNode(new ServletStop_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     public ServletStop_Node(String nodeId, long timestamp) {
