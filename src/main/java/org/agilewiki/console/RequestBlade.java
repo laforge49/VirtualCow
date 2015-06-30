@@ -1,6 +1,6 @@
 package org.agilewiki.console;
 
-import org.agilewiki.console.awdb.AwDb;
+import org.agilewiki.awdb.AwDb;
 import org.agilewiki.console.roles.Role;
 import org.agilewiki.jactor2.core.blades.NonBlockingBladeBase;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;

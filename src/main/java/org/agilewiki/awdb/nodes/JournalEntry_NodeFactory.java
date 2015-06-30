@@ -1,8 +1,8 @@
-package org.agilewiki.console.awdb.nodes;
+package org.agilewiki.awdb.nodes;
 
 import org.agilewiki.console.VCJournalEntry_Node;
-import org.agilewiki.console.awdb.AwDb;
-import org.agilewiki.console.awdb.Node;
+import org.agilewiki.awdb.AwDb;
+import org.agilewiki.awdb.Node;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
 public class JournalEntry_NodeFactory extends Node_Node {

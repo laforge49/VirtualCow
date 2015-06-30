@@ -1,6 +1,6 @@
-package org.agilewiki.console.awdb.nodes;
+package org.agilewiki.awdb.nodes;
 
-import org.agilewiki.console.awdb.NodeBase;
+import org.agilewiki.awdb.NodeBase;
 
 public class Key_Node extends NodeBase {
     public Key_Node(String nodeId, long timestamp) {

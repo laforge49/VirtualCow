@@ -4,7 +4,7 @@ import org.agilewiki.console.NameIds;
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.TimestampIds;
-import org.agilewiki.console.awdb.nodes.Key_NodeFactory;
+import org.agilewiki.awdb.nodes.Key_NodeFactory;
 import org.agilewiki.console.roles.Role;
 import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.ids.composites.SecondaryId;

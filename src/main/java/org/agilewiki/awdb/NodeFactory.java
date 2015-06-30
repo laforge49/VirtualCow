@@ -1,4 +1,4 @@
-package org.agilewiki.console.awdb;
+package org.agilewiki.awdb;
 
 /**
  * A factory to create a node.

@@ -1,6 +1,6 @@
 package org.agilewiki.console;
 
-import org.agilewiki.console.awdb.nodes.JournalEntry_Node;
+import org.agilewiki.awdb.nodes.JournalEntry_Node;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 

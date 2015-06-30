@@ -1,7 +1,7 @@
 package org.agilewiki.console.roles.visitor;
 
 import org.agilewiki.console.RequestBlade;
-import org.agilewiki.console.awdb.AwDb;
+import org.agilewiki.awdb.AwDb;
 import org.agilewiki.console.roles.Role_NodeInstance;
 import org.agilewiki.console.roles.visitor.forgotPassword.ForgotPasswordBlade;
 import org.agilewiki.console.roles.visitor.login.LoginBlade;

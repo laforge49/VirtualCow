@@ -1,7 +1,7 @@
-package org.agilewiki.console.awdb.nodes;
+package org.agilewiki.awdb.nodes;
 
-import org.agilewiki.console.awdb.AwDb;
-import org.agilewiki.console.awdb.Node;
+import org.agilewiki.awdb.AwDb;
+import org.agilewiki.awdb.Node;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
 public class Key_NodeFactory extends Metadata_NodeFactory {
@@ -18,13 +18,6 @@ public class Key_NodeFactory extends Metadata_NodeFactory {
 
     public static void create(AwDb awDb) {
         awDb.addTimelessNode(new Key_NodeFactory(ID, FactoryRegistry.MAX_TIMESTAMP));
-    }
-
-    public static void define(String nodeId, String targetType, String roleId) {
-        Node_NodeFactory.define(nodeId, ID, null, roleId);
-        getAwDb().createLnk1(nodeId,
-                Lnk1_NodeFactory.TARGET_ID,
-                targetType);
     }
 
     public Key_NodeFactory(String nodeId, long timestamp) {

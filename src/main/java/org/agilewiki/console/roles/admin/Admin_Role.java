@@ -1,7 +1,7 @@
 package org.agilewiki.console.roles.admin;
 
 import org.agilewiki.console.RequestBlade;
-import org.agilewiki.console.awdb.AwDb;
+import org.agilewiki.awdb.AwDb;
 import org.agilewiki.console.roles.Role_NodeInstance;
 import org.agilewiki.console.roles.admin.editRoles.EditRolesBlade;
 import org.agilewiki.utils.immutable.FactoryRegistry;

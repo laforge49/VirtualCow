@@ -1,8 +1,8 @@
 package org.agilewiki.console;
 
-import org.agilewiki.console.awdb.AwDb;
-import org.agilewiki.console.awdb.NodeBase;
-import org.agilewiki.console.awdb.nodes.Key_NodeFactory;
+import org.agilewiki.awdb.AwDb;
+import org.agilewiki.awdb.NodeBase;
+import org.agilewiki.awdb.nodes.Key_NodeFactory;
 import org.agilewiki.console.roles.Role;
 import org.agilewiki.console.roles.Role_NodeInstance;
 import org.agilewiki.console.roles.admin.Admin_Role;

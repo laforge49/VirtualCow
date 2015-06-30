@@ -1,6 +1,6 @@
-package org.agilewiki.console.awdb;
+package org.agilewiki.awdb;
 
-import org.agilewiki.console.awdb.nodes.Key_NodeFactory;
+import org.agilewiki.awdb.nodes.Key_NodeFactory;
 
 import java.util.ArrayDeque;
 

@@ -1,8 +1,8 @@
 package org.agilewiki.console.roles.user.logout;
 
-import org.agilewiki.console.awdb.AwDb;
-import org.agilewiki.console.awdb.Node;
-import org.agilewiki.console.awdb.nodes.JournalEntry_NodeFactory;
+import org.agilewiki.awdb.AwDb;
+import org.agilewiki.awdb.Node;
+import org.agilewiki.awdb.nodes.JournalEntry_NodeFactory;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
 public class Logout_NodeFactory extends JournalEntry_NodeFactory {

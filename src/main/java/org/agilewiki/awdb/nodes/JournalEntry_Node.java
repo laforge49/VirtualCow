@@ -1,6 +1,6 @@
-package org.agilewiki.console.awdb.nodes;
+package org.agilewiki.awdb.nodes;
 
-import org.agilewiki.console.awdb.NodeBase;
+import org.agilewiki.awdb.NodeBase;
 import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.MapNode;

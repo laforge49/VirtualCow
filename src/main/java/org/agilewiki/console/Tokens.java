@@ -1,6 +1,6 @@
 package org.agilewiki.console;
 
-import org.agilewiki.console.awdb.AwDb;
+import org.agilewiki.awdb.AwDb;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
 import java.security.MessageDigest;

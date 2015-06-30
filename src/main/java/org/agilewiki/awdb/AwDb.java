@@ -1,10 +1,10 @@
-package org.agilewiki.console.awdb;
+package org.agilewiki.awdb;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import org.agilewiki.console.awdb.nodes.Key_NodeFactory;
-import org.agilewiki.console.awdb.nodes.Metadata_NodeFactory;
+import org.agilewiki.awdb.nodes.Key_NodeFactory;
+import org.agilewiki.awdb.nodes.Metadata_NodeFactory;
 import org.agilewiki.jactor2.core.blades.BladeBase;
 import org.agilewiki.jactor2.core.blades.NonBlockingBladeBase;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
