@@ -1,9 +1,9 @@
 package org.agilewiki.console.oodb.nodes.roles.system;
 
 import org.agilewiki.console.SimpleSimon;
-import org.agilewiki.console.User;
 import org.agilewiki.console.oodb.OODb;
 import org.agilewiki.console.oodb.nodes.JournalEntry_NodeInstance;
+import org.agilewiki.console.oodb.nodes.User_NodeInstance;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
@@ -25,6 +25,6 @@ public class ServletStart_NodeInstance extends JournalEntry_NodeInstance {
 
     @Override
     public void process(Db db, MapNode tMapNode) {
-        User.init();
+        User_NodeInstance.init();
     }
 }

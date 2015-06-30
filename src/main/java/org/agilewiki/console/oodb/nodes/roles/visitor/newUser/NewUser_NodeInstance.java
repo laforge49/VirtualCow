@@ -1,8 +1,8 @@
 package org.agilewiki.console.oodb.nodes.roles.visitor.newUser;
 
 import org.agilewiki.console.NameIds;
-import org.agilewiki.console.User;
 import org.agilewiki.console.oodb.nodes.JournalEntry_NodeInstance;
+import org.agilewiki.console.oodb.nodes.User_NodeInstance;
 import org.agilewiki.utils.immutable.collections.ListNode;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
@@ -30,6 +30,6 @@ public class NewUser_NodeInstance extends JournalEntry_NodeInstance {
         ListNode list = mapNode.getList(NameIds.ROLE_ID);
         List<String> flatList = list.flatList();
         String[] roles = new String[]{};
-        User.createUser(userId, emailId, passwordHash, flatList.toArray(roles));
+        User_NodeInstance.createUser(userId, emailId, passwordHash, flatList.toArray(roles));
     }
 }
