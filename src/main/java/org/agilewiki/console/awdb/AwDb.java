@@ -4,9 +4,9 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import org.agilewiki.console.awdb.nodes.Key_NodeFactory;
+import org.agilewiki.console.awdb.nodes.Metadata_NodeFactory;
 import org.agilewiki.jactor2.core.blades.BladeBase;
 import org.agilewiki.jactor2.core.blades.NonBlockingBladeBase;
-import org.agilewiki.jactor2.core.impl.Plant;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.jactor2.core.messages.ExceptionHandler;
 import org.agilewiki.jactor2.core.messages.impl.AsyncRequestImpl;
@@ -49,7 +49,6 @@ public class AwDb {
     public AwDb(int maxRootBlockSize, long maxNodeCacheSize)
             throws Exception {
         awDb = this;
-        new Plant();
         dbUpdater = new DbUpdater();
         Path dbPath = Paths.get("vcow.db");
         db = new Db(new BaseRegistry(), dbPath, maxRootBlockSize);
@@ -87,6 +86,7 @@ public class AwDb {
             }
         });
         nodeCache = cache;
+        Metadata_NodeFactory.create(awDb);
     }
 
     public void close() {

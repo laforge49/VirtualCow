@@ -1,15 +1,15 @@
 package org.agilewiki.console;
 
 import org.agilewiki.console.awdb.AwDb;
-import org.agilewiki.console.awdb.nodes.Metadata_NodeFactory;
 import org.agilewiki.console.roles.Role;
 import org.agilewiki.console.roles.Role_NodeFactory;
-import org.agilewiki.console.roles.system.ServletStart_NodeFactory;
 import org.agilewiki.console.roles.system.ServletStart_Node;
-import org.agilewiki.console.roles.system.ServletStop_NodeFactory;
+import org.agilewiki.console.roles.system.ServletStart_NodeFactory;
 import org.agilewiki.console.roles.system.ServletStop_Node;
+import org.agilewiki.console.roles.system.ServletStop_NodeFactory;
 import org.agilewiki.console.roles.user.User_Role;
 import org.agilewiki.console.roles.visitor.Visitor_Role;
+import org.agilewiki.jactor2.core.impl.Plant;
 import org.agilewiki.utils.ids.Timestamp;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
@@ -94,12 +94,13 @@ public class SimpleSimon extends HttpServlet {
             servletConfig = getServletConfig();
             servletContext = servletConfig.getServletContext();
 
+            new Plant();
+
             awDb = new AwDb(100000, 10000L);
 
             mailOut = new MailOut();
 
             try {
-                Metadata_NodeFactory.create(awDb);
                 Role_NodeFactory.create(awDb);
             } catch (Exception ex) {
                 ex.printStackTrace();

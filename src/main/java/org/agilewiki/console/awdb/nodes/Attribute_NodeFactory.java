@@ -1,8 +1,8 @@
 package org.agilewiki.console.awdb.nodes;
 
 import org.agilewiki.console.RandomIds;
-import org.agilewiki.console.awdb.Node;
 import org.agilewiki.console.awdb.AwDb;
+import org.agilewiki.console.awdb.Node;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
 public class Attribute_NodeFactory extends Node_Node {
