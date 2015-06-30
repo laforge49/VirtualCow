@@ -74,7 +74,7 @@ public class NodesBlade extends RequestBlade {
                         sb = new StringBuilder();
                         String keyId = SecondaryId.secondaryIdType(secondaryId);
                         String valueId = SecondaryId.secondaryIdValue(secondaryId);
-                        for (String nodeId : ooDb.keyTargetIdIterable(keyId, valueId, longTimestamp)) {
+                        for (String nodeId : awDb.keyTargetIdIterable(keyId, valueId, longTimestamp)) {
                             --limit;
                             if (limit == 0) {
                                 hasMore = true;
@@ -82,7 +82,7 @@ public class NodesBlade extends RequestBlade {
                                 break;
                             }
 
-                            String kindId = ooDb.kindId(nodeId, longTimestamp);
+                            String kindId = awDb.kindId(nodeId, longTimestamp);
                             sb.append(kindId.substring(2));
 
                             sb.append(' ');
@@ -100,13 +100,13 @@ public class NodesBlade extends RequestBlade {
                                 sb.append(nodeId.substring(2));
                             sb.append("</a>");
                             StringBuilder lb = new StringBuilder();
-                            String subject = (String) ooDb.get(nodeId, NameIds.SUBJECT, longTimestamp);
+                            String subject = (String) awDb.get(nodeId, NameIds.SUBJECT, longTimestamp);
                             if (subject != null) {
                                 lb.append(' ');
                                 lb.append(subject);
                                 lb.append(" | ");
                             }
-                            String body = (String) ooDb.get(nodeId, NameIds.BODY, longTimestamp);
+                            String body = (String) awDb.get(nodeId, NameIds.BODY, longTimestamp);
                             if (body != null) {
                                 if (subject == null) {
                                     lb.append(" | ");

@@ -45,13 +45,13 @@ public class SubJournalBlade extends RequestBlade {
                 subJournal = request.getParameter("subJournal");
                 String what = null;
                 String href = null;
-                if (ooDb.isNode(subJournal, longTimestamp)) {
+                if (awDb.isNode(subJournal, longTimestamp)) {
                     what = "";
                     href = subJournal;
-                } else if (ooDb.isNode(subJournal + ".lnk1", longTimestamp)) {
+                } else if (awDb.isNode(subJournal + ".lnk1", longTimestamp)) {
                     what = "label ";
                     href = subJournal + ".lnk1";
-                } else if (ooDb.isNode(subJournal + ".key", longTimestamp)) {
+                } else if (awDb.isNode(subJournal + ".key", longTimestamp)) {
                     what = "key ";
                     href = subJournal + ".key";
                 }
@@ -73,7 +73,7 @@ public class SubJournalBlade extends RequestBlade {
                         hasMore = false;
                         sb = new StringBuilder();
                         int limit = 25;
-                        PeekABoo<String> peekABoo = ooDb.journal(subJournal, longTimestamp);
+                        PeekABoo<String> peekABoo = awDb.journal(subJournal, longTimestamp);
                         peekABoo.setPosition(TimestampIds.generate(startingAt));
                         for (String jeId : peekABoo) {
                             if (jeId == null)
@@ -94,17 +94,17 @@ public class SubJournalBlade extends RequestBlade {
 
                             sb.append(' ');
 
-                            String transactionName = (String) ooDb.get(jeId, NameIds.TRANSACTION_NAME, longTimestamp);
+                            String transactionName = (String) awDb.get(jeId, NameIds.TRANSACTION_NAME, longTimestamp);
                             sb.append(transactionName + ".node");
 
                             StringBuilder lb = new StringBuilder();
-                            String subject = (String) ooDb.get(jeId, NameIds.SUBJECT, longTimestamp);
+                            String subject = (String) awDb.get(jeId, NameIds.SUBJECT, longTimestamp);
                             if (subject != null) {
                                 lb.append(' ');
                                 lb.append(subject);
                                 lb.append(" | ");
                             }
-                            String body = (String) ooDb.get(jeId, NameIds.BODY, longTimestamp);
+                            String body = (String) awDb.get(jeId, NameIds.BODY, longTimestamp);
                             if (body != null) {
                                 if (subject != null) {
                                     lb.append(" | ");

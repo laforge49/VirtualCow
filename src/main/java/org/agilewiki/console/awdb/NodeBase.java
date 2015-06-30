@@ -1,4 +1,4 @@
-package org.agilewiki.console.oodb;
+package org.agilewiki.console.awdb;
 
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
@@ -14,8 +14,8 @@ public class NodeBase implements Node {
     private NodeData innerReference = null;
     private NodeData outerReference = null;
 
-    public static OODb getOoDb() {
-        return OODb.getOoDb();
+    public static AwDb getOoDb() {
+        return AwDb.getAwDb();
     }
 
     public NodeBase(String nodeId, long timestamp) {

@@ -3,7 +3,7 @@ package org.agilewiki.console.roles.developer;
 import org.agilewiki.console.NameIds;
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.SimpleSimon;
-import org.agilewiki.console.oodb.nodes.Key_Node;
+import org.agilewiki.console.awdb.nodes.Key_Node;
 import org.agilewiki.console.roles.Role;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.collections.PeekABoo;
@@ -53,7 +53,7 @@ public class SecondaryKeysBlade extends RequestBlade {
                         int limit = 25;
                         sb = new StringBuilder();
                         String keyId = NameIds.generate(secondaryType);
-                        PeekABoo<String> idPeekABoo = ooDb.keyValueIdIterable(keyId, longTimestamp);
+                        PeekABoo<String> idPeekABoo = awDb.keyValueIdIterable(keyId, longTimestamp);
                         if (startingAt != null)
                             idPeekABoo.setPosition(startingAt);
                         for (String valueId : idPeekABoo) {
@@ -64,7 +64,7 @@ public class SecondaryKeysBlade extends RequestBlade {
                             }
                             --limit;
                             String secondaryId = SecondaryId.secondaryId(keyId, valueId);
-                            String nodeId = ooDb.getOnlyKeyTargetId(Key_Node.EMAIL_ID, valueId, longTimestamp);
+                            String nodeId = awDb.getOnlyKeyTargetId(Key_Node.EMAIL_ID, valueId, longTimestamp);
                             String line = valueId.substring(2);
                             if (line.length() > 60)
                                 line = line.substring(0, 60);
@@ -85,7 +85,7 @@ public class SecondaryKeysBlade extends RequestBlade {
                                 sb.append(line);
                                 sb.append(" -> ");
 
-                                String kindId = ooDb.kindId(nodeId, longTimestamp);
+                                String kindId = awDb.kindId(nodeId, longTimestamp);
                                 sb.append(kindId.substring(2));
 
                                 sb.append(' ');

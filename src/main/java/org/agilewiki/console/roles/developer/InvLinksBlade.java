@@ -53,7 +53,7 @@ public class InvLinksBlade extends RequestBlade {
                         hasMore = false;
                         int limit = 25;
                         sb = new StringBuilder();
-                        PeekABoo<String> peekABoo = ooDb.originIdIterable(targetId, labelId, longTimestamp);
+                        PeekABoo<String> peekABoo = awDb.originIdIterable(targetId, labelId, longTimestamp);
                         peekABoo.setPosition(startingAt);
                         for (String nodeId : peekABoo) {
                             --limit;
@@ -64,7 +64,7 @@ public class InvLinksBlade extends RequestBlade {
                             }
 
                             if (!nodeId.startsWith("$t")) {
-                                String kindId = ooDb.kindId(nodeId, longTimestamp);
+                                String kindId = awDb.kindId(nodeId, longTimestamp);
                                 sb.append(kindId.substring(2));
 
                                 sb.append(" ");
@@ -81,7 +81,7 @@ public class InvLinksBlade extends RequestBlade {
                             }
 
                             if (nodeId.startsWith("$t")) {
-                                String transactionName = (String) ooDb.get(nodeId, NameIds.TRANSACTION_NAME, longTimestamp);
+                                String transactionName = (String) awDb.get(nodeId, NameIds.TRANSACTION_NAME, longTimestamp);
                                 if (transactionName != null) {
                                     sb.append(transactionName + ".node");
                                     sb.append(' ');
@@ -98,13 +98,13 @@ public class InvLinksBlade extends RequestBlade {
                                 sb.append("</a>");
                             }
                             StringBuilder lb = new StringBuilder();
-                            String subject = (String) ooDb.get(nodeId, NameIds.SUBJECT, longTimestamp);
+                            String subject = (String) awDb.get(nodeId, NameIds.SUBJECT, longTimestamp);
                             if (subject != null) {
                                 lb.append(' ');
                                 lb.append(subject);
                                 lb.append(" | ");
                             }
-                            String body = (String) ooDb.get(nodeId, NameIds.BODY, longTimestamp);
+                            String body = (String) awDb.get(nodeId, NameIds.BODY, longTimestamp);
                             if (body != null) {
                                 if (subject == null) {
                                     lb.append(" | ");

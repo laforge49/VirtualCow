@@ -1,7 +1,7 @@
 package org.agilewiki.console;
 
-import org.agilewiki.console.oodb.OODb;
-import org.agilewiki.console.oodb.nodes.Metadata_Node;
+import org.agilewiki.console.awdb.AwDb;
+import org.agilewiki.console.awdb.nodes.Metadata_Node;
 import org.agilewiki.console.roles.Role;
 import org.agilewiki.console.roles.Role_Node;
 import org.agilewiki.console.roles.system.ServletStart_Node;
@@ -41,7 +41,7 @@ public class SimpleSimon extends HttpServlet {
     public final static int ENCODE_FIELD = 3;
     public static SimpleSimon simpleSimon;
 
-    public OODb ooDb;
+    public AwDb awDb;
     protected ServletConfig servletConfig;
     public ServletContext servletContext;
     public MailOut mailOut;
@@ -94,24 +94,24 @@ public class SimpleSimon extends HttpServlet {
             servletConfig = getServletConfig();
             servletContext = servletConfig.getServletContext();
 
-            ooDb = new OODb(100000, 10000L);
+            awDb = new AwDb(100000, 10000L);
 
             mailOut = new MailOut();
 
             try {
-                Metadata_Node.create(ooDb);
-                Role_Node.create(ooDb);
+                Metadata_Node.create(awDb);
+                Role_Node.create(awDb);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
 
-            ServletStart_Node.create(ooDb);
-            ooDb.registerTransaction(ServletStart_NodeInstance.NAME, ServletStart_NodeInstance.class);
+            ServletStart_Node.create(awDb);
+            awDb.registerTransaction(ServletStart_NodeInstance.NAME, ServletStart_NodeInstance.class);
 
-            ServletStop_Node.create(ooDb);
-            ooDb.registerTransaction(ServletStop_NodeInstance.NAME, ServletStop_NodeInstance.class);
+            ServletStop_Node.create(awDb);
+            awDb.registerTransaction(ServletStop_NodeInstance.NAME, ServletStop_NodeInstance.class);
 
-            ServletStart_NodeInstance.update(ooDb);
+            ServletStart_NodeInstance.update(awDb);
         } catch (Exception ex) {
             destroy();
         }
@@ -119,10 +119,10 @@ public class SimpleSimon extends HttpServlet {
 
     public void destroy() {
         try {
-            ServletStop_NodeInstance.update(ooDb);
+            ServletStop_NodeInstance.update(awDb);
         } catch (Exception e) {
         }
-        ooDb.close();
+        awDb.close();
     }
 
     public void doGet(HttpServletRequest request,
@@ -143,15 +143,15 @@ public class SimpleSimon extends HttpServlet {
         if (userIdToken != null)
             userId = Tokens.parse(userIdToken);
         if (userId == null) {
-            ((Visitor_Role) ooDb.fetchNode(Visitor_Role.ID, FactoryRegistry.MAX_TIMESTAMP)).dispatchGetRequest(request, null);
+            ((Visitor_Role) awDb.fetchNode(Visitor_Role.ID, FactoryRegistry.MAX_TIMESTAMP)).dispatchGetRequest(request, null);
         } else {
-            User_NodeInstance user_nodeInstance = (User_NodeInstance) ooDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
+            User_NodeInstance user_nodeInstance = (User_NodeInstance) awDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
             String roleName = request.getParameter("role");
             if (roleName == null || !user_nodeInstance.hasRole(roleName))
                 roleName = "profile";
             Role role = roles.get(roleName);
             if (role == null) {
-                role = ((User_Role) ooDb.fetchNode(User_Role.ID, FactoryRegistry.MAX_TIMESTAMP));
+                role = ((User_Role) awDb.fetchNode(User_Role.ID, FactoryRegistry.MAX_TIMESTAMP));
             }
             role.dispatchGetRequest(request, userId);
         }
@@ -175,15 +175,15 @@ public class SimpleSimon extends HttpServlet {
             userId = Tokens.parse(userIdToken);
 
         if (userId == null) {
-            ((Visitor_Role) ooDb.fetchNode(Visitor_Role.ID, FactoryRegistry.MAX_TIMESTAMP)).dispatchPostRequest(request, response, null);
+            ((Visitor_Role) awDb.fetchNode(Visitor_Role.ID, FactoryRegistry.MAX_TIMESTAMP)).dispatchPostRequest(request, response, null);
         } else {
-            User_NodeInstance user_nodeInstance = (User_NodeInstance) ooDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
+            User_NodeInstance user_nodeInstance = (User_NodeInstance) awDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
             String roleName = request.getParameter("role");
             if (roleName == null || !user_nodeInstance.hasRole(roleName))
                 roleName = "profile";
             Role role = roles.get(roleName);
             if (role == null) {
-                role = ((User_Role) ooDb.fetchNode(User_Role.ID, FactoryRegistry.MAX_TIMESTAMP));
+                role = ((User_Role) awDb.fetchNode(User_Role.ID, FactoryRegistry.MAX_TIMESTAMP));
             }
             role.dispatchPostRequest(request, response, userId);
         }

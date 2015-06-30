@@ -1,7 +1,7 @@
-package org.agilewiki.console.oodb.nodes;
+package org.agilewiki.console.awdb.nodes;
 
-import org.agilewiki.console.oodb.Node;
-import org.agilewiki.console.oodb.OODb;
+import org.agilewiki.console.awdb.Node;
+import org.agilewiki.console.awdb.AwDb;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
 public class Key_Node extends Metadata_Node {
@@ -23,8 +23,8 @@ public class Key_Node extends Metadata_Node {
     final public static String SUBJECT_ID = "$nsubject";
     final public static String SUBJECT_KEY_ID = "$nsubject.key";
 
-    public static void create(OODb ooDb) {
-        ooDb.addTimelessNode(new Key_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
+    public static void create(AwDb awDb) {
+        awDb.addTimelessNode(new Key_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     public static void define(String nodeId, String targetType, String roleId) {

@@ -1,7 +1,7 @@
 package org.agilewiki.console.roles.developer;
 
 import org.agilewiki.console.RequestBlade;
-import org.agilewiki.console.oodb.OODb;
+import org.agilewiki.console.awdb.AwDb;
 import org.agilewiki.console.roles.Role_NodeInstance;
 import org.agilewiki.console.roles.developer.npje.PostBlade;
 import org.agilewiki.utils.immutable.FactoryRegistry;
@@ -12,9 +12,9 @@ import org.agilewiki.utils.immutable.FactoryRegistry;
 public class Developer_Role extends Role_NodeInstance {
     public final static String ID = "$ndeveloper.role";
 
-    public static void create(OODb ooDb)
+    public static void create(AwDb awDb)
             throws Exception {
-        ooDb.addTimelessNode(new Developer_Role(ID, FactoryRegistry.MAX_TIMESTAMP));
+        awDb.addTimelessNode(new Developer_Role(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     private DeveloperBlade developerBlade;

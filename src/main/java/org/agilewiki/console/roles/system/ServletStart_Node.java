@@ -1,15 +1,15 @@
 package org.agilewiki.console.roles.system;
 
-import org.agilewiki.console.oodb.Node;
-import org.agilewiki.console.oodb.OODb;
-import org.agilewiki.console.oodb.nodes.JournalEntry_Node;
+import org.agilewiki.console.awdb.Node;
+import org.agilewiki.console.awdb.AwDb;
+import org.agilewiki.console.awdb.nodes.JournalEntry_Node;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
 public class ServletStart_Node extends JournalEntry_Node {
     public final static String ID = "$nservletStart.node";
 
-    public static void create(OODb ooDb) {
-        ooDb.addTimelessNode(new ServletStart_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
+    public static void create(AwDb awDb) {
+        awDb.addTimelessNode(new ServletStart_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     public ServletStart_Node(String nodeId, long timestamp) {

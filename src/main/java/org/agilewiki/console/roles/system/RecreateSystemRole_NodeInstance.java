@@ -3,7 +3,7 @@ package org.agilewiki.console.roles.system;
 import org.agilewiki.console.NameIds;
 import org.agilewiki.console.RecreateRole_NodeInstance;
 import org.agilewiki.console.User_Node;
-import org.agilewiki.console.oodb.nodes.*;
+import org.agilewiki.console.awdb.nodes.*;
 import org.agilewiki.console.roles.Role;
 import org.agilewiki.console.roles.Role_Node;
 import org.agilewiki.console.roles.admin.RecreateAdminRole_Node;

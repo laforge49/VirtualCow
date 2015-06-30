@@ -1,7 +1,7 @@
 package org.agilewiki.console.roles.visitor;
 
 import org.agilewiki.console.RequestBlade;
-import org.agilewiki.console.oodb.OODb;
+import org.agilewiki.console.awdb.AwDb;
 import org.agilewiki.console.roles.Role_NodeInstance;
 import org.agilewiki.console.roles.visitor.forgotPassword.ForgotPasswordBlade;
 import org.agilewiki.console.roles.visitor.login.LoginBlade;
@@ -14,8 +14,8 @@ import org.agilewiki.utils.immutable.FactoryRegistry;
 public class Visitor_Role extends Role_NodeInstance {
     public final static String ID = "$nvisitor.role";
 
-    public static void create(OODb ooDb) throws Exception {
-        ooDb.addTimelessNode(new Visitor_Role(ID, FactoryRegistry.MAX_TIMESTAMP));
+    public static void create(AwDb awDb) throws Exception {
+        awDb.addTimelessNode(new Visitor_Role(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     private WelcomeBlade welcomeBlade;

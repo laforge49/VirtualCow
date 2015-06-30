@@ -1,8 +1,8 @@
 package org.agilewiki.console.roles;
 
-import org.agilewiki.console.oodb.Node;
-import org.agilewiki.console.oodb.OODb;
-import org.agilewiki.console.oodb.nodes.Node_NodeInstance;
+import org.agilewiki.console.awdb.Node;
+import org.agilewiki.console.awdb.AwDb;
+import org.agilewiki.console.awdb.nodes.Node_NodeInstance;
 import org.agilewiki.console.roles.admin.Admin_Role;
 import org.agilewiki.console.roles.developer.Developer_Role;
 import org.agilewiki.console.roles.system.System_Role;
@@ -13,13 +13,13 @@ import org.agilewiki.utils.immutable.FactoryRegistry;
 public class Role_Node extends Node_NodeInstance {
     public final static String ID = "$nrole.node";
 
-    public static void create(OODb ooDb) throws Exception {
-        ooDb.addTimelessNode(new Role_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
-        Admin_Role.create(ooDb);
-        Developer_Role.create(ooDb);
-        System_Role.create(ooDb);
-        Visitor_Role.create(ooDb);
-        User_Role.create(ooDb);
+    public static void create(AwDb awDb) throws Exception {
+        awDb.addTimelessNode(new Role_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
+        Admin_Role.create(awDb);
+        Developer_Role.create(awDb);
+        System_Role.create(awDb);
+        Visitor_Role.create(awDb);
+        User_Role.create(awDb);
     }
 
     public Role_Node(String nodeId, long timestamp) {

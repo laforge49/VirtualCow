@@ -15,8 +15,8 @@ import javax.servlet.AsyncContext;
 public class PostBlade extends PostRequestBlade {
     public PostBlade(Role role, String page) throws Exception {
         super(role, page);
-        Npje_Node.create(ooDb);
-        ooDb.registerTransaction(Npje_NodeInstance.NAME, Npje_NodeInstance.class);
+        Npje_Node.create(awDb);
+        awDb.registerTransaction(Npje_NodeInstance.NAME, Npje_NodeInstance.class);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class PostBlade extends PostRequestBlade {
                 map.put("body", SimpleSimon.encode(body, 0, SimpleSimon.ENCODE_FIELD)); //text area
                 if (subject.length() > 0)
                     map.put("subject", SimpleSimon.encode(subject, 0, SimpleSimon.ENCODE_FIELD)); //field
-                MapNode mn = ooDb.nilMap;
+                MapNode mn = awDb.nilMap;
                 if (subject.length() > 0)
                     mn = mn.add(NameIds.SUBJECT, subject);
                 if (body.length() > 0)
@@ -57,7 +57,7 @@ public class PostBlade extends PostRequestBlade {
                 mn = mn.add(NameIds.REMOTE_ADDR, request.getRemoteAddr());
                 mn = mn.add(NameIds.REMOTE_PORT, request.getRemotePort());
 
-                asyncRequestImpl.send(ooDb.update(Npje_NodeInstance.NAME, mn), new AsyncResponseProcessor<String>() {
+                asyncRequestImpl.send(awDb.update(Npje_NodeInstance.NAME, mn), new AsyncResponseProcessor<String>() {
                     @Override
                     public void processAsyncResponse(String _response) throws Exception {
                         map.put("subject", "");

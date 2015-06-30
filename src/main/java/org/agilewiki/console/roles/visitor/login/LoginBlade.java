@@ -16,12 +16,12 @@ import java.security.NoSuchAlgorithmException;
 public class LoginBlade extends PostRequestBlade {
     public LoginBlade(Role role, String page) throws Exception {
         super(role, page);
-        Login_Node.create(ooDb);
-        ooDb.registerTransaction(Login_NodeInstance.NAME, Login_NodeInstance.class);
-        BadUserAddress_Node.create(ooDb);
-        ooDb.registerTransaction(BadUserAddress_NodeInstance.NAME, BadUserAddress_NodeInstance.class);
-        BadUserPassword_Node.create(ooDb);
-        ooDb.registerTransaction(BadUserPassword_NodeInstance.NAME, BadUserPassword_NodeInstance.class);
+        Login_Node.create(awDb);
+        awDb.registerTransaction(Login_NodeInstance.NAME, Login_NodeInstance.class);
+        BadUserAddress_Node.create(awDb);
+        awDb.registerTransaction(BadUserAddress_NodeInstance.NAME, BadUserAddress_NodeInstance.class);
+        BadUserPassword_Node.create(awDb);
+        awDb.registerTransaction(BadUserPassword_NodeInstance.NAME, BadUserPassword_NodeInstance.class);
     }
 
     @Override
@@ -62,12 +62,12 @@ public class LoginBlade extends PostRequestBlade {
                 }
                 String userId = User_NodeInstance.userId(emailAddress, FactoryRegistry.MAX_TIMESTAMP);
                 if (userId == null) {
-                    MapNode mn = ooDb.nilMap;
+                    MapNode mn = awDb.nilMap;
                     mn = mn.add(NameIds.SUBJECT, emailAddress);
                     mn = mn.add(NameIds.REMOTE_HOST, request.getRemoteHost());
                     mn = mn.add(NameIds.REMOTE_ADDR, request.getRemoteAddr());
                     mn = mn.add(NameIds.REMOTE_PORT, request.getRemotePort());
-                    asyncRequestImpl.send(ooDb.update(BadUserAddress_NodeInstance.NAME, mn),
+                    asyncRequestImpl.send(awDb.update(BadUserAddress_NodeInstance.NAME, mn),
                             new AsyncResponseProcessor<String>() {
                                 @Override
                                 public void processAsyncResponse(String _response) throws Exception {
@@ -78,15 +78,15 @@ public class LoginBlade extends PostRequestBlade {
                             });
                     return;
                 }
-                User_NodeInstance user_nodeInstance = (User_NodeInstance) ooDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
+                User_NodeInstance user_nodeInstance = (User_NodeInstance) awDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
                 if (!user_nodeInstance.confirmPassword(servletContext, password)) {
-                    MapNode mn = ooDb.nilMap;
+                    MapNode mn = awDb.nilMap;
                     mn = mn.add(NameIds.SUBJECT, emailAddress);
                     mn = mn.add(NameIds.USER_KEY, userId);
                     mn = mn.add(NameIds.REMOTE_HOST, request.getRemoteHost());
                     mn = mn.add(NameIds.REMOTE_ADDR, request.getRemoteAddr());
                     mn = mn.add(NameIds.REMOTE_PORT, request.getRemotePort());
-                    asyncRequestImpl.send(ooDb.update(BadUserPassword_NodeInstance.NAME, mn),
+                    asyncRequestImpl.send(awDb.update(BadUserPassword_NodeInstance.NAME, mn),
                             new AsyncResponseProcessor<String>() {
                                 @Override
                                 public void processAsyncResponse(String _response) throws Exception {
@@ -111,13 +111,13 @@ public class LoginBlade extends PostRequestBlade {
                 Cookie loginCookie = new Cookie("userId", userId + "|" + token);
                 loginCookie.setMaxAge(60 * 60 * 24 * 3); //3 days
                 response.addCookie(loginCookie);
-                MapNode mn = ooDb.nilMap;
+                MapNode mn = awDb.nilMap;
                 mn = mn.add(NameIds.SUBJECT, emailAddress);
                 mn = mn.add(NameIds.USER_KEY, userId);
                 mn = mn.add(NameIds.REMOTE_HOST, request.getRemoteHost());
                 mn = mn.add(NameIds.REMOTE_ADDR, request.getRemoteAddr());
                 mn = mn.add(NameIds.REMOTE_PORT, request.getRemotePort());
-                asyncRequestImpl.send(ooDb.update(Login_NodeInstance.NAME, mn),
+                asyncRequestImpl.send(awDb.update(Login_NodeInstance.NAME, mn),
                         new AsyncResponseProcessor<String>() {
                             @Override
                             public void processAsyncResponse(String _response) throws Exception {

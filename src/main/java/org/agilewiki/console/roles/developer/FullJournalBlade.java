@@ -50,7 +50,7 @@ public class FullJournalBlade extends RequestBlade {
                         int limit = 25;
                         hasMore = false;
                         sb = new StringBuilder();
-                        PeekABoo<String> idPeekABoo = ooDb.journal(longTimestamp);
+                        PeekABoo<String> idPeekABoo = awDb.journal(longTimestamp);
                         idPeekABoo.setPosition(startingAt);
                         for (String next : idPeekABoo) {
                             String tsId = TimestampIds.generate(next);
@@ -69,17 +69,17 @@ public class FullJournalBlade extends RequestBlade {
 
                             sb.append(' ');
 
-                            String transactionName = (String) ooDb.get(tsId, NameIds.TRANSACTION_NAME, longTimestamp);
+                            String transactionName = (String) awDb.get(tsId, NameIds.TRANSACTION_NAME, longTimestamp);
                             sb.append(transactionName);
 
                             StringBuilder lb = new StringBuilder();
-                            String subject = (String) ooDb.get(tsId, NameIds.SUBJECT, longTimestamp);
+                            String subject = (String) awDb.get(tsId, NameIds.SUBJECT, longTimestamp);
                             if (subject != null) {
                                 lb.append(' ');
                                 lb.append(subject);
                                 lb.append(" | ");
                             }
-                            String body = (String) ooDb.get(tsId, NameIds.BODY, longTimestamp);
+                            String body = (String) awDb.get(tsId, NameIds.BODY, longTimestamp);
                             if (body != null) {
                                 if (subject != null) {
                                     lb.append(" | ");

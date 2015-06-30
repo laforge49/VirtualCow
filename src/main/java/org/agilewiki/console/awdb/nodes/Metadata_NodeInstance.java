@@ -1,7 +1,7 @@
-package org.agilewiki.console.oodb.nodes;
+package org.agilewiki.console.awdb.nodes;
 
-import org.agilewiki.console.oodb.NodeBase;
-import org.agilewiki.console.oodb.NodeFactory;
+import org.agilewiki.console.awdb.NodeBase;
+import org.agilewiki.console.awdb.NodeFactory;
 
 public abstract class Metadata_NodeInstance extends NodeBase implements NodeFactory {
     public Metadata_NodeInstance(String nodeId, long timestamp) {

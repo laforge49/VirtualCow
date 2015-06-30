@@ -1,4 +1,4 @@
-package org.agilewiki.console.oodb;
+package org.agilewiki.console.awdb;
 
 import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.ids.composites.SecondaryId;

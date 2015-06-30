@@ -1,8 +1,8 @@
 package org.agilewiki.console.roles.user.delete;
 
 import org.agilewiki.console.NameIds;
-import org.agilewiki.console.oodb.Delete;
-import org.agilewiki.console.oodb.nodes.JournalEntry_NodeInstance;
+import org.agilewiki.console.awdb.Delete;
+import org.agilewiki.console.awdb.nodes.JournalEntry_NodeInstance;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 

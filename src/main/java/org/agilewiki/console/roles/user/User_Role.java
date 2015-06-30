@@ -1,7 +1,7 @@
 package org.agilewiki.console.roles.user;
 
 import org.agilewiki.console.RequestBlade;
-import org.agilewiki.console.oodb.OODb;
+import org.agilewiki.console.awdb.AwDb;
 import org.agilewiki.console.roles.Role_NodeInstance;
 import org.agilewiki.console.roles.user.changePassword.ChangePasswordBlade;
 import org.agilewiki.console.roles.user.delete.DeleteAccountBlade;
@@ -15,9 +15,9 @@ import org.agilewiki.utils.immutable.FactoryRegistry;
 public class User_Role extends Role_NodeInstance {
     public final static String ID = "$nuser.role";
 
-    public static void create(OODb ooDb)
+    public static void create(AwDb awDb)
             throws Exception {
-        ooDb.addTimelessNode(new User_Role(ID, FactoryRegistry.MAX_TIMESTAMP));
+        awDb.addTimelessNode(new User_Role(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     private UserBlade userBlade;

@@ -1,7 +1,7 @@
 package org.agilewiki.console.roles.system;
 
 import org.agilewiki.console.RequestBlade;
-import org.agilewiki.console.oodb.OODb;
+import org.agilewiki.console.awdb.AwDb;
 import org.agilewiki.console.roles.Role_NodeInstance;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
@@ -11,8 +11,8 @@ import org.agilewiki.utils.immutable.FactoryRegistry;
 public class System_Role extends Role_NodeInstance {
     public final static String ID = "$nsystem.role";
 
-    public static void create(OODb ooDb) {
-        ooDb.addTimelessNode(new System_Role(ID, FactoryRegistry.MAX_TIMESTAMP));
+    public static void create(AwDb awDb) {
+        awDb.addTimelessNode(new System_Role(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     public System_Role(String nodeId, long timestamp) {

@@ -1,7 +1,7 @@
-package org.agilewiki.console.oodb.nodes;
+package org.agilewiki.console.awdb.nodes;
 
-import org.agilewiki.console.oodb.Node;
-import org.agilewiki.console.oodb.OODb;
+import org.agilewiki.console.awdb.Node;
+import org.agilewiki.console.awdb.AwDb;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
 public class Lnk1_Node extends Metadata_Node {
@@ -22,20 +22,20 @@ public class Lnk1_Node extends Metadata_Node {
     final public static String USER_ID = "$nuser";
     final public static String USER_LNK1_ID = "$nuser.lnk1";
 
-    public static void create(OODb ooDb) {
-        ooDb.addTimelessNode(new Lnk1_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
+    public static void create(AwDb awDb) {
+        awDb.addTimelessNode(new Lnk1_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     public static void define(String nodeId, String invDependency, String originType, String destinationType, String ofRole) {
-        OODb ooDb = getOoDb();
+        AwDb awDb = getOoDb();
         Node_Node.define(nodeId, ID, null, ofRole);
         if (invDependency != null) {
-            ooDb.createSecondaryId(nodeId, Key_Node.INVDEPENDENCY_ID, invDependency);
+            awDb.createSecondaryId(nodeId, Key_Node.INVDEPENDENCY_ID, invDependency);
         }
-        ooDb.createLnk1(nodeId,
+        awDb.createLnk1(nodeId,
                 Lnk1_Node.ORIGIN_ID,
                 originType);
-        ooDb.createLnk1(nodeId,
+        awDb.createLnk1(nodeId,
                 Lnk1_Node.DESTINATION_ID,
                 destinationType);
     }

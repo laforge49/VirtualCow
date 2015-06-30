@@ -1,7 +1,7 @@
 package org.agilewiki.console.roles.admin;
 
 import org.agilewiki.console.RequestBlade;
-import org.agilewiki.console.oodb.OODb;
+import org.agilewiki.console.awdb.AwDb;
 import org.agilewiki.console.roles.Role_NodeInstance;
 import org.agilewiki.console.roles.admin.editRoles.EditRolesBlade;
 import org.agilewiki.utils.immutable.FactoryRegistry;
@@ -12,9 +12,9 @@ import org.agilewiki.utils.immutable.FactoryRegistry;
 public class Admin_Role extends Role_NodeInstance {
     public final static String ID = "$nadmin.role";
 
-    public static void create(OODb ooDb)
+    public static void create(AwDb awDb)
             throws Exception {
-        ooDb.addTimelessNode(new Admin_Role(ID, FactoryRegistry.MAX_TIMESTAMP));
+        awDb.addTimelessNode(new Admin_Role(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     private AdminBlade adminBlade;

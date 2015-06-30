@@ -1,9 +1,9 @@
-package org.agilewiki.console.oodb;
+package org.agilewiki.console.awdb;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import org.agilewiki.console.oodb.nodes.Key_Node;
+import org.agilewiki.console.awdb.nodes.Key_Node;
 import org.agilewiki.jactor2.core.blades.BladeBase;
 import org.agilewiki.jactor2.core.blades.NonBlockingBladeBase;
 import org.agilewiki.jactor2.core.impl.Plant;
@@ -29,8 +29,8 @@ import java.util.*;
 /**
  * Object Oriented Database, without state caching.
  */
-public class OODb {
-    private static OODb ooDb = null;
+public class AwDb {
+    private static AwDb awDb = null;
     private final Db db;
     private LoadingCache<String, Node> nodeCache;
     private Map<String, Node> updatedNodes;
@@ -42,13 +42,13 @@ public class OODb {
     public final ListNode nilList;
     public final MapNode nilMap;
 
-    public static OODb getOoDb() {
-        return ooDb;
+    public static AwDb getAwDb() {
+        return awDb;
     }
 
-    public OODb(int maxRootBlockSize, long maxNodeCacheSize)
+    public AwDb(int maxRootBlockSize, long maxNodeCacheSize)
             throws Exception {
-        ooDb = this;
+        awDb = this;
         new Plant();
         dbUpdater = new DbUpdater();
         Path dbPath = Paths.get("vcow.db");

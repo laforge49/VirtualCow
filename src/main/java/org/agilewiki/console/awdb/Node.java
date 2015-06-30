@@ -1,4 +1,4 @@
-package org.agilewiki.console.oodb;
+package org.agilewiki.console.awdb;
 
 import java.util.List;
 import java.util.NavigableMap;

@@ -1,18 +1,18 @@
-package org.agilewiki.console.oodb.nodes;
+package org.agilewiki.console.awdb.nodes;
 
-import org.agilewiki.console.oodb.Node;
-import org.agilewiki.console.oodb.OODb;
+import org.agilewiki.console.awdb.Node;
+import org.agilewiki.console.awdb.AwDb;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
 public class Metadata_Node extends Node_NodeInstance {
     public final static String ID = "$nmetadata.node";
 
-    public static void create(OODb ooDb)
+    public static void create(AwDb awDb)
             throws Exception {
-        ooDb.addTimelessNode(new Metadata_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
-        Node_Node.create(ooDb);
-        Lnk1_Node.create(ooDb);
-        Key_Node.create(ooDb);
+        awDb.addTimelessNode(new Metadata_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
+        Node_Node.create(awDb);
+        Lnk1_Node.create(awDb);
+        Key_Node.create(awDb);
     }
 
     public Metadata_Node(String nodeId, long timestamp) {

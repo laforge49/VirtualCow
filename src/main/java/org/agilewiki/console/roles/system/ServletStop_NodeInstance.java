@@ -1,7 +1,7 @@
 package org.agilewiki.console.roles.system;
 
-import org.agilewiki.console.oodb.OODb;
-import org.agilewiki.console.oodb.nodes.JournalEntry_NodeInstance;
+import org.agilewiki.console.awdb.AwDb;
+import org.agilewiki.console.awdb.nodes.JournalEntry_NodeInstance;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
@@ -18,10 +18,10 @@ public class ServletStop_NodeInstance extends JournalEntry_NodeInstance {
         super(nodeId, timestamp);
     }
 
-    public static String update(OODb ooDb)
+    public static String update(AwDb awDb)
             throws Exception {
-        MapNode mn = ooDb.nilMap;
-        return ooDb.update(NAME, mn).call();
+        MapNode mn = awDb.nilMap;
+        return awDb.update(NAME, mn).call();
     }
 
     @Override

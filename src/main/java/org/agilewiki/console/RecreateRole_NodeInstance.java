@@ -1,8 +1,8 @@
 package org.agilewiki.console;
 
-import org.agilewiki.console.oodb.Delete;
-import org.agilewiki.console.oodb.nodes.JournalEntry_NodeInstance;
-import org.agilewiki.console.oodb.nodes.Key_Node;
+import org.agilewiki.console.awdb.Delete;
+import org.agilewiki.console.awdb.nodes.JournalEntry_NodeInstance;
+import org.agilewiki.console.awdb.nodes.Key_Node;
 import org.agilewiki.console.roles.Role;
 import org.agilewiki.console.roles.Role_Node;
 import org.agilewiki.utils.immutable.collections.MapNode;

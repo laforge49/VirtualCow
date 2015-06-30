@@ -37,7 +37,7 @@ public class UserBlade extends RequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                User_NodeInstance user_nodeInstance = (User_NodeInstance) ooDb.fetchNode(nodeId, longTimestamp);
+                User_NodeInstance user_nodeInstance = (User_NodeInstance) awDb.fetchNode(nodeId, longTimestamp);
                 String email = user_nodeInstance.getEmailAddress();
                 map.put("email", email);
                 StringBuilder sb;
@@ -62,7 +62,7 @@ public class UserBlade extends RequestBlade {
                                 String niceRoleName = simpleSimon.roles.get(roleName).niceRoleName();
                                 sb.append("<tr>");
                                 sb.append("<td>");
-                                if (ooDb.nodeHasValueId(nodeId,
+                                if (awDb.nodeHasValueId(nodeId,
                                         NameIds.ROLE_ID,
                                         NameId.generate(roleName),
                                         longTimestamp))

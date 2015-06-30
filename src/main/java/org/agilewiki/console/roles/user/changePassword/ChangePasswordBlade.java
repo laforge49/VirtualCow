@@ -20,8 +20,8 @@ public class ChangePasswordBlade extends PostRequestBlade {
 
     public ChangePasswordBlade(Role role, String page) throws Exception {
         super(role, page);
-        ChangePassword_Node.create(ooDb);
-        ooDb.registerTransaction(ChangePassword_NodeInstance.NAME, ChangePassword_NodeInstance.class);
+        ChangePassword_Node.create(awDb);
+        awDb.registerTransaction(ChangePassword_NodeInstance.NAME, ChangePassword_NodeInstance.class);
     }
 
     @Override
@@ -74,17 +74,17 @@ public class ChangePasswordBlade extends PostRequestBlade {
                     finish();
                     return;
                 }
-                MapNode mn = ooDb.nilMap;
+                MapNode mn = awDb.nilMap;
                 mn = mn.add(NameIds.USER_KEY, userId);
                 mn = mn.add(NameIds.PASSWORD_KEY, User_NodeInstance.encodePassword(servletContext, userId, newPassword));
-                asyncRequestImpl.send(ooDb.update(ChangePassword_NodeInstance.NAME, mn),
+                asyncRequestImpl.send(awDb.update(ChangePassword_NodeInstance.NAME, mn),
                         new AsyncResponseProcessor<String>() {
                             @Override
                             public void processAsyncResponse(String _response) throws Exception {
                                 long expTime = System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 3; // 3 days
                                 String token = null;
                                 try {
-                                    User_NodeInstance user_nodeInstance = (User_NodeInstance) ooDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
+                                    User_NodeInstance user_nodeInstance = (User_NodeInstance) awDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
                                     token = Tokens.generate(user_nodeInstance.passwordDigest(), expTime);
                                 } catch (NoSuchAlgorithmException e) {
                                 }

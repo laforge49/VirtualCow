@@ -1,14 +1,14 @@
-package org.agilewiki.console.oodb.nodes;
+package org.agilewiki.console.awdb.nodes;
 
-import org.agilewiki.console.oodb.Node;
-import org.agilewiki.console.oodb.OODb;
+import org.agilewiki.console.awdb.Node;
+import org.agilewiki.console.awdb.AwDb;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
 public class JournalEntry_Node extends Node_NodeInstance {
     public final static String ID = "$njournalEntry.node";
 
-    public static void create(OODb ooDb) {
-        ooDb.addTimelessNode(new JournalEntry_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
+    public static void create(AwDb awDb) {
+        awDb.addTimelessNode(new JournalEntry_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     public JournalEntry_Node(String nodeId, long timestamp) {

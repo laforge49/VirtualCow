@@ -18,8 +18,8 @@ import java.security.NoSuchAlgorithmException;
 public class ValidatedBlade extends PostRequestBlade {
     public ValidatedBlade(Role role, String page) throws Exception {
         super(role, page);
-        NewUser_Node.create(ooDb);
-        ooDb.registerTransaction(NewUser_NodeInstance.NAME, NewUser_NodeInstance.class);
+        NewUser_Node.create(awDb);
+        awDb.registerTransaction(NewUser_NodeInstance.NAME, NewUser_NodeInstance.class);
     }
 
     @Override
@@ -89,14 +89,14 @@ public class ValidatedBlade extends PostRequestBlade {
                     finish();
                     return;
                 }
-                MapNode mn = ooDb.nilMap;
+                MapNode mn = awDb.nilMap;
                 mn = mn.add(NameIds.USER_KEY, userId);
                 String emailId = ValueId.generate(email);
                 mn = mn.add(NameIds.EMAIL_ID, emailId);
                 mn = mn.add(NameIds.PASSWORD_KEY, passwordHash);
                 mn = mn.add(NameIds.ROLE_ID, Role_NodeInstance.roleName(User_Role.ID));
                 mn = mn.add(NameIds.ROLE_ID, Role_NodeInstance.roleName(Developer_Role.ID));
-                asyncRequestImpl.send(ooDb.update(NewUser_NodeInstance.NAME, mn),
+                asyncRequestImpl.send(awDb.update(NewUser_NodeInstance.NAME, mn),
                         new AsyncResponseProcessor<String>() {
                             @Override
                             public void processAsyncResponse(String _response) throws Exception {

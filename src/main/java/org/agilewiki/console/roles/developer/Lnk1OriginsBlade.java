@@ -51,7 +51,7 @@ public class Lnk1OriginsBlade extends RequestBlade {
                         hasMore = false;
                         int limit = 25;
                         sb = new StringBuilder();
-                        PeekABoo<String> idPeekABoo = ooDb.originIdIterable(labelId, longTimestamp);
+                        PeekABoo<String> idPeekABoo = awDb.originIdIterable(labelId, longTimestamp);
                         if (startingAt != null)
                             idPeekABoo.setPosition(startingAt);
                         for (String nodeId : idPeekABoo) {
@@ -60,7 +60,7 @@ public class Lnk1OriginsBlade extends RequestBlade {
                                 startingAt = idPeekABoo.getPosition();
                                 break;
                             }
-                            String kindId = ooDb.kindId(nodeId, longTimestamp);
+                            String kindId = awDb.kindId(nodeId, longTimestamp);
                             if (kindId == null)
                                 continue;
                             --limit;

@@ -1,6 +1,6 @@
 package org.agilewiki.console;
 
-import org.agilewiki.console.oodb.OODb;
+import org.agilewiki.console.awdb.AwDb;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
 import java.security.MessageDigest;
@@ -25,7 +25,7 @@ public class Tokens {
         String userId = idToken.substring(0, i);
         String token = idToken.substring(i + 1);
         try {
-            User_NodeInstance user_nodeInstance = (User_NodeInstance) OODb.getOoDb().fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
+            User_NodeInstance user_nodeInstance = (User_NodeInstance) AwDb.getAwDb().fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
             if (user_nodeInstance == null)
                 return null;
             if (validate(user_nodeInstance.passwordDigest(), token)) {

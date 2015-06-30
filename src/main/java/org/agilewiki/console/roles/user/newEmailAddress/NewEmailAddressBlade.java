@@ -18,8 +18,8 @@ import java.security.NoSuchAlgorithmException;
 public class NewEmailAddressBlade extends PostRequestBlade {
     public NewEmailAddressBlade(Role role, String page) throws Exception {
         super(role, page);
-        NewEmailAddress_Node.create(ooDb);
-        ooDb.registerTransaction(NewEmailAddress_NodeInstance.NAME, NewEmailAddress_NodeInstance.class);
+        NewEmailAddress_Node.create(awDb);
+        awDb.registerTransaction(NewEmailAddress_NodeInstance.NAME, NewEmailAddress_NodeInstance.class);
     }
 
     @Override
@@ -75,10 +75,10 @@ public class NewEmailAddressBlade extends PostRequestBlade {
                     return;
                 }
                 String oldEmailAddress = latest_user_nodeInstance.getEmailAddress();
-                MapNode mn = ooDb.nilMap;
+                MapNode mn = awDb.nilMap;
                 mn = mn.add(NameIds.USER_KEY, userId);
                 mn = mn.add(NameIds.EMAIL_ID, emailAddress);
-                asyncRequestImpl.send(ooDb.update(NewEmailAddress_NodeInstance.NAME, mn),
+                asyncRequestImpl.send(awDb.update(NewEmailAddress_NodeInstance.NAME, mn),
                         new AsyncResponseProcessor<String>() {
                             @Override
                             public void processAsyncResponse(String _response) throws Exception {

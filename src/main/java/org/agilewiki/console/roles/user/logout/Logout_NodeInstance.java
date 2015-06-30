@@ -1,7 +1,7 @@
 package org.agilewiki.console.roles.user.logout;
 
 import org.agilewiki.console.NameIds;
-import org.agilewiki.console.oodb.nodes.JournalEntry_NodeInstance;
+import org.agilewiki.console.awdb.nodes.JournalEntry_NodeInstance;
 import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;

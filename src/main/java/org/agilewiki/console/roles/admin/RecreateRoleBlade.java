@@ -76,13 +76,13 @@ public class RecreateRoleBlade extends PostRequestBlade {
                     return;
                 }
 
-                MapNode mn = ooDb.nilMap;
+                MapNode mn = awDb.nilMap;
                 if (userId != null)
                     mn = mn.add(NameIds.USER_KEY, userId);
                 mn = mn.add(NameIds.REMOTE_HOST, request.getRemoteHost());
                 mn = mn.add(NameIds.REMOTE_ADDR, request.getRemoteAddr());
                 mn = mn.add(NameIds.REMOTE_PORT, request.getRemotePort());
-                asyncRequestImpl.send(ooDb.update(sRole.initializeTransactionName(), mn),
+                asyncRequestImpl.send(awDb.update(sRole.initializeTransactionName(), mn),
                         new AsyncResponseProcessor<String>() {
                             @Override
                             public void processAsyncResponse(String _response) throws Exception {

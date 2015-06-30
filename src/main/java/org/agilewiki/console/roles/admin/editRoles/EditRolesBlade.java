@@ -17,8 +17,8 @@ import javax.servlet.AsyncContext;
 public class EditRolesBlade extends PostRequestBlade {
     public EditRolesBlade(Role role, String page) throws Exception {
         super(role, page);
-        UpdateRoles_Node.create(ooDb);
-        ooDb.registerTransaction(UpdateRoles_NodeInstance.NAME, UpdateRoles_NodeInstance.class);
+        UpdateRoles_Node.create(awDb);
+        awDb.registerTransaction(UpdateRoles_NodeInstance.NAME, UpdateRoles_NodeInstance.class);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class EditRolesBlade extends PostRequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                User_NodeInstance user_nodeInstance = (User_NodeInstance) ooDb.fetchNode(nodeId, longTimestamp);
+                User_NodeInstance user_nodeInstance = (User_NodeInstance) awDb.fetchNode(nodeId, longTimestamp);
                 String email = user_nodeInstance.getEmailAddress();
                 String userLink = "<a href=\"?from=" + page +
                         "&to=user" +
@@ -63,7 +63,7 @@ public class EditRolesBlade extends PostRequestBlade {
                                 sb.append("\" value=\"");
                                 sb.append(roleName);
                                 sb.append("\"");
-                                if (ooDb.nodeHasValueId(nodeId,
+                                if (awDb.nodeHasValueId(nodeId,
                                         NameIds.ROLE_ID,
                                         NameId.generate(roleName),
                                         longTimestamp))
@@ -104,7 +104,7 @@ public class EditRolesBlade extends PostRequestBlade {
                 MapNode mn;
                 while (true) {
                     try {
-                        mn = ooDb.nilMap;
+                        mn = awDb.nilMap;
                         mn = mn.add(NameIds.USER_KEY, userId);
                         mn = mn.add(NameIds.NODE_ID, nodeId);
                         for (String role : simpleSimon.roles.keySet()) {
@@ -114,7 +114,7 @@ public class EditRolesBlade extends PostRequestBlade {
                                 if (request.getParameter("role-" + role) != null) {
                                     n = true;
                                 }
-                                if (ooDb.nodeHasValueId(nodeId,
+                                if (awDb.nodeHasValueId(nodeId,
                                         NameIds.ROLE_ID,
                                         NameId.generate(role),
                                         longTimestamp)) {
@@ -132,10 +132,10 @@ public class EditRolesBlade extends PostRequestBlade {
                     } catch (UnexpectedChecksumException uce) {
                     }
                 }
-                asyncRequestImpl.send(ooDb.update(UpdateRoles_NodeInstance.NAME, mn), new AsyncResponseProcessor<String>() {
+                asyncRequestImpl.send(awDb.update(UpdateRoles_NodeInstance.NAME, mn), new AsyncResponseProcessor<String>() {
                     @Override
                     public void processAsyncResponse(String _response) throws Exception {
-                        User_NodeInstance user_nodeInstance = (User_NodeInstance) ooDb.fetchNode(nodeId, longTimestamp);
+                        User_NodeInstance user_nodeInstance = (User_NodeInstance) awDb.fetchNode(nodeId, longTimestamp);
                         String email = user_nodeInstance.getEmailAddress();
                         String userLink = "<a href=\"?from=" + page +
                                 "&to=user" +
@@ -157,7 +157,7 @@ public class EditRolesBlade extends PostRequestBlade {
                                         sb.append("\" value=\"");
                                         sb.append(roleName);
                                         sb.append("\"");
-                                        if (ooDb.nodeHasValueId(nodeId,
+                                        if (awDb.nodeHasValueId(nodeId,
                                                 NameIds.ROLE_ID,
                                                 NameId.generate(roleName),
                                                 longTimestamp))

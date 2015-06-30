@@ -15,8 +15,8 @@ public class DeleteAccountBlade extends PostRequestBlade {
 
     public DeleteAccountBlade(Role role, String page) throws Exception {
         super(role, page);
-        Delete_Node.create(ooDb);
-        ooDb.registerTransaction(Delete_NodeInstance.NAME, Delete_NodeInstance.class);
+        Delete_Node.create(awDb);
+        awDb.registerTransaction(Delete_NodeInstance.NAME, Delete_NodeInstance.class);
     }
 
     @Override
@@ -53,10 +53,10 @@ public class DeleteAccountBlade extends PostRequestBlade {
                     return;
                 }
                 String email = latest_user_nodeInstance.getEmailAddress();
-                MapNode mn = ooDb.nilMap;
+                MapNode mn = awDb.nilMap;
                 mn = mn.add(NameIds.AN_ID, userId);
                 mn = mn.add(NameIds.SUBJECT, email);
-                asyncRequestImpl.send(ooDb.update(Delete_NodeInstance.NAME, mn),
+                asyncRequestImpl.send(awDb.update(Delete_NodeInstance.NAME, mn),
                         new AsyncResponseProcessor<String>() {
                             @Override
                             public void processAsyncResponse(String _response) throws Exception {

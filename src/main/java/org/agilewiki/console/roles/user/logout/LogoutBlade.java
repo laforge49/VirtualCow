@@ -15,8 +15,8 @@ import javax.servlet.http.Cookie;
 public class LogoutBlade extends PostRequestBlade {
     public LogoutBlade(Role role, String page) throws Exception {
         super(role, page);
-        Logout_Node.create(ooDb);
-        ooDb.registerTransaction(Logout_NodeInstance.NAME, Logout_NodeInstance.class);
+        Logout_Node.create(awDb);
+        awDb.registerTransaction(Logout_NodeInstance.NAME, Logout_NodeInstance.class);
     }
 
     @Override
@@ -36,10 +36,10 @@ public class LogoutBlade extends PostRequestBlade {
             protected void process()
                     throws Exception {
                 String email = latest_user_nodeInstance.getEmailAddress();
-                MapNode mn = ooDb.nilMap;
+                MapNode mn = awDb.nilMap;
                 mn = mn.add(NameIds.SUBJECT, email);
                 mn = mn.add(NameIds.USER_KEY, userId);
-                asyncRequestImpl.send(ooDb.update(Logout_NodeInstance.NAME, mn), new AsyncResponseProcessor<String>() {
+                asyncRequestImpl.send(awDb.update(Logout_NodeInstance.NAME, mn), new AsyncResponseProcessor<String>() {
                     @Override
                     public void processAsyncResponse(String _response) throws Exception {
                         Cookie[] cookies = request.getCookies();

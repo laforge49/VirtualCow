@@ -1,6 +1,6 @@
 package org.agilewiki.console;
 
-import org.agilewiki.console.oodb.OODb;
+import org.agilewiki.console.awdb.AwDb;
 import org.agilewiki.console.roles.Role;
 import org.agilewiki.jactor2.core.blades.NonBlockingBladeBase;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
@@ -24,7 +24,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
     public final Role role;
     public final SimpleSimon simpleSimon;
     protected final ServletContext servletContext;
-    protected final OODb ooDb;
+    protected final AwDb awDb;
     protected final MailOut mailOut;
     public final String page;
 
@@ -33,7 +33,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
         this.role = role;
         this.simpleSimon = role.simpleSimon();
         this.servletContext = simpleSimon.servletContext;
-        this.ooDb = simpleSimon.ooDb;
+        this.awDb = simpleSimon.awDb;
         this.mailOut = simpleSimon.mailOut;
         this.page = page;
         role.requests().put(page, this);
@@ -77,7 +77,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
             this.page = page;
             this.userId = userId;
             if (userId != null) {
-                latest_user_nodeInstance = (User_NodeInstance) ooDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
+                latest_user_nodeInstance = (User_NodeInstance) awDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
                 myEmail = latest_user_nodeInstance.getEmailAddress();
             } else {
                 latest_user_nodeInstance = null;

@@ -51,7 +51,7 @@ public class Lnk1DestinationsBlade extends RequestBlade {
                         hasMore = false;
                         int limit = 25;
                         sb = new StringBuilder();
-                        PeekABoo<String> idPeekABoo = ooDb.destinationIdIterable(labelId, longTimestamp);
+                        PeekABoo<String> idPeekABoo = awDb.destinationIdIterable(labelId, longTimestamp);
                         if (startingAt != null)
                             idPeekABoo.setPosition(startingAt);
                         for (String nodeId : idPeekABoo) {
@@ -61,7 +61,7 @@ public class Lnk1DestinationsBlade extends RequestBlade {
                                 break;
                             }
                             --limit;
-                            String kindId = ooDb.kindId(nodeId, longTimestamp);
+                            String kindId = awDb.kindId(nodeId, longTimestamp);
 
                             sb.append(kindId.substring(2));
 

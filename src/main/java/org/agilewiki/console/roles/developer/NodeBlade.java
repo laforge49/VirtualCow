@@ -4,7 +4,7 @@ import org.agilewiki.console.NameIds;
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.TimestampIds;
-import org.agilewiki.console.oodb.nodes.Key_Node;
+import org.agilewiki.console.awdb.nodes.Key_Node;
 import org.agilewiki.console.roles.Role;
 import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.ids.composites.SecondaryId;
@@ -50,7 +50,7 @@ public class NodeBlade extends RequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                if (!ooDb.isNode(nodeId, longTimestamp)) {
+                if (!awDb.isNode(nodeId, longTimestamp)) {
                     throw new ServletException("not a node");
                 }
                 String time = null;
@@ -59,7 +59,7 @@ public class NodeBlade extends RequestBlade {
                     jeTimestamp = TimestampIds.value(nodeId);
                     time = SimpleSimon.niceTime(nodeId);
                 }
-                String kindId = ooDb.kindId(nodeId, longTimestamp);
+                String kindId = awDb.kindId(nodeId, longTimestamp);
                 String nodeTypeHref = "<a href=\"?from=node&to=node&nodeId=" + kindId + setRole;
                 if (timestamp != null) {
                     nodeTypeHref += "&timestamp=" + timestamp;
@@ -72,7 +72,7 @@ public class NodeBlade extends RequestBlade {
                         sb = new StringBuilder();
                         if (nodeId.startsWith("$n")) {
                             if (nodeId.endsWith(".key")) {
-                                if (ooDb.keyHasValueId(nodeId.substring(0, nodeId.length() - 4), longTimestamp)) {
+                                if (awDb.keyHasValueId(nodeId.substring(0, nodeId.length() - 4), longTimestamp)) {
                                     sb.append("<a href=\"?from=node&to=");
                                     sb.append(nodeId.substring(2).replace(".key", "Values"));
                                     if (timestamp != null) {
@@ -84,7 +84,7 @@ public class NodeBlade extends RequestBlade {
                                 }
                             } else if (nodeId.endsWith(".lnk1")) {
                                 String label = nodeId.substring(0, nodeId.length() - 5);
-                                PeekABoo<String> idPeekABoo = ooDb.originIdIterable(label, longTimestamp);
+                                PeekABoo<String> idPeekABoo = awDb.originIdIterable(label, longTimestamp);
                                 if (idPeekABoo.hasNext()) {
                                     sb.append("<a href=\"?from=node&to=");
                                     sb.append(nodeId.substring(2).replace(".lnk1", "Origins"));
@@ -96,7 +96,7 @@ public class NodeBlade extends RequestBlade {
                                     sb.append("#rupa\"><strong>Origins</strong></a>, ");
                                 } else
                                     sb.append("Origins, ");
-                                idPeekABoo = ooDb.destinationIdIterable(label, longTimestamp);
+                                idPeekABoo = awDb.destinationIdIterable(label, longTimestamp);
                                 if (idPeekABoo.hasNext()) {
                                     sb.append("<a href=\"?from=node&to=");
                                     sb.append(nodeId.substring(2).replace(".lnk1", "Destinations"));
@@ -109,7 +109,7 @@ public class NodeBlade extends RequestBlade {
                                 } else
                                     sb.append("Destinations<br />");
                             } else if (nodeId.endsWith(".node")) {
-                                if (ooDb.keyHasTargetId(Key_Node.SUPERTYPE_ID, nodeId, longTimestamp)) {
+                                if (awDb.keyHasTargetId(Key_Node.SUPERTYPE_ID, nodeId, longTimestamp)) {
                                     sb.append("<a href=\"?from=node&to=nodes&secondaryId=$D$nsuperType");
                                     sb.append(nodeId);
                                     if (timestamp != null) {
@@ -120,7 +120,7 @@ public class NodeBlade extends RequestBlade {
                                     sb.append("#rupa\"><strong>Subtypes</strong></a>, ");
                                 } else
                                     sb.append("Subtypes, ");
-                                if (ooDb.keyHasTargetId(Key_Node.NODETYPE_ID, nodeId, longTimestamp)) {
+                                if (awDb.keyHasTargetId(Key_Node.NODETYPE_ID, nodeId, longTimestamp)) {
                                     sb.append("<a href=\"?from=node&to=nodes&secondaryId=$D$nnodeType");
                                     sb.append(nodeId);
                                     if (timestamp != null) {
@@ -134,7 +134,7 @@ public class NodeBlade extends RequestBlade {
                             }
                         }
 
-                        NavigableMap<Comparable, List> atts = ooDb.getFlatMap(nodeId, longTimestamp);
+                        NavigableMap<Comparable, List> atts = awDb.getFlatMap(nodeId, longTimestamp);
                         if (!atts.isEmpty()) {
                             sb.append("<strong>Attributes:</strong><br />");
                             for (Comparable key : atts.keySet()) {
@@ -144,7 +144,7 @@ public class NodeBlade extends RequestBlade {
                                     String s = ((String) key).substring(2) + "[" + i + "] = ";
                                     sb.append("&nbsp;&nbsp;&nbsp;&nbsp;" + s);
                                     String value = l.get(i).toString();
-                                    if (!value.startsWith("$") || value.substring(1).indexOf('$') > -1 || !ooDb.isNode(value, longTimestamp)) {
+                                    if (!value.startsWith("$") || value.substring(1).indexOf('$') > -1 || !awDb.isNode(value, longTimestamp)) {
                                         sb.append(SimpleSimon.encode(value, s.length() + 4,
                                                 SimpleSimon.ENCODE_MULTIPLE_LINES)); //body text
                                     } else {
@@ -165,20 +165,20 @@ public class NodeBlade extends RequestBlade {
                         }
                         if (time != null) {
                             sb.append("<strong>Modifies:</strong><br />");
-                            for (String nId : ooDb.modifies(nodeId, longTimestamp)) {
+                            for (String nId : awDb.modifies(nodeId, longTimestamp)) {
                                 String onId = nId;
-                                boolean isNode = ooDb.isNode(nId, longTimestamp);
-                                if (!isNode && ooDb.isNode(nId + ".lnk1", longTimestamp)) {
+                                boolean isNode = awDb.isNode(nId, longTimestamp);
+                                if (!isNode && awDb.isNode(nId + ".lnk1", longTimestamp)) {
                                     isNode = true;
                                     nId = nId + ".lnk1";
                                 }
-                                if (!isNode && ooDb.isNode(nId + ".key", longTimestamp)) {
+                                if (!isNode && awDb.isNode(nId + ".key", longTimestamp)) {
                                     isNode = true;
                                     nId = nId + ".key";
                                 }
                                 if (isNode) {
                                     sb.append("&nbsp;&nbsp;&nbsp;&nbsp;");
-                                    String kId = ooDb.kindId(nId, longTimestamp);
+                                    String kId = awDb.kindId(nId, longTimestamp);
                                     sb.append("<a href=\"?from=");
                                     sb.append(page);
                                     sb.append("&to=node&nodeId=");
@@ -209,7 +209,7 @@ public class NodeBlade extends RequestBlade {
                                 } else if (nId.startsWith(SecondaryId.SECONDARY_INV)) {
                                     sb.append("&nbsp;&nbsp;&nbsp;&nbsp;Target: ");
                                     String vnmId = SecondaryId.secondaryInvVmn(nId);
-                                    boolean isVN = ooDb.isNode(vnmId, longTimestamp);
+                                    boolean isVN = awDb.isNode(vnmId, longTimestamp);
                                     if (isVN) {
                                         sb.append("<a href=\"?from=");
                                         sb.append(page);
@@ -242,11 +242,11 @@ public class NodeBlade extends RequestBlade {
                                     sb.append(keyId.substring(2));
                                     sb.append("</a>");
                                     if (isVN) {
-                                        for (String value : ooDb.nodeValueIdIterable(vnmId, keyId, longTimestamp)) {
+                                        for (String value : awDb.nodeValueIdIterable(vnmId, keyId, longTimestamp)) {
                                             sb.append(" Value: ");
                                             String valueId = value;
-                                            boolean isN = ooDb.isNode(value, longTimestamp);
-                                            if (!isN && ooDb.isNode(value + ".lnk1", longTimestamp)) {
+                                            boolean isN = awDb.isNode(value, longTimestamp);
+                                            if (!isN && awDb.isNode(value + ".lnk1", longTimestamp)) {
                                                 valueId = value + ".lnk1";
                                                 isN = true;
                                             }
@@ -272,7 +272,7 @@ public class NodeBlade extends RequestBlade {
                                 } else if (nId.startsWith(Link1Id.LINK1_ID)) {
                                     sb.append("&nbsp;&nbsp;&nbsp;&nbsp;Origin: ");
                                     String originId = Link1Id.link1IdOrigin(nId);
-                                    boolean isON = ooDb.isNode(originId, longTimestamp);
+                                    boolean isON = awDb.isNode(originId, longTimestamp);
                                     if (isON) {
                                         sb.append("<a href=\"?from=");
                                         sb.append(page);
@@ -305,9 +305,9 @@ public class NodeBlade extends RequestBlade {
                                     sb.append(labelId.substring(2));
                                     sb.append("</a>");
                                     if (isON) {
-                                        for (String destinationId : ooDb.destinationIdIterable(originId, labelId, longTimestamp)) {
+                                        for (String destinationId : awDb.destinationIdIterable(originId, labelId, longTimestamp)) {
                                             sb.append(" Destination: ");
-                                            boolean isDN = ooDb.isNode(destinationId, longTimestamp);
+                                            boolean isDN = awDb.isNode(destinationId, longTimestamp);
                                             if (isDN) {
                                                 sb.append("<a href=\"?from=");
                                                 sb.append(page);
@@ -359,8 +359,8 @@ public class NodeBlade extends RequestBlade {
                             sb.append(setRole + "\"><strong>Node Journal</strong></a><br />");
                         }
                         sb.append("<strong>Secondary Keys:</strong><br />");
-                        for (String typeId : ooDb.nodeKeyIdIterable(nodeId)) {
-                            if (ooDb.nodeHasKeyId(nodeId, typeId, longTimestamp)) {
+                        for (String typeId : awDb.nodeKeyIdIterable(nodeId)) {
+                            if (awDb.nodeHasKeyId(nodeId, typeId, longTimestamp)) {
                                 sb.append("&nbsp;&nbsp;&nbsp;&nbsp;key: <a href=\"?from=node&to=node&nodeId=");
                                 sb.append(typeId);
                                 sb.append(".key");
@@ -374,9 +374,9 @@ public class NodeBlade extends RequestBlade {
                                 sb.append("</a><br />");
 
                                 for (String value :
-                                        ooDb.nodeValueIdIterable(nodeId, typeId, longTimestamp)) {
+                                        awDb.nodeValueIdIterable(nodeId, typeId, longTimestamp)) {
                                     sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value = ");
-                                    if (!ooDb.isNode(value, longTimestamp)) {
+                                    if (!awDb.isNode(value, longTimestamp)) {
                                         sb.append(value.substring(2));
                                     } else {
                                         sb.append("<a href=\"?from=node&to=node&nodeId=");
@@ -395,8 +395,8 @@ public class NodeBlade extends RequestBlade {
                             }
                         }
                         sb.append("<strong>Links:</strong><br />");
-                        for (String typeId : ooDb.originLabelIdIterable(nodeId)) {
-                            if (ooDb.hasLabel1(nodeId, typeId, longTimestamp)) {
+                        for (String typeId : awDb.originLabelIdIterable(nodeId)) {
+                            if (awDb.hasLabel1(nodeId, typeId, longTimestamp)) {
                                 sb.append("&nbsp;&nbsp;&nbsp;&nbsp;label: <a href=\"?from=node&to=node&nodeId=");
                                 sb.append(typeId);
                                 sb.append(".lnk1");
@@ -409,7 +409,7 @@ public class NodeBlade extends RequestBlade {
                                 sb.append(typeId.substring(2));
                                 sb.append("</a><br />");
 
-                                for (String targetId : ooDb.destinationIdIterable(nodeId, typeId, longTimestamp)) {
+                                for (String targetId : awDb.destinationIdIterable(nodeId, typeId, longTimestamp)) {
                                     sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
                                     sb.append("<a href=\"?from=node&to=node&nodeId=");
                                     sb.append(targetId);
@@ -424,17 +424,17 @@ public class NodeBlade extends RequestBlade {
                                         sb.append(" (");
                                         sb.append(SimpleSimon.niceTime(targetId));
                                         sb.append(") ");
-                                        String transactionName = (String) ooDb.get(targetId, NameIds.TRANSACTION_NAME, longTimestamp);
+                                        String transactionName = (String) awDb.get(targetId, NameIds.TRANSACTION_NAME, longTimestamp);
                                         sb.append(transactionName);
                                     }
                                     StringBuilder lb = new StringBuilder();
-                                    String subject = (String) ooDb.get(targetId, NameIds.TRANSACTION_NAME, longTimestamp);
+                                    String subject = (String) awDb.get(targetId, NameIds.TRANSACTION_NAME, longTimestamp);
                                     if (subject != null) {
                                         lb.append(' ');
                                         lb.append(subject);
                                         lb.append(" | ");
                                     }
-                                    String body = (String) ooDb.get(targetId, NameIds.BODY, longTimestamp);
+                                    String body = (String) awDb.get(targetId, NameIds.BODY, longTimestamp);
                                     if (body != null) {
                                         if (subject != null) {
                                             lb.append(" | ");
@@ -452,8 +452,8 @@ public class NodeBlade extends RequestBlade {
                             }
                         }
                         sb.append("<strong>Inverted Links:</strong><br />");
-                        for (String typeId : ooDb.targetLabelInvIterable(nodeId)) {
-                            PeekABoo<String> peekABoo = ooDb.originIdIterable(nodeId, typeId, longTimestamp);
+                        for (String typeId : awDb.targetLabelInvIterable(nodeId)) {
+                            PeekABoo<String> peekABoo = awDb.originIdIterable(nodeId, typeId, longTimestamp);
                             if (peekABoo.hasNext()) {
                                 sb.append("&nbsp;&nbsp;&nbsp;&nbsp;label: ");
                                 sb.append("<a href=\"?from=node&to=invLinks&nodeId=");

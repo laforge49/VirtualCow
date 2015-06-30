@@ -1,8 +1,8 @@
 package org.agilewiki.console;
 
-import org.agilewiki.console.oodb.NodeBase;
-import org.agilewiki.console.oodb.OODb;
-import org.agilewiki.console.oodb.nodes.Key_Node;
+import org.agilewiki.console.awdb.NodeBase;
+import org.agilewiki.console.awdb.AwDb;
+import org.agilewiki.console.awdb.nodes.Key_Node;
 import org.agilewiki.console.roles.Role;
 import org.agilewiki.console.roles.Role_NodeInstance;
 import org.agilewiki.console.roles.admin.Admin_Role;
@@ -59,16 +59,16 @@ public class User_NodeInstance extends NodeBase {
                                     String emailId,
                                     String passwordHash,
                                     String... userRoles) {
-        OODb ooDb = SimpleSimon.simpleSimon.ooDb;
-        if (ooDb.keyHasTargetId(NameIds.EMAIL_ID, emailId, ooDb.getDbTimestamp())) {
+        AwDb awDb = SimpleSimon.simpleSimon.awDb;
+        if (awDb.keyHasTargetId(NameIds.EMAIL_ID, emailId, awDb.getDbTimestamp())) {
             return "duplicate email: " + ValueId.value(emailId);
         }
-        ooDb.set(userId, "$nsubject", emailId);
-        ooDb.set(userId, NameIds.PASSWORD_KEY, passwordHash);
-        ooDb.createSecondaryId(userId, NameIds.EMAIL_ID, emailId);
-        ooDb.createSecondaryId(userId, Key_Node.NODETYPE_ID, User_Node.ID);
+        awDb.set(userId, "$nsubject", emailId);
+        awDb.set(userId, NameIds.PASSWORD_KEY, passwordHash);
+        awDb.createSecondaryId(userId, NameIds.EMAIL_ID, emailId);
+        awDb.createSecondaryId(userId, Key_Node.NODETYPE_ID, User_Node.ID);
         for (String userRole : userRoles) {
-            ooDb.createSecondaryId(userId, NameIds.ROLE_ID, NameIds.generate(userRole));
+            awDb.createSecondaryId(userId, NameIds.ROLE_ID, NameIds.generate(userRole));
         }
         return null;
     }
