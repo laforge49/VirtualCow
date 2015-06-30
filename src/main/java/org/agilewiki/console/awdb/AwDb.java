@@ -65,7 +65,7 @@ public class AwDb {
         nilMap = dbFactoryRegistry.nilMap;
 
         final LoadingCache<String, Node> cache = CacheBuilder.newBuilder().concurrencyLevel(1).
-                softValues().build(new CacheLoader<String, Node>() {
+                maximumSize(maxNodeCacheSize).build(new CacheLoader<String, Node>() {
             @Override
             public Node load(String id) throws Exception {
                 int i = id.lastIndexOf('$');
