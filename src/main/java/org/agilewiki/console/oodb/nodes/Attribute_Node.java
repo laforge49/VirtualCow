@@ -1,7 +1,6 @@
 package org.agilewiki.console.oodb.nodes;
 
 import org.agilewiki.console.RandomIds;
-import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.oodb.Node;
 import org.agilewiki.console.oodb.OODb;
 import org.agilewiki.utils.immutable.FactoryRegistry;
@@ -14,7 +13,7 @@ public class Attribute_Node extends Node_NodeInstance {
     }
 
     public static void define(String attributeNameId, String nodeId) {
-        OODb ooDb = SimpleSimon.simpleSimon.ooDb;
+        OODb ooDb = getOoDb();
         String attributeId = RandomIds.randomId.generate();
         ooDb.set(attributeId, "$nsubject", attributeNameId + " - " + nodeId);
         ooDb.createSecondaryId(attributeId, Key_Node.NODETYPE_ID, ID);

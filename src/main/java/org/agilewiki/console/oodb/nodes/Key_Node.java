@@ -1,6 +1,5 @@
 package org.agilewiki.console.oodb.nodes;
 
-import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.oodb.Node;
 import org.agilewiki.console.oodb.OODb;
 import org.agilewiki.utils.immutable.FactoryRegistry;
@@ -30,7 +29,7 @@ public class Key_Node extends Metadata_Node {
 
     public static void define(String nodeId, String targetType, String roleId) {
         Node_Node.define(nodeId, ID, null, roleId);
-        SimpleSimon.simpleSimon.ooDb.createLnk1(nodeId,
+        getOoDb().createLnk1(nodeId,
                 Lnk1_Node.TARGET_ID,
                 targetType);
     }

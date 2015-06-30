@@ -1,6 +1,5 @@
 package org.agilewiki.console.oodb.nodes;
 
-import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.oodb.Node;
 import org.agilewiki.console.oodb.OODb;
 import org.agilewiki.utils.immutable.FactoryRegistry;
@@ -28,7 +27,7 @@ public class Lnk1_Node extends Metadata_Node {
     }
 
     public static void define(String nodeId, String invDependency, String originType, String destinationType, String ofRole) {
-        OODb ooDb = SimpleSimon.simpleSimon.ooDb;
+        OODb ooDb = getOoDb();
         Node_Node.define(nodeId, ID, null, ofRole);
         if (invDependency != null) {
             ooDb.createSecondaryId(nodeId, Key_Node.INVDEPENDENCY_ID, invDependency);

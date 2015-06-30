@@ -1,6 +1,6 @@
 package org.agilewiki.console;
 
-import org.agilewiki.console.oodb.nodes.roles.Role;
+import org.agilewiki.console.roles.Role;
 
 import javax.servlet.AsyncContext;
 import javax.servlet.http.HttpServletResponse;

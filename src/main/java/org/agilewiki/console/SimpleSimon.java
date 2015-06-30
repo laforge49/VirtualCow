@@ -2,14 +2,14 @@ package org.agilewiki.console;
 
 import org.agilewiki.console.oodb.OODb;
 import org.agilewiki.console.oodb.nodes.Metadata_Node;
-import org.agilewiki.console.oodb.nodes.User_NodeInstance;
-import org.agilewiki.console.oodb.nodes.roles.Role;
-import org.agilewiki.console.oodb.nodes.roles.system.ServletStart_Node;
-import org.agilewiki.console.oodb.nodes.roles.system.ServletStart_NodeInstance;
-import org.agilewiki.console.oodb.nodes.roles.system.ServletStop_Node;
-import org.agilewiki.console.oodb.nodes.roles.system.ServletStop_NodeInstance;
-import org.agilewiki.console.oodb.nodes.roles.user.User_Role;
-import org.agilewiki.console.oodb.nodes.roles.visitor.Visitor_Role;
+import org.agilewiki.console.roles.Role;
+import org.agilewiki.console.roles.Role_Node;
+import org.agilewiki.console.roles.system.ServletStart_Node;
+import org.agilewiki.console.roles.system.ServletStart_NodeInstance;
+import org.agilewiki.console.roles.system.ServletStop_Node;
+import org.agilewiki.console.roles.system.ServletStop_NodeInstance;
+import org.agilewiki.console.roles.user.User_Role;
+import org.agilewiki.console.roles.visitor.Visitor_Role;
 import org.agilewiki.utils.ids.Timestamp;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
@@ -100,6 +100,7 @@ public class SimpleSimon extends HttpServlet {
 
             try {
                 Metadata_Node.create(ooDb);
+                Role_Node.create(ooDb);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

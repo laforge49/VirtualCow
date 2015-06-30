@@ -1,7 +1,6 @@
 package org.agilewiki.console;
 
 import org.agilewiki.console.oodb.OODb;
-import org.agilewiki.console.oodb.nodes.User_NodeInstance;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
 import java.security.MessageDigest;
