@@ -1,6 +1,7 @@
 package org.agilewiki.console.roles.visitor.newUser;
 
 import org.agilewiki.console.*;
+import org.agilewiki.console.awdb.AwDb;
 import org.agilewiki.console.roles.Role;
 import org.agilewiki.console.roles.Role_NodeInstance;
 import org.agilewiki.console.roles.developer.Developer_Role;
@@ -80,7 +81,7 @@ public class ValidatedBlade extends PostRequestBlade {
                     finish();
                     return;
                 }
-                String userId = RandomIds.randomId.generate();
+                String userId = AwDb.randomId.generate();
                 String passwordHash = User_NodeInstance.encodePassword(servletContext, userId, password);
                 if (passwordHash == null) {
                     error = "Unable to create your account at this time. Please try again later.";

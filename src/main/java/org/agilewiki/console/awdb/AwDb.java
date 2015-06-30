@@ -10,6 +10,7 @@ import org.agilewiki.jactor2.core.blades.NonBlockingBladeBase;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.jactor2.core.messages.ExceptionHandler;
 import org.agilewiki.jactor2.core.messages.impl.AsyncRequestImpl;
+import org.agilewiki.utils.ids.RandomId;
 import org.agilewiki.utils.ids.Timestamp;
 import org.agilewiki.utils.ids.composites.Journal;
 import org.agilewiki.utils.ids.composites.Link1Id;
@@ -31,6 +32,7 @@ import java.util.*;
  */
 public class AwDb {
     private static AwDb awDb = null;
+    public final static RandomId randomId = new RandomId();
     private final Db db;
     private LoadingCache<String, Node> nodeCache;
     private Map<String, Node> updatedNodes;

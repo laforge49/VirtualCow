@@ -81,7 +81,7 @@ public class User_NodeInstance extends NodeBase {
             return false;
         }
         ServletContext servletContext = servletConfig.getServletContext();
-        String userId = RandomIds.randomId.generate();
+        String userId = AwDb.randomId.generate();
         String passwordHash = User_NodeInstance.encodePassword(
                 servletContext, userId, adminPassword);
         if (passwordHash == null) {
