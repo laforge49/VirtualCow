@@ -62,15 +62,20 @@ public class OODb {
         final LoadingCache<String, Node> cache = CacheBuilder.newBuilder().concurrencyLevel(1).
                 softValues().build(new CacheLoader<String, Node>() {
             @Override
-            public Node load(String nodeId) throws Exception {
+            public Node load(String id) throws Exception {
+                int i = id.lastIndexOf('$');
+                String nodeId = id.substring(0, i);
                 String factoryId = nodeTypeId(nodeId);
                 if (factoryId == null) {
                     return NullNode.singleton;
                 }
-                NodeFactory nodeFactory = (NodeFactory) fetchNode(factoryId);
-                if (nodeFactory == null)
+                NodeFactory nodeFactory = (NodeFactory) fetchNode(factoryId, FactoryRegistry.MAX_TIMESTAMP);
+                if (nodeFactory == null) {
                     return NullNode.singleton;
-                Node node = nodeFactory.createNode(nodeId, FactoryRegistry.MAX_TIMESTAMP);
+                }
+                String timestampId = id.substring(i);
+                long longTimestamp = Timestamp.timestamp(timestampId);
+                Node node = nodeFactory.createNode(nodeId, longTimestamp);
                 if (node == null)
                     return NullNode.singleton;
                 return node;
@@ -111,14 +116,17 @@ public class OODb {
         return null;
     }
 
-    public Node fetchNode(String nodeId) {
+    public Node fetchNode(String nodeId, long timestamp) {
         char x = nodeId.charAt(1);
         if (x != 'n' && x != 'r' && x != 't')
             return null;
         Node node = immutableNodes.get(nodeId);
         if (node != null)
             return node;
-        node = nodeCache.getUnchecked(nodeId);
+        if (Timestamp.generate() < timestamp)
+            timestamp = FactoryRegistry.MAX_TIMESTAMP;
+        String timestampId = Timestamp.timestampId(timestamp);
+        node = nodeCache.getUnchecked(nodeId+timestampId);
         if (node instanceof NullNode) {
             dropNode(nodeId);
             return null;
@@ -163,7 +171,7 @@ public class OODb {
     //
 
     public void clearMap(String nodeId) {
-        Node node = fetchNode(nodeId);
+        Node node = fetchNode(nodeId, FactoryRegistry.MAX_TIMESTAMP);
         if (node == null)
             db.clearMap(nodeId);
         else
@@ -171,7 +179,7 @@ public class OODb {
     }
 
     public void set(String nodeId, String key, Object value) {
-        Node node = fetchNode(nodeId);
+        Node node = fetchNode(nodeId, FactoryRegistry.MAX_TIMESTAMP);
         if (node == null)
             db.set(nodeId, key, value);
         else
@@ -179,22 +187,14 @@ public class OODb {
     }
 
     public Object get(String nodeId, String key, long timestamp) {
-        if (timestamp != FactoryRegistry.MAX_TIMESTAMP)
-            return db.get(nodeId, key, timestamp);
-        Node node = fetchNode(nodeId);
+        Node node = fetchNode(nodeId, timestamp);
         if (node == null)
             return db.get(nodeId, key, timestamp);
         return node.get(key);
     }
 
     public List getFlatList(String nodeId, String key, long timestamp) {
-        if (timestamp != FactoryRegistry.MAX_TIMESTAMP) {
-            VersionedListNode vln = db.versionedListNode(nodeId, key);
-            if (vln == null)
-                return new ArrayList();
-            return vln.flatList(timestamp);
-        }
-        Node node = fetchNode(nodeId);
+        Node node = fetchNode(nodeId, timestamp);
         if (node == null) {
             VersionedListNode vln = db.versionedListNode(nodeId, key);
             if (vln == null)
@@ -205,14 +205,7 @@ public class OODb {
     }
 
     public NavigableMap<Comparable, List> getFlatMap(String nodeId, long timestamp) {
-        if (timestamp != FactoryRegistry.MAX_TIMESTAMP) {
-            VersionedMapNode vmn = db.get(nodeId);
-            if (vmn == null)
-                return new TreeMap<>();
-            else
-                return vmn.flatMap(FactoryRegistry.MAX_TIMESTAMP);
-        }
-        Node node = fetchNode(nodeId);
+        Node node = fetchNode(nodeId, timestamp);
         if (node == null) {
             VersionedMapNode vmn = db.get(nodeId);
             if (vmn == null)
@@ -228,7 +221,7 @@ public class OODb {
     //
 
     public void createSecondaryId(String nodeId, String keyId, String valueId) {
-        Node node = fetchNode(nodeId);
+        Node node = fetchNode(nodeId, FactoryRegistry.MAX_TIMESTAMP);
         if (node == null)
             SecondaryId.createSecondaryId(db, nodeId, SecondaryId.secondaryId(keyId, valueId));
         else
@@ -236,7 +229,7 @@ public class OODb {
     }
 
     public void removeSecondaryId(String nodeId, String keyId, String valueId) {
-        Node node = fetchNode(nodeId);
+        Node node = fetchNode(nodeId, FactoryRegistry.MAX_TIMESTAMP);
         if (node == null)
             SecondaryId.removeSecondaryId(db, nodeId, SecondaryId.secondaryId(keyId, valueId));
         else
@@ -244,7 +237,7 @@ public class OODb {
     }
 
     public Iterable<String> nodeKeyIdIterable(String nodeId) {
-        Node node = fetchNode(nodeId);
+        Node node = fetchNode(nodeId, FactoryRegistry.MAX_TIMESTAMP);
         if (node == null) {
             return SecondaryId.typeIdIterable(db, nodeId);
         }
@@ -252,13 +245,7 @@ public class OODb {
     }
 
     public String getNodeValue(String nodeId, String keyId, long timestamp) {
-        if (timestamp != FactoryRegistry.MAX_TIMESTAMP) {
-            for (String value : db.keysIterable(SecondaryId.secondaryInv(nodeId, keyId), timestamp)) {
-                return value;
-            }
-            return null;
-        }
-        Node node = fetchNode(nodeId);
+        Node node = fetchNode(nodeId, timestamp);
         if (node == null) {
             if (Key_Node.NODETYPE_ID.equals(keyId)) {
                 return null;
@@ -286,10 +273,7 @@ public class OODb {
     }
 
     public boolean nodeHasKeyId(String nodeId, String keyId, long timestamp) {
-        if (timestamp != FactoryRegistry.MAX_TIMESTAMP) {
-            return db.keysIterable(SecondaryId.secondaryInv(nodeId, keyId), db.getTimestamp()).hasNext();
-        }
-        Node node = fetchNode(nodeId);
+        Node node = fetchNode(nodeId, timestamp);
         if (node == null) {
             return db.keysIterable(SecondaryId.secondaryInv(nodeId, keyId), db.getTimestamp()).hasNext();
         }
@@ -297,10 +281,7 @@ public class OODb {
     }
 
     public boolean nodeHasValueId(String nodeId, String keyId, String valueId, long timestamp) {
-        if (timestamp != FactoryRegistry.MAX_TIMESTAMP) {
-            return SecondaryId.hasSecondaryId(db, nodeId, keyId, valueId, timestamp);
-        }
-        Node node = fetchNode(nodeId);
+        Node node = fetchNode(nodeId, timestamp);
         if (node == null) {
             return SecondaryId.hasSecondaryId(db, nodeId, keyId, valueId, timestamp);
         }
@@ -308,10 +289,7 @@ public class OODb {
     }
 
     public Iterable<String> nodeValueIdIterable(String nodeId, String keyId, long timestamp) {
-        if (timestamp != FactoryRegistry.MAX_TIMESTAMP) {
-            return db.keysIterable(SecondaryId.secondaryInv(nodeId, keyId), timestamp);
-        }
-        Node node = fetchNode(nodeId);
+        Node node = fetchNode(nodeId, timestamp);
         if (node == null) {
             return db.keysIterable(SecondaryId.secondaryInv(nodeId, keyId), timestamp);
         }
@@ -357,7 +335,7 @@ public class OODb {
     //
 
     public void createLnk1(String originNodeId, String labelId, String destinationNodeId) {
-        Node node = fetchNode(originNodeId);
+        Node node = fetchNode(originNodeId, FactoryRegistry.MAX_TIMESTAMP);
         if (node == null)
             Link1Id.createLink1(db, originNodeId, labelId, destinationNodeId);
         else
@@ -365,7 +343,7 @@ public class OODb {
     }
 
     public void removeLnk1(String originNodeId, String labelId, String destinationNodeId) {
-        Node node = fetchNode(originNodeId);
+        Node node = fetchNode(originNodeId, FactoryRegistry.MAX_TIMESTAMP);
         if (node == null)
             Link1Id.removeLink1(db, originNodeId, labelId, destinationNodeId);
         else
@@ -373,7 +351,7 @@ public class OODb {
     }
 
     public Iterable<String> originLabelIdIterable(String nodeId) {
-        Node node = fetchNode(nodeId);
+        Node node = fetchNode(nodeId, FactoryRegistry.MAX_TIMESTAMP);
         if (node == null) {
             return Link1Id.link1LabelIdIterable(db, nodeId);
         }
@@ -385,10 +363,7 @@ public class OODb {
     }
 
     public boolean hasLabel1(String nodeId, String label1Id, long timestamp) {
-        if (timestamp != FactoryRegistry.MAX_TIMESTAMP) {
-            return db.keysIterable(Link1Id.link1Id(nodeId, label1Id), timestamp).hasNext();
-        }
-        Node node = fetchNode(nodeId);
+        Node node = fetchNode(nodeId, timestamp);
         if (node == null) {
             return db.keysIterable(Link1Id.link1Id(nodeId, label1Id), timestamp).hasNext();
         }
@@ -396,10 +371,7 @@ public class OODb {
     }
 
     public boolean hasDestination(String nodeId, String label1Id, String destinationId, long timestamp) {
-        if (timestamp != FactoryRegistry.MAX_TIMESTAMP) {
-            return Link1Id.hasLink1(db, nodeId, label1Id, destinationId, timestamp);
-        }
-        Node node = fetchNode(nodeId);
+        Node node = fetchNode(nodeId, timestamp);
         if (node == null) {
             return Link1Id.hasLink1(db, nodeId, label1Id, destinationId, timestamp);
         }
@@ -407,10 +379,7 @@ public class OODb {
     }
 
     public Iterable<String> destinationIdIterable(String nodeId, String label1Id, long timestamp) {
-        if (timestamp != FactoryRegistry.MAX_TIMESTAMP) {
-            return db.keysIterable(Link1Id.link1Id(nodeId, label1Id), timestamp);
-        }
-        Node node = fetchNode(nodeId);
+        Node node = fetchNode(nodeId, timestamp);
         if (node == null) {
             return db.keysIterable(Link1Id.link1Id(nodeId, label1Id), timestamp);
         }

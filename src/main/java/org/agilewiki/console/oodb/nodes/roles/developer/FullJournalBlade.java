@@ -73,7 +73,7 @@ public class FullJournalBlade extends RequestBlade {
                             sb.append(transactionName);
 
                             StringBuilder lb = new StringBuilder();
-                            String subject = (String) ooDb.get(tsId, NameIds.TRANSACTION_NAME, longTimestamp);
+                            String subject = (String) ooDb.get(tsId, NameIds.SUBJECT, longTimestamp);
                             if (subject != null) {
                                 lb.append(' ');
                                 lb.append(subject);

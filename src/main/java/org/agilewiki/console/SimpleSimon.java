@@ -10,6 +10,7 @@ import org.agilewiki.console.oodb.nodes.roles.system.ServletStop_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.user.User_Role;
 import org.agilewiki.console.oodb.nodes.roles.visitor.Visitor_Role;
 import org.agilewiki.utils.ids.Timestamp;
+import org.agilewiki.utils.immutable.FactoryRegistry;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -140,14 +141,14 @@ public class SimpleSimon extends HttpServlet {
         if (userIdToken != null)
             userId = Tokens.parse(userIdToken);
         if (userId == null) {
-            ((Visitor_Role) ooDb.fetchNode(Visitor_Role.ID)).dispatchGetRequest(request, null);
+            ((Visitor_Role) ooDb.fetchNode(Visitor_Role.ID, FactoryRegistry.MAX_TIMESTAMP)).dispatchGetRequest(request, null);
         } else {
             String roleName = request.getParameter("role");
             if (roleName == null || !User.hasRole(userId, roleName))
                 roleName = "profile";
             Role role = roles.get(roleName);
             if (role == null) {
-                role = ((User_Role) ooDb.fetchNode(User_Role.ID));
+                role = ((User_Role) ooDb.fetchNode(User_Role.ID, FactoryRegistry.MAX_TIMESTAMP));
             }
             role.dispatchGetRequest(request, userId);
         }
@@ -171,14 +172,14 @@ public class SimpleSimon extends HttpServlet {
             userId = Tokens.parse(userIdToken);
 
         if (userId == null) {
-            ((Visitor_Role) ooDb.fetchNode(Visitor_Role.ID)).dispatchPostRequest(request, response, null);
+            ((Visitor_Role) ooDb.fetchNode(Visitor_Role.ID, FactoryRegistry.MAX_TIMESTAMP)).dispatchPostRequest(request, response, null);
         } else {
             String roleName = request.getParameter("role");
             if (roleName == null || !User.hasRole(userId, roleName))
                 roleName = "profile";
             Role role = roles.get(roleName);
             if (role == null) {
-                role = ((User_Role) ooDb.fetchNode(User_Role.ID));
+                role = ((User_Role) ooDb.fetchNode(User_Role.ID, FactoryRegistry.MAX_TIMESTAMP));
             }
             role.dispatchPostRequest(request, response, userId);
         }
