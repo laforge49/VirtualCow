@@ -1,6 +1,5 @@
 package org.agilewiki.console.awdb.nodes;
 
-import org.agilewiki.console.NameIds;
 import org.agilewiki.console.awdb.NodeBase;
 import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.immutable.FactoryRegistry;
@@ -8,16 +7,13 @@ import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 import org.agilewiki.utils.virtualcow.Transaction;
 
-/**
- * Created by Bill on 6/30/2015.
- */
-public class XJournalEntry_Node extends NodeBase implements Transaction {
+public class JournalEntry_Node extends NodeBase implements Transaction {
 
-    public XJournalEntry_Node() {
+    public JournalEntry_Node() {
         super(null, 0L);
     }
 
-    public XJournalEntry_Node(String nodeId, long timestamp) {
+    public JournalEntry_Node(String nodeId, long timestamp) {
         super(nodeId, timestamp);
     }
 

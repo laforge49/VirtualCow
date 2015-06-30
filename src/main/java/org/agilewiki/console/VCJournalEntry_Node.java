@@ -1,18 +1,13 @@
 package org.agilewiki.console;
 
-import org.agilewiki.console.NameIds;
-import org.agilewiki.console.awdb.NodeBase;
-import org.agilewiki.console.awdb.nodes.XJournalEntry_Node;
-import org.agilewiki.utils.ids.NameId;
-import org.agilewiki.utils.immutable.FactoryRegistry;
+import org.agilewiki.console.awdb.nodes.JournalEntry_Node;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
-import org.agilewiki.utils.virtualcow.Transaction;
 
 /**
  * Base class for all virtual cow transactions.
  */
-public class VCJournalEntry_Node extends XJournalEntry_Node {
+public class VCJournalEntry_Node extends JournalEntry_Node {
 
     public VCJournalEntry_Node() {
         super(null, 0L);
