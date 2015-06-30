@@ -1,5 +1,7 @@
 package org.agilewiki.console.oodb;
 
+import org.agilewiki.utils.immutable.FactoryRegistry;
+
 import java.util.List;
 import java.util.NavigableMap;
 
@@ -42,6 +44,11 @@ public class NodeBase implements Node {
     }
 
     @Override
+    public boolean isLatestTime() {
+        return timestamp == FactoryRegistry.MAX_TIMESTAMP;
+    }
+
+    @Override
     public void endTransaction() {
         outerReference = innerReference;
     }
@@ -52,6 +59,9 @@ public class NodeBase implements Node {
     }
 
     private void prep() {
+        if (!isLatestTime()) {
+            throw new IllegalStateException("No updates except with latest time");
+        }
         if (innerReference == outerReference) {
             innerReference = new NodeData(innerReference);
             getOoDb().updated(this);

@@ -10,7 +10,7 @@ import java.util.NavigableMap;
  */
 public interface Node {
     default OODb getOoDb() {
-        return SimpleSimon.simpleSimon.ooDb;
+        return OODb.getOoDb();
     }
 
     String getNodeId();
@@ -18,6 +18,8 @@ public interface Node {
     NodeData getNodeData();
 
     long getTimestamp();
+
+    boolean isLatestTime();
 
     void endTransaction();
 

@@ -25,6 +25,11 @@ public class NullNode implements Node {
     }
 
     @Override
+    public boolean isLatestTime() {
+        return false;
+    }
+
+    @Override
     public void endTransaction() {
 
     }

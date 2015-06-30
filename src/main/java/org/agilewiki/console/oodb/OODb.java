@@ -31,6 +31,7 @@ import java.util.concurrent.ExecutionException;
  * Object Oriented Database, without state caching.
  */
 public class OODb {
+    private static OODb ooDb = null;
     private final Db db;
     private LoadingCache<String, Node> nodeCache;
     private Map<String, Node> updatedNodes;
@@ -42,8 +43,13 @@ public class OODb {
     public final ListNode nilList;
     public final MapNode nilMap;
 
+    public static OODb getOoDb() {
+        return ooDb;
+    }
+
     public OODb(int maxRootBlockSize, long maxNodeCacheSize)
             throws Exception {
+        ooDb = this;
         new Plant();
         dbUpdater = new DbUpdater();
         Path dbPath = Paths.get("vcow.db");
