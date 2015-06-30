@@ -14,6 +14,10 @@ public class NodeBase implements Node {
     private NodeData innerReference = null;
     private NodeData outerReference = null;
 
+    public static OODb getOoDb() {
+        return OODb.getOoDb();
+    }
+
     public NodeBase(String nodeId, long timestamp) {
         if (nodeId != null) {
             initialize(nodeId, timestamp);

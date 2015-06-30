@@ -1,6 +1,10 @@
 package org.agilewiki.console.oodb.nodes.roles.visitor.forgotPassword;
 
-import org.agilewiki.console.*;
+import org.agilewiki.console.NameIds;
+import org.agilewiki.console.PostRequestBlade;
+import org.agilewiki.console.SimpleSimon;
+import org.agilewiki.console.Tokens;
+import org.agilewiki.console.oodb.nodes.User_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.utils.immutable.FactoryRegistry;
@@ -75,7 +79,7 @@ public class ForgotPasswordBlade extends PostRequestBlade {
                     finish();
                     return;
                 }
-                String userId = User.userId(email, FactoryRegistry.MAX_TIMESTAMP);
+                String userId = User_NodeInstance.userId(email, FactoryRegistry.MAX_TIMESTAMP);
                 if (userId == null) {
                     String error = "Unable to change your password at this time. Please try again later.";
                     map.put("error", SimpleSimon.encode(error, 0, SimpleSimon.ENCODE_FIELD)); //field
@@ -84,7 +88,7 @@ public class ForgotPasswordBlade extends PostRequestBlade {
                 }
                 MapNode mn = ooDb.nilMap;
                 mn = mn.add(NameIds.USER_KEY, userId);
-                mn = mn.add(NameIds.PASSWORD_KEY, User.encodePassword(servletContext, userId, newPassword));
+                mn = mn.add(NameIds.PASSWORD_KEY, User_NodeInstance.encodePassword(servletContext, userId, newPassword));
                 asyncRequestImpl.send(ooDb.update(ForgotPassword_NodeInstance.NAME, mn),
                         new AsyncResponseProcessor<String>() {
                             @Override

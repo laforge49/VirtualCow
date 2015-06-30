@@ -3,7 +3,7 @@ package org.agilewiki.console.oodb.nodes.roles.visitor;
 import org.agilewiki.console.PostRequestBlade;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.Tokens;
-import org.agilewiki.console.User;
+import org.agilewiki.console.oodb.nodes.User_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.utils.immutable.FactoryRegistry;
@@ -52,7 +52,7 @@ public class ForgotBlade extends PostRequestBlade {
                     finish();
                     return;
                 }
-                String userId = User.userId(emailAddress, FactoryRegistry.MAX_TIMESTAMP);
+                String userId = User_NodeInstance.userId(emailAddress, FactoryRegistry.MAX_TIMESTAMP);
                 String msg = "An email has been sent to verify your address. Please check your inbox.";
                 if (userId == null) {
                     map.put("success3", SimpleSimon.encode(msg, 0, SimpleSimon.ENCODE_FIELD)); //field

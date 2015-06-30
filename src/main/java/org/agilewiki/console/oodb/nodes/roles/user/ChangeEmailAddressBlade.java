@@ -3,7 +3,7 @@ package org.agilewiki.console.oodb.nodes.roles.user;
 import org.agilewiki.console.PostRequestBlade;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.Tokens;
-import org.agilewiki.console.User;
+import org.agilewiki.console.oodb.nodes.User_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.utils.immutable.FactoryRegistry;
@@ -45,7 +45,7 @@ public class ChangeEmailAddressBlade extends PostRequestBlade {
                 if (emailAddress != null)
                     map.put("emailAddress", SimpleSimon.encode(emailAddress, 0, SimpleSimon.ENCODE_FIELD)); //field
                 String error = null;
-                String oldEmailAddress = User.email(userId, FactoryRegistry.MAX_TIMESTAMP);
+                String oldEmailAddress = latest_user_nodeInstance.getEmailAddress();
                 if (emailAddress == null || emailAddress.length() == 0) {
                     error = "Enter your new email address.";
                 } else if (emailAddress.equals(oldEmailAddress)) {
@@ -58,7 +58,7 @@ public class ChangeEmailAddressBlade extends PostRequestBlade {
                 }
                 String subject = null;
                 String body = null;
-                String userId2 = User.userId(emailAddress, FactoryRegistry.MAX_TIMESTAMP);
+                String userId2 = User_NodeInstance.userId(emailAddress, FactoryRegistry.MAX_TIMESTAMP);
                 if (userId2 != null) {
                     subject = "Notification of attempt to reassign email address";
                     body = "<p>There was an attempt made to change the email of an account " +

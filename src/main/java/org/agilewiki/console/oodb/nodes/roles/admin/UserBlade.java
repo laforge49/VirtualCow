@@ -2,7 +2,7 @@ package org.agilewiki.console.oodb.nodes.roles.admin;
 
 import org.agilewiki.console.NameIds;
 import org.agilewiki.console.RequestBlade;
-import org.agilewiki.console.User;
+import org.agilewiki.console.oodb.nodes.User_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.utils.ids.NameId;
 import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
@@ -37,7 +37,8 @@ public class UserBlade extends RequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                String email = User.email(nodeId, longTimestamp);
+                User_NodeInstance user_nodeInstance = (User_NodeInstance) ooDb.fetchNode(nodeId, longTimestamp);
+                String email = user_nodeInstance.getEmailAddress();
                 map.put("email", email);
                 StringBuilder sb;
                 while (true) {

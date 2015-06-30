@@ -1,6 +1,7 @@
 package org.agilewiki.console.oodb.nodes.roles.visitor.newUser;
 
 import org.agilewiki.console.*;
+import org.agilewiki.console.oodb.nodes.User_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.console.oodb.nodes.roles.Role_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.developer.Developer_Role;
@@ -81,7 +82,7 @@ public class ValidatedBlade extends PostRequestBlade {
                     return;
                 }
                 String userId = RandomIds.randomId.generate();
-                String passwordHash = User.encodePassword(servletContext, userId, password);
+                String passwordHash = User_NodeInstance.encodePassword(servletContext, userId, password);
                 if (passwordHash == null) {
                     error = "Unable to create your account at this time. Please try again later.";
                     map.put("error", SimpleSimon.encode(error, 0, SimpleSimon.ENCODE_FIELD)); //field

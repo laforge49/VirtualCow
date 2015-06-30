@@ -1,5 +1,7 @@
 package org.agilewiki.console;
 
+import org.agilewiki.console.oodb.OODb;
+import org.agilewiki.console.oodb.nodes.User_NodeInstance;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
 import java.security.MessageDigest;
@@ -13,7 +15,7 @@ public class Tokens {
             throws NoSuchAlgorithmException {
         String expirationTime = Long.toHexString(expTime);
         MessageDigest md = MessageDigest.getInstance("SHA-256");
-        String digest = User.bytesToHex(md.digest((identifier + expirationTime).getBytes()));
+        String digest = User_NodeInstance.bytesToHex(md.digest((identifier + expirationTime).getBytes()));
         return expirationTime + "|" + digest;
     }
 
@@ -24,7 +26,10 @@ public class Tokens {
         String userId = idToken.substring(0, i);
         String token = idToken.substring(i + 1);
         try {
-            if (validate(User.passwordDigest(userId, FactoryRegistry.MAX_TIMESTAMP), token)) {
+            User_NodeInstance user_nodeInstance = (User_NodeInstance) OODb.getOoDb().fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
+            if (user_nodeInstance == null)
+                return null;
+            if (validate(user_nodeInstance.passwordDigest(), token)) {
                 return userId;
             } else {
                 return null;

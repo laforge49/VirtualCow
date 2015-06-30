@@ -3,7 +3,7 @@ package org.agilewiki.console.oodb.nodes.roles.user.changePassword;
 import org.agilewiki.console.NameIds;
 import org.agilewiki.console.PostRequestBlade;
 import org.agilewiki.console.Tokens;
-import org.agilewiki.console.User;
+import org.agilewiki.console.oodb.nodes.User_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.utils.immutable.FactoryRegistry;
@@ -69,14 +69,14 @@ public class ChangePasswordBlade extends PostRequestBlade {
                     finish();
                     return;
                 }
-                if (!User.confirmPassword(servletContext, userId, oldPassword)) {
+                if (!latest_user_nodeInstance.confirmPassword(servletContext, oldPassword)) {
                     map.put("error", "Enter your current password in the old password field");
                     finish();
                     return;
                 }
                 MapNode mn = ooDb.nilMap;
                 mn = mn.add(NameIds.USER_KEY, userId);
-                mn = mn.add(NameIds.PASSWORD_KEY, User.encodePassword(servletContext, userId, newPassword));
+                mn = mn.add(NameIds.PASSWORD_KEY, User_NodeInstance.encodePassword(servletContext, userId, newPassword));
                 asyncRequestImpl.send(ooDb.update(ChangePassword_NodeInstance.NAME, mn),
                         new AsyncResponseProcessor<String>() {
                             @Override
@@ -84,13 +84,14 @@ public class ChangePasswordBlade extends PostRequestBlade {
                                 long expTime = System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 3; // 3 days
                                 String token = null;
                                 try {
-                                    token = Tokens.generate(User.passwordDigest(userId, FactoryRegistry.MAX_TIMESTAMP), expTime);
+                                    User_NodeInstance user_nodeInstance = (User_NodeInstance) ooDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
+                                    token = Tokens.generate(user_nodeInstance.passwordDigest(), expTime);
                                 } catch (NoSuchAlgorithmException e) {
                                 }
                                 Cookie loginCookie = new Cookie("userId", userId + "|" + token);
                                 loginCookie.setMaxAge(60 * 60 * 24 * 3); //3 days
                                 response.addCookie(loginCookie);
-                                String email = User.email(userId, FactoryRegistry.MAX_TIMESTAMP);
+                                String email = latest_user_nodeInstance.getEmailAddress();
                                 asyncRequestImpl.send(mailOut.sendEmail(servletContext,
                                                 email,
                                                 "Password Change Notification",

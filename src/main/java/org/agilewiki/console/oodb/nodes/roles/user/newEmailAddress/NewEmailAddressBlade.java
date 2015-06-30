@@ -1,9 +1,11 @@
 package org.agilewiki.console.oodb.nodes.roles.user.newEmailAddress;
 
-import org.agilewiki.console.*;
+import org.agilewiki.console.NameIds;
+import org.agilewiki.console.PostRequestBlade;
+import org.agilewiki.console.SimpleSimon;
+import org.agilewiki.console.Tokens;
 import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
-import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.MapNode;
 
 import javax.servlet.AsyncContext;
@@ -57,7 +59,7 @@ public class NewEmailAddressBlade extends PostRequestBlade {
                     finish();
                     return;
                 }
-                if (!User.confirmPassword(servletContext, userId, password)) {
+                if (!latest_user_nodeInstance.confirmPassword(servletContext, password)) {
                     map.put("error", "Password does not match.");
                     finish();
                     return;
@@ -72,7 +74,7 @@ public class NewEmailAddressBlade extends PostRequestBlade {
                     finish();
                     return;
                 }
-                String oldEmailAddress = User.email(userId, FactoryRegistry.MAX_TIMESTAMP);
+                String oldEmailAddress = latest_user_nodeInstance.getEmailAddress();
                 MapNode mn = ooDb.nilMap;
                 mn = mn.add(NameIds.USER_KEY, userId);
                 mn = mn.add(NameIds.EMAIL_ID, emailAddress);
@@ -80,7 +82,7 @@ public class NewEmailAddressBlade extends PostRequestBlade {
                         new AsyncResponseProcessor<String>() {
                             @Override
                             public void processAsyncResponse(String _response) throws Exception {
-                                myEmail = User.email(userId, FactoryRegistry.MAX_TIMESTAMP);
+                                myEmail = latest_user_nodeInstance.getEmailAddress();
                                 map.put("myEmail", myEmail);
                                 map.put("success", "The email address for your account has been updated.");
                                 println();

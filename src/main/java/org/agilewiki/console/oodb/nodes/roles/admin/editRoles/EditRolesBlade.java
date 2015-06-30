@@ -2,7 +2,7 @@ package org.agilewiki.console.oodb.nodes.roles.admin.editRoles;
 
 import org.agilewiki.console.NameIds;
 import org.agilewiki.console.PostRequestBlade;
-import org.agilewiki.console.User;
+import org.agilewiki.console.oodb.nodes.User_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.utils.ids.NameId;
@@ -41,7 +41,8 @@ public class EditRolesBlade extends PostRequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                String email = User.email(nodeId, longTimestamp);
+                User_NodeInstance user_nodeInstance = (User_NodeInstance) ooDb.fetchNode(nodeId, longTimestamp);
+                String email = user_nodeInstance.getEmailAddress();
                 String userLink = "<a href=\"?from=" + page +
                         "&to=user" +
                         "&nodeId=" + nodeId +
@@ -134,7 +135,8 @@ public class EditRolesBlade extends PostRequestBlade {
                 asyncRequestImpl.send(ooDb.update(UpdateRoles_NodeInstance.NAME, mn), new AsyncResponseProcessor<String>() {
                     @Override
                     public void processAsyncResponse(String _response) throws Exception {
-                        String email = User.email(nodeId, longTimestamp);
+                        User_NodeInstance user_nodeInstance = (User_NodeInstance) ooDb.fetchNode(nodeId, longTimestamp);
+                        String email = user_nodeInstance.getEmailAddress();
                         String userLink = "<a href=\"?from=" + page +
                                 "&to=user" +
                                 "&nodeId=" + nodeId +

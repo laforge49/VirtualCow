@@ -56,6 +56,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
         protected final HttpServletResponse response;
         protected final String page;
         protected final String userId;
+        protected final User_NodeInstance latest_user_nodeInstance;
         protected final Role role;
         protected String myEmail = null;
         protected AsyncRequestImpl asyncRequestImpl;
@@ -77,7 +78,10 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
             this.page = page;
             this.userId = userId;
             if (userId != null) {
-                myEmail = User.email(userId, FactoryRegistry.MAX_TIMESTAMP);
+                latest_user_nodeInstance = (User_NodeInstance) ooDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
+                myEmail = latest_user_nodeInstance.getEmailAddress();
+            } else {
+                latest_user_nodeInstance = null;
             }
             this.role = role;
         }
@@ -142,8 +146,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
                 map.put("page", page);
                 map.put("nicePageName", niceName());
                 map.put("myEmail", myEmail);
-                User_NodeInstance user_nodeInstance = (User_NodeInstance) ooDb.fetchNode(userId, longTimestamp);
-                List<Role> roles = user_nodeInstance.roles();
+                List<Role> roles = latest_user_nodeInstance.roles();
                 StringBuilder appMenu = new StringBuilder();
                 appMenu.append("<a>Role &#9660;</a>\n");
                 appMenu.append("<ul class=\"sub-menu\">\n");

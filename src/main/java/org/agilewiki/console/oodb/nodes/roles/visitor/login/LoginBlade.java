@@ -1,6 +1,10 @@
 package org.agilewiki.console.oodb.nodes.roles.visitor.login;
 
-import org.agilewiki.console.*;
+import org.agilewiki.console.NameIds;
+import org.agilewiki.console.PostRequestBlade;
+import org.agilewiki.console.SimpleSimon;
+import org.agilewiki.console.Tokens;
+import org.agilewiki.console.oodb.nodes.User_NodeInstance;
 import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.utils.immutable.FactoryRegistry;
@@ -60,7 +64,7 @@ public class LoginBlade extends PostRequestBlade {
                     finish();
                     return;
                 }
-                String userId = User.userId(emailAddress, FactoryRegistry.MAX_TIMESTAMP);
+                String userId = User_NodeInstance.userId(emailAddress, FactoryRegistry.MAX_TIMESTAMP);
                 if (userId == null) {
                     MapNode mn = ooDb.nilMap;
                     mn = mn.add(NameIds.SUBJECT, emailAddress);
@@ -78,7 +82,8 @@ public class LoginBlade extends PostRequestBlade {
                             });
                     return;
                 }
-                if (!User.confirmPassword(servletContext, userId, password)) {
+                User_NodeInstance user_nodeInstance = (User_NodeInstance) ooDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
+                if (!user_nodeInstance.confirmPassword(servletContext, password)) {
                     MapNode mn = ooDb.nilMap;
                     mn = mn.add(NameIds.SUBJECT, emailAddress);
                     mn = mn.add(NameIds.USER_KEY, userId);
@@ -99,7 +104,7 @@ public class LoginBlade extends PostRequestBlade {
                 long expTime = System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 3; // 3 days
                 String token = null;
                 try {
-                    token = Tokens.generate(User.passwordDigest(userId, FactoryRegistry.MAX_TIMESTAMP), expTime);
+                    token = Tokens.generate(user_nodeInstance.passwordDigest(), expTime);
                 } catch (NoSuchAlgorithmException e) {
                     servletContext.log("no such algorithm: SHA-256");
                     map.put("error", SimpleSimon.encode("Unable to create your account at this time. Please try again later.",

@@ -7,9 +7,6 @@ import java.util.NavigableMap;
  * A durable object.
  */
 public interface Node {
-    default OODb getOoDb() {
-        return OODb.getOoDb();
-    }
 
     String getNodeId();
 

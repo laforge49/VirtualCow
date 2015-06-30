@@ -2,10 +2,8 @@ package org.agilewiki.console.oodb.nodes.roles.user.delete;
 
 import org.agilewiki.console.NameIds;
 import org.agilewiki.console.PostRequestBlade;
-import org.agilewiki.console.User;
 import org.agilewiki.console.oodb.nodes.roles.Role;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
-import org.agilewiki.utils.immutable.FactoryRegistry;
 import org.agilewiki.utils.immutable.collections.MapNode;
 
 import javax.servlet.AsyncContext;
@@ -49,12 +47,12 @@ public class DeleteAccountBlade extends PostRequestBlade {
                     finish();
                     return;
                 }
-                if (!User.confirmPassword(servletContext, userId, oldPassword)) {
+                if (!latest_user_nodeInstance.confirmPassword(servletContext, oldPassword)) {
                     map.put("error", "Incorrect password");
                     finish();
                     return;
                 }
-                String email = User.email(userId, FactoryRegistry.MAX_TIMESTAMP);
+                String email = latest_user_nodeInstance.getEmailAddress();
                 MapNode mn = ooDb.nilMap;
                 mn = mn.add(NameIds.AN_ID, userId);
                 mn = mn.add(NameIds.SUBJECT, email);

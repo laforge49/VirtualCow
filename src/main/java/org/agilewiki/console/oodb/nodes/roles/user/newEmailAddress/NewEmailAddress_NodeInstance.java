@@ -1,8 +1,8 @@
 package org.agilewiki.console.oodb.nodes.roles.user.newEmailAddress;
 
 import org.agilewiki.console.NameIds;
-import org.agilewiki.console.User;
 import org.agilewiki.console.oodb.nodes.JournalEntry_NodeInstance;
+import org.agilewiki.console.oodb.nodes.User_NodeInstance;
 import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
@@ -24,7 +24,8 @@ public class NewEmailAddress_NodeInstance extends JournalEntry_NodeInstance {
     public void process(Db db, MapNode mapNode) {
         String userId = (String) mapNode.get(NameIds.USER_KEY);
 
-        String oldEmailAddressId = ValueId.generate(User.email(userId, getOoDb().getDbTimestamp()));
+        User_NodeInstance user_nodeInstance = (User_NodeInstance) getOoDb().fetchNode(userId, getOoDb().getDbTimestamp());
+        String oldEmailAddressId = ValueId.generate(user_nodeInstance.getEmailAddress());
         getOoDb().removeSecondaryId(userId, NameIds.EMAIL_ID, oldEmailAddressId);
 
         String emailAddressId = ValueId.generate((String) mapNode.get(NameIds.EMAIL_ID));
