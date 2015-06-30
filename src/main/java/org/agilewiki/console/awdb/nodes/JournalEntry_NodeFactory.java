@@ -4,14 +4,14 @@ import org.agilewiki.console.awdb.Node;
 import org.agilewiki.console.awdb.AwDb;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
-public class JournalEntry_Node extends Node_NodeInstance {
+public class JournalEntry_NodeFactory extends Node_NodeInstance {
     public final static String ID = "$njournalEntry.node";
 
     public static void create(AwDb awDb) {
-        awDb.addTimelessNode(new JournalEntry_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
+        awDb.addTimelessNode(new JournalEntry_NodeFactory(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
-    public JournalEntry_Node(String nodeId, long timestamp) {
+    public JournalEntry_NodeFactory(String nodeId, long timestamp) {
         super(nodeId, timestamp);
     }
 

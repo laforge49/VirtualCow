@@ -38,7 +38,7 @@ public class User_Role extends Role_NodeInstance {
         newEmailAddressBlade = new NewEmailAddressBlade(this, "newEmailAddress");
         userBlade = new UserBlade(this, "user");
 
-        RecreateUserRole_Node.create(getOoDb());
+        RecreateUserRole_NodeFactory.create(getOoDb());
         getOoDb().registerTransaction(RecreateUserRole_NodeInstance.NAME, RecreateUserRole_NodeInstance.class);
         RecreateUserRole_NodeInstance.userRole = this;
     }

@@ -2,7 +2,7 @@ package org.agilewiki.console;
 
 import org.agilewiki.console.awdb.NodeBase;
 import org.agilewiki.console.awdb.AwDb;
-import org.agilewiki.console.awdb.nodes.Key_Node;
+import org.agilewiki.console.awdb.nodes.Key_NodeFactory;
 import org.agilewiki.console.roles.Role;
 import org.agilewiki.console.roles.Role_NodeInstance;
 import org.agilewiki.console.roles.admin.Admin_Role;
@@ -66,7 +66,7 @@ public class User_NodeInstance extends NodeBase {
         awDb.set(userId, "$nsubject", emailId);
         awDb.set(userId, NameIds.PASSWORD_KEY, passwordHash);
         awDb.createSecondaryId(userId, NameIds.EMAIL_ID, emailId);
-        awDb.createSecondaryId(userId, Key_Node.NODETYPE_ID, User_Node.ID);
+        awDb.createSecondaryId(userId, Key_NodeFactory.NODETYPE_ID, User_Node.ID);
         for (String userRole : userRoles) {
             awDb.createSecondaryId(userId, NameIds.ROLE_ID, NameIds.generate(userRole));
         }

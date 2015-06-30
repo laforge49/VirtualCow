@@ -33,7 +33,7 @@ public class Admin_Role extends Role_NodeInstance {
         editRolesBlade = new EditRolesBlade(this, "editRoles");
         recreateRoleBlade = new RecreateRoleBlade(this, "recreateRole");
 
-        RecreateAdminRole_Node.create(getOoDb());
+        RecreateAdminRole_NodeFactory.create(getOoDb());
         getOoDb().registerTransaction(RecreateAdminRole_NodeInstance.NAME, RecreateAdminRole_NodeInstance.class);
         RecreateAdminRole_NodeInstance.adminRole = this;
     }

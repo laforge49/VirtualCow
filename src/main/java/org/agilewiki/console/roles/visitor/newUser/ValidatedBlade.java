@@ -18,7 +18,7 @@ import java.security.NoSuchAlgorithmException;
 public class ValidatedBlade extends PostRequestBlade {
     public ValidatedBlade(Role role, String page) throws Exception {
         super(role, page);
-        NewUser_Node.create(awDb);
+        NewUser_NodeFactory.create(awDb);
         awDb.registerTransaction(NewUser_NodeInstance.NAME, NewUser_NodeInstance.class);
     }
 

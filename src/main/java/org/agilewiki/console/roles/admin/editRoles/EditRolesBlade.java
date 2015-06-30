@@ -17,7 +17,7 @@ import javax.servlet.AsyncContext;
 public class EditRolesBlade extends PostRequestBlade {
     public EditRolesBlade(Role role, String page) throws Exception {
         super(role, page);
-        UpdateRoles_Node.create(awDb);
+        UpdateRoles_NodeFactory.create(awDb);
         awDb.registerTransaction(UpdateRoles_NodeInstance.NAME, UpdateRoles_NodeInstance.class);
     }
 

@@ -3,7 +3,7 @@ package org.agilewiki.console.awdb;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import org.agilewiki.console.awdb.nodes.Key_Node;
+import org.agilewiki.console.awdb.nodes.Key_NodeFactory;
 import org.agilewiki.jactor2.core.blades.BladeBase;
 import org.agilewiki.jactor2.core.blades.NonBlockingBladeBase;
 import org.agilewiki.jactor2.core.impl.Plant;
@@ -114,7 +114,7 @@ public class AwDb {
     }
 
     String nodeTypeId(String nodeId) {
-        for (String mnId : db.keysIterable(SecondaryId.secondaryInv(nodeId, Key_Node.NODETYPE_ID),
+        for (String mnId : db.keysIterable(SecondaryId.secondaryInv(nodeId, Key_NodeFactory.NODETYPE_ID),
                 FactoryRegistry.MAX_TIMESTAMP)) {
             return mnId;
         }
@@ -252,7 +252,7 @@ public class AwDb {
     public String getNodeValue(String nodeId, String keyId, long timestamp) {
         Node node = fetchNode(nodeId, timestamp);
         if (node == null) {
-            if (Key_Node.NODETYPE_ID.equals(keyId)) {
+            if (Key_NodeFactory.NODETYPE_ID.equals(keyId)) {
                 return null;
             }
             for (String value : db.keysIterable(SecondaryId.secondaryInv(nodeId, keyId), timestamp)) {
@@ -267,13 +267,13 @@ public class AwDb {
         char x = id.charAt(1);
         if (x != 'n' && x != 'r' && x != 't')
             return false;
-        return getNodeValue(id, Key_Node.NODETYPE_ID, longTimestamp) != null;
+        return getNodeValue(id, Key_NodeFactory.NODETYPE_ID, longTimestamp) != null;
     }
 
     public String kindId(String nodeId, long longTimestamp) {
-        String kind = getNodeValue(nodeId, Key_Node.SUPERTYPE_ID, longTimestamp);
+        String kind = getNodeValue(nodeId, Key_NodeFactory.SUPERTYPE_ID, longTimestamp);
         if (kind == null)
-            kind = getNodeValue(nodeId, Key_Node.NODETYPE_ID, longTimestamp);
+            kind = getNodeValue(nodeId, Key_NodeFactory.NODETYPE_ID, longTimestamp);
         return kind;
     }
 

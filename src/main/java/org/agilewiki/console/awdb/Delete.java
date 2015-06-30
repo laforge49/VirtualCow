@@ -1,6 +1,6 @@
 package org.agilewiki.console.awdb;
 
-import org.agilewiki.console.awdb.nodes.Key_Node;
+import org.agilewiki.console.awdb.nodes.Key_NodeFactory;
 
 import java.util.ArrayDeque;
 
@@ -38,7 +38,7 @@ public class Delete {
         for (String lnkTyp : awDb.targetLabelInvIterable(id)) {
             for (String oId : awDb.originIdIterable(id, lnkTyp, awDb.getDbTimestamp())) {
                 if (awDb.nodeHasValueId(lnkTyp + ".lnk1",
-                        Key_Node.INVDEPENDENCY_ID,
+                        Key_NodeFactory.INVDEPENDENCY_ID,
                         lnkTyp,
                         awDb.getDbTimestamp())) {
                     deleter(awDb, ids, oId);

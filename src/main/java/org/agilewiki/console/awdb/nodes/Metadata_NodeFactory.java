@@ -4,18 +4,18 @@ import org.agilewiki.console.awdb.Node;
 import org.agilewiki.console.awdb.AwDb;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
-public class Metadata_Node extends Node_NodeInstance {
+public class Metadata_NodeFactory extends Node_NodeInstance {
     public final static String ID = "$nmetadata.node";
 
     public static void create(AwDb awDb)
             throws Exception {
-        awDb.addTimelessNode(new Metadata_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
-        Node_Node.create(awDb);
-        Lnk1_Node.create(awDb);
-        Key_Node.create(awDb);
+        awDb.addTimelessNode(new Metadata_NodeFactory(ID, FactoryRegistry.MAX_TIMESTAMP));
+        Node_NodeFactory.create(awDb);
+        Lnk1_NodeFactory.create(awDb);
+        Key_NodeFactory.create(awDb);
     }
 
-    public Metadata_Node(String nodeId, long timestamp) {
+    public Metadata_NodeFactory(String nodeId, long timestamp) {
         super(nodeId, timestamp);
     }
 

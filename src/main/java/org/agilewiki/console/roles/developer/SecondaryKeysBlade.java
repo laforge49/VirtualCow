@@ -3,7 +3,7 @@ package org.agilewiki.console.roles.developer;
 import org.agilewiki.console.NameIds;
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.SimpleSimon;
-import org.agilewiki.console.awdb.nodes.Key_Node;
+import org.agilewiki.console.awdb.nodes.Key_NodeFactory;
 import org.agilewiki.console.roles.Role;
 import org.agilewiki.utils.ids.composites.SecondaryId;
 import org.agilewiki.utils.immutable.collections.PeekABoo;
@@ -64,7 +64,7 @@ public class SecondaryKeysBlade extends RequestBlade {
                             }
                             --limit;
                             String secondaryId = SecondaryId.secondaryId(keyId, valueId);
-                            String nodeId = awDb.getOnlyKeyTargetId(Key_Node.EMAIL_ID, valueId, longTimestamp);
+                            String nodeId = awDb.getOnlyKeyTargetId(Key_NodeFactory.EMAIL_ID, valueId, longTimestamp);
                             String line = valueId.substring(2);
                             if (line.length() > 60)
                                 line = line.substring(0, 60);

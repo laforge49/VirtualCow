@@ -4,7 +4,7 @@ import org.agilewiki.console.NameIds;
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.SimpleSimon;
 import org.agilewiki.console.TimestampIds;
-import org.agilewiki.console.awdb.nodes.Key_Node;
+import org.agilewiki.console.awdb.nodes.Key_NodeFactory;
 import org.agilewiki.console.roles.Role;
 import org.agilewiki.utils.ids.composites.Link1Id;
 import org.agilewiki.utils.ids.composites.SecondaryId;
@@ -109,7 +109,7 @@ public class NodeBlade extends RequestBlade {
                                 } else
                                     sb.append("Destinations<br />");
                             } else if (nodeId.endsWith(".node")) {
-                                if (awDb.keyHasTargetId(Key_Node.SUPERTYPE_ID, nodeId, longTimestamp)) {
+                                if (awDb.keyHasTargetId(Key_NodeFactory.SUPERTYPE_ID, nodeId, longTimestamp)) {
                                     sb.append("<a href=\"?from=node&to=nodes&secondaryId=$D$nsuperType");
                                     sb.append(nodeId);
                                     if (timestamp != null) {
@@ -120,7 +120,7 @@ public class NodeBlade extends RequestBlade {
                                     sb.append("#rupa\"><strong>Subtypes</strong></a>, ");
                                 } else
                                     sb.append("Subtypes, ");
-                                if (awDb.keyHasTargetId(Key_Node.NODETYPE_ID, nodeId, longTimestamp)) {
+                                if (awDb.keyHasTargetId(Key_NodeFactory.NODETYPE_ID, nodeId, longTimestamp)) {
                                     sb.append("<a href=\"?from=node&to=nodes&secondaryId=$D$nnodeType");
                                     sb.append(nodeId);
                                     if (timestamp != null) {

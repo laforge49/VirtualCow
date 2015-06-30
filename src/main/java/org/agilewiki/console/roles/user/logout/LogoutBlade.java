@@ -15,7 +15,7 @@ import javax.servlet.http.Cookie;
 public class LogoutBlade extends PostRequestBlade {
     public LogoutBlade(Role role, String page) throws Exception {
         super(role, page);
-        Logout_Node.create(awDb);
+        Logout_NodeFactory.create(awDb);
         awDb.registerTransaction(Logout_NodeInstance.NAME, Logout_NodeInstance.class);
     }
 

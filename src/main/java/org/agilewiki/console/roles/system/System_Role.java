@@ -18,7 +18,7 @@ public class System_Role extends Role_NodeInstance {
     public System_Role(String nodeId, long timestamp) {
         super(nodeId, timestamp);
         niceRoleName = "System";
-        RecreateSystemRole_Node.create(getOoDb());
+        RecreateSystemRole_NodeFactory.create(getOoDb());
         getOoDb().registerTransaction(RecreateSystemRole_NodeInstance.NAME, RecreateSystemRole_NodeInstance.class);
         RecreateSystemRole_NodeInstance.systemRole = this;
     }

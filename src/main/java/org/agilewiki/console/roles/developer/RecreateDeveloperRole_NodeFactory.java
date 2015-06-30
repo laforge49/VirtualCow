@@ -2,17 +2,17 @@ package org.agilewiki.console.roles.developer;
 
 import org.agilewiki.console.awdb.Node;
 import org.agilewiki.console.awdb.AwDb;
-import org.agilewiki.console.awdb.nodes.JournalEntry_Node;
+import org.agilewiki.console.awdb.nodes.JournalEntry_NodeFactory;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
-public class RecreateDeveloperRole_Node extends JournalEntry_Node {
+public class RecreateDeveloperRole_NodeFactory extends JournalEntry_NodeFactory {
     public final static String ID = "$nrecreateDeveloperRole.node";
 
     public static void create(AwDb awDb) {
-        awDb.addTimelessNode(new RecreateDeveloperRole_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
+        awDb.addTimelessNode(new RecreateDeveloperRole_NodeFactory(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
-    public RecreateDeveloperRole_Node(String nodeId, long timestamp) {
+    public RecreateDeveloperRole_NodeFactory(String nodeId, long timestamp) {
         super(nodeId, timestamp);
     }
 

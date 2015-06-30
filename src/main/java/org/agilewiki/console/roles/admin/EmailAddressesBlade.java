@@ -2,7 +2,7 @@ package org.agilewiki.console.roles.admin;
 
 import org.agilewiki.console.RequestBlade;
 import org.agilewiki.console.SimpleSimon;
-import org.agilewiki.console.awdb.nodes.Key_Node;
+import org.agilewiki.console.awdb.nodes.Key_NodeFactory;
 import org.agilewiki.console.roles.Role;
 import org.agilewiki.utils.ids.ValueId;
 import org.agilewiki.utils.immutable.collections.PeekABoo;
@@ -39,7 +39,7 @@ public class EmailAddressesBlade extends RequestBlade {
                         hasMore = false;
                         int limit = 25;
                         sb = new StringBuilder();
-                        PeekABoo<String> idPeekABoo = awDb.keyValueIdIterable(Key_Node.EMAIL_ID, longTimestamp);
+                        PeekABoo<String> idPeekABoo = awDb.keyValueIdIterable(Key_NodeFactory.EMAIL_ID, longTimestamp);
                         idPeekABoo.setPosition(startingAt);
                         for (String valueId : idPeekABoo) {
                             if (limit == 0) {
@@ -48,7 +48,7 @@ public class EmailAddressesBlade extends RequestBlade {
                                 break;
                             }
                             --limit;
-                            String nodeId = awDb.getKeyTargetId(Key_Node.EMAIL_ID, valueId, longTimestamp);
+                            String nodeId = awDb.getKeyTargetId(Key_NodeFactory.EMAIL_ID, valueId, longTimestamp);
                             sb.append("<a href=\"?from=secondaryKeys&to=user&nodeId=");
                             sb.append(nodeId);
                             if (timestamp != null) {

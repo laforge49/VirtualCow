@@ -87,7 +87,7 @@ public class Developer_Role extends Role_NodeInstance {
         rolesNodesBlade = new NodesBlade(this, "roleNodes", "Role Types", "$D$nnodeType$nrole.node");
         invLinksBlade = new InvLinksBlade(this, "invLinks");
 
-        RecreateDeveloperRole_Node.create(getOoDb());
+        RecreateDeveloperRole_NodeFactory.create(getOoDb());
         getOoDb().registerTransaction(RecreateDeveloperRole_NodeInstance.NAME, RecreateDeveloperRole_NodeInstance.class);
         RecreateDeveloperRole_NodeInstance.developerRole = this;
     }

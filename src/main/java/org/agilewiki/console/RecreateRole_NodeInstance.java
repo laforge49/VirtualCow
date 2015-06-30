@@ -2,9 +2,9 @@ package org.agilewiki.console;
 
 import org.agilewiki.console.awdb.Delete;
 import org.agilewiki.console.awdb.nodes.JournalEntry_NodeInstance;
-import org.agilewiki.console.awdb.nodes.Key_Node;
+import org.agilewiki.console.awdb.nodes.Key_NodeFactory;
 import org.agilewiki.console.roles.Role;
-import org.agilewiki.console.roles.Role_Node;
+import org.agilewiki.console.roles.Role_NodeFactory;
 import org.agilewiki.utils.immutable.collections.MapNode;
 import org.agilewiki.utils.virtualcow.Db;
 
@@ -29,6 +29,6 @@ abstract public class RecreateRole_NodeInstance extends JournalEntry_NodeInstanc
 
         Delete.delete(thisRoleNodeId);
 
-        getOoDb().createSecondaryId(thisRoleNodeId, Key_Node.NODETYPE_ID, Role_Node.ID);
+        getOoDb().createSecondaryId(thisRoleNodeId, Key_NodeFactory.NODETYPE_ID, Role_NodeFactory.ID);
     }
 }

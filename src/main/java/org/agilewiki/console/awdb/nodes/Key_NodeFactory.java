@@ -4,7 +4,7 @@ import org.agilewiki.console.awdb.Node;
 import org.agilewiki.console.awdb.AwDb;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
-public class Key_Node extends Metadata_Node {
+public class Key_NodeFactory extends Metadata_NodeFactory {
     public final static String ID = "$nkey.node";
 
     final public static String NODETYPE_ID = "$nnodeType";
@@ -24,17 +24,17 @@ public class Key_Node extends Metadata_Node {
     final public static String SUBJECT_KEY_ID = "$nsubject.key";
 
     public static void create(AwDb awDb) {
-        awDb.addTimelessNode(new Key_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
+        awDb.addTimelessNode(new Key_NodeFactory(ID, FactoryRegistry.MAX_TIMESTAMP));
     }
 
     public static void define(String nodeId, String targetType, String roleId) {
-        Node_Node.define(nodeId, ID, null, roleId);
+        Node_NodeFactory.define(nodeId, ID, null, roleId);
         getOoDb().createLnk1(nodeId,
-                Lnk1_Node.TARGET_ID,
+                Lnk1_NodeFactory.TARGET_ID,
                 targetType);
     }
 
-    public Key_Node(String nodeId, long timestamp) {
+    public Key_NodeFactory(String nodeId, long timestamp) {
         super(nodeId, timestamp);
     }
 

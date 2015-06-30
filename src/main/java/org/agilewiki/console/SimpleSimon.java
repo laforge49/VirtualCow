@@ -1,12 +1,12 @@
 package org.agilewiki.console;
 
 import org.agilewiki.console.awdb.AwDb;
-import org.agilewiki.console.awdb.nodes.Metadata_Node;
+import org.agilewiki.console.awdb.nodes.Metadata_NodeFactory;
 import org.agilewiki.console.roles.Role;
-import org.agilewiki.console.roles.Role_Node;
-import org.agilewiki.console.roles.system.ServletStart_Node;
+import org.agilewiki.console.roles.Role_NodeFactory;
+import org.agilewiki.console.roles.system.ServletStart_NodeFactory;
 import org.agilewiki.console.roles.system.ServletStart_NodeInstance;
-import org.agilewiki.console.roles.system.ServletStop_Node;
+import org.agilewiki.console.roles.system.ServletStop_NodeFactory;
 import org.agilewiki.console.roles.system.ServletStop_NodeInstance;
 import org.agilewiki.console.roles.user.User_Role;
 import org.agilewiki.console.roles.visitor.Visitor_Role;
@@ -99,16 +99,16 @@ public class SimpleSimon extends HttpServlet {
             mailOut = new MailOut();
 
             try {
-                Metadata_Node.create(awDb);
-                Role_Node.create(awDb);
+                Metadata_NodeFactory.create(awDb);
+                Role_NodeFactory.create(awDb);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
 
-            ServletStart_Node.create(awDb);
+            ServletStart_NodeFactory.create(awDb);
             awDb.registerTransaction(ServletStart_NodeInstance.NAME, ServletStart_NodeInstance.class);
 
-            ServletStop_Node.create(awDb);
+            ServletStop_NodeFactory.create(awDb);
             awDb.registerTransaction(ServletStop_NodeInstance.NAME, ServletStop_NodeInstance.class);
 
             ServletStart_NodeInstance.update(awDb);

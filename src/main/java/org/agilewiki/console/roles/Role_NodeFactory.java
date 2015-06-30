@@ -10,11 +10,11 @@ import org.agilewiki.console.roles.user.User_Role;
 import org.agilewiki.console.roles.visitor.Visitor_Role;
 import org.agilewiki.utils.immutable.FactoryRegistry;
 
-public class Role_Node extends Node_NodeInstance {
+public class Role_NodeFactory extends Node_NodeInstance {
     public final static String ID = "$nrole.node";
 
     public static void create(AwDb awDb) throws Exception {
-        awDb.addTimelessNode(new Role_Node(ID, FactoryRegistry.MAX_TIMESTAMP));
+        awDb.addTimelessNode(new Role_NodeFactory(ID, FactoryRegistry.MAX_TIMESTAMP));
         Admin_Role.create(awDb);
         Developer_Role.create(awDb);
         System_Role.create(awDb);
@@ -22,7 +22,7 @@ public class Role_Node extends Node_NodeInstance {
         User_Role.create(awDb);
     }
 
-    public Role_Node(String nodeId, long timestamp) {
+    public Role_NodeFactory(String nodeId, long timestamp) {
         super(nodeId, timestamp);
     }
 

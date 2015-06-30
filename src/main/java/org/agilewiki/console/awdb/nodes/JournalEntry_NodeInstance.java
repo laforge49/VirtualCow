@@ -25,7 +25,7 @@ public class JournalEntry_NodeInstance extends NodeBase implements Transaction {
     public final void transform(Db db, MapNode tMapNode) {
         initialize(db.getJEName(), FactoryRegistry.MAX_TIMESTAMP);
         String transactionName = tMapNode.get(Db.transactionNameId).toString();
-        getOoDb().createSecondaryId(db.getJEName(), Key_Node.NODETYPE_ID,
+        getOoDb().createSecondaryId(db.getJEName(), Key_NodeFactory.NODETYPE_ID,
                 NameId.generate(transactionName + ".node"));
         String userId = (String) tMapNode.get(NameIds.USER_KEY);
         if (userId != null) {

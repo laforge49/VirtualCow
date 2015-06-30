@@ -16,7 +16,7 @@ import java.security.NoSuchAlgorithmException;
 public class ForgotPasswordBlade extends PostRequestBlade {
     public ForgotPasswordBlade(Role role, String page) throws Exception {
         super(role, page);
-        ForgotPassword_Node.create(awDb);
+        ForgotPassword_NodeFactory.create(awDb);
         awDb.registerTransaction(ForgotPassword_NodeInstance.NAME, ForgotPassword_NodeInstance.class);
     }
 
