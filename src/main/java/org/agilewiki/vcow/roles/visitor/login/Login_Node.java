@@ -2,9 +2,9 @@ package org.agilewiki.vcow.roles.visitor.login;
 
 import org.agilewiki.vcow.NameIds;
 import org.agilewiki.vcow.VCJournalEntry_Node;
-import org.agilewiki.utils.ids.ValueId;
-import org.agilewiki.utils.immutable.collections.MapNode;
-import org.agilewiki.utils.virtualcow.Db;
+import org.agilewiki.awdb.db.ids.ValueId;
+import org.agilewiki.awdb.db.immutable.collections.MapNode;
+import org.agilewiki.awdb.db.virtualcow.Db;
 
 public class Login_Node extends VCJournalEntry_Node {
     public final static String NAME = "login";

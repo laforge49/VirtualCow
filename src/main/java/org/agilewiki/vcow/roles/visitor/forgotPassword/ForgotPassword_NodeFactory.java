@@ -3,7 +3,7 @@ package org.agilewiki.vcow.roles.visitor.forgotPassword;
 import org.agilewiki.awdb.AwDb;
 import org.agilewiki.awdb.Node;
 import org.agilewiki.awdb.nodes.JournalEntry_NodeFactory;
-import org.agilewiki.utils.immutable.FactoryRegistry;
+import org.agilewiki.awdb.db.immutable.FactoryRegistry;
 
 public class ForgotPassword_NodeFactory extends JournalEntry_NodeFactory {
     public final static String ID = "$nforgotPassword.node";

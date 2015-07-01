@@ -4,8 +4,8 @@ import org.agilewiki.vcow.SimpleSimon;
 import org.agilewiki.vcow.User_NodeInstance;
 import org.agilewiki.vcow.VCJournalEntry_Node;
 import org.agilewiki.awdb.AwDb;
-import org.agilewiki.utils.immutable.collections.MapNode;
-import org.agilewiki.utils.virtualcow.Db;
+import org.agilewiki.awdb.db.immutable.collections.MapNode;
+import org.agilewiki.awdb.db.virtualcow.Db;
 
 public class ServletStart_Node extends VCJournalEntry_Node {
     public final static String NAME = "servletStart";

@@ -3,7 +3,7 @@ package org.agilewiki.vcow.roles.system;
 import org.agilewiki.vcow.RequestBlade;
 import org.agilewiki.awdb.AwDb;
 import org.agilewiki.vcow.roles.Role_NodeInstance;
-import org.agilewiki.utils.immutable.FactoryRegistry;
+import org.agilewiki.awdb.db.immutable.FactoryRegistry;
 
 /**
  * System role represents the general infrastructure.

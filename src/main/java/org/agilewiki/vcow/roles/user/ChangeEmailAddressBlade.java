@@ -6,7 +6,7 @@ import org.agilewiki.vcow.Tokens;
 import org.agilewiki.vcow.User_NodeInstance;
 import org.agilewiki.vcow.roles.Role;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
-import org.agilewiki.utils.immutable.FactoryRegistry;
+import org.agilewiki.awdb.db.immutable.FactoryRegistry;
 
 import javax.servlet.AsyncContext;
 import java.security.NoSuchAlgorithmException;

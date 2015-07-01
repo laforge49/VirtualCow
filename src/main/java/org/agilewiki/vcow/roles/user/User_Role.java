@@ -7,7 +7,7 @@ import org.agilewiki.vcow.roles.user.changePassword.ChangePasswordBlade;
 import org.agilewiki.vcow.roles.user.delete.DeleteAccountBlade;
 import org.agilewiki.vcow.roles.user.logout.LogoutBlade;
 import org.agilewiki.vcow.roles.user.newEmailAddress.NewEmailAddressBlade;
-import org.agilewiki.utils.immutable.FactoryRegistry;
+import org.agilewiki.awdb.db.immutable.FactoryRegistry;
 
 /**
  * A base role.

@@ -1,6 +1,6 @@
 package org.agilewiki.vcow;
 
-import org.agilewiki.utils.ids.NameId;
+import org.agilewiki.awdb.db.ids.NameId;
 
 /**
  * NameId constants.

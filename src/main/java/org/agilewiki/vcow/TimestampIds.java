@@ -1,6 +1,6 @@
 package org.agilewiki.vcow;
 
-import org.agilewiki.utils.ids.Timestamp;
+import org.agilewiki.awdb.db.ids.Timestamp;
 
 /**
  * Provides methods missing from Timestamp.

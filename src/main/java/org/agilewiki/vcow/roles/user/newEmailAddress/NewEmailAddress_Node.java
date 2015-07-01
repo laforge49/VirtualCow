@@ -3,9 +3,9 @@ package org.agilewiki.vcow.roles.user.newEmailAddress;
 import org.agilewiki.vcow.NameIds;
 import org.agilewiki.vcow.User_NodeInstance;
 import org.agilewiki.vcow.VCJournalEntry_Node;
-import org.agilewiki.utils.ids.ValueId;
-import org.agilewiki.utils.immutable.collections.MapNode;
-import org.agilewiki.utils.virtualcow.Db;
+import org.agilewiki.awdb.db.ids.ValueId;
+import org.agilewiki.awdb.db.immutable.collections.MapNode;
+import org.agilewiki.awdb.db.virtualcow.Db;
 
 /**
  * Changes the user's password.

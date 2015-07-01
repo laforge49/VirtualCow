@@ -3,8 +3,8 @@ package org.agilewiki.vcow.roles.visitor.forgotPassword;
 import org.agilewiki.vcow.*;
 import org.agilewiki.vcow.roles.Role;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
-import org.agilewiki.utils.immutable.FactoryRegistry;
-import org.agilewiki.utils.immutable.collections.MapNode;
+import org.agilewiki.awdb.db.immutable.FactoryRegistry;
+import org.agilewiki.awdb.db.immutable.collections.MapNode;
 
 import javax.servlet.AsyncContext;
 import javax.servlet.http.HttpServletResponse;

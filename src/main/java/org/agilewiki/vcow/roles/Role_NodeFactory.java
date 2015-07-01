@@ -8,7 +8,7 @@ import org.agilewiki.vcow.roles.developer.Developer_Role;
 import org.agilewiki.vcow.roles.system.System_Role;
 import org.agilewiki.vcow.roles.user.User_Role;
 import org.agilewiki.vcow.roles.visitor.Visitor_Role;
-import org.agilewiki.utils.immutable.FactoryRegistry;
+import org.agilewiki.awdb.db.immutable.FactoryRegistry;
 
 public class Role_NodeFactory extends Node_Node {
     public final static String ID = "$nrole.node";

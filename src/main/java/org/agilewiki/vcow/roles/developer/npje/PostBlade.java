@@ -5,7 +5,7 @@ import org.agilewiki.vcow.PostRequestBlade;
 import org.agilewiki.vcow.SimpleSimon;
 import org.agilewiki.vcow.roles.Role;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
-import org.agilewiki.utils.immutable.collections.MapNode;
+import org.agilewiki.awdb.db.immutable.collections.MapNode;
 
 import javax.servlet.AsyncContext;
 

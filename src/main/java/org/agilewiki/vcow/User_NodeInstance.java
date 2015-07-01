@@ -8,9 +8,9 @@ import org.agilewiki.vcow.roles.Role_NodeInstance;
 import org.agilewiki.vcow.roles.admin.Admin_Role;
 import org.agilewiki.vcow.roles.developer.Developer_Role;
 import org.agilewiki.vcow.roles.user.User_Role;
-import org.agilewiki.utils.ids.NameId;
-import org.agilewiki.utils.ids.ValueId;
-import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
+import org.agilewiki.awdb.db.ids.NameId;
+import org.agilewiki.awdb.db.ids.ValueId;
+import org.agilewiki.awdb.db.virtualcow.UnexpectedChecksumException;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;

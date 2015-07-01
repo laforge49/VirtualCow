@@ -1,7 +1,7 @@
 package org.agilewiki.vcow;
 
 import org.agilewiki.awdb.AwDb;
-import org.agilewiki.utils.immutable.FactoryRegistry;
+import org.agilewiki.awdb.db.immutable.FactoryRegistry;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

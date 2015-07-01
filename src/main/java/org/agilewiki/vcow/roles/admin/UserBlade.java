@@ -4,8 +4,8 @@ import org.agilewiki.vcow.NameIds;
 import org.agilewiki.vcow.RequestBlade;
 import org.agilewiki.vcow.User_NodeInstance;
 import org.agilewiki.vcow.roles.Role;
-import org.agilewiki.utils.ids.NameId;
-import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
+import org.agilewiki.awdb.db.ids.NameId;
+import org.agilewiki.awdb.db.virtualcow.UnexpectedChecksumException;
 
 import javax.servlet.AsyncContext;
 

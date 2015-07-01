@@ -5,9 +5,9 @@ import org.agilewiki.vcow.PostRequestBlade;
 import org.agilewiki.vcow.User_NodeInstance;
 import org.agilewiki.vcow.roles.Role;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
-import org.agilewiki.utils.ids.NameId;
-import org.agilewiki.utils.immutable.collections.MapNode;
-import org.agilewiki.utils.virtualcow.UnexpectedChecksumException;
+import org.agilewiki.awdb.db.ids.NameId;
+import org.agilewiki.awdb.db.immutable.collections.MapNode;
+import org.agilewiki.awdb.db.virtualcow.UnexpectedChecksumException;
 
 import javax.servlet.AsyncContext;
 

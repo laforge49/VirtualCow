@@ -21,8 +21,8 @@ import org.agilewiki.vcow.roles.visitor.login.BadUserAddress_NodeFactory;
 import org.agilewiki.vcow.roles.visitor.login.BadUserPassword_NodeFactory;
 import org.agilewiki.vcow.roles.visitor.login.Login_NodeFactory;
 import org.agilewiki.vcow.roles.visitor.newUser.NewUser_NodeFactory;
-import org.agilewiki.utils.immutable.collections.MapNode;
-import org.agilewiki.utils.virtualcow.Db;
+import org.agilewiki.awdb.db.immutable.collections.MapNode;
+import org.agilewiki.awdb.db.virtualcow.Db;
 
 public class RecreateSystemRole_Node extends RecreateRole_Node {
     public final static String NAME = "recreateSystemRole";
