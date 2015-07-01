@@ -1,6 +1,5 @@
 package org.agilewiki.awdb.nodes;
 
-import org.agilewiki.console.User_Node;
 import org.agilewiki.awdb.AwDb;
 import org.agilewiki.awdb.Node;
 import org.agilewiki.utils.immutable.FactoryRegistry;
@@ -12,7 +11,6 @@ public class Node_NodeFactory extends Metadata_NodeFactory {
             throws Exception {
         awDb.addTimelessNode(new Node_NodeFactory(ID, FactoryRegistry.MAX_TIMESTAMP));
         JournalEntry_NodeFactory.create(awDb);
-        User_Node.create(awDb);
         Attribute_NodeFactory.create(awDb);
     }
 

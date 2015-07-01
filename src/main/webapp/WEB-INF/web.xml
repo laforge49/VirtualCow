@@ -9,7 +9,7 @@
     <servlet>
         <servlet-name>Console</servlet-name>
         <servlet-class>
-            org.agilewiki.console.SimpleSimon
+            org.agilewiki.vcow.SimpleSimon
         </servlet-class>
         <load-on-startup>1</load-on-startup>
         <async-supported>true</async-supported>
