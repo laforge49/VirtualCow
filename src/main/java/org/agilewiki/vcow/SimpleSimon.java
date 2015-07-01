@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -96,7 +98,9 @@ public class SimpleSimon extends HttpServlet {
 
             new Plant();
 
-            awDb = new AwDb(100000, 10000L);
+            Path dbPath = Paths.get("vcow.db");
+            Path journalsPath = Paths.get("journals");
+            awDb = new AwDb(dbPath, 100000, 10000L, journalsPath, false);
 
             mailOut = new MailOut();
 

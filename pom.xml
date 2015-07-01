@@ -13,7 +13,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jettyVersion>9.2.10.v20150310</jettyVersion>
-        <cow.version>0.13.0</cow.version>
+        <awdb.version>0.0.1</awdb.version>
         <slf4j.version>1.7.7</slf4j.version>
         <junit.version>4.11</junit.version>
         <guava.version>18.0</guava.version>
@@ -56,9 +56,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.agilewiki.utils</groupId>
-            <artifactId>cow</artifactId>
-            <version>${cow.version}</version>
+            <groupId>org.agilewiki</groupId>
+            <artifactId>awDb</artifactId>
+            <version>${awdb.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
