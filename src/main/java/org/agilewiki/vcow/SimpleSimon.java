@@ -117,6 +117,8 @@ public class SimpleSimon extends HttpServlet {
             ServletStop_NodeFactory.create(awDb);
             awDb.registerTransaction(ServletStop_Node.NAME, ServletStop_Node.class);
 
+            awDb.openJournalFile();
+
             ServletStart_Node.update(awDb);
         } catch (Exception ex) {
             destroy();

@@ -63,10 +63,10 @@ public class User_NodeInstance extends NodeBase {
         if (awDb.keyHasTargetId(NameIds.EMAIL_ID, emailId, awDb.getDbTimestamp())) {
             return "duplicate email: " + ValueId.value(emailId);
         }
+        awDb.createSecondaryId(userId, Key_NodeFactory.NODETYPE_ID, User_Node.ID);
         awDb.set(userId, "$nsubject", emailId);
         awDb.set(userId, NameIds.PASSWORD_KEY, passwordHash);
         awDb.createSecondaryId(userId, NameIds.EMAIL_ID, emailId);
-        awDb.createSecondaryId(userId, Key_NodeFactory.NODETYPE_ID, User_Node.ID);
         for (String userRole : userRoles) {
             awDb.createSecondaryId(userId, NameIds.ROLE_ID, NameIds.generate(userRole));
         }
@@ -95,8 +95,9 @@ public class User_NodeInstance extends NodeBase {
                 Role_NodeInstance.roleName(User_Role.ID),
                 Role_NodeInstance.roleName(Developer_Role.ID),
                 Role_NodeInstance.roleName(Admin_Role.ID));
-        if (error == null)
+        if (error == null) {
             return true;
+        }
         servletConfig.getServletContext().log(error);
         return false;
     }
