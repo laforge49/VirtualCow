@@ -104,12 +104,8 @@ public class SimpleSimon extends HttpServlet {
 
             mailOut = new MailOut();
 
-            try {
-                User_NodeFactory.create(awDb);
-                Role_NodeFactory.create(awDb);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            User_NodeFactory.create(awDb);
+            Role_NodeFactory.create(awDb);
 
             ServletStart_NodeFactory.create(awDb);
             awDb.registerTransaction(ServletStart_Node.NAME, ServletStart_Node.class);
@@ -117,10 +113,11 @@ public class SimpleSimon extends HttpServlet {
             ServletStop_NodeFactory.create(awDb);
             awDb.registerTransaction(ServletStop_Node.NAME, ServletStop_Node.class);
 
-            awDb.openJournalFile();
+            awDb.initialize();
 
             ServletStart_Node.update(awDb);
         } catch (Exception ex) {
+            ex.printStackTrace();
             destroy();
         }
     }
