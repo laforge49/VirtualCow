@@ -1,14 +1,14 @@
 package org.agilewiki.vcow.roles.visitor.newUser;
 
-import org.agilewiki.vcow.*;
 import org.agilewiki.awdb.AwDb;
+import org.agilewiki.awdb.db.ids.ValueId;
+import org.agilewiki.awdb.db.immutable.collections.MapNode;
+import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
+import org.agilewiki.vcow.*;
 import org.agilewiki.vcow.roles.Role;
 import org.agilewiki.vcow.roles.Role_NodeInstance;
 import org.agilewiki.vcow.roles.developer.Developer_Role;
 import org.agilewiki.vcow.roles.user.User_Role;
-import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
-import org.agilewiki.awdb.db.ids.ValueId;
-import org.agilewiki.awdb.db.immutable.collections.MapNode;
 
 import javax.servlet.AsyncContext;
 import java.security.NoSuchAlgorithmException;
@@ -82,7 +82,7 @@ public class ValidatedBlade extends PostRequestBlade {
                     return;
                 }
                 String userId = AwDb.randomId.generate();
-                String passwordHash = User_NodeInstance.encodePassword(servletContext, userId, password);
+                String passwordHash = User_Node.encodePassword(servletContext, userId, password);
                 if (passwordHash == null) {
                     error = "Unable to create your account at this time. Please try again later.";
                     map.put("error", SimpleSimon.encode(error, 0, SimpleSimon.ENCODE_FIELD)); //field

@@ -1,6 +1,9 @@
 package org.agilewiki.vcow;
 
 import org.agilewiki.awdb.AwDb;
+import org.agilewiki.awdb.db.ids.Timestamp;
+import org.agilewiki.awdb.db.immutable.FactoryRegistry;
+import org.agilewiki.jactor2.core.impl.Plant;
 import org.agilewiki.vcow.roles.Role;
 import org.agilewiki.vcow.roles.Role_NodeFactory;
 import org.agilewiki.vcow.roles.system.ServletStart_Node;
@@ -9,9 +12,6 @@ import org.agilewiki.vcow.roles.system.ServletStop_Node;
 import org.agilewiki.vcow.roles.system.ServletStop_NodeFactory;
 import org.agilewiki.vcow.roles.user.User_Role;
 import org.agilewiki.vcow.roles.visitor.Visitor_Role;
-import org.agilewiki.jactor2.core.impl.Plant;
-import org.agilewiki.awdb.db.ids.Timestamp;
-import org.agilewiki.awdb.db.immutable.FactoryRegistry;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -105,7 +105,7 @@ public class SimpleSimon extends HttpServlet {
             mailOut = new MailOut();
 
             try {
-                User_Node.create(awDb);
+                User_NodeFactory.create(awDb);
                 Role_NodeFactory.create(awDb);
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -153,9 +153,9 @@ public class SimpleSimon extends HttpServlet {
         if (userId == null) {
             ((Visitor_Role) awDb.fetchNode(Visitor_Role.ID, FactoryRegistry.MAX_TIMESTAMP)).dispatchGetRequest(request, null);
         } else {
-            User_NodeInstance user_nodeInstance = (User_NodeInstance) awDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
+            User_Node user_node = (User_Node) awDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
             String roleName = request.getParameter("role");
-            if (roleName == null || !user_nodeInstance.hasRole(roleName))
+            if (roleName == null || !user_node.hasRole(roleName))
                 roleName = "profile";
             Role role = roles.get(roleName);
             if (role == null) {
@@ -185,9 +185,9 @@ public class SimpleSimon extends HttpServlet {
         if (userId == null) {
             ((Visitor_Role) awDb.fetchNode(Visitor_Role.ID, FactoryRegistry.MAX_TIMESTAMP)).dispatchPostRequest(request, response, null);
         } else {
-            User_NodeInstance user_nodeInstance = (User_NodeInstance) awDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
+            User_Node user_node = (User_Node) awDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
             String roleName = request.getParameter("role");
-            if (roleName == null || !user_nodeInstance.hasRole(roleName))
+            if (roleName == null || !user_node.hasRole(roleName))
                 roleName = "profile";
             Role role = roles.get(roleName);
             if (role == null) {

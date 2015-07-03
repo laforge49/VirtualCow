@@ -2,8 +2,8 @@ package org.agilewiki.vcow.roles.developer.npje;
 
 import org.agilewiki.awdb.AwDb;
 import org.agilewiki.awdb.Node;
-import org.agilewiki.awdb.nodes.JournalEntry_NodeFactory;
 import org.agilewiki.awdb.db.immutable.FactoryRegistry;
+import org.agilewiki.awdb.nodes.JournalEntry_NodeFactory;
 
 public class Npje_NodeFactory extends JournalEntry_NodeFactory {
     public final static String ID = "$nnpje.node";

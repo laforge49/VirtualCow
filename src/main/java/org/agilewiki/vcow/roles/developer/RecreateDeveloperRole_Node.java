@@ -1,9 +1,9 @@
 package org.agilewiki.vcow.roles.developer;
 
-import org.agilewiki.vcow.RecreateRole_Node;
-import org.agilewiki.vcow.roles.Role;
 import org.agilewiki.awdb.db.immutable.collections.MapNode;
 import org.agilewiki.awdb.db.virtualcow.Db;
+import org.agilewiki.vcow.RecreateRole_Node;
+import org.agilewiki.vcow.roles.Role;
 
 public class RecreateDeveloperRole_Node extends RecreateRole_Node {
     public final static String NAME = "recreateDeveloperRole";

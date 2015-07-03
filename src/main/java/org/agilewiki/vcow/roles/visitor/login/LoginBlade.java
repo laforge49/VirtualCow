@@ -1,10 +1,10 @@
 package org.agilewiki.vcow.roles.visitor.login;
 
-import org.agilewiki.vcow.*;
-import org.agilewiki.vcow.roles.Role;
-import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.awdb.db.immutable.FactoryRegistry;
 import org.agilewiki.awdb.db.immutable.collections.MapNode;
+import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
+import org.agilewiki.vcow.*;
+import org.agilewiki.vcow.roles.Role;
 
 import javax.servlet.AsyncContext;
 import javax.servlet.http.Cookie;
@@ -60,7 +60,7 @@ public class LoginBlade extends PostRequestBlade {
                     finish();
                     return;
                 }
-                String userId = User_NodeInstance.userId(emailAddress, FactoryRegistry.MAX_TIMESTAMP);
+                String userId = User_Node.userId(emailAddress, FactoryRegistry.MAX_TIMESTAMP);
                 if (userId == null) {
                     MapNode mn = awDb.nilMap;
                     mn = mn.add(NameIds.SUBJECT, emailAddress);
@@ -78,8 +78,8 @@ public class LoginBlade extends PostRequestBlade {
                             });
                     return;
                 }
-                User_NodeInstance user_nodeInstance = (User_NodeInstance) awDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
-                if (!user_nodeInstance.confirmPassword(servletContext, password)) {
+                User_Node user_node = (User_Node) awDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
+                if (!user_node.confirmPassword(servletContext, password)) {
                     MapNode mn = awDb.nilMap;
                     mn = mn.add(NameIds.SUBJECT, emailAddress);
                     mn = mn.add(NameIds.USER_KEY, userId);
@@ -100,7 +100,7 @@ public class LoginBlade extends PostRequestBlade {
                 long expTime = System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 3; // 3 days
                 String token = null;
                 try {
-                    token = Tokens.generate(user_nodeInstance.passwordDigest(), expTime);
+                    token = Tokens.generate(user_node.passwordDigest(), expTime);
                 } catch (NoSuchAlgorithmException e) {
                     servletContext.log("no such algorithm: SHA-256");
                     map.put("error", SimpleSimon.encode("Unable to create your account at this time. Please try again later.",

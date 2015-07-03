@@ -14,7 +14,7 @@ public class Tokens {
             throws NoSuchAlgorithmException {
         String expirationTime = Long.toHexString(expTime);
         MessageDigest md = MessageDigest.getInstance("SHA-256");
-        String digest = User_NodeInstance.bytesToHex(md.digest((identifier + expirationTime).getBytes()));
+        String digest = User_Node.bytesToHex(md.digest((identifier + expirationTime).getBytes()));
         return expirationTime + "|" + digest;
     }
 
@@ -25,10 +25,10 @@ public class Tokens {
         String userId = idToken.substring(0, i);
         String token = idToken.substring(i + 1);
         try {
-            User_NodeInstance user_nodeInstance = (User_NodeInstance) AwDb.getAwDb().fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
-            if (user_nodeInstance == null)
+            User_Node user_node = (User_Node) AwDb.getAwDb().fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
+            if (user_node == null)
                 return null;
-            if (validate(user_nodeInstance.passwordDigest(), token)) {
+            if (validate(user_node.passwordDigest(), token)) {
                 return userId;
             } else {
                 return null;

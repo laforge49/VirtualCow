@@ -1,12 +1,12 @@
 package org.agilewiki.vcow.roles.visitor;
 
+import org.agilewiki.awdb.db.immutable.FactoryRegistry;
+import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.vcow.PostRequestBlade;
 import org.agilewiki.vcow.SimpleSimon;
 import org.agilewiki.vcow.Tokens;
-import org.agilewiki.vcow.User_NodeInstance;
+import org.agilewiki.vcow.User_Node;
 import org.agilewiki.vcow.roles.Role;
-import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
-import org.agilewiki.awdb.db.immutable.FactoryRegistry;
 
 import javax.servlet.AsyncContext;
 import java.security.NoSuchAlgorithmException;
@@ -52,7 +52,7 @@ public class ForgotBlade extends PostRequestBlade {
                     finish();
                     return;
                 }
-                String userId = User_NodeInstance.userId(emailAddress, FactoryRegistry.MAX_TIMESTAMP);
+                String userId = User_Node.userId(emailAddress, FactoryRegistry.MAX_TIMESTAMP);
                 String msg = "An email has been sent to verify your address. Please check your inbox.";
                 if (userId == null) {
                     map.put("success3", SimpleSimon.encode(msg, 0, SimpleSimon.ENCODE_FIELD)); //field

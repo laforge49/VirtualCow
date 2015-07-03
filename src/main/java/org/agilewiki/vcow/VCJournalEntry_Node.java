@@ -1,8 +1,8 @@
 package org.agilewiki.vcow;
 
-import org.agilewiki.awdb.nodes.JournalEntry_Node;
 import org.agilewiki.awdb.db.immutable.collections.MapNode;
 import org.agilewiki.awdb.db.virtualcow.Db;
+import org.agilewiki.awdb.nodes.JournalEntry_Node;
 
 /**
  * Base class for all virtual cow transactions.

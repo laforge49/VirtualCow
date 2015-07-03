@@ -1,11 +1,11 @@
 package org.agilewiki.vcow.roles.system;
 
-import org.agilewiki.vcow.SimpleSimon;
-import org.agilewiki.vcow.User_NodeInstance;
-import org.agilewiki.vcow.VCJournalEntry_Node;
 import org.agilewiki.awdb.AwDb;
 import org.agilewiki.awdb.db.immutable.collections.MapNode;
 import org.agilewiki.awdb.db.virtualcow.Db;
+import org.agilewiki.vcow.SimpleSimon;
+import org.agilewiki.vcow.User_Node;
+import org.agilewiki.vcow.VCJournalEntry_Node;
 
 public class ServletStart_Node extends VCJournalEntry_Node {
     public final static String NAME = "servletStart";
@@ -25,6 +25,6 @@ public class ServletStart_Node extends VCJournalEntry_Node {
 
     @Override
     public void process(Db db, MapNode tMapNode) {
-        User_NodeInstance.init();
+        User_Node.init();
     }
 }

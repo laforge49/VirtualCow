@@ -1,13 +1,13 @@
 package org.agilewiki.vcow.roles.admin.editRoles;
 
-import org.agilewiki.vcow.NameIds;
-import org.agilewiki.vcow.PostRequestBlade;
-import org.agilewiki.vcow.User_NodeInstance;
-import org.agilewiki.vcow.roles.Role;
-import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.awdb.db.ids.NameId;
 import org.agilewiki.awdb.db.immutable.collections.MapNode;
 import org.agilewiki.awdb.db.virtualcow.UnexpectedChecksumException;
+import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
+import org.agilewiki.vcow.NameIds;
+import org.agilewiki.vcow.PostRequestBlade;
+import org.agilewiki.vcow.User_Node;
+import org.agilewiki.vcow.roles.Role;
 
 import javax.servlet.AsyncContext;
 
@@ -41,8 +41,8 @@ public class EditRolesBlade extends PostRequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                User_NodeInstance user_nodeInstance = (User_NodeInstance) awDb.fetchNode(nodeId, longTimestamp);
-                String email = user_nodeInstance.getEmailAddress();
+                User_Node user_node = (User_Node) awDb.fetchNode(nodeId, longTimestamp);
+                String email = user_node.getEmailAddress();
                 String userLink = "<a href=\"?from=" + page +
                         "&to=user" +
                         "&nodeId=" + nodeId +
@@ -135,8 +135,8 @@ public class EditRolesBlade extends PostRequestBlade {
                 asyncRequestImpl.send(awDb.update(UpdateRoles_Node.NAME, mn), new AsyncResponseProcessor<String>() {
                     @Override
                     public void processAsyncResponse(String _response) throws Exception {
-                        User_NodeInstance user_nodeInstance = (User_NodeInstance) awDb.fetchNode(nodeId, longTimestamp);
-                        String email = user_nodeInstance.getEmailAddress();
+                        User_Node user_node = (User_Node) awDb.fetchNode(nodeId, longTimestamp);
+                        String email = user_node.getEmailAddress();
                         String userLink = "<a href=\"?from=" + page +
                                 "&to=user" +
                                 "&nodeId=" + nodeId +

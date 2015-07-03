@@ -2,8 +2,8 @@ package org.agilewiki.vcow.roles.visitor.newUser;
 
 import org.agilewiki.awdb.AwDb;
 import org.agilewiki.awdb.Node;
-import org.agilewiki.awdb.nodes.JournalEntry_NodeFactory;
 import org.agilewiki.awdb.db.immutable.FactoryRegistry;
+import org.agilewiki.awdb.nodes.JournalEntry_NodeFactory;
 
 public class NewUser_NodeFactory extends JournalEntry_NodeFactory {
     public final static String ID = "$nnewUser.node";

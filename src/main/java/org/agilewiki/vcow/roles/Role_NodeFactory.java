@@ -2,13 +2,13 @@ package org.agilewiki.vcow.roles;
 
 import org.agilewiki.awdb.AwDb;
 import org.agilewiki.awdb.Node;
+import org.agilewiki.awdb.db.immutable.FactoryRegistry;
 import org.agilewiki.awdb.nodes.Node_Node;
 import org.agilewiki.vcow.roles.admin.Admin_Role;
 import org.agilewiki.vcow.roles.developer.Developer_Role;
 import org.agilewiki.vcow.roles.system.System_Role;
 import org.agilewiki.vcow.roles.user.User_Role;
 import org.agilewiki.vcow.roles.visitor.Visitor_Role;
-import org.agilewiki.awdb.db.immutable.FactoryRegistry;
 
 public class Role_NodeFactory extends Node_Node {
     public final static String ID = "$nrole.node";

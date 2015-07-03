@@ -1,10 +1,10 @@
 package org.agilewiki.vcow.roles.user.delete;
 
+import org.agilewiki.awdb.db.immutable.collections.MapNode;
+import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.vcow.NameIds;
 import org.agilewiki.vcow.PostRequestBlade;
 import org.agilewiki.vcow.roles.Role;
-import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
-import org.agilewiki.awdb.db.immutable.collections.MapNode;
 
 import javax.servlet.AsyncContext;
 
@@ -47,12 +47,12 @@ public class DeleteAccountBlade extends PostRequestBlade {
                     finish();
                     return;
                 }
-                if (!latest_user_nodeInstance.confirmPassword(servletContext, oldPassword)) {
+                if (!latest_user_node.confirmPassword(servletContext, oldPassword)) {
                     map.put("error", "Incorrect password");
                     finish();
                     return;
                 }
-                String email = latest_user_nodeInstance.getEmailAddress();
+                String email = latest_user_node.getEmailAddress();
                 MapNode mn = awDb.nilMap;
                 mn = mn.add(NameIds.AN_ID, userId);
                 mn = mn.add(NameIds.SUBJECT, email);

@@ -1,12 +1,12 @@
 package org.agilewiki.vcow;
 
 import org.agilewiki.awdb.AwDb;
-import org.agilewiki.vcow.roles.Role;
+import org.agilewiki.awdb.db.immutable.FactoryRegistry;
 import org.agilewiki.jactor2.core.blades.NonBlockingBladeBase;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.jactor2.core.messages.ExceptionHandler;
 import org.agilewiki.jactor2.core.messages.impl.AsyncRequestImpl;
-import org.agilewiki.awdb.db.immutable.FactoryRegistry;
+import org.agilewiki.vcow.roles.Role;
 
 import javax.servlet.AsyncContext;
 import javax.servlet.ServletContext;
@@ -55,7 +55,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
         protected final HttpServletResponse response;
         protected final String page;
         protected final String userId;
-        protected final User_NodeInstance latest_user_nodeInstance;
+        protected final User_Node latest_user_node;
         protected final Role role;
         protected String myEmail = null;
         protected AsyncRequestImpl asyncRequestImpl;
@@ -77,10 +77,10 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
             this.page = page;
             this.userId = userId;
             if (userId != null) {
-                latest_user_nodeInstance = (User_NodeInstance) awDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
-                myEmail = latest_user_nodeInstance.getEmailAddress();
+                latest_user_node = (User_Node) awDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
+                myEmail = latest_user_node.getEmailAddress();
             } else {
-                latest_user_nodeInstance = null;
+                latest_user_node = null;
             }
             this.role = role;
         }
@@ -145,7 +145,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
                 map.put("page", page);
                 map.put("nicePageName", niceName());
                 map.put("myEmail", myEmail);
-                List<Role> roles = latest_user_nodeInstance.roles();
+                List<Role> roles = latest_user_node.roles();
                 StringBuilder appMenu = new StringBuilder();
                 appMenu.append("<a>Role &#9660;</a>\n");
                 appMenu.append("<ul class=\"sub-menu\">\n");

@@ -1,10 +1,10 @@
 package org.agilewiki.vcow.roles.user.logout;
 
-import org.agilewiki.vcow.NameIds;
-import org.agilewiki.vcow.VCJournalEntry_Node;
 import org.agilewiki.awdb.db.ids.ValueId;
 import org.agilewiki.awdb.db.immutable.collections.MapNode;
 import org.agilewiki.awdb.db.virtualcow.Db;
+import org.agilewiki.vcow.NameIds;
+import org.agilewiki.vcow.VCJournalEntry_Node;
 
 public class Logout_Node extends VCJournalEntry_Node {
     public final static String NAME = "logout";

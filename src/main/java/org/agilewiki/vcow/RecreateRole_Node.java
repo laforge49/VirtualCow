@@ -2,13 +2,13 @@ package org.agilewiki.vcow;
 
 import org.agilewiki.awdb.AwDb;
 import org.agilewiki.awdb.Delete;
+import org.agilewiki.awdb.db.immutable.collections.MapNode;
+import org.agilewiki.awdb.db.virtualcow.Db;
 import org.agilewiki.awdb.nodes.Attribute_NodeFactory;
 import org.agilewiki.awdb.nodes.Key_NodeFactory;
 import org.agilewiki.awdb.nodes.Lnk1_NodeFactory;
 import org.agilewiki.vcow.roles.Role;
 import org.agilewiki.vcow.roles.Role_NodeFactory;
-import org.agilewiki.awdb.db.immutable.collections.MapNode;
-import org.agilewiki.awdb.db.virtualcow.Db;
 
 /**
  * Creates the common metadata for a role.

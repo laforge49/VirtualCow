@@ -1,9 +1,9 @@
 package org.agilewiki.vcow.roles.visitor.forgotPassword;
 
-import org.agilewiki.vcow.NameIds;
-import org.agilewiki.vcow.VCJournalEntry_Node;
 import org.agilewiki.awdb.db.immutable.collections.MapNode;
 import org.agilewiki.awdb.db.virtualcow.Db;
+import org.agilewiki.vcow.NameIds;
+import org.agilewiki.vcow.VCJournalEntry_Node;
 
 public class ForgotPassword_Node extends VCJournalEntry_Node {
     public final static String NAME = "forgotPassword";

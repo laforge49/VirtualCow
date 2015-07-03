@@ -1,9 +1,9 @@
 package org.agilewiki.vcow.roles;
 
+import org.agilewiki.awdb.NodeBase;
 import org.agilewiki.vcow.PostRequestBlade;
 import org.agilewiki.vcow.RequestBlade;
 import org.agilewiki.vcow.SimpleSimon;
-import org.agilewiki.awdb.NodeBase;
 
 import java.util.HashMap;
 import java.util.Map;

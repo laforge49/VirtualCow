@@ -1,9 +1,9 @@
 package org.agilewiki.vcow.roles.system;
 
-import org.agilewiki.vcow.VCJournalEntry_Node;
 import org.agilewiki.awdb.AwDb;
 import org.agilewiki.awdb.db.immutable.collections.MapNode;
 import org.agilewiki.awdb.db.virtualcow.Db;
+import org.agilewiki.vcow.VCJournalEntry_Node;
 
 /**
  * Run when the servlet has started.

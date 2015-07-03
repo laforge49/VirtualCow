@@ -1,13 +1,13 @@
 package org.agilewiki.vcow.roles.user;
 
-import org.agilewiki.vcow.RequestBlade;
 import org.agilewiki.awdb.AwDb;
+import org.agilewiki.awdb.db.immutable.FactoryRegistry;
+import org.agilewiki.vcow.RequestBlade;
 import org.agilewiki.vcow.roles.Role_NodeInstance;
 import org.agilewiki.vcow.roles.user.changePassword.ChangePasswordBlade;
 import org.agilewiki.vcow.roles.user.delete.DeleteAccountBlade;
 import org.agilewiki.vcow.roles.user.logout.LogoutBlade;
 import org.agilewiki.vcow.roles.user.newEmailAddress.NewEmailAddressBlade;
-import org.agilewiki.awdb.db.immutable.FactoryRegistry;
 
 /**
  * A base role.

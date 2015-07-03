@@ -1,10 +1,10 @@
 package org.agilewiki.vcow.roles.user.logout;
 
+import org.agilewiki.awdb.db.immutable.collections.MapNode;
+import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.vcow.NameIds;
 import org.agilewiki.vcow.PostRequestBlade;
 import org.agilewiki.vcow.roles.Role;
-import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
-import org.agilewiki.awdb.db.immutable.collections.MapNode;
 
 import javax.servlet.AsyncContext;
 import javax.servlet.http.Cookie;
@@ -35,7 +35,7 @@ public class LogoutBlade extends PostRequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                String email = latest_user_nodeInstance.getEmailAddress();
+                String email = latest_user_node.getEmailAddress();
                 MapNode mn = awDb.nilMap;
                 mn = mn.add(NameIds.SUBJECT, email);
                 mn = mn.add(NameIds.USER_KEY, userId);

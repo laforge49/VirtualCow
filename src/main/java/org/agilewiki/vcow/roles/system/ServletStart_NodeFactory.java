@@ -2,8 +2,8 @@ package org.agilewiki.vcow.roles.system;
 
 import org.agilewiki.awdb.AwDb;
 import org.agilewiki.awdb.Node;
-import org.agilewiki.awdb.nodes.JournalEntry_NodeFactory;
 import org.agilewiki.awdb.db.immutable.FactoryRegistry;
+import org.agilewiki.awdb.nodes.JournalEntry_NodeFactory;
 
 public class ServletStart_NodeFactory extends JournalEntry_NodeFactory {
     public final static String ID = "$nservletStart.node";

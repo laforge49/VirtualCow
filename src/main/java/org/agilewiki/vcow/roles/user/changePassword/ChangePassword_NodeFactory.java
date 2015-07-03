@@ -2,8 +2,8 @@ package org.agilewiki.vcow.roles.user.changePassword;
 
 import org.agilewiki.awdb.AwDb;
 import org.agilewiki.awdb.Node;
-import org.agilewiki.awdb.nodes.JournalEntry_NodeFactory;
 import org.agilewiki.awdb.db.immutable.FactoryRegistry;
+import org.agilewiki.awdb.nodes.JournalEntry_NodeFactory;
 
 public class ChangePassword_NodeFactory extends JournalEntry_NodeFactory {
     public final static String ID = "$nchangePassword.node";

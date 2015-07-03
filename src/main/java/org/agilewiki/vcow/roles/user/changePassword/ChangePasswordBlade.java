@@ -1,13 +1,13 @@
 package org.agilewiki.vcow.roles.user.changePassword;
 
+import org.agilewiki.awdb.db.immutable.FactoryRegistry;
+import org.agilewiki.awdb.db.immutable.collections.MapNode;
+import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.vcow.NameIds;
 import org.agilewiki.vcow.PostRequestBlade;
 import org.agilewiki.vcow.Tokens;
-import org.agilewiki.vcow.User_NodeInstance;
+import org.agilewiki.vcow.User_Node;
 import org.agilewiki.vcow.roles.Role;
-import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
-import org.agilewiki.awdb.db.immutable.FactoryRegistry;
-import org.agilewiki.awdb.db.immutable.collections.MapNode;
 
 import javax.servlet.AsyncContext;
 import javax.servlet.http.Cookie;
@@ -69,14 +69,14 @@ public class ChangePasswordBlade extends PostRequestBlade {
                     finish();
                     return;
                 }
-                if (!latest_user_nodeInstance.confirmPassword(servletContext, oldPassword)) {
+                if (!latest_user_node.confirmPassword(servletContext, oldPassword)) {
                     map.put("error", "Enter your current password in the old password field");
                     finish();
                     return;
                 }
                 MapNode mn = awDb.nilMap;
                 mn = mn.add(NameIds.USER_KEY, userId);
-                mn = mn.add(NameIds.PASSWORD_KEY, User_NodeInstance.encodePassword(servletContext, userId, newPassword));
+                mn = mn.add(NameIds.PASSWORD_KEY, User_Node.encodePassword(servletContext, userId, newPassword));
                 asyncRequestImpl.send(awDb.update(ChangePassword_Node.NAME, mn),
                         new AsyncResponseProcessor<String>() {
                             @Override
@@ -84,14 +84,14 @@ public class ChangePasswordBlade extends PostRequestBlade {
                                 long expTime = System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 3; // 3 days
                                 String token = null;
                                 try {
-                                    User_NodeInstance user_nodeInstance = (User_NodeInstance) awDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
-                                    token = Tokens.generate(user_nodeInstance.passwordDigest(), expTime);
+                                    User_Node user_node = (User_Node) awDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
+                                    token = Tokens.generate(user_node.passwordDigest(), expTime);
                                 } catch (NoSuchAlgorithmException e) {
                                 }
                                 Cookie loginCookie = new Cookie("userId", userId + "|" + token);
                                 loginCookie.setMaxAge(60 * 60 * 24 * 3); //3 days
                                 response.addCookie(loginCookie);
-                                String email = latest_user_nodeInstance.getEmailAddress();
+                                String email = latest_user_node.getEmailAddress();
                                 asyncRequestImpl.send(mailOut.sendEmail(servletContext,
                                                 email,
                                                 "Password Change Notification",
