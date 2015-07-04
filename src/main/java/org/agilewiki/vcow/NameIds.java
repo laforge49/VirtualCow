@@ -6,7 +6,6 @@ import org.agilewiki.awdb.db.ids.NameId;
  * NameId constants.
  */
 public class NameIds extends NameId {
-    public final static String SUBJECT = generate("subject");
     public final static String BODY = generate("body");
     public final static String REMOTE_HOST = generate("remoteHost");
     public final static String REMOTE_ADDR = generate("remoteAddr");

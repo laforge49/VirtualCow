@@ -7,6 +7,7 @@ import org.agilewiki.awdb.db.virtualcow.Db;
 import org.agilewiki.awdb.nodes.Attribute_NodeFactory;
 import org.agilewiki.awdb.nodes.Key_NodeFactory;
 import org.agilewiki.awdb.nodes.Lnk1_NodeFactory;
+import org.agilewiki.awdb.nodes.Node_NodeFactory;
 import org.agilewiki.vcow.roles.Role;
 import org.agilewiki.vcow.roles.Role_NodeFactory;
 
@@ -23,43 +24,6 @@ abstract public class RecreateRole_Node extends VCJournalEntry_Node {
     }
 
     abstract public Role role();
-
-    public void defineNode(String nodeId, String nodeType, String superType, String roleId, String... attributes) {
-        AwDb awDb = getAwDb();
-        if (nodeType != null) {
-            awDb.createSecondaryId(nodeId, Key_NodeFactory.NODETYPE_ID, nodeType);
-        }
-        if (superType != null) {
-            awDb.createSecondaryId(nodeId, Key_NodeFactory.SUPERTYPE_ID, superType);
-        }
-        awDb.createLnk1(nodeId,
-                NameIds.OFROLE_ID,
-                roleId);
-        for (String attributeName : attributes) {
-            Attribute_NodeFactory.define(attributeName, nodeId);
-        }
-    }
-
-    public void defineKey(String nodeId, String targetType, String roleId) {
-        defineNode(nodeId, Key_NodeFactory.ID, null, roleId);
-        getAwDb().createLnk1(nodeId,
-                Lnk1_NodeFactory.TARGET_ID,
-                targetType);
-    }
-
-    public void defineLnk1(String nodeId, String invDependency, String originType, String destinationType, String ofRole) {
-        AwDb awDb = getAwDb();
-        defineNode(nodeId, Lnk1_NodeFactory.ID, null, ofRole);
-        if (invDependency != null) {
-            awDb.createSecondaryId(nodeId, Key_NodeFactory.INVDEPENDENCY_ID, invDependency);
-        }
-        awDb.createLnk1(nodeId,
-                Lnk1_NodeFactory.ORIGIN_ID,
-                originType);
-        awDb.createLnk1(nodeId,
-                Lnk1_NodeFactory.DESTINATION_ID,
-                destinationType);
-    }
 
     @Override
     public void process(Db db, MapNode tMapNode) {
