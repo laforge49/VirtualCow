@@ -6,7 +6,7 @@ import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.vcow.NameIds;
 import org.agilewiki.vcow.PostRequestBlade;
 import org.agilewiki.vcow.Tokens;
-import org.agilewiki.vcow.User_Node;
+import org.agilewiki.vcow.VCUser_Node;
 import org.agilewiki.vcow.roles.Role;
 
 import javax.servlet.AsyncContext;
@@ -76,7 +76,7 @@ public class ChangePasswordBlade extends PostRequestBlade {
                 }
                 MapNode mn = awDb.nilMap;
                 mn = mn.add(NameIds.USER_KEY, userId);
-                mn = mn.add(NameIds.PASSWORD_KEY, User_Node.encodePassword(servletContext, userId, newPassword));
+                mn = mn.add(NameIds.PASSWORD_KEY, VCUser_Node.encodePassword(servletContext, userId, newPassword));
                 asyncRequestImpl.send(awDb.update(ChangePassword_Node.NAME, mn),
                         new AsyncResponseProcessor<String>() {
                             @Override
@@ -84,7 +84,7 @@ public class ChangePasswordBlade extends PostRequestBlade {
                                 long expTime = System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 3; // 3 days
                                 String token = null;
                                 try {
-                                    User_Node user_node = (User_Node) awDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
+                                    VCUser_Node user_node = (VCUser_Node) awDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
                                     token = Tokens.generate(user_node.passwordDigest(), expTime);
                                 } catch (NoSuchAlgorithmException e) {
                                 }

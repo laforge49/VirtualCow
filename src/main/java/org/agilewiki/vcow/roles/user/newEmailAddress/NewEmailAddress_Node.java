@@ -4,7 +4,7 @@ import org.agilewiki.awdb.db.ids.ValueId;
 import org.agilewiki.awdb.db.immutable.collections.MapNode;
 import org.agilewiki.awdb.db.virtualcow.Db;
 import org.agilewiki.vcow.NameIds;
-import org.agilewiki.vcow.User_Node;
+import org.agilewiki.vcow.VCUser_Node;
 import org.agilewiki.vcow.VCJournalEntry_Node;
 
 /**
@@ -24,7 +24,7 @@ public class NewEmailAddress_Node extends VCJournalEntry_Node {
     public void process(Db db, MapNode mapNode) {
         String userId = (String) mapNode.get(NameIds.USER_KEY);
 
-        User_Node user_node = (User_Node) getAwDb().fetchNode(userId, getAwDb().getDbTimestamp());
+        VCUser_Node user_node = (VCUser_Node) getAwDb().fetchNode(userId, getAwDb().getDbTimestamp());
         String oldEmailAddressId = ValueId.generate(user_node.getEmailAddress());
         getAwDb().removeSecondaryId(userId, NameIds.EMAIL_ID, oldEmailAddressId);
 

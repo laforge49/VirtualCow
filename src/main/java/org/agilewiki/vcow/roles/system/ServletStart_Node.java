@@ -4,7 +4,7 @@ import org.agilewiki.awdb.AwDb;
 import org.agilewiki.awdb.db.immutable.collections.MapNode;
 import org.agilewiki.awdb.db.virtualcow.Db;
 import org.agilewiki.vcow.SimpleSimon;
-import org.agilewiki.vcow.User_Node;
+import org.agilewiki.vcow.VCUser_Node;
 import org.agilewiki.vcow.VCJournalEntry_Node;
 
 public class ServletStart_Node extends VCJournalEntry_Node {
@@ -25,6 +25,6 @@ public class ServletStart_Node extends VCJournalEntry_Node {
 
     @Override
     public void process(Db db, MapNode tMapNode) {
-        User_Node.init();
+        VCUser_Node.init();
     }
 }

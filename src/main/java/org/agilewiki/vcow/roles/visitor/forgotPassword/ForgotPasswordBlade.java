@@ -75,7 +75,7 @@ public class ForgotPasswordBlade extends PostRequestBlade {
                     finish();
                     return;
                 }
-                String userId = User_Node.userId(email, FactoryRegistry.MAX_TIMESTAMP);
+                String userId = VCUser_Node.userId(email, FactoryRegistry.MAX_TIMESTAMP);
                 if (userId == null) {
                     String error = "Unable to change your password at this time. Please try again later.";
                     map.put("error", SimpleSimon.encode(error, 0, SimpleSimon.ENCODE_FIELD)); //field
@@ -84,7 +84,7 @@ public class ForgotPasswordBlade extends PostRequestBlade {
                 }
                 MapNode mn = awDb.nilMap;
                 mn = mn.add(NameIds.USER_KEY, userId);
-                mn = mn.add(NameIds.PASSWORD_KEY, User_Node.encodePassword(servletContext, userId, newPassword));
+                mn = mn.add(NameIds.PASSWORD_KEY, VCUser_Node.encodePassword(servletContext, userId, newPassword));
                 asyncRequestImpl.send(awDb.update(ForgotPassword_Node.NAME, mn),
                         new AsyncResponseProcessor<String>() {
                             @Override

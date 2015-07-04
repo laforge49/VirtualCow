@@ -6,7 +6,7 @@ import org.agilewiki.awdb.db.virtualcow.UnexpectedChecksumException;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.vcow.NameIds;
 import org.agilewiki.vcow.PostRequestBlade;
-import org.agilewiki.vcow.User_Node;
+import org.agilewiki.vcow.VCUser_Node;
 import org.agilewiki.vcow.roles.Role;
 
 import javax.servlet.AsyncContext;
@@ -41,7 +41,7 @@ public class EditRolesBlade extends PostRequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                User_Node user_node = (User_Node) awDb.fetchNode(nodeId, longTimestamp);
+                VCUser_Node user_node = (VCUser_Node) awDb.fetchNode(nodeId, longTimestamp);
                 String email = user_node.getEmailAddress();
                 String userLink = "<a href=\"?from=" + page +
                         "&to=user" +
@@ -135,7 +135,7 @@ public class EditRolesBlade extends PostRequestBlade {
                 asyncRequestImpl.send(awDb.update(UpdateRoles_Node.NAME, mn), new AsyncResponseProcessor<String>() {
                     @Override
                     public void processAsyncResponse(String _response) throws Exception {
-                        User_Node user_node = (User_Node) awDb.fetchNode(nodeId, longTimestamp);
+                        VCUser_Node user_node = (VCUser_Node) awDb.fetchNode(nodeId, longTimestamp);
                         String email = user_node.getEmailAddress();
                         String userLink = "<a href=\"?from=" + page +
                                 "&to=user" +

@@ -82,7 +82,7 @@ public class ValidatedBlade extends PostRequestBlade {
                     return;
                 }
                 String userId = AwDb.randomId.generate();
-                String passwordHash = User_Node.encodePassword(servletContext, userId, password);
+                String passwordHash = VCUser_Node.encodePassword(servletContext, userId, password);
                 if (passwordHash == null) {
                     error = "Unable to create your account at this time. Please try again later.";
                     map.put("error", SimpleSimon.encode(error, 0, SimpleSimon.ENCODE_FIELD)); //field

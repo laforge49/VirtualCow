@@ -4,7 +4,7 @@ import org.agilewiki.awdb.db.immutable.collections.ListNode;
 import org.agilewiki.awdb.db.immutable.collections.MapNode;
 import org.agilewiki.awdb.db.virtualcow.Db;
 import org.agilewiki.vcow.NameIds;
-import org.agilewiki.vcow.User_Node;
+import org.agilewiki.vcow.VCUser_Node;
 import org.agilewiki.vcow.VCJournalEntry_Node;
 
 import java.util.List;
@@ -30,6 +30,6 @@ public class NewUser_Node extends VCJournalEntry_Node {
         ListNode list = mapNode.getList(NameIds.ROLE_ID);
         List<String> flatList = list.flatList();
         String[] roles = new String[]{};
-        User_Node.createUser(userId, emailId, passwordHash, flatList.toArray(roles));
+        VCUser_Node.createUser(userId, emailId, passwordHash, flatList.toArray(roles));
     }
 }

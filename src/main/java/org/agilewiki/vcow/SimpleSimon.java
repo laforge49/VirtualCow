@@ -104,7 +104,7 @@ public class SimpleSimon extends HttpServlet {
 
             mailOut = new MailOut();
 
-            User_NodeFactory.create(awDb);
+            VCUser_NodeFactory.create(awDb);
             Role_NodeFactory.create(awDb);
 
             ServletStart_NodeFactory.create(awDb);
@@ -150,7 +150,7 @@ public class SimpleSimon extends HttpServlet {
         if (userId == null) {
             ((Visitor_Role) awDb.fetchNode(Visitor_Role.ID, FactoryRegistry.MAX_TIMESTAMP)).dispatchGetRequest(request, null);
         } else {
-            User_Node user_node = (User_Node) awDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
+            VCUser_Node user_node = (VCUser_Node) awDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
             String roleName = request.getParameter("role");
             if (roleName == null || !user_node.hasRole(roleName))
                 roleName = "profile";
@@ -182,7 +182,7 @@ public class SimpleSimon extends HttpServlet {
         if (userId == null) {
             ((Visitor_Role) awDb.fetchNode(Visitor_Role.ID, FactoryRegistry.MAX_TIMESTAMP)).dispatchPostRequest(request, response, null);
         } else {
-            User_Node user_node = (User_Node) awDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
+            VCUser_Node user_node = (VCUser_Node) awDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
             String roleName = request.getParameter("role");
             if (roleName == null || !user_node.hasRole(roleName))
                 roleName = "profile";

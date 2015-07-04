@@ -5,7 +5,7 @@ import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.vcow.PostRequestBlade;
 import org.agilewiki.vcow.SimpleSimon;
 import org.agilewiki.vcow.Tokens;
-import org.agilewiki.vcow.User_Node;
+import org.agilewiki.vcow.VCUser_Node;
 import org.agilewiki.vcow.roles.Role;
 
 import javax.servlet.AsyncContext;
@@ -51,7 +51,7 @@ public class NewAccountBlade extends PostRequestBlade {
                     map.put("error2", SimpleSimon.encode(error, 0, SimpleSimon.ENCODE_FIELD)); //field
                     finish();
                 }
-                String userId = User_Node.userId(emailAddress, FactoryRegistry.MAX_TIMESTAMP);
+                String userId = VCUser_Node.userId(emailAddress, FactoryRegistry.MAX_TIMESTAMP);
                 String subject = null;
                 String body = null;
                 if (userId == null) {

@@ -4,7 +4,7 @@ import org.agilewiki.awdb.db.ids.NameId;
 import org.agilewiki.awdb.db.virtualcow.UnexpectedChecksumException;
 import org.agilewiki.vcow.NameIds;
 import org.agilewiki.vcow.RequestBlade;
-import org.agilewiki.vcow.User_Node;
+import org.agilewiki.vcow.VCUser_Node;
 import org.agilewiki.vcow.roles.Role;
 
 import javax.servlet.AsyncContext;
@@ -37,7 +37,7 @@ public class UserBlade extends RequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                User_Node user_node = (User_Node) awDb.fetchNode(nodeId, longTimestamp);
+                VCUser_Node user_node = (VCUser_Node) awDb.fetchNode(nodeId, longTimestamp);
                 String email = user_node.getEmailAddress();
                 map.put("email", email);
                 StringBuilder sb;

@@ -6,6 +6,7 @@ import org.agilewiki.awdb.db.ids.NameId;
 import org.agilewiki.awdb.db.ids.ValueId;
 import org.agilewiki.awdb.db.virtualcow.UnexpectedChecksumException;
 import org.agilewiki.awdb.nodes.Key_NodeFactory;
+import org.agilewiki.awdb.nodes.User_Node;
 import org.agilewiki.vcow.roles.Role;
 import org.agilewiki.vcow.roles.Role_NodeInstance;
 import org.agilewiki.vcow.roles.admin.Admin_Role;
@@ -19,7 +20,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User_Node extends NodeBase {
+public class VCUser_Node extends User_Node {
 
     final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
 
@@ -63,7 +64,7 @@ public class User_Node extends NodeBase {
         if (awDb.keyHasTargetId(NameIds.EMAIL_ID, emailId, awDb.getDbTimestamp())) {
             return "duplicate email: " + ValueId.value(emailId);
         }
-        awDb.createSecondaryId(userId, Key_NodeFactory.NODETYPE_ID, User_NodeFactory.ID);
+        awDb.createSecondaryId(userId, Key_NodeFactory.NODETYPE_ID, VCUser_NodeFactory.ID);
         awDb.set(userId, "$nsubject", emailId);
         awDb.set(userId, NameIds.PASSWORD_KEY, passwordHash);
         awDb.createSecondaryId(userId, NameIds.EMAIL_ID, emailId);
@@ -82,14 +83,14 @@ public class User_Node extends NodeBase {
         }
         ServletContext servletContext = servletConfig.getServletContext();
         String userId = AwDb.randomId.generate();
-        String passwordHash = User_Node.encodePassword(
+        String passwordHash = VCUser_Node.encodePassword(
                 servletContext, userId, adminPassword);
         if (passwordHash == null) {
             servletContext.log("unable to hash password");
             return false;
         }
         String emailId = ValueId.generate(adminEmail);
-        String error = User_Node.createUser(userId,
+        String error = VCUser_Node.createUser(userId,
                 emailId,
                 passwordHash,
                 Role_NodeInstance.roleName(User_Role.ID),
@@ -102,7 +103,7 @@ public class User_Node extends NodeBase {
         return false;
     }
 
-    public User_Node(String nodeId, long timestamp) {
+    public VCUser_Node(String nodeId, long timestamp) {
         super(nodeId, timestamp);
     }
 

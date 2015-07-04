@@ -5,7 +5,7 @@ import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.vcow.PostRequestBlade;
 import org.agilewiki.vcow.SimpleSimon;
 import org.agilewiki.vcow.Tokens;
-import org.agilewiki.vcow.User_Node;
+import org.agilewiki.vcow.VCUser_Node;
 import org.agilewiki.vcow.roles.Role;
 
 import javax.servlet.AsyncContext;
@@ -58,7 +58,7 @@ public class ChangeEmailAddressBlade extends PostRequestBlade {
                 }
                 String subject = null;
                 String body = null;
-                String userId2 = User_Node.userId(emailAddress, FactoryRegistry.MAX_TIMESTAMP);
+                String userId2 = VCUser_Node.userId(emailAddress, FactoryRegistry.MAX_TIMESTAMP);
                 if (userId2 != null) {
                     subject = "Notification of attempt to reassign email address";
                     body = "<p>There was an attempt made to change the email of an account " +

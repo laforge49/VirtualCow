@@ -55,7 +55,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
         protected final HttpServletResponse response;
         protected final String page;
         protected final String userId;
-        protected final User_Node latest_user_node;
+        protected final VCUser_Node latest_user_node;
         protected final Role role;
         protected String myEmail = null;
         protected AsyncRequestImpl asyncRequestImpl;
@@ -77,7 +77,7 @@ public abstract class RequestBlade extends NonBlockingBladeBase {
             this.page = page;
             this.userId = userId;
             if (userId != null) {
-                latest_user_node = (User_Node) awDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
+                latest_user_node = (VCUser_Node) awDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
                 myEmail = latest_user_node.getEmailAddress();
             } else {
                 latest_user_node = null;

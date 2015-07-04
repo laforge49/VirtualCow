@@ -5,7 +5,7 @@ import org.agilewiki.awdb.db.virtualcow.Db;
 import org.agilewiki.awdb.nodes.*;
 import org.agilewiki.vcow.NameIds;
 import org.agilewiki.vcow.RecreateRole_Node;
-import org.agilewiki.vcow.User_NodeFactory;
+import org.agilewiki.vcow.VCUser_NodeFactory;
 import org.agilewiki.vcow.roles.Role;
 import org.agilewiki.vcow.roles.Role_NodeFactory;
 import org.agilewiki.vcow.roles.admin.RecreateAdminRole_NodeFactory;
@@ -49,8 +49,8 @@ public class RecreateSystemRole_Node extends RecreateRole_Node {
         defineKey(Key_NodeFactory.ATTRIBUTENAME_KEY_ID, Attribute_NodeFactory.ID, System_Role.ID);
         defineKey(Key_NodeFactory.INVDEPENDENCY_KEY_ID, Lnk1_NodeFactory.ID, System_Role.ID);
 
-        defineKey(NameIds.EMAIL_KEY_ID, User_NodeFactory.ID, System_Role.ID);
-        defineKey(NameIds.ROLE_KEY_ID, User_NodeFactory.ID, System_Role.ID);
+        defineKey(NameIds.EMAIL_KEY_ID, VCUser_NodeFactory.ID, System_Role.ID);
+        defineKey(NameIds.ROLE_KEY_ID, VCUser_NodeFactory.ID, System_Role.ID);
         defineKey(NameIds.SUBJECT_KEY_ID, Node_NodeFactory.ID, System_Role.ID);
 
         defineLnk1(Lnk1_NodeFactory.TARGET_LNK1_ID, null, Node_NodeFactory.ID, Node_NodeFactory.ID, System_Role.ID);
@@ -59,7 +59,7 @@ public class RecreateSystemRole_Node extends RecreateRole_Node {
         defineLnk1(Lnk1_NodeFactory.ORIGIN_LNK1_ID, null, Lnk1_NodeFactory.ID, Node_NodeFactory.ID, System_Role.ID);
         defineLnk1(Lnk1_NodeFactory.DESTINATION_LNK1_ID, null, Lnk1_NodeFactory.ID, Node_NodeFactory.ID, System_Role.ID);
 
-        defineLnk1(NameIds.USER_LNK1_ID, null, Metadata_NodeFactory.ID, User_NodeFactory.ID, System_Role.ID);
+        defineLnk1(NameIds.USER_LNK1_ID, null, Metadata_NodeFactory.ID, VCUser_NodeFactory.ID, System_Role.ID);
 
         defineNode(Metadata_NodeFactory.ID, Node_NodeFactory.ID, null, System_Role.ID);
 
@@ -74,7 +74,7 @@ public class RecreateSystemRole_Node extends RecreateRole_Node {
         defineNode(Attribute_NodeFactory.ID, Node_NodeFactory.ID, Node_NodeFactory.ID, System_Role.ID,
                 NameIds.SUBJECT);
 
-        defineNode(User_NodeFactory.ID, Node_NodeFactory.ID, Node_NodeFactory.ID, System_Role.ID,
+        defineNode(VCUser_NodeFactory.ID, Node_NodeFactory.ID, Node_NodeFactory.ID, System_Role.ID,
                 NameIds.SUBJECT, NameIds.PASSWORD_KEY);
 
         defineNode(JournalEntry_NodeFactory.ID, Node_NodeFactory.ID, Node_NodeFactory.ID, System_Role.ID);

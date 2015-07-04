@@ -60,7 +60,7 @@ public class LoginBlade extends PostRequestBlade {
                     finish();
                     return;
                 }
-                String userId = User_Node.userId(emailAddress, FactoryRegistry.MAX_TIMESTAMP);
+                String userId = VCUser_Node.userId(emailAddress, FactoryRegistry.MAX_TIMESTAMP);
                 if (userId == null) {
                     MapNode mn = awDb.nilMap;
                     mn = mn.add(NameIds.SUBJECT, emailAddress);
@@ -78,7 +78,7 @@ public class LoginBlade extends PostRequestBlade {
                             });
                     return;
                 }
-                User_Node user_node = (User_Node) awDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
+                VCUser_Node user_node = (VCUser_Node) awDb.fetchNode(userId, FactoryRegistry.MAX_TIMESTAMP);
                 if (!user_node.confirmPassword(servletContext, password)) {
                     MapNode mn = awDb.nilMap;
                     mn = mn.add(NameIds.SUBJECT, emailAddress);
