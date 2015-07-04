@@ -104,6 +104,7 @@ public class SimpleSimon extends HttpServlet {
 
             mailOut = new MailOut();
 
+            VCInitializeDatabase_NodeFactory.create(awDb);
             VCUser_NodeFactory.create(awDb);
             Role_NodeFactory.create(awDb);
 
