@@ -44,20 +44,9 @@ public class RecreateSystemRole_Node extends RecreateRole_Node {
     public void process(Db db, MapNode tMapNode) {
         super.process(db, tMapNode);
 
-        Key_NodeFactory.define(Key_NodeFactory.NODETYPE_KEY_ID, Node_NodeFactory.ID);
-        Key_NodeFactory.define(Key_NodeFactory.SUPERTYPE_KEY_ID, Node_NodeFactory.ID);
-        Key_NodeFactory.define(Key_NodeFactory.ATTRIBUTENAME_KEY_ID, Attribute_NodeFactory.ID);
-        Key_NodeFactory.define(Key_NodeFactory.INVDEPENDENCY_KEY_ID, Lnk1_NodeFactory.ID);
 
         Key_NodeFactory.define(NameIds.EMAIL_KEY_ID, VCUser_NodeFactory.ID);
         Key_NodeFactory.define(NameIds.ROLE_KEY_ID, VCUser_NodeFactory.ID);
-        Key_NodeFactory.define(NameIds.SUBJECT_KEY_ID, Node_NodeFactory.ID);
-
-        Lnk1_NodeFactory.define(Lnk1_NodeFactory.TARGET_LNK1_ID, null, Node_NodeFactory.ID, Node_NodeFactory.ID);
-        Lnk1_NodeFactory.define(NameIds.OFROLE_LNK1_ID, NameIds.OFROLE_ID, Metadata_NodeFactory.ID, Role_NodeFactory.ID);
-        Lnk1_NodeFactory.define(Lnk1_NodeFactory.ATTRIBUTEOF_LNK1_ID, Lnk1_NodeFactory.ATTRIBUTEOF_ID, Attribute_NodeFactory.ID, Metadata_NodeFactory.ID);
-        Lnk1_NodeFactory.define(Lnk1_NodeFactory.ORIGIN_LNK1_ID, null, Lnk1_NodeFactory.ID, Node_NodeFactory.ID);
-        Lnk1_NodeFactory.define(Lnk1_NodeFactory.DESTINATION_LNK1_ID, null, Lnk1_NodeFactory.ID, Node_NodeFactory.ID);
 
         Lnk1_NodeFactory.define(NameIds.USER_LNK1_ID, null, Metadata_NodeFactory.ID, VCUser_NodeFactory.ID);
 
