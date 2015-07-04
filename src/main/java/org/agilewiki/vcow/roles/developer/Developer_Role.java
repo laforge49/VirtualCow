@@ -86,15 +86,6 @@ public class Developer_Role extends Role_NodeInstance {
         lnk1sNodesBlade = new NodesBlade(this, "lnk1Nodes", "Label Types", "$D$nnodeType$nlnk1.node");
         rolesNodesBlade = new NodesBlade(this, "roleNodes", "Role Types", "$D$nnodeType$nrole.node");
         invLinksBlade = new InvLinksBlade(this, "invLinks");
-
-        RecreateDeveloperRole_NodeFactory.create(getAwDb());
-        getAwDb().registerTransaction(RecreateDeveloperRole_Node.NAME, RecreateDeveloperRole_Node.class);
-        RecreateDeveloperRole_Node.developerRole = this;
-    }
-
-    @Override
-    public String initializeTransactionName() {
-        return RecreateDeveloperRole_Node.NAME;
     }
 
     @Override

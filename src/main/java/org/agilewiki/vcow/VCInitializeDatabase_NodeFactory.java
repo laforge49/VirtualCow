@@ -3,9 +3,7 @@ package org.agilewiki.vcow;
 import org.agilewiki.awdb.AwDb;
 import org.agilewiki.awdb.Node;
 import org.agilewiki.awdb.db.immutable.FactoryRegistry;
-import org.agilewiki.awdb.nodes.InitializeDatabase_Node;
 import org.agilewiki.awdb.nodes.InitializeDatabase_NodeFactory;
-import org.agilewiki.awdb.nodes.JournalEntry_NodeFactory;
 
 public class VCInitializeDatabase_NodeFactory extends InitializeDatabase_NodeFactory {
 

@@ -3,7 +3,6 @@ package org.agilewiki.vcow;
 import org.agilewiki.awdb.AwDb;
 import org.agilewiki.awdb.Node;
 import org.agilewiki.awdb.db.immutable.FactoryRegistry;
-import org.agilewiki.awdb.nodes.Node_Node;
 import org.agilewiki.awdb.nodes.User_NodeFactory;
 
 public class VCUser_NodeFactory extends User_NodeFactory {

@@ -18,14 +18,6 @@ public class System_Role extends Role_NodeInstance {
     public System_Role(String nodeId, long timestamp) {
         super(nodeId, timestamp);
         niceRoleName = "System";
-        RecreateSystemRole_NodeFactory.create(getAwDb());
-        getAwDb().registerTransaction(RecreateSystemRole_Node.NAME, RecreateSystemRole_Node.class);
-        RecreateSystemRole_Node.systemRole = this;
-    }
-
-    @Override
-    public String initializeTransactionName() {
-        return RecreateSystemRole_Node.NAME;
     }
 
     @Override

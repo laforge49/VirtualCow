@@ -37,15 +37,6 @@ public class User_Role extends Role_NodeInstance {
         changeEmailAddressBlade = new ChangeEmailAddressBlade(this, "changeEmailAddress");
         newEmailAddressBlade = new NewEmailAddressBlade(this, "newEmailAddress");
         userBlade = new UserBlade(this, "user");
-
-        RecreateUserRole_NodeFactory.create(getAwDb());
-        getAwDb().registerTransaction(RecreateUserRole_Node.NAME, RecreateUserRole_Node.class);
-        RecreateUserRole_Node.userRole = this;
-    }
-
-    @Override
-    public String initializeTransactionName() {
-        return RecreateUserRole_Node.NAME;
     }
 
     @Override

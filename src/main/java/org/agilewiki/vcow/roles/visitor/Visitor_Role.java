@@ -33,14 +33,6 @@ public class Visitor_Role extends Role_NodeInstance {
         AboutBlade aboutBlade = new AboutBlade(this, "about");
         ContactBlade contactBlade = new ContactBlade(this, "contact");
 
-        RecreateVisitorRole_NodeFactory.create(getAwDb());
-        getAwDb().registerTransaction(RecreateVisitorRole_Node.NAME, RecreateVisitorRole_Node.class);
-        RecreateVisitorRole_Node.visitorRole = this;
-    }
-
-    @Override
-    public String initializeTransactionName() {
-        return RecreateVisitorRole_Node.NAME;
     }
 
     @Override

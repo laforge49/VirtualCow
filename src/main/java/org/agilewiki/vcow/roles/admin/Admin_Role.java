@@ -21,7 +21,6 @@ public class Admin_Role extends Role_NodeInstance {
     private EmailAddressesBlade emailAddressesBlade;
     private UserBlade userBlade;
     private EditRolesBlade editRolesBlade;
-    private RecreateRoleBlade recreateRoleBlade;
 
     public Admin_Role(String nodeId, long timestamp)
             throws Exception {
@@ -31,16 +30,6 @@ public class Admin_Role extends Role_NodeInstance {
         emailAddressesBlade = new EmailAddressesBlade(this, "emailAddresses");
         userBlade = new UserBlade(this, "user");
         editRolesBlade = new EditRolesBlade(this, "editRoles");
-        recreateRoleBlade = new RecreateRoleBlade(this, "recreateRole");
-
-        RecreateAdminRole_NodeFactory.create(getAwDb());
-        getAwDb().registerTransaction(RecreateAdminRole_Node.NAME, RecreateAdminRole_Node.class);
-        RecreateAdminRole_Node.adminRole = this;
-    }
-
-    @Override
-    public String initializeTransactionName() {
-        return RecreateAdminRole_Node.NAME;
     }
 
     @Override
@@ -56,6 +45,5 @@ public class Admin_Role extends Role_NodeInstance {
                           String setRole) {
         menuItem(sb, currentPage, setTimestamp, setRole, adminBlade);
         menuItem(sb, currentPage, setTimestamp, setRole, emailAddressesBlade);
-        menuItem(sb, currentPage, setTimestamp, setRole, recreateRoleBlade, timestamp != null);
     }
 }

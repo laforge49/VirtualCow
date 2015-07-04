@@ -1,7 +1,6 @@
 package org.agilewiki.vcow;
 
 import org.agilewiki.awdb.AwDb;
-import org.agilewiki.awdb.NodeBase;
 import org.agilewiki.awdb.db.ids.NameId;
 import org.agilewiki.awdb.db.ids.ValueId;
 import org.agilewiki.awdb.db.virtualcow.UnexpectedChecksumException;

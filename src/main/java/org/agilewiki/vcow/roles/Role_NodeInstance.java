@@ -28,11 +28,6 @@ public class Role_NodeInstance extends NodeBase implements Role {
     }
 
     @Override
-    public String initializeTransactionName() {
-        return null;
-    }
-
-    @Override
     public SimpleSimon simpleSimon() {
         return simpleSimon;
     }

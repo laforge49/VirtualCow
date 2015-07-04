@@ -15,8 +15,6 @@ import java.util.Map;
  * A command set and menus.
  */
 public interface Role {
-    String initializeTransactionName();
-
     SimpleSimon simpleSimon();
 
     String roleName();
