@@ -6,7 +6,6 @@ import org.agilewiki.awdb.db.ids.NameId;
  * NameId constants.
  */
 public class NameIds extends NameId {
-    public final static String TRANSACTION_NAME = "$ntransactionName";
     public final static String SUBJECT = generate("subject");
     public final static String BODY = generate("body");
     public final static String REMOTE_HOST = generate("remoteHost");
@@ -17,7 +16,6 @@ public class NameIds extends NameId {
     public final static String REMOVEROLES_ID = generate("removeRoles");
     public final static String ADDROLES_ID = generate("addRoles");
     public static final String PASSWORD_KEY = NameId.generate("password");
-    public static final String USER_KEY = NameId.generate("user");
 
     final public static String OFROLE_ID = "$nofRole";
     final public static String OFROLE_LNK1_ID = "$nofRole.lnk1";

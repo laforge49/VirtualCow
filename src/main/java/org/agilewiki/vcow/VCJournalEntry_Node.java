@@ -20,9 +20,5 @@ public class VCJournalEntry_Node extends JournalEntry_Node {
     @Override
     public void transformInit(Db db, MapNode tMapNode) {
         super.transformInit(db, tMapNode);
-        String userId = (String) tMapNode.get(NameIds.USER_KEY);
-        if (userId != null) {
-            getAwDb().createLnk1(getNodeId(), NameIds.USER_KEY, userId);
-        }
     }
 }
