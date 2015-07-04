@@ -20,7 +20,4 @@ public class NameIds extends NameId {
     final public static String EMAIL_KEY_ID = "$nemail.key";
     final public static String ROLE_ID = "$nrole";
     final public static String ROLE_KEY_ID = "$nrole.key";
-
-    final public static String USER_ID = "$nuser";
-    final public static String USER_LNK1_ID = "$nuser.lnk1";
 }
