@@ -16,7 +16,7 @@ public class VCUser_NodeFactory extends User_NodeFactory {
     }
 
     @Override
-    public Node createNode(String nodeId, long timestamp) {
+    public Node instantiateNode(String nodeId, long timestamp) {
         return new VCUser_Node(nodeId, timestamp);
     }
 }

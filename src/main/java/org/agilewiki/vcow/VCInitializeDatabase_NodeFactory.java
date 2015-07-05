@@ -17,7 +17,7 @@ public class VCInitializeDatabase_NodeFactory extends InitializeDatabase_NodeFac
     }
 
     @Override
-    public Node createNode(String nodeId, long timestamp) {
+    public Node instantiateNode(String nodeId, long timestamp) {
         return new VCInitializeDatabase_Node(nodeId, timestamp);
     }
 }
