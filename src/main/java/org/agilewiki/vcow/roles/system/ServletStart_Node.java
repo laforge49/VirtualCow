@@ -25,6 +25,6 @@ public class ServletStart_Node extends VCJournalEntry_Node {
 
     @Override
     public void process(Db db, MapNode tMapNode) {
-        VCUser_Node.init();
+        VCUser_Node.servletInit();
     }
 }

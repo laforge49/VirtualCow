@@ -3,7 +3,9 @@ package org.agilewiki.vcow;
 import org.agilewiki.awdb.AwDb;
 import org.agilewiki.awdb.db.ids.NameId;
 import org.agilewiki.awdb.db.ids.ValueId;
+import org.agilewiki.awdb.db.immutable.FactoryRegistry;
 import org.agilewiki.awdb.db.virtualcow.UnexpectedChecksumException;
+import org.agilewiki.awdb.nodes.GenerativeNode;
 import org.agilewiki.awdb.nodes.Key_NodeFactory;
 import org.agilewiki.awdb.nodes.User_Node;
 import org.agilewiki.vcow.roles.Role;
@@ -19,7 +21,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VCUser_Node extends User_Node {
+public class VCUser_Node extends User_Node implements GenerativeNode {
 
     final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
 
@@ -55,25 +57,7 @@ public class VCUser_Node extends User_Node {
         }
     }
 
-    public static String createUser(String userId,
-                                    String emailId,
-                                    String passwordHash,
-                                    String... userRoles) {
-        AwDb awDb = SimpleSimon.simpleSimon.awDb;
-        if (awDb.keyHasTargetId(NameIds.EMAIL_ID, emailId, awDb.getDbTimestamp())) {
-            return "duplicate email: " + ValueId.value(emailId);
-        }
-        awDb.createSecondaryId(userId, Key_NodeFactory.NODETYPE_ID, VCUser_NodeFactory.ID);
-        awDb.set(userId, "$nsubject", emailId);
-        awDb.set(userId, NameIds.PASSWORD_KEY, passwordHash);
-        awDb.createSecondaryId(userId, NameIds.EMAIL_ID, emailId);
-        for (String userRole : userRoles) {
-            awDb.createSecondaryId(userId, NameIds.ROLE_ID, NameIds.generate(userRole));
-        }
-        return null;
-    }
-
-    public static boolean init() {
+    public static boolean servletInit() {
         ServletConfig servletConfig = SimpleSimon.simpleSimon.getServletConfig();
         String adminEmail = servletConfig.getInitParameter("adminEmail");
         String adminPassword = servletConfig.getInitParameter("adminPassword");
@@ -100,6 +84,26 @@ public class VCUser_Node extends User_Node {
         }
         servletConfig.getServletContext().log(error);
         return false;
+    }
+
+    public static String createUser(String userId,
+                                    String emailId,
+                                    String passwordHash,
+                                    String... userRoles) {
+        AwDb awDb = SimpleSimon.simpleSimon.awDb;
+        if (awDb.keyHasTargetId(NameIds.EMAIL_ID, emailId, awDb.getDbTimestamp())) {
+            return "duplicate email: " + ValueId.value(emailId);
+        }
+        VCUser_Node user_node = new VCUser_Node(null, FactoryRegistry.MAX_TIMESTAMP);
+        user_node.createNode(userId, VCUser_NodeFactory.ID, null, null);
+        user_node.set(NameId.SUBJECT, emailId);
+        user_node.set(NameIds.PASSWORD_KEY, passwordHash);
+        user_node.createSecondaryId(NameIds.EMAIL_ID, emailId);
+        for (String userRole : userRoles) {
+            user_node.createSecondaryId(NameIds.ROLE_ID, NameIds.generate(userRole));
+        }
+        awDb.addNode(user_node);
+        return null;
     }
 
     public VCUser_Node(String nodeId, long timestamp) {
