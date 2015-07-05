@@ -48,6 +48,7 @@ public class VCInitializeDatabase_Node extends InitializeDatabase_Node {
         Attribute_NodeFactory.define(NameIds.REMOTE_HOST, Delete_NodeFactory.ID);
         Attribute_NodeFactory.define(NameIds.REMOTE_ADDR, Delete_NodeFactory.ID);
         Attribute_NodeFactory.define(NameIds.REMOTE_PORT, Delete_NodeFactory.ID);
+        Attribute_NodeFactory.define(NameIds.PASSWORD_KEY, User_NodeFactory.ID);
 
         Node_NodeFactory.define(Role_NodeFactory.ID, Node_NodeFactory.ID, Node_NodeFactory.ID);
         Node_NodeFactory.define(BadUserAddress_NodeFactory.ID, Node_NodeFactory.ID, JournalEntry_NodeFactory.ID,
@@ -75,7 +76,5 @@ public class VCInitializeDatabase_Node extends InitializeDatabase_Node {
         Node_NodeFactory.define(UpdateRoles_NodeFactory.ID, Node_NodeFactory.ID, JournalEntry_NodeFactory.ID,
                 NameIds.USER_KEY, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT,
                 NameIds.NODE_ID, NameIds.ADDROLES_ID, NameIds.REMOVEROLES_ID);
-        Node_NodeFactory.define(VCUser_NodeFactory.ID, Node_NodeFactory.ID, Node_NodeFactory.ID,
-                NameIds.SUBJECT, NameIds.PASSWORD_KEY);
     }
 }
