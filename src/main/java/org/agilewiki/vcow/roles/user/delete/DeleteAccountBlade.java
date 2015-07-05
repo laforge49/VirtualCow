@@ -17,8 +17,6 @@ public class DeleteAccountBlade extends PostRequestBlade {
 
     public DeleteAccountBlade(Role role, String page) throws Exception {
         super(role, page);
-        Delete_NodeFactory.create(awDb);
-        awDb.registerTransaction(Delete_Node.NAME, Delete_Node.class);
     }
 
     @Override
