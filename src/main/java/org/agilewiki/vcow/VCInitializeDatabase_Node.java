@@ -42,8 +42,8 @@ public class VCInitializeDatabase_Node extends InitializeDatabase_Node {
         getAwDb().createSecondaryId(User_Role.ID, Key_NodeFactory.NODETYPE_ID, Role_NodeFactory.ID);
         getAwDb().createSecondaryId(Visitor_Role.ID, Key_NodeFactory.NODETYPE_ID, Role_NodeFactory.ID);
 
-        Key_NodeFactory.define(NameIds.EMAIL_KEY_ID, VCUser_NodeFactory.ID);
-        Key_NodeFactory.define(NameIds.ROLE_KEY_ID, VCUser_NodeFactory.ID);
+        Key_NodeFactory.define(NameIds.EMAIL_KEY_ID, User_NodeFactory.ID);
+        Key_NodeFactory.define(NameIds.ROLE_KEY_ID, User_NodeFactory.ID);
 
         Attribute_NodeFactory.define(NameIds.REMOTE_HOST, Delete_NodeFactory.ID);
         Attribute_NodeFactory.define(NameIds.REMOTE_ADDR, Delete_NodeFactory.ID);
