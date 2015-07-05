@@ -1,6 +1,8 @@
 package org.agilewiki.vcow.roles.user.delete;
 
 import org.agilewiki.awdb.db.immutable.collections.MapNode;
+import org.agilewiki.awdb.nodes.Delete_Node;
+import org.agilewiki.awdb.nodes.Delete_NodeFactory;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.vcow.NameIds;
 import org.agilewiki.vcow.PostRequestBlade;
