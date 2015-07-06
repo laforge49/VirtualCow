@@ -6,9 +6,7 @@ import org.agilewiki.awdb.db.ids.NameId;
 import org.agilewiki.awdb.db.ids.ValueId;
 import org.agilewiki.awdb.db.immutable.FactoryRegistry;
 import org.agilewiki.awdb.db.virtualcow.UnexpectedChecksumException;
-import org.agilewiki.awdb.nodes.Realm_NodeFactory;
-import org.agilewiki.awdb.nodes.User_Node;
-import org.agilewiki.awdb.nodes.User_NodeFactory;
+import org.agilewiki.awdb.nodes.*;
 import org.agilewiki.vcow.roles.Role;
 import org.agilewiki.vcow.roles.Role_NodeInstance;
 import org.agilewiki.vcow.roles.admin.Admin_Role;
@@ -103,6 +101,7 @@ public class VCUser_Node extends User_Node implements GenerativeNode {
         for (String userRole : userRoles) {
             user_node.createSecondaryId(NameIds.ROLE_ID, NameIds.generate(userRole));
         }
+        user_node.createLnk1(Lnk1_NodeFactory.MEMBER_OF_LNK1_ID, Group_NodeFactory.USERS_GROUP_ID);
         awDb.addNode(user_node);
         return null;
     }
