@@ -96,7 +96,7 @@ public class VCUser_Node extends User_Node implements GenerativeNode {
             return "duplicate email: " + ValueId.value(emailId);
         }
         VCUser_Node user_node = new VCUser_Node(null, FactoryRegistry.MAX_TIMESTAMP);
-        user_node.createNode(userId, User_NodeFactory.ID, userId, Realm_NodeFactory.USER_REALM_ID);
+        user_node.createNode(userId, User_NodeFactory.ID, userId);
         user_node.set(NameId.SUBJECT, emailId);
         user_node.set(NameIds.PASSWORD_KEY, passwordHash);
         user_node.createSecondaryId(NameIds.EMAIL_ID, emailId);

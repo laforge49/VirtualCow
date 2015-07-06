@@ -1,5 +1,6 @@
 package org.agilewiki.vcow.roles.developer;
 
+import org.agilewiki.awdb.Node;
 import org.agilewiki.awdb.db.ids.composites.Link1Id;
 import org.agilewiki.awdb.db.ids.composites.SecondaryId;
 import org.agilewiki.awdb.db.immutable.collections.PeekABoo;
@@ -50,26 +51,39 @@ public class NodeBlade extends RequestBlade {
             @Override
             protected void process()
                     throws Exception {
-                if (!awDb.isNode(nodeId, longTimestamp)) {
-                    throw new ServletException("not a node");
-                }
-                String time = null;
-                String jeTimestamp = "";
-                if (nodeId.startsWith("$t")) {
-                    jeTimestamp = TimestampIds.value(nodeId);
-                    time = SimpleSimon.niceTime(nodeId);
-                }
-                String kindId = awDb.kindId(nodeId, longTimestamp);
-                String nodeTypeHref = "<a href=\"?from=node&to=node&nodeId=" + kindId + setRole;
-                if (timestamp != null) {
-                    nodeTypeHref += "&timestamp=" + timestamp;
-                }
-                nodeTypeHref += "#rupa\">" + kindId.substring(2) + "</a>";
-                map.put("nodeType", nodeTypeHref);
                 StringBuilder sb;
+                String time;
+                String jeTimestamp;
                 while (true) {
                     try {
+                        time = null;
+                        if (!awDb.isNode(nodeId, longTimestamp)) {
+                            throw new ServletException("not a node");
+                        }
+                        jeTimestamp = "";
+                        if (nodeId.startsWith("$t")) {
+                            jeTimestamp = TimestampIds.value(nodeId);
+                            time = SimpleSimon.niceTime(nodeId);
+                        }
+                        String kindId = awDb.kindId(nodeId, longTimestamp);
+                        String nodeTypeHref = "<a href=\"?from=node&to=node&nodeId=" + kindId + setRole;
+                        if (timestamp != null) {
+                            nodeTypeHref += "&timestamp=" + timestamp;
+                        }
+                        nodeTypeHref += "#rupa\">" + kindId.substring(2) + "</a>";
+                        map.put("nodeType", nodeTypeHref);
                         sb = new StringBuilder();
+                        Node node = awDb.fetchNode(nodeId, longTimestamp);
+                        sb.append("Realm: <a href=\"?from=node&to=node&nodeId=");
+                        sb.append(node.getRealmId());
+                        if (timestamp != null) {
+                            sb.append("&timestamp=");
+                            sb.append(timestamp);
+                        }
+                        sb.append(setRole);
+                        sb.append("#rupa\"><strong>");
+                        sb.append(node.getRealmId().substring(2));
+                        sb.append("</strong></a><br />");
                         if (nodeId.startsWith("$n")) {
                             if (nodeId.endsWith(".key")) {
                                 if (awDb.keyHasValueId(nodeId.substring(0, nodeId.length() - 4), longTimestamp)) {
