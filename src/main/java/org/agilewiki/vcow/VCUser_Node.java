@@ -79,6 +79,7 @@ public class VCUser_Node extends User_Node implements GenerativeNode {
                 Role_NodeInstance.roleName(Developer_Role.ID),
                 Role_NodeInstance.roleName(Admin_Role.ID));
         if (error == null) {
+            getAwDb().createLnk1(userId, Lnk1_NodeFactory.MEMBER_OF_ID, Group_NodeFactory.ADMINS_GROUP_ID);
             return true;
         }
         servletConfig.getServletContext().log(error);
@@ -101,7 +102,7 @@ public class VCUser_Node extends User_Node implements GenerativeNode {
         for (String userRole : userRoles) {
             user_node.createSecondaryId(NameIds.ROLE_ID, NameIds.generate(userRole));
         }
-        user_node.createLnk1(Lnk1_NodeFactory.MEMBER_OF_LNK1_ID, Group_NodeFactory.USERS_GROUP_ID);
+        user_node.createLnk1(Lnk1_NodeFactory.MEMBER_OF_ID, Group_NodeFactory.USERS_GROUP_ID);
         awDb.addNode(user_node);
         return null;
     }
