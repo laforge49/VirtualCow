@@ -3,6 +3,7 @@ package org.agilewiki.vcow.roles.developer;
 import org.agilewiki.awdb.Node;
 import org.agilewiki.awdb.db.ids.composites.Link1Id;
 import org.agilewiki.awdb.db.ids.composites.SecondaryId;
+import org.agilewiki.awdb.db.immutable.FactoryRegistry;
 import org.agilewiki.awdb.db.immutable.collections.PeekABoo;
 import org.agilewiki.awdb.db.virtualcow.UnexpectedChecksumException;
 import org.agilewiki.awdb.nodes.Key_NodeFactory;
@@ -373,7 +374,7 @@ public class NodeBlade extends RequestBlade {
                             sb.append(setRole + "\"><strong>Node Journal</strong></a><br />");
                         }
                         sb.append("<strong>Secondary Keys:</strong><br />");
-                        for (String typeId : awDb.nodeKeyIdIterable(nodeId)) {
+                        for (String typeId : awDb.nodeKeyIdIterable(nodeId, FactoryRegistry.MAX_TIMESTAMP)) {
                             if (awDb.nodeHasKeyId(nodeId, typeId, longTimestamp)) {
                                 sb.append("&nbsp;&nbsp;&nbsp;&nbsp;key: <a href=\"?from=node&to=node&nodeId=");
                                 sb.append(typeId);
@@ -409,7 +410,7 @@ public class NodeBlade extends RequestBlade {
                             }
                         }
                         sb.append("<strong>Links:</strong><br />");
-                        for (String typeId : awDb.originLabelIdIterable(nodeId)) {
+                        for (String typeId : awDb.originLabelIdIterable(nodeId, FactoryRegistry.MAX_TIMESTAMP)) {
                             if (awDb.hasLabel1(nodeId, typeId, longTimestamp)) {
                                 sb.append("&nbsp;&nbsp;&nbsp;&nbsp;label: <a href=\"?from=node&to=node&nodeId=");
                                 sb.append(typeId);
