@@ -2,6 +2,7 @@ package org.agilewiki.vcow.roles.visitor.forgotPassword;
 
 import org.agilewiki.awdb.db.immutable.collections.MapNode;
 import org.agilewiki.awdb.db.virtualcow.Db;
+import org.agilewiki.awdb.nodes.Realm_NodeFactory;
 import org.agilewiki.vcow.NameIds;
 import org.agilewiki.vcow.VCJournalEntry_Node;
 
@@ -13,6 +14,11 @@ public class ForgotPassword_Node extends VCJournalEntry_Node {
 
     public ForgotPassword_Node(String nodeId, long timestamp) {
         super(nodeId, timestamp);
+    }
+
+    @Override
+    public String getRealmId() {
+        return Realm_NodeFactory.USER_REALM_ID;
     }
 
     @Override
