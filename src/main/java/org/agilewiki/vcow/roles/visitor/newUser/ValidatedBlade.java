@@ -6,7 +6,7 @@ import org.agilewiki.awdb.db.immutable.collections.MapNode;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
 import org.agilewiki.vcow.*;
 import org.agilewiki.vcow.roles.Role;
-import org.agilewiki.vcow.roles.Role_NodeInstance;
+import org.agilewiki.vcow.roles.Role_Node;
 import org.agilewiki.vcow.roles.developer.Developer_Role;
 import org.agilewiki.vcow.roles.user.User_Role;
 
@@ -95,8 +95,8 @@ public class ValidatedBlade extends PostRequestBlade {
                 String emailId = ValueId.generate(email);
                 mn = mn.add(NameIds.EMAIL_ID, emailId);
                 mn = mn.add(NameIds.PASSWORD_KEY, passwordHash);
-                mn = mn.add(NameIds.ROLE_ID, Role_NodeInstance.roleName(User_Role.ID));
-                mn = mn.add(NameIds.ROLE_ID, Role_NodeInstance.roleName(Developer_Role.ID));
+                mn = mn.add(NameIds.ROLE_ID, Role_Node.roleName(User_Role.ID));
+                mn = mn.add(NameIds.ROLE_ID, Role_Node.roleName(Developer_Role.ID));
                 asyncRequestImpl.send(awDb.update(NewUser_Node.NAME, mn),
                         new AsyncResponseProcessor<String>() {
                             @Override

@@ -3,7 +3,7 @@ package org.agilewiki.vcow.roles.user;
 import org.agilewiki.awdb.AwDb;
 import org.agilewiki.awdb.db.immutable.FactoryRegistry;
 import org.agilewiki.vcow.RequestBlade;
-import org.agilewiki.vcow.roles.Role_NodeInstance;
+import org.agilewiki.vcow.roles.Role_Node;
 import org.agilewiki.vcow.roles.user.changePassword.ChangePasswordBlade;
 import org.agilewiki.vcow.roles.user.delete.DeleteAccountBlade;
 import org.agilewiki.vcow.roles.user.logout.LogoutBlade;
@@ -12,7 +12,7 @@ import org.agilewiki.vcow.roles.user.newEmailAddress.NewEmailAddressBlade;
 /**
  * A base role.
  */
-public class User_Role extends Role_NodeInstance {
+public class User_Role extends Role_Node {
     public final static String ID = "$nuser.role";
 
     public static void create(AwDb awDb)

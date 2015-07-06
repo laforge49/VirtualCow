@@ -8,7 +8,7 @@ import org.agilewiki.awdb.db.immutable.FactoryRegistry;
 import org.agilewiki.awdb.db.virtualcow.UnexpectedChecksumException;
 import org.agilewiki.awdb.nodes.*;
 import org.agilewiki.vcow.roles.Role;
-import org.agilewiki.vcow.roles.Role_NodeInstance;
+import org.agilewiki.vcow.roles.Role_Node;
 import org.agilewiki.vcow.roles.admin.Admin_Role;
 import org.agilewiki.vcow.roles.developer.Developer_Role;
 import org.agilewiki.vcow.roles.user.User_Role;
@@ -75,9 +75,9 @@ public class VCUser_Node extends User_Node implements GenerativeNode {
         String error = VCUser_Node.createUser(userId,
                 emailId,
                 passwordHash,
-                Role_NodeInstance.roleName(User_Role.ID),
-                Role_NodeInstance.roleName(Developer_Role.ID),
-                Role_NodeInstance.roleName(Admin_Role.ID));
+                Role_Node.roleName(User_Role.ID),
+                Role_Node.roleName(Developer_Role.ID),
+                Role_Node.roleName(Admin_Role.ID));
         if (error == null) {
             getAwDb().createLnk1(userId, Lnk1_NodeFactory.MEMBER_OF_ID, Group_NodeFactory.ADMINS_GROUP_ID);
             return true;

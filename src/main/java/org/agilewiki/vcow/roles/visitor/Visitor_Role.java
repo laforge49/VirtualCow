@@ -3,7 +3,7 @@ package org.agilewiki.vcow.roles.visitor;
 import org.agilewiki.awdb.AwDb;
 import org.agilewiki.awdb.db.immutable.FactoryRegistry;
 import org.agilewiki.vcow.RequestBlade;
-import org.agilewiki.vcow.roles.Role_NodeInstance;
+import org.agilewiki.vcow.roles.Role_Node;
 import org.agilewiki.vcow.roles.visitor.forgotPassword.ForgotPasswordBlade;
 import org.agilewiki.vcow.roles.visitor.login.LoginBlade;
 import org.agilewiki.vcow.roles.visitor.newUser.ValidatedBlade;
@@ -11,7 +11,7 @@ import org.agilewiki.vcow.roles.visitor.newUser.ValidatedBlade;
 /**
  * Default role when the user is not logged in.
  */
-public class Visitor_Role extends Role_NodeInstance {
+public class Visitor_Role extends Role_Node {
     public final static String ID = "$nvisitor.role";
 
     public static void create(AwDb awDb) throws Exception {

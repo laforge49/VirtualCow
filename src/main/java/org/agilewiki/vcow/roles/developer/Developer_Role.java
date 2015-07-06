@@ -3,13 +3,13 @@ package org.agilewiki.vcow.roles.developer;
 import org.agilewiki.awdb.AwDb;
 import org.agilewiki.awdb.db.immutable.FactoryRegistry;
 import org.agilewiki.vcow.RequestBlade;
-import org.agilewiki.vcow.roles.Role_NodeInstance;
+import org.agilewiki.vcow.roles.Role_Node;
 import org.agilewiki.vcow.roles.developer.npje.PostBlade;
 
 /**
  * The developer role.
  */
-public class Developer_Role extends Role_NodeInstance {
+public class Developer_Role extends Role_Node {
     public final static String ID = "$ndeveloper.role";
 
     public static void create(AwDb awDb)

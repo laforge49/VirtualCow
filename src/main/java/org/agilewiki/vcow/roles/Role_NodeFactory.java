@@ -28,6 +28,6 @@ public class Role_NodeFactory extends Node_Node {
 
     @Override
     public Node instantiateNode(String nodeId, long timestamp) {
-        return new Role_NodeInstance(nodeId, timestamp);
+        return new Role_Node(nodeId, timestamp);
     }
 }
