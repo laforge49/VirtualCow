@@ -26,7 +26,7 @@ public class Npje_Node extends VCJournalEntry_Node {
         if (subject != null) {
             String subjectVId = ValueId.generate(subject.toLowerCase().
                     replaceAll("\r", "").replaceAll("\t", " "));
-            getAwDb().createSecondaryId(jeName, NameIds.SUBJECT, subjectVId);
+            createSecondaryId(NameIds.SUBJECT, subjectVId);
         }
     }
 }

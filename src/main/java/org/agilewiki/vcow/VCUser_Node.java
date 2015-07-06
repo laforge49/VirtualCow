@@ -6,7 +6,9 @@ import org.agilewiki.awdb.db.ids.NameId;
 import org.agilewiki.awdb.db.ids.ValueId;
 import org.agilewiki.awdb.db.immutable.FactoryRegistry;
 import org.agilewiki.awdb.db.virtualcow.UnexpectedChecksumException;
+import org.agilewiki.awdb.nodes.Realm_NodeFactory;
 import org.agilewiki.awdb.nodes.User_Node;
+import org.agilewiki.awdb.nodes.User_NodeFactory;
 import org.agilewiki.vcow.roles.Role;
 import org.agilewiki.vcow.roles.Role_NodeInstance;
 import org.agilewiki.vcow.roles.admin.Admin_Role;
@@ -94,7 +96,7 @@ public class VCUser_Node extends User_Node implements GenerativeNode {
             return "duplicate email: " + ValueId.value(emailId);
         }
         VCUser_Node user_node = new VCUser_Node(null, FactoryRegistry.MAX_TIMESTAMP);
-        user_node.createNode(userId, VCUser_NodeFactory.ID, null, null);
+        user_node.createNode(userId, User_NodeFactory.ID, null, Realm_NodeFactory.USER_REALM_ID);
         user_node.set(NameId.SUBJECT, emailId);
         user_node.set(NameIds.PASSWORD_KEY, passwordHash);
         user_node.createSecondaryId(NameIds.EMAIL_ID, emailId);

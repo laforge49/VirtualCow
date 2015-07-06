@@ -22,7 +22,7 @@ public class Login_Node extends VCJournalEntry_Node {
         String subject = (String) mapNode.get(NameIds.SUBJECT);
         if (subject != null) {
             String subjectVId = ValueId.generate(subject.toLowerCase());
-            getAwDb().createSecondaryId(jeName, NameIds.SUBJECT, subjectVId);
+            createSecondaryId(NameIds.SUBJECT, subjectVId);
         }
     }
 }
