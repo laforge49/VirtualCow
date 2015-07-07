@@ -15,6 +15,9 @@ public class NameIds extends NameId {
     public final static String ADDROLES_ID = generate("addRoles");
     public static final String PASSWORD_KEY = NameId.generate("password");
 
+    public final static String USERS_SYSTEM_DOMAIN_ID = "$nusersSystem.domain";
+    public final static String ADMINS_USER_DOMAIN_ID = "$nadminsUser.domain";
+
     final public static String EMAIL_ID = "$nemail";
     final public static String EMAIL_KEY_ID = "$nemail.key";
     final public static String ROLE_ID = "$nrole";

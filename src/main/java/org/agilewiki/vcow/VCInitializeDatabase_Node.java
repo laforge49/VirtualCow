@@ -49,6 +49,8 @@ public class VCInitializeDatabase_Node extends InitializeDatabase_Node {
         Attribute_NodeFactory.define(NameIds.REMOTE_PORT, Delete_NodeFactory.ID);
         Attribute_NodeFactory.define(NameIds.PASSWORD_KEY, User_NodeFactory.ID);
 
+        Node_NodeFactory.define(NameIds.USERS_SYSTEM_DOMAIN_ID, Domain_NodeFactory.ID, null);
+        Node_NodeFactory.define(NameIds.ADMINS_USER_DOMAIN_ID, Domain_NodeFactory.ID, null);
         Node_NodeFactory.define(BadUserAddress_NodeFactory.ID, Node_NodeFactory.ID, JournalEntry_NodeFactory.ID,
                 NameIds.SUBJECT, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT);
         Node_NodeFactory.define(BadUserPassword_NodeFactory.ID, Node_NodeFactory.ID, JournalEntry_NodeFactory.ID,
@@ -74,5 +76,19 @@ public class VCInitializeDatabase_Node extends InitializeDatabase_Node {
         Node_NodeFactory.define(UpdateRoles_NodeFactory.ID, Node_NodeFactory.ID, JournalEntry_NodeFactory.ID,
                 NameIds.USER_KEY, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT,
                 NameIds.NODE_ID, NameIds.ADDROLES_ID, NameIds.REMOVEROLES_ID);
+
+        getAwDb().createLnk1(Developer_Role.ID, Lnk1_NodeFactory.ROLE_OF_REALM_ID, Realm_NodeFactory.SYSTEM_REALM_ID);
+        getAwDb().createLnk1(Developer_Role.ID, Lnk1_NodeFactory.ROLE_OF_REALM_ID, Realm_NodeFactory.USER_REALM_ID);
+        getAwDb().createLnk1(User_Role.ID, Lnk1_NodeFactory.ROLE_OF_REALM_ID, Realm_NodeFactory.USER_REALM_ID);
+        getAwDb().createLnk1(Admin_Role.ID, Lnk1_NodeFactory.ROLE_OF_REALM_ID, Realm_NodeFactory.USER_REALM_ID);
+        getAwDb().createLnk1(User_NodeFactory.SYSTEM_USER_ID, Lnk1_NodeFactory.USER_DOMAIN_ID, NameIds.USERS_SYSTEM_DOMAIN_ID);
+        getAwDb().createLnk1(User_NodeFactory.SYSTEM_USER_ID, Lnk1_NodeFactory.USER_DOMAIN_ID, NameIds.ADMINS_USER_DOMAIN_ID);
+        getAwDb().createLnk1(Group_NodeFactory.USERS_GROUP_ID, Lnk1_NodeFactory.GROUP_DOMAIN_ID, NameIds.USERS_SYSTEM_DOMAIN_ID);
+        getAwDb().createLnk1(Group_NodeFactory.ADMINS_GROUP_ID, Lnk1_NodeFactory.GROUP_DOMAIN_ID, NameIds.ADMINS_USER_DOMAIN_ID);
+        getAwDb().createLnk1(NameIds.USERS_SYSTEM_DOMAIN_ID, Lnk1_NodeFactory.DOMAIN_FOR_REALM_ID, Realm_NodeFactory.SYSTEM_REALM_ID);
+        getAwDb().createLnk1(NameIds.ADMINS_USER_DOMAIN_ID, Lnk1_NodeFactory.DOMAIN_FOR_REALM_ID, Realm_NodeFactory.USER_REALM_ID);
+        getAwDb().createLnk1(NameIds.USERS_SYSTEM_DOMAIN_ID, Lnk1_NodeFactory.DOMAIN_FOR_ROLE_ID, Developer_Role.ID);
+        getAwDb().createLnk1(NameIds.ADMINS_USER_DOMAIN_ID, Lnk1_NodeFactory.DOMAIN_FOR_ROLE_ID, Admin_Role.ID);
+        getAwDb().createLnk1(NameIds.ADMINS_USER_DOMAIN_ID, Lnk1_NodeFactory.DOMAIN_FOR_ROLE_ID, Developer_Role.ID);
     }
 }

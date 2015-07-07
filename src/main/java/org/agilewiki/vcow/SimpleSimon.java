@@ -3,6 +3,7 @@ package org.agilewiki.vcow;
 import org.agilewiki.awdb.AwDb;
 import org.agilewiki.awdb.db.ids.Timestamp;
 import org.agilewiki.awdb.db.immutable.FactoryRegistry;
+import org.agilewiki.awdb.nodes.Domain_Node;
 import org.agilewiki.jactor2.core.impl.Plant;
 import org.agilewiki.vcow.roles.Role;
 import org.agilewiki.vcow.roles.VCRole_NodeFactory;
@@ -107,6 +108,9 @@ public class SimpleSimon extends HttpServlet {
             VCInitializeDatabase_NodeFactory.create(awDb);
             VCUser_NodeFactory.create(awDb);
             VCRole_NodeFactory.create(awDb);
+
+            awDb.addTimelessNode(new Domain_Node(NameIds.USERS_SYSTEM_DOMAIN_ID, FactoryRegistry.MAX_TIMESTAMP));
+            awDb.addTimelessNode(new Domain_Node(NameIds.ADMINS_USER_DOMAIN_ID, FactoryRegistry.MAX_TIMESTAMP));
 
             ServletStart_NodeFactory.create(awDb);
             awDb.registerTransaction(ServletStart_Node.NAME, ServletStart_Node.class);
