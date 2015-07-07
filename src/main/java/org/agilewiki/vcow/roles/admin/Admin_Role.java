@@ -3,13 +3,13 @@ package org.agilewiki.vcow.roles.admin;
 import org.agilewiki.awdb.AwDb;
 import org.agilewiki.awdb.db.immutable.FactoryRegistry;
 import org.agilewiki.vcow.RequestBlade;
-import org.agilewiki.vcow.roles.Role_Node;
+import org.agilewiki.vcow.roles.VCRole_Node;
 import org.agilewiki.vcow.roles.admin.editRoles.EditRolesBlade;
 
 /**
  * A base role.
  */
-public class Admin_Role extends Role_Node {
+public class Admin_Role extends VCRole_Node {
     public final static String ID = "$nadmin.role";
 
     public static void create(AwDb awDb)

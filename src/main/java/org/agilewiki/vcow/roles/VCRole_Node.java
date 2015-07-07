@@ -1,6 +1,6 @@
 package org.agilewiki.vcow.roles;
 
-import org.agilewiki.awdb.NodeBase;
+import org.agilewiki.awdb.nodes.Role_Node;
 import org.agilewiki.vcow.PostRequestBlade;
 import org.agilewiki.vcow.RequestBlade;
 import org.agilewiki.vcow.SimpleSimon;
@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Base class for roles.
  */
-public class Role_Node extends NodeBase implements Role {
+public class VCRole_Node extends Role_Node implements Role {
     public final SimpleSimon simpleSimon;
     public String niceRoleName;
     public final Map<String, RequestBlade> requests = new HashMap<String, RequestBlade>();
@@ -21,7 +21,7 @@ public class Role_Node extends NodeBase implements Role {
         return nodeId.substring(2, nodeId.length() - 5);
     }
 
-    public Role_Node(String nodeId, long timestamp) {
+    public VCRole_Node(String nodeId, long timestamp) {
         super(nodeId, timestamp);
         this.simpleSimon = SimpleSimon.simpleSimon;
         simpleSimon.roles.put(roleName(), this);

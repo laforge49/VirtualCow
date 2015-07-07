@@ -1,10 +1,9 @@
 package org.agilewiki.vcow;
 
-import org.agilewiki.awdb.db.ids.NameId;
 import org.agilewiki.awdb.db.immutable.collections.MapNode;
 import org.agilewiki.awdb.db.virtualcow.Db;
 import org.agilewiki.awdb.nodes.*;
-import org.agilewiki.vcow.roles.Role_NodeFactory;
+import org.agilewiki.vcow.roles.VCRole_NodeFactory;
 import org.agilewiki.vcow.roles.admin.Admin_Role;
 import org.agilewiki.vcow.roles.admin.editRoles.UpdateRoles_NodeFactory;
 import org.agilewiki.vcow.roles.developer.Developer_Role;
@@ -36,11 +35,11 @@ public class VCInitializeDatabase_Node extends InitializeDatabase_Node {
     public void process(Db db, MapNode tMapNode) {
         super.process(db, tMapNode);
 
-        getAwDb().createSecondaryId(Admin_Role.ID, Key_NodeFactory.NODETYPE_ID, Role_NodeFactory.ID);
-        getAwDb().createSecondaryId(Developer_Role.ID, Key_NodeFactory.NODETYPE_ID, Role_NodeFactory.ID);
-        getAwDb().createSecondaryId(System_Role.ID, Key_NodeFactory.NODETYPE_ID, Role_NodeFactory.ID);
-        getAwDb().createSecondaryId(User_Role.ID, Key_NodeFactory.NODETYPE_ID, Role_NodeFactory.ID);
-        getAwDb().createSecondaryId(Visitor_Role.ID, Key_NodeFactory.NODETYPE_ID, Role_NodeFactory.ID);
+        getAwDb().createSecondaryId(Admin_Role.ID, Key_NodeFactory.NODETYPE_ID, VCRole_NodeFactory.ID);
+        getAwDb().createSecondaryId(Developer_Role.ID, Key_NodeFactory.NODETYPE_ID, VCRole_NodeFactory.ID);
+        getAwDb().createSecondaryId(System_Role.ID, Key_NodeFactory.NODETYPE_ID, VCRole_NodeFactory.ID);
+        getAwDb().createSecondaryId(User_Role.ID, Key_NodeFactory.NODETYPE_ID, VCRole_NodeFactory.ID);
+        getAwDb().createSecondaryId(Visitor_Role.ID, Key_NodeFactory.NODETYPE_ID, VCRole_NodeFactory.ID);
 
         Key_NodeFactory.define(NameIds.EMAIL_KEY_ID, User_NodeFactory.ID);
         Key_NodeFactory.define(NameIds.ROLE_KEY_ID, User_NodeFactory.ID);
@@ -50,7 +49,6 @@ public class VCInitializeDatabase_Node extends InitializeDatabase_Node {
         Attribute_NodeFactory.define(NameIds.REMOTE_PORT, Delete_NodeFactory.ID);
         Attribute_NodeFactory.define(NameIds.PASSWORD_KEY, User_NodeFactory.ID);
 
-        Node_NodeFactory.define(Role_NodeFactory.ID, Node_NodeFactory.ID, Node_NodeFactory.ID);
         Node_NodeFactory.define(BadUserAddress_NodeFactory.ID, Node_NodeFactory.ID, JournalEntry_NodeFactory.ID,
                 NameIds.SUBJECT, NameIds.REMOTE_HOST, NameIds.REMOTE_ADDR, NameIds.REMOTE_PORT);
         Node_NodeFactory.define(BadUserPassword_NodeFactory.ID, Node_NodeFactory.ID, JournalEntry_NodeFactory.ID,

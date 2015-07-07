@@ -5,7 +5,7 @@ import org.agilewiki.awdb.db.ids.Timestamp;
 import org.agilewiki.awdb.db.immutable.FactoryRegistry;
 import org.agilewiki.jactor2.core.impl.Plant;
 import org.agilewiki.vcow.roles.Role;
-import org.agilewiki.vcow.roles.Role_NodeFactory;
+import org.agilewiki.vcow.roles.VCRole_NodeFactory;
 import org.agilewiki.vcow.roles.system.ServletStart_Node;
 import org.agilewiki.vcow.roles.system.ServletStart_NodeFactory;
 import org.agilewiki.vcow.roles.system.ServletStop_Node;
@@ -106,7 +106,7 @@ public class SimpleSimon extends HttpServlet {
 
             VCInitializeDatabase_NodeFactory.create(awDb);
             VCUser_NodeFactory.create(awDb);
-            Role_NodeFactory.create(awDb);
+            VCRole_NodeFactory.create(awDb);
 
             ServletStart_NodeFactory.create(awDb);
             awDb.registerTransaction(ServletStart_Node.NAME, ServletStart_Node.class);
