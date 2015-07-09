@@ -22,7 +22,7 @@ public class Lnk1OriginsBlade extends RequestBlade {
             throws Exception {
         super(role, page);
         this.niceName = niceName;
-        this.label = label;
+        this.label = label.substring(2);
     }
 
     @Override
