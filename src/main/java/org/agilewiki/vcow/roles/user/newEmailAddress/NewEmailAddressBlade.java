@@ -83,7 +83,7 @@ public class NewEmailAddressBlade extends PostRequestBlade {
                             @Override
                             public void processAsyncResponse(String _response) throws Exception {
                                 myEmail = latest_user_node.getEmailAddress();
-                                map.put("myEmail", myEmail);
+                                map.put("myEmail", myEmail.substring(2));
                                 map.put("success", "The email address for your account has been updated.");
                                 println();
                                 response.setStatus(HttpServletResponse.SC_OK);
