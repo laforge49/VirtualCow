@@ -20,13 +20,6 @@ public class Npje_Node extends VCJournalEntry_Node {
         super(nodeId, timestamp);
     }
 
-    /*
-    @Override
-    public String getRealmId() {
-        return Realm_NodeFactory.USER_REALM_ID;
-    }
-    */
-
     @Override
     public void process(Db db, MapNode mapNode) {
         String jeName = db.getJEName();

@@ -13,7 +13,6 @@ public class System_Realm extends Realm_Node {
     @Override
     public void newNode(Node node, String userId) {
         if (!User_NodeFactory.SYSTEM_USER_ID.equals(userId)) {
-            System.out.println(node.getNodeId() + " ``````````````````````````````````````````");
             node.createLnk1(Lnk1_NodeFactory.OF_DOMAIN_ID, NameIds.USERS_SYSTEM_DOMAIN_ID);
         }
     }
