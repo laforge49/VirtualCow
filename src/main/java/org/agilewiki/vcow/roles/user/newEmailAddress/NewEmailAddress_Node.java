@@ -25,7 +25,6 @@ public class NewEmailAddress_Node extends VCJournalEntry_Node {
     public void process(Db db, MapNode mapNode) {
         String userId = (String) mapNode.get(NameIds.USER_KEY);
 
-        System.out.println(getAwDb().getDbTimestamp());
         VCUser_Node user_node = (VCUser_Node) getAwDb().fetchNode(userId, getAwDb().getDbTimestamp());
         String oldEmailAddressId = user_node.getEmailAddress();
         getAwDb().removeSecondaryId(userId, NameIds.EMAIL_ID, oldEmailAddressId);

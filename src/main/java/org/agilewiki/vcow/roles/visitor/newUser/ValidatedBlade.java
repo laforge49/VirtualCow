@@ -1,6 +1,7 @@
 package org.agilewiki.vcow.roles.visitor.newUser;
 
 import org.agilewiki.awdb.AwDb;
+import org.agilewiki.awdb.db.ids.NameId;
 import org.agilewiki.awdb.db.ids.ValueId;
 import org.agilewiki.awdb.db.immutable.collections.MapNode;
 import org.agilewiki.jactor2.core.messages.AsyncResponseProcessor;
@@ -91,6 +92,7 @@ public class ValidatedBlade extends PostRequestBlade {
                     return;
                 }
                 MapNode mn = awDb.nilMap;
+                mn = mn.set(NameId.RANDOM_SEED, awDb.randomId.generateSeed());
                 mn = mn.add(NameIds.USER_KEY, userId);
                 String emailId = ValueId.generate(email);
                 mn = mn.add(NameIds.EMAIL_ID, emailId);

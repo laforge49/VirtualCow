@@ -1,6 +1,7 @@
 package org.agilewiki.vcow.roles.system;
 
 import org.agilewiki.awdb.AwDb;
+import org.agilewiki.awdb.db.ids.NameId;
 import org.agilewiki.awdb.db.immutable.collections.MapNode;
 import org.agilewiki.awdb.db.virtualcow.Db;
 import org.agilewiki.vcow.SimpleSimon;
@@ -20,6 +21,7 @@ public class ServletStart_Node extends VCJournalEntry_Node {
     public static String update(AwDb awDb)
             throws Exception {
         MapNode mn = awDb.nilMap;
+        mn = mn.set(NameId.RANDOM_SEED, awDb.randomId.generateSeed());
         return SimpleSimon.simpleSimon.awDb.update(NAME, mn).call();
     }
 
